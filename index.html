@@ -12,9 +12,7 @@
   --gold:#d6ad55;
   --gold2:#f5d98b;
   --black:#080808;
-  --card:#151515;
   --white:#f8f5ed;
-  --green:#174d35;
 }
 *{box-sizing:border-box}
 body{
@@ -46,7 +44,7 @@ button{cursor:pointer}
   background:#000;
 }
 
-/* Corner branding animation */
+/* CORNER BRAND ANIMATION */
 .cornerBrand{
   position:absolute;
   top:18px;
@@ -68,7 +66,7 @@ button{cursor:pointer}
   100%{opacity:0;transform:translateX(-55px) scale(.8)}
 }
 
-/* Skip button only */
+/* SKIP BUTTON */
 #skip{
   position:absolute;
   top:17px;
@@ -86,7 +84,7 @@ button{cursor:pointer}
 }
 #skip:hover{background:var(--gold);color:#000}
 
-/* Intro footer - separate from video */
+/* INTRO CREDITS */
 .introCredits{
   width:100%;
   height:42px;
@@ -99,14 +97,13 @@ button{cursor:pointer}
   background:#050505;
   color:#bda66f;
   font-size:clamp(8px,2.2vw,11px);
-  letter-spacing:1px;
+  letter-spacing:.7px;
   text-align:center;
   white-space:nowrap;
 }
-.introCredits .cobraMark{color:var(--gold2);font-size:14px}
-.introCredits .creditName{color:#f1d28a;font-weight:bold}
+.introCredits strong{color:#f1d28a}
 
-/* STORE HEADER */
+/* STORE */
 #store{display:none;min-height:100vh}
 header{
   position:sticky;
@@ -121,22 +118,10 @@ header{
   gap:12px;
 }
 .brand{
-  display:flex;
-  align-items:center;
-  gap:9px;
   color:var(--gold2);
   font-size:22px;
   font-weight:900;
-  letter-spacing:1px;
-}
-.brandIcon{
-  width:39px;height:39px;
-  border:1px solid var(--gold);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-size:23px;
-  background:#17120a;
+  letter-spacing:2px;
 }
 .headerActions{display:flex;gap:8px}
 .headerBtn{
@@ -154,8 +139,7 @@ header{
 .hero{
   text-align:center;
   padding:38px 15px 30px;
-  background:
-    radial-gradient(ellipse at center,#29200f 0%,#0b0b0b 65%);
+  background:radial-gradient(ellipse at center,#29200f 0%,#0b0b0b 65%);
   border-bottom:1px solid #342816;
 }
 .hero h1{
@@ -172,7 +156,7 @@ header{
   margin:12px 0 0;
 }
 
-/* SEARCH AND FILTERS */
+/* SEARCH */
 .controls{
   max-width:1100px;
   margin:20px auto;
@@ -194,6 +178,8 @@ header{
 .controls input:focus,.controls select:focus{
   border-color:var(--gold2);
 }
+
+/* CATEGORIES */
 .categories{
   max-width:1100px;
   margin:0 auto 20px;
@@ -358,15 +344,17 @@ header{
 .modalContent p{color:#ddd;line-height:1.6;font-size:14px}
 .closeModal{
   position:absolute;
-  right:10px;top:10px;
+  right:10px;
+  top:10px;
   background:#000;
   color:white;
   border:1px solid var(--gold);
   border-radius:50%;
-  width:34px;height:34px;
+  width:34px;
+  height:34px;
 }
 
-/* MAIN FOOTER */
+/* FOOTER */
 footer{
   text-align:center;
   padding:23px 12px;
@@ -389,7 +377,6 @@ footer strong{color:var(--gold2)}
 }
 @media(max-width:380px){
   .brand{font-size:17px}
-  .brandIcon{width:33px;height:33px}
   .headerBtn{padding:8px;font-size:10px}
   .product img{height:135px}
 }
@@ -401,25 +388,22 @@ footer strong{color:var(--gold2)}
 <!-- CINEMATIC INTRO -->
 <section id="intro">
 
-  <div class="cornerBrand">🐍 COBRA STORE</div>
+  <div class="cornerBrand">COBRA STORE</div>
 
   <button id="skip" onclick="openStore()">SKIP INTRO ✕</button>
 
   <video
     id="cobraVideo"
     autoplay
-    muted
     playsinline
     preload="auto"
     src="YTShort_09Nov2026_19_11_21.mp4">
   </video>
 
   <div class="introCredits">
-    <span>AS TOLD BY CHATGPT</span>
-    <span class="cobraMark">🐍</span>
-    <span class="creditName">COBRA STORE</span>
+    <span>MANAGED BY AQIB JAVED</span>
     <span>•</span>
-    <span>WEBSITE BY THE COBRA DEVELOPERS</span>
+    <strong>DEVELOPED BY THE COBRA DEVELOPERS</strong>
   </div>
 
 </section>
@@ -428,14 +412,11 @@ footer strong{color:var(--gold2)}
 <div id="store">
 
   <header>
-    <div class="brand">
-      <div class="brandIcon">🐍</div>
-      <span>COBRA STORE</span>
-    </div>
+    <div class="brand">COBRA STORE</div>
 
     <div class="headerActions">
       <button class="headerBtn" onclick="goToCart()">
-        🛒 CART (<span id="cartCount">0</span>)
+        CART (<span id="cartCount">0</span>)
       </button>
     </div>
   </header>
@@ -467,7 +448,7 @@ footer strong{color:var(--gold2)}
   <main class="products" id="products"></main>
 
   <section class="cartPanel" id="cartSection">
-    <h2>🛒 YOUR SHOPPING CART</h2>
+    <h2>YOUR SHOPPING CART</h2>
     <div id="cartItems">
       <p style="color:#aaa;font-size:13px">Your cart is empty.</p>
     </div>
@@ -478,11 +459,9 @@ footer strong{color:var(--gold2)}
   </section>
 
   <footer>
-    AS TOLD BY CHATGPT
+    MANAGED BY <strong>AQIB JAVED</strong>
     <br>
-    <strong>🐍 COBRA STORE</strong>
-    <br>
-    WEBSITE BY <strong>THE COBRA DEVELOPERS</strong>
+    DEVELOPED BY <strong>THE COBRA DEVELOPERS</strong>
   </footer>
 
 </div>
@@ -502,6 +481,7 @@ footer strong{color:var(--gold2)}
 </div>
 
 <script>
+
 /* INTRO CONTROL */
 const intro = document.getElementById("intro");
 const video = document.getElementById("cobraVideo");
@@ -509,6 +489,7 @@ let introClosed = false;
 
 function openStore(){
   if(introClosed) return;
+
   introClosed = true;
   intro.style.opacity = "0";
 
@@ -519,21 +500,42 @@ function openStore(){
   },800);
 }
 
-/* When video finishes, open the store */
+/*
+  Try to autoplay with original sound first.
+  If browser blocks audible autoplay, fall back to muted autoplay.
+  Browser policies cannot be overridden by website code.
+*/
+async function startIntroVideo(){
+
+  video.muted = false;
+  video.volume = 1;
+
+  try{
+    await video.play();
+    console.log("Intro playing with sound.");
+  }catch(error){
+
+    console.log("Audible autoplay was blocked. Trying muted autoplay.");
+
+    video.muted = true;
+
+    try{
+      await video.play();
+      console.log("Intro playing in muted autoplay mode.");
+    }catch(secondError){
+      console.log("Browser blocked autoplay.");
+    }
+  }
+}
+
+/* Start video */
+startIntroVideo();
+
+/* Open store when video ends */
 video.addEventListener("ended",openStore);
 
-/* If video cannot load, allow the user to enter with Skip */
-video.addEventListener("error",()=>{
-  console.log("Intro video could not be loaded. Check the video filename.");
-});
-
-/* Try autoplay */
-video.play().catch(()=>{
-  console.log("Browser requires a user interaction to play the intro video.");
-});
-
 /* PRODUCT DATA
-   These are demo products. Replace them with your real products and prices.
+   Demo products: replace images and prices with actual products.
 */
 const products = [
   {
@@ -635,12 +637,14 @@ function selectCategory(category){
 
 /* PRODUCT DISPLAY */
 function renderProducts(){
+
   const search = document.getElementById("searchInput").value
     .toLowerCase().trim();
 
   const sort = document.getElementById("sortSelect").value;
 
   let list = products.filter(product=>{
+
     const matchesCategory =
       selectedCategory==="All" ||
       product.category===selectedCategory;
@@ -665,6 +669,7 @@ function renderProducts(){
 
   area.innerHTML = list.map(product=>`
     <article class="product">
+
       <img
         src="${product.image}"
         alt="${product.name}"
@@ -674,7 +679,10 @@ function renderProducts(){
       <div class="productInfo">
         <div class="category">${product.category}</div>
         <h3>${product.name}</h3>
-        <div class="price">Rs. ${product.price.toLocaleString("en-PK")}</div>
+
+        <div class="price">
+          Rs. ${product.price.toLocaleString("en-PK")}
+        </div>
 
         <div class="productButtons">
           <button class="viewBtn" onclick="showDetails(${product.id})">
@@ -691,6 +699,7 @@ function renderProducts(){
 
 /* CART FUNCTIONS */
 function addToCart(id){
+
   const product = products.find(item=>item.id===id);
   const existing = cart.find(item=>item.id===id);
 
@@ -709,13 +718,19 @@ function removeFromCart(id){
 }
 
 function renderCart(){
+
   const area = document.getElementById("cartItems");
-  const count = cart.reduce((sum,item)=>sum+item.quantity,0);
+
+  const count = cart.reduce(
+    (sum,item)=>sum+item.quantity,0
+  );
+
   const total = cart.reduce(
     (sum,item)=>sum+(item.price*item.quantity),0
   );
 
   document.getElementById("cartCount").textContent = count;
+
   document.getElementById("cartTotal").textContent =
     "Total: Rs. " + total.toLocaleString("en-PK");
 
@@ -727,6 +742,7 @@ function renderCart(){
 
   area.innerHTML = cart.map(item=>`
     <div class="cartItem">
+
       <span>
         ${item.name} × ${item.quantity}
         <br>
@@ -734,9 +750,11 @@ function renderCart(){
           Rs. ${(item.price*item.quantity).toLocaleString("en-PK")}
         </small>
       </span>
+
       <button class="removeBtn" onclick="removeFromCart(${item.id})">
         REMOVE
       </button>
+
     </div>
   `).join("");
 }
@@ -749,6 +767,7 @@ function goToCart(){
 
 /* WHATSAPP CHECKOUT */
 function checkoutWhatsApp(){
+
   if(cart.length===0){
     alert("Please add a product to your cart first.");
     return;
@@ -758,34 +777,39 @@ function checkoutWhatsApp(){
     (sum,item)=>sum+(item.price*item.quantity),0
   );
 
-  let message = "Assalam-o-Alaikum! I want to order from COBRA STORE:%0A%0A";
+  let message =
+    "Assalam-o-Alaikum! I want to order from COBRA STORE:\n\n";
 
   cart.forEach(item=>{
     message +=
-      "• "+encodeURIComponent(item.name)+
+      "• "+item.name+
       " x "+item.quantity+
-      " — Rs. "+item.price*item.quantity+
-      "%0A";
+      " — Rs. "+(item.price*item.quantity)+
+      "\n";
   });
 
   message +=
-    "%0ATotal: Rs. "+total+
-    "%0A%0AKindly share order details.";
+    "\nTotal: Rs. "+total+
+    "\n\nKindly share order details.";
 
   window.open(
-    "https://wa.me/923432752543?text="+message,
+    "https://wa.me/923432752543?text="+
+    encodeURIComponent(message),
     "_blank"
   );
 }
 
 /* PRODUCT DETAILS MODAL */
 function showDetails(id){
+
   const product = products.find(item=>item.id===id);
 
   document.getElementById("modalImage").src = product.image;
   document.getElementById("modalName").textContent = product.name;
+
   document.getElementById("modalPrice").textContent =
     "Rs. "+product.price.toLocaleString("en-PK");
+
   document.getElementById("modalDescription").textContent =
     product.description;
 
@@ -809,6 +833,7 @@ function closeModalOutside(event){
 renderCategories();
 renderProducts();
 renderCart();
+
 </script>
 
 </body>
