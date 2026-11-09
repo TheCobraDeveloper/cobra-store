@@ -8,9 +8,9 @@
 <title>COBRA STORE | Premium Shopping</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#080706;color:#fff;font-family:Arial,sans-serif}
-button{cursor:pointer}
 :root{--gold:#d9a83b;--light:#ffe3a0;--black:#080706}
+body{background:var(--black);color:white;font-family:Arial,sans-serif}
+button{cursor:pointer}
 header{height:72px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:#100e0a;border-bottom:1px solid #9e772b;position:sticky;top:0;z-index:10}
 .brand{font-size:24px;font-weight:900;color:var(--gold);letter-spacing:2px}
 .brand span{color:white}
@@ -18,27 +18,18 @@ nav{display:flex;gap:22px;align-items:center}
 nav a{color:#eee;text-decoration:none;font-size:14px}
 nav a:hover{color:var(--gold)}
 .goldbtn{background:linear-gradient(120deg,#8e6418,#ffdf83,#a6751b);color:#100d06;border:0;border-radius:30px;padding:12px 23px;font-weight:bold}
-#intro{position:fixed;inset:0;background:radial-gradient(ellipse at center,#33220d,#080706 65%);z-index:99;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#intro video{position:absolute;width:100%;height:100%;object-fit:cover}
-.introShade{position:absolute;inset:0;background:linear-gradient(0deg,#080706 0%,transparent 75%);pointer-events:none}
+#intro{position:fixed;inset:0;background:#080706;z-index:99;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s}
+#cobraVideo{position:absolute;width:100%;height:100%;object-fit:cover;background:#080706}
+.introShade{position:absolute;inset:0;background:linear-gradient(0deg,#080706 0%,transparent 65%,#0007 100%);pointer-events:none}
 .introContent{position:relative;z-index:2;text-align:center;width:100%;padding:20px}
 .introTitle{font-size:clamp(35px,8vw,85px);font-weight:1000;letter-spacing:5px;color:#f5cc69;text-shadow:0 0 25px #d99c26,0 0 60px #b77b1b}
-.introSub{letter-spacing:5px;margin-top:12px;color:#fff}
-#cobraFallback{font-size:clamp(100px,25vw,220px);filter:drop-shadow(0 0 30px #e4a52e);animation:rise 2s ease-in-out infinite alternate}
-@keyframes rise{from{transform:translateY(20px) scale(.95)}to{transform:translateY(-18px) scale(1.06)}}
-#productsBurst{position:absolute;inset:0;pointer-events:none}
-.burstItem{position:absolute;left:50%;top:48%;font-size:42px;animation:fly 2.4s ease-out forwards;animation-delay:1s;opacity:0}
-.burstItem:nth-child(1){--x:-40vw;--y:-25vh}
-.burstItem:nth-child(2){--x:35vw;--y:-30vh}
-.burstItem:nth-child(3){--x:-30vw;--y:28vh}
-.burstItem:nth-child(4){--x:40vw;--y:25vh}
-.burstItem:nth-child(5){--x:0vw;--y:-38vh}
-.burstItem:nth-child(6){--x:15vw;--y:35vh}
-@keyframes fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}
-15%{opacity:1}100%{opacity:1;transform:translate(var(--x),var(--y)) scale(1.5)}}
-#enterBtn{margin-top:30px}
-#skip{position:absolute;right:20px;top:20px;z-index:5;background:#17130c;color:#fff;border:1px solid #b78b37;border-radius:25px;padding:10px 18px}
-.hero{min-height:460px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:radial-gradient(ellipse at center,#35240c,#090807 70%);position:relative;overflow:hidden}
+.introSub{letter-spacing:4px;margin-top:12px;color:white}
+.introActions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:25px}
+#skip,#soundBtn{position:absolute;z-index:5;background:#17130c;color:white;border:1px solid #b78b37;border-radius:25px;padding:11px 17px}
+#skip{right:18px;top:18px}
+#soundBtn{left:18px;top:18px}
+#videoFallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:130px;color:var(--gold)}
+.hero{min-height:460px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:radial-gradient(ellipse at center,#35240c,#090807 70%);position:relative}
 .hero h1{font-size:clamp(38px,7vw,76px);color:var(--gold);text-shadow:0 0 25px #a87925}
 .hero p{margin:20px auto;color:#ddd;line-height:1.8;max-width:600px}
 .hero .cobra{font-size:90px;filter:drop-shadow(0 0 20px #b98830);margin-bottom:15px}
@@ -64,31 +55,33 @@ footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-to
 .modalbox{background:#17130d;border:1px solid var(--gold);border-radius:18px;padding:25px;max-width:420px;width:100%}
 .modalbox img{width:100%;height:220px;object-fit:cover;border-radius:12px}
 .close{float:right;background:none;color:white;border:0;font-size:25px}
-@media(max-width:650px){nav{gap:10px}nav a{font-size:12px}.brand{font-size:18px}.hero{min-height:380px}}
+@media(max-width:650px){
+nav{gap:10px}nav a{font-size:12px}
+.brand{font-size:18px}
+.hero{min-height:380px}
+.introTitle{letter-spacing:2px}
+}
 </style>
 </head>
 <body>
 
-<!-- INTRO: Put your Hollywood cobra video in the repository as cobra-intro.mp4 -->
+<!-- COBRA STORE VIDEO INTRO -->
 <div id="intro">
-  <video id="cobraVideo" autoplay muted playsinline>
-    <source src="cobra-intro.mp4" type="video/mp4">
+  <video id="cobraVideo" autoplay muted playsinline preload="auto">
+    <source src="YTShort_09Nov2026_19_11_21.mp4" type="video/mp4">
   </video>
+  <div id="videoFallback">🐍</div>
   <div class="introShade"></div>
+
   <button id="skip" onclick="openStore()">SKIP INTRO ✕</button>
-  <div id="productsBurst">
-    <span class="burstItem">👟</span>
-    <span class="burstItem">⌚</span>
-    <span class="burstItem">📱</span>
-    <span class="burstItem">👜</span>
-    <span class="burstItem">🎧</span>
-    <span class="burstItem">👓</span>
-  </div>
+  <button id="soundBtn" onclick="toggleSound()">🔇 SOUND ON</button>
+
   <div class="introContent">
-    <div id="cobraFallback">🐍</div>
     <div class="introTitle">COBRA STORE</div>
-    <div class="introSub">SHOP SMART • LIVE BETTER</div>
-    <button id="enterBtn" class="goldbtn" onclick="openStore()">ENTER THE STORE</button>
+    <div class="introSub">UNLEASH THE POWER OF SHOPPING</div>
+    <div class="introActions">
+      <button class="goldbtn" onclick="openStore()">ENTER THE STORE</button>
+    </div>
   </div>
 </div>
 
@@ -112,6 +105,7 @@ footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-to
 
 <section class="section" id="shop">
   <h2 class="heading">OUR PREMIUM COLLECTION</h2>
+
   <div class="tools">
     <input id="search" placeholder="Search products..." oninput="renderProducts()">
     <select id="sort" onchange="renderProducts()">
@@ -120,6 +114,7 @@ footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-to
       <option value="high">Price: High to Low</option>
     </select>
   </div>
+
   <div class="categories">
     <button class="cat active" onclick="setCategory('All',this)">All</button>
     <button class="cat" onclick="setCategory('Shoes',this)">Shoes</button>
@@ -128,6 +123,7 @@ footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-to
     <button class="cat" onclick="setCategory('Fashion',this)">Fashion</button>
     <button class="cat" onclick="setCategory('Accessories',this)">Accessories</button>
   </div>
+
   <div class="grid" id="productGrid"></div>
 
   <div class="cartBox" id="cart">
@@ -152,7 +148,7 @@ footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-to
 <footer>
   <h2 style="color:#d9a83b">COBRA STORE</h2>
   <p style="margin-top:10px">A project by THE COBRA DEVELOPERS</p>
-  <p style="margin-top:8px">SHOP SMART • LIVE BETTER</p>
+  <p style="margin-top:8px">UNLEASH THE POWER OF SHOPPING</p>
 </footer>
 
 <script>
@@ -164,6 +160,7 @@ const products = [
  {id:5,name:"Modern Sunglasses",category:"Accessories",price:1200,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=700",desc:"A bold and stylish look."},
  {id:6,name:"Smartphone",category:"Electronics",price:18000,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=700",desc:"Modern smartphone design."}
 ];
+
 let category="All",cart=[],selected=null;
 
 function setCategory(c,btn){
@@ -172,12 +169,14 @@ function setCategory(c,btn){
  btn.classList.add('active');
  renderProducts();
 }
+
 function renderProducts(){
  let q=document.getElementById('search').value.toLowerCase();
  let list=products.filter(p=>(category==="All"||p.category===category)&&p.name.toLowerCase().includes(q));
  let sort=document.getElementById('sort').value;
  if(sort==="low")list.sort((a,b)=>a.price-b.price);
  if(sort==="high")list.sort((a,b)=>b.price-a.price);
+
  document.getElementById('productGrid').innerHTML=list.map(p=>`
  <div class="card">
  <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400/17130d/d9a83b?text=COBRA+STORE'">
@@ -189,6 +188,7 @@ function renderProducts(){
  <button class="cat" style="width:100%" onclick="addCart(${p.id})">ADD TO CART +</button>
  </div></div>`).join('');
 }
+
 function showProduct(id){
  let p=products.find(x=>x.id===id);selected=id;
  document.getElementById('modalImg').src=p.img;
@@ -198,31 +198,68 @@ function showProduct(id){
  document.getElementById('modalAdd').onclick=()=>{addCart(id);closeModal()};
  document.getElementById('productModal').style.display='flex';
 }
-function closeModal(){document.getElementById('productModal').style.display='none'}
-function addCart(id){let p=products.find(x=>x.id===id);cart.push(p);renderCart()}
-function removeCart(i){cart.splice(i,1);renderCart()}
+
+function closeModal(){
+ document.getElementById('productModal').style.display='none';
+}
+
+function addCart(id){
+ let p=products.find(x=>x.id===id);
+ cart.push(p);
+ renderCart();
+}
+
+function removeCart(i){
+ cart.splice(i,1);
+ renderCart();
+}
+
 function renderCart(){
  document.getElementById('cartCount').textContent=cart.length;
  document.getElementById('total').textContent=cart.reduce((s,p)=>s+p.price,0).toLocaleString('en-PK');
  document.getElementById('cartItems').innerHTML=cart.length?cart.map((p,i)=>`
- <div class="cartLine"><span>${p.name} — Rs. ${p.price.toLocaleString('en-PK')}</span>
- <button onclick="removeCart(${i})" style="background:none;color:#e8bc60;border:0">Remove ✕</button></div>`).join(''):"Your cart is empty.";
+ <div class="cartLine">
+ <span>${p.name} — Rs. ${p.price.toLocaleString('en-PK')}</span>
+ <button onclick="removeCart(${i})" style="background:none;color:#e8bc60;border:0">Remove ✕</button>
+ </div>`).join(''):"Your cart is empty.";
 }
+
 function checkout(){
  if(!cart.length){alert("Please add a product first.");return}
- let lines=cart.map(p=>p.name+" - Rs. "+p.price).join("%0A");
+ let lines=cart.map(p=>p.name+" - Rs. "+p.price).join("\n");
  let total=cart.reduce((s,p)=>s+p.price,0);
- let message="Assalamualaikum! I want to order from COBRA STORE:%0A"+lines+"%0ATotal: Rs. "+total;
- window.open("https://wa.me/923432752543?text="+message,"_blank");
+ let message="Assalamualaikum! I want to order from COBRA STORE:\n"+lines+"\nTotal: Rs. "+total;
+ window.open("https://wa.me/923432752543?text="+encodeURIComponent(message),"_blank");
 }
+
 function openStore(){
- document.getElementById('intro').style.opacity='0';
- setTimeout(()=>document.getElementById('intro').style.display='none',700);
+ const intro=document.getElementById('intro');
+ if(intro.style.display==='none')return;
+ intro.style.opacity='0';
+ setTimeout(()=>intro.style.display='none',700);
 }
+
+function toggleSound(){
+ const video=document.getElementById('cobraVideo');
+ const btn=document.getElementById('soundBtn');
+ video.muted=!video.muted;
+ if(!video.muted){
+   video.volume=1;
+   video.play().catch(()=>{});
+   btn.textContent="🔊 SOUND ON";
+ }else{
+   btn.textContent="🔇 SOUND OFF";
+ }
+}
+
 const video=document.getElementById('cobraVideo');
-video.addEventListener('ended',()=>openStore());
-video.addEventListener('error',()=>{video.style.display='none'});
-setTimeout(()=>{if(document.getElementById('intro').style.display!=='none')openStore()},15000);
+video.addEventListener('ended',openStore);
+video.addEventListener('error',()=>{
+ video.style.display='none';
+ document.getElementById('videoFallback').style.display='flex';
+});
+video.play().catch(()=>{});
+
 renderProducts();
 renderCart();
 </script>
