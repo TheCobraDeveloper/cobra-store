@@ -4,264 +4,812 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080706">
+<meta name="theme-color" content="#080808">
 <title>COBRA STORE | Premium Shopping</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#d9a83b;--light:#ffe3a0;--black:#080706}
-body{background:var(--black);color:white;font-family:Arial,sans-serif}
+:root{
+  --gold:#d6ad55;
+  --gold2:#f5d98b;
+  --black:#080808;
+  --card:#151515;
+  --white:#f8f5ed;
+  --green:#174d35;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--black);
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input,select{font:inherit}
 button{cursor:pointer}
-header{height:72px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:#100e0a;border-bottom:1px solid #9e772b;position:sticky;top:0;z-index:10}
-.brand{font-size:24px;font-weight:900;color:var(--gold);letter-spacing:2px}
-.brand span{color:white}
-nav{display:flex;gap:22px;align-items:center}
-nav a{color:#eee;text-decoration:none;font-size:14px}
-nav a:hover{color:var(--gold)}
-.goldbtn{background:linear-gradient(120deg,#8e6418,#ffdf83,#a6751b);color:#100d06;border:0;border-radius:30px;padding:12px 23px;font-weight:bold}
-#intro{position:fixed;inset:0;background:#080706;z-index:99;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s}
-#cobraVideo{position:absolute;width:100%;height:100%;object-fit:cover;background:#080706}
-.introShade{position:absolute;inset:0;background:linear-gradient(0deg,#080706 0%,transparent 65%,#0007 100%);pointer-events:none}
-.introContent{position:relative;z-index:2;text-align:center;width:100%;padding:20px}
-.introTitle{font-size:clamp(35px,8vw,85px);font-weight:1000;letter-spacing:5px;color:#f5cc69;text-shadow:0 0 25px #d99c26,0 0 60px #b77b1b}
-.introSub{letter-spacing:4px;margin-top:12px;color:white}
-.introActions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:25px}
-#skip,#soundBtn{position:absolute;z-index:5;background:#17130c;color:white;border:1px solid #b78b37;border-radius:25px;padding:11px 17px}
-#skip{right:18px;top:18px}
-#soundBtn{left:18px;top:18px}
-#videoFallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:130px;color:var(--gold)}
-.hero{min-height:460px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:radial-gradient(ellipse at center,#35240c,#090807 70%);position:relative}
-.hero h1{font-size:clamp(38px,7vw,76px);color:var(--gold);text-shadow:0 0 25px #a87925}
-.hero p{margin:20px auto;color:#ddd;line-height:1.8;max-width:600px}
-.hero .cobra{font-size:90px;filter:drop-shadow(0 0 20px #b98830);margin-bottom:15px}
-.section{padding:45px 5%}
-.heading{text-align:center;color:var(--gold);font-size:30px;margin-bottom:25px}
-.tools{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:25px}
-input,select{background:#17140f;color:white;border:1px solid #745a2b;padding:13px;border-radius:10px;min-width:180px}
-.categories{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
-.cat{background:#17140f;color:#e9c36c;border:1px solid #795c27;padding:10px 18px;border-radius:25px}
-.cat.active,.cat:hover{background:var(--gold);color:#111}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
-.card{background:linear-gradient(145deg,#1b1812,#0d0c0a);border:1px solid #57421f;border-radius:16px;overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-7px);box-shadow:0 10px 30px #b17c2530}
-.card img{width:100%;height:210px;object-fit:cover;background:#211b11}
-.cardbody{padding:16px}
-.card h3{color:#f3d18a;margin-bottom:8px}
-.price{color:var(--gold);font-size:20px;font-weight:bold;margin:12px 0}
-.card button{width:100%;margin-top:8px}
-.cartBox{background:#17140e;border:1px solid #8d692c;border-radius:15px;padding:20px;margin-top:25px}
-.cartLine{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #40321b}
-footer{text-align:center;padding:30px;background:#100e0a;color:#b9a57d;margin-top:35px}
-.modal{display:none;position:fixed;inset:0;background:#000d;z-index:30;align-items:center;justify-content:center;padding:20px}
-.modalbox{background:#17130d;border:1px solid var(--gold);border-radius:18px;padding:25px;max-width:420px;width:100%}
-.modalbox img{width:100%;height:220px;object-fit:cover;border-radius:12px}
-.close{float:right;background:none;color:white;border:0;font-size:25px}
-@media(max-width:650px){
-nav{gap:10px}nav a{font-size:12px}
-.brand{font-size:18px}
-.hero{min-height:380px}
-.introTitle{letter-spacing:2px}
+
+/* INTRO VIDEO */
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  transition:opacity .8s ease;
+}
+#cobraVideo{
+  width:100%;
+  height:calc(100% - 42px);
+  object-fit:contain;
+  background:#000;
+}
+
+/* Corner branding animation */
+.cornerBrand{
+  position:absolute;
+  top:18px;
+  left:12px;
+  z-index:3;
+  color:var(--gold2);
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:clamp(12px,3vw,19px);
+  text-shadow:0 0 12px #b88731;
+  pointer-events:none;
+  animation:cornerAppear 5s ease-in-out infinite;
+}
+@keyframes cornerAppear{
+  0%{opacity:0;transform:translateX(-55px) scale(.8)}
+  15%{opacity:1;transform:translateX(0) scale(1)}
+  72%{opacity:1;transform:translateX(0) scale(1)}
+  90%{opacity:0;transform:translateX(-55px) scale(.8)}
+  100%{opacity:0;transform:translateX(-55px) scale(.8)}
+}
+
+/* Skip button only */
+#skip{
+  position:absolute;
+  top:17px;
+  right:14px;
+  z-index:5;
+  border:1px solid var(--gold);
+  background:rgba(0,0,0,.55);
+  color:var(--gold2);
+  padding:9px 15px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+  backdrop-filter:blur(5px);
+}
+#skip:hover{background:var(--gold);color:#000}
+
+/* Intro footer - separate from video */
+.introCredits{
+  width:100%;
+  height:42px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:4px 8px;
+  background:#050505;
+  color:#bda66f;
+  font-size:clamp(8px,2.2vw,11px);
+  letter-spacing:1px;
+  text-align:center;
+  white-space:nowrap;
+}
+.introCredits .cobraMark{color:var(--gold2);font-size:14px}
+.introCredits .creditName{color:#f1d28a;font-weight:bold}
+
+/* STORE HEADER */
+#store{display:none;min-height:100vh}
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,7,7,.97);
+  border-bottom:1px solid #57431e;
+  padding:13px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--gold2);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.brandIcon{
+  width:39px;height:39px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+  background:#17120a;
+}
+.headerActions{display:flex;gap:8px}
+.headerBtn{
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold2);
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:12px;
+}
+.headerBtn:hover{background:var(--gold);color:#000}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:38px 15px 30px;
+  background:
+    radial-gradient(ellipse at center,#29200f 0%,#0b0b0b 65%);
+  border-bottom:1px solid #342816;
+}
+.hero h1{
+  margin:0;
+  color:var(--gold2);
+  font-size:clamp(27px,6vw,48px);
+  letter-spacing:3px;
+  text-shadow:0 0 20px #6b4b17;
+}
+.hero p{
+  color:#c8b98f;
+  font-size:13px;
+  letter-spacing:2px;
+  margin:12px 0 0;
+}
+
+/* SEARCH AND FILTERS */
+.controls{
+  max-width:1100px;
+  margin:20px auto;
+  padding:0 14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.controls input,.controls select{
+  flex:1;
+  min-width:150px;
+  padding:12px;
+  border:1px solid #66502a;
+  border-radius:8px;
+  background:#151515;
+  color:white;
+  outline:none;
+}
+.controls input:focus,.controls select:focus{
+  border-color:var(--gold2);
+}
+.categories{
+  max-width:1100px;
+  margin:0 auto 20px;
+  padding:0 14px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+}
+.catBtn{
+  flex-shrink:0;
+  border:1px solid #59451f;
+  background:#151515;
+  color:#e6d6b2;
+  border-radius:25px;
+  padding:9px 15px;
+  font-size:12px;
+}
+.catBtn.active,.catBtn:hover{
+  background:var(--gold);
+  color:#080808;
+  border-color:var(--gold);
+}
+
+/* PRODUCTS */
+.sectionTitle{
+  max-width:1100px;
+  margin:25px auto 15px;
+  padding:0 14px;
+  color:var(--gold2);
+  font-size:20px;
+}
+.products{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 14px 35px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+.product{
+  background:linear-gradient(145deg,#1b1b1b,#101010);
+  border:1px solid #40321b;
+  border-radius:12px;
+  overflow:hidden;
+  transition:.25s;
+}
+.product:hover{
+  transform:translateY(-4px);
+  border-color:var(--gold);
+  box-shadow:0 8px 25px #000;
+}
+.product img{
+  display:block;
+  width:100%;
+  height:165px;
+  object-fit:cover;
+  background:#222;
+}
+.productInfo{padding:12px}
+.productInfo h3{
+  margin:0 0 8px;
+  font-size:14px;
+  color:#fff0ce;
+}
+.productInfo .category{
+  color:#bda66f;
+  font-size:10px;
+}
+.price{
+  color:var(--gold2);
+  font-size:17px;
+  font-weight:bold;
+  margin:9px 0;
+}
+.productButtons{display:flex;gap:7px}
+.productButtons button{
+  flex:1;
+  border:1px solid var(--gold);
+  border-radius:7px;
+  padding:9px 5px;
+  font-size:11px;
+  font-weight:bold;
+}
+.viewBtn{background:transparent;color:var(--gold2)}
+.addBtn{background:var(--gold);color:#080808}
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  color:#bca875;
+  padding:35px 10px;
+}
+
+/* CART */
+.cartPanel{
+  max-width:1100px;
+  margin:0 auto 30px;
+  padding:15px;
+  border:1px solid #5b4826;
+  border-radius:12px;
+  background:#111;
+}
+.cartPanel h2{color:var(--gold2);font-size:19px}
+.cartItem{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #292929;
+  font-size:13px;
+}
+.removeBtn{
+  background:#542323;
+  border:0;
+  color:white;
+  border-radius:5px;
+  padding:6px 9px;
+}
+.cartTotal{
+  color:var(--gold2);
+  font-weight:bold;
+  margin:15px 0;
+}
+.checkout{
+  width:100%;
+  border:0;
+  border-radius:8px;
+  padding:13px;
+  background:#167346;
+  color:white;
+  font-weight:bold;
+}
+.checkout:hover{background:#208c58}
+
+/* PRODUCT MODAL */
+#productModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:500;
+  background:rgba(0,0,0,.85);
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.modalBox{
+  width:100%;
+  max-width:420px;
+  background:#151515;
+  border:1px solid var(--gold);
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+}
+.modalBox img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+}
+.modalContent{padding:16px}
+.modalContent h2{color:var(--gold2)}
+.modalContent p{color:#ddd;line-height:1.6;font-size:14px}
+.closeModal{
+  position:absolute;
+  right:10px;top:10px;
+  background:#000;
+  color:white;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  width:34px;height:34px;
+}
+
+/* MAIN FOOTER */
+footer{
+  text-align:center;
+  padding:23px 12px;
+  border-top:1px solid #49391f;
+  background:#070707;
+  color:#bca875;
+  font-size:11px;
+  line-height:2;
+  letter-spacing:1px;
+}
+footer strong{color:var(--gold2)}
+
+/* RESPONSIVE */
+@media(min-width:650px){
+  .products{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .product img{height:210px}
+}
+@media(min-width:950px){
+  .products{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:380px){
+  .brand{font-size:17px}
+  .brandIcon{width:33px;height:33px}
+  .headerBtn{padding:8px;font-size:10px}
+  .product img{height:135px}
 }
 </style>
 </head>
+
 <body>
 
-<!-- COBRA STORE VIDEO INTRO -->
-<div id="intro">
-  <video id="cobraVideo" autoplay muted playsinline preload="auto">
-    <source src="YTShort_09Nov2026_19_11_21.mp4" type="video/mp4">
-  </video>
-  <div id="videoFallback">🐍</div>
-  <div class="introShade"></div>
+<!-- CINEMATIC INTRO -->
+<section id="intro">
+
+  <div class="cornerBrand">🐍 COBRA STORE</div>
 
   <button id="skip" onclick="openStore()">SKIP INTRO ✕</button>
-  <button id="soundBtn" onclick="toggleSound()">🔇 SOUND ON</button>
 
-  <div class="introContent">
-    <div class="introTitle">COBRA STORE</div>
-    <div class="introSub">UNLEASH THE POWER OF SHOPPING</div>
-    <div class="introActions">
-      <button class="goldbtn" onclick="openStore()">ENTER THE STORE</button>
+  <video
+    id="cobraVideo"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+    src="YTShort_09Nov2026_19_11_21.mp4">
+  </video>
+
+  <div class="introCredits">
+    <span>AS TOLD BY CHATGPT</span>
+    <span class="cobraMark">🐍</span>
+    <span class="creditName">COBRA STORE</span>
+    <span>•</span>
+    <span>WEBSITE BY THE COBRA DEVELOPERS</span>
+  </div>
+
+</section>
+
+<!-- MAIN STORE -->
+<div id="store">
+
+  <header>
+    <div class="brand">
+      <div class="brandIcon">🐍</div>
+      <span>COBRA STORE</span>
+    </div>
+
+    <div class="headerActions">
+      <button class="headerBtn" onclick="goToCart()">
+        🛒 CART (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>COBRA STORE</h1>
+    <p>UNLEASH THE POWER OF SHOPPING</p>
+  </section>
+
+  <div class="controls">
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search products..."
+      oninput="renderProducts()">
+
+    <select id="sortSelect" onchange="renderProducts()">
+      <option value="default">Sort Products</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="name">Name: A to Z</option>
+    </select>
+  </div>
+
+  <div class="categories" id="categories"></div>
+
+  <h2 class="sectionTitle">✦ EXPLORE OUR COLLECTION ✦</h2>
+
+  <main class="products" id="products"></main>
+
+  <section class="cartPanel" id="cartSection">
+    <h2>🛒 YOUR SHOPPING CART</h2>
+    <div id="cartItems">
+      <p style="color:#aaa;font-size:13px">Your cart is empty.</p>
+    </div>
+    <div class="cartTotal" id="cartTotal">Total: Rs. 0</div>
+    <button class="checkout" onclick="checkoutWhatsApp()">
+      ORDER ON WHATSAPP
+    </button>
+  </section>
+
+  <footer>
+    AS TOLD BY CHATGPT
+    <br>
+    <strong>🐍 COBRA STORE</strong>
+    <br>
+    WEBSITE BY <strong>THE COBRA DEVELOPERS</strong>
+  </footer>
+
+</div>
+
+<!-- PRODUCT DETAILS -->
+<div id="productModal" onclick="closeModalOutside(event)">
+  <div class="modalBox">
+    <button class="closeModal" onclick="closeModal()">✕</button>
+    <img id="modalImage" src="" alt="Product">
+    <div class="modalContent">
+      <h2 id="modalName"></h2>
+      <div class="price" id="modalPrice"></div>
+      <p id="modalDescription"></p>
+      <button class="checkout" id="modalAdd">ADD TO CART</button>
     </div>
   </div>
 </div>
 
-<header>
-  <div class="brand">🐍 COBRA <span>STORE</span></div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#cart">Cart 🛒 <span id="cartCount">0</span></a>
-  </nav>
-</header>
-
-<section class="hero" id="home">
-  <div>
-    <div class="cobra">🐍</div>
-    <h1>ENTER THE COBRA WORLD</h1>
-    <p>Discover premium products, amazing styles and a powerful shopping experience. Welcome to COBRA STORE.</p>
-    <button class="goldbtn" onclick="document.querySelector('#shop').scrollIntoView({behavior:'smooth'})">EXPLORE PRODUCTS</button>
-  </div>
-</section>
-
-<section class="section" id="shop">
-  <h2 class="heading">OUR PREMIUM COLLECTION</h2>
-
-  <div class="tools">
-    <input id="search" placeholder="Search products..." oninput="renderProducts()">
-    <select id="sort" onchange="renderProducts()">
-      <option value="default">Sort Products</option>
-      <option value="low">Price: Low to High</option>
-      <option value="high">Price: High to Low</option>
-    </select>
-  </div>
-
-  <div class="categories">
-    <button class="cat active" onclick="setCategory('All',this)">All</button>
-    <button class="cat" onclick="setCategory('Shoes',this)">Shoes</button>
-    <button class="cat" onclick="setCategory('Watches',this)">Watches</button>
-    <button class="cat" onclick="setCategory('Electronics',this)">Electronics</button>
-    <button class="cat" onclick="setCategory('Fashion',this)">Fashion</button>
-    <button class="cat" onclick="setCategory('Accessories',this)">Accessories</button>
-  </div>
-
-  <div class="grid" id="productGrid"></div>
-
-  <div class="cartBox" id="cart">
-    <h2 style="color:#e6bd65;margin-bottom:12px">YOUR SHOPPING CART 🛒</h2>
-    <div id="cartItems">Your cart is empty.</div>
-    <h3 style="margin-top:15px">Total: Rs. <span id="total">0</span></h3>
-    <button class="goldbtn" style="margin-top:15px" onclick="checkout()">ORDER ON WHATSAPP</button>
-  </div>
-</section>
-
-<div class="modal" id="productModal" onclick="if(event.target===this)closeModal()">
-  <div class="modalbox">
-    <button class="close" onclick="closeModal()">×</button>
-    <img id="modalImg" src="" alt="Product">
-    <h2 id="modalName" style="color:#e8c36c;margin-top:15px"></h2>
-    <p id="modalDesc" style="color:#ddd;margin:12px 0"></p>
-    <h3 id="modalPrice" style="color:#e9bd5d"></h3>
-    <button class="goldbtn" style="width:100%;margin-top:15px" id="modalAdd">ADD TO CART</button>
-  </div>
-</div>
-
-<footer>
-  <h2 style="color:#d9a83b">COBRA STORE</h2>
-  <p style="margin-top:10px">A project by THE COBRA DEVELOPERS</p>
-  <p style="margin-top:8px">UNLEASH THE POWER OF SHOPPING</p>
-</footer>
-
 <script>
+/* INTRO CONTROL */
+const intro = document.getElementById("intro");
+const video = document.getElementById("cobraVideo");
+let introClosed = false;
+
+function openStore(){
+  if(introClosed) return;
+  introClosed = true;
+  intro.style.opacity = "0";
+
+  setTimeout(()=>{
+    intro.style.display = "none";
+    document.getElementById("store").style.display = "block";
+    window.scrollTo(0,0);
+  },800);
+}
+
+/* When video finishes, open the store */
+video.addEventListener("ended",openStore);
+
+/* If video cannot load, allow the user to enter with Skip */
+video.addEventListener("error",()=>{
+  console.log("Intro video could not be loaded. Check the video filename.");
+});
+
+/* Try autoplay */
+video.play().catch(()=>{
+  console.log("Browser requires a user interaction to play the intro video.");
+});
+
+/* PRODUCT DATA
+   These are demo products. Replace them with your real products and prices.
+*/
 const products = [
- {id:1,name:"Premium Sport Sneakers",category:"Shoes",price:2500,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700",desc:"Stylish sneakers for everyday comfort."},
- {id:2,name:"Luxury Wrist Watch",category:"Watches",price:3200,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700",desc:"A premium look for every occasion."},
- {id:3,name:"Wireless Headphones",category:"Electronics",price:2800,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700",desc:"Enjoy your favourite music."},
- {id:4,name:"Classic Leather Bag",category:"Fashion",price:3500,img:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700",desc:"Elegant everyday fashion bag."},
- {id:5,name:"Modern Sunglasses",category:"Accessories",price:1200,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=700",desc:"A bold and stylish look."},
- {id:6,name:"Smartphone",category:"Electronics",price:18000,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=700",desc:"Modern smartphone design."}
+  {
+    id:1,
+    name:"Premium Men's Shoes",
+    category:"Shoes",
+    price:2499,
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700",
+    description:"Stylish everyday footwear with a modern premium look."
+  },
+  {
+    id:2,
+    name:"Luxury Wrist Watch",
+    category:"Watches",
+    price:1899,
+    image:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=700",
+    description:"A classic watch style for everyday and special occasions."
+  },
+  {
+    id:3,
+    name:"Wireless Headphones",
+    category:"Technology",
+    price:2999,
+    image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700",
+    description:"Modern headphones for music, entertainment and daily use."
+  },
+  {
+    id:4,
+    name:"Premium Perfume",
+    category:"Perfumes",
+    price:1599,
+    image:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=700",
+    description:"A stylish fragrance choice for your collection."
+  },
+  {
+    id:5,
+    name:"Fashion Backpack",
+    category:"Bags",
+    price:2199,
+    image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=700",
+    description:"A practical bag with a clean and modern design."
+  },
+  {
+    id:6,
+    name:"Smart Mobile Phone",
+    category:"Technology",
+    price:24999,
+    image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=700",
+    description:"A modern smartphone product showcase."
+  },
+  {
+    id:7,
+    name:"Casual Sneakers",
+    category:"Shoes",
+    price:2799,
+    image:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=700",
+    description:"Comfortable casual sneakers for everyday style."
+  },
+  {
+    id:8,
+    name:"Elegant Ladies Bag",
+    category:"Bags",
+    price:3299,
+    image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=700",
+    description:"A fashionable bag for daily use and occasions."
+  }
 ];
 
-let category="All",cart=[],selected=null;
+let selectedCategory = "All";
+let cart = [];
 
-function setCategory(c,btn){
- category=c;
- document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));
- btn.classList.add('active');
- renderProducts();
+const categories = [
+  "All",
+  "Shoes",
+  "Watches",
+  "Technology",
+  "Perfumes",
+  "Bags"
+];
+
+/* CATEGORY BUTTONS */
+function renderCategories(){
+  const area = document.getElementById("categories");
+
+  area.innerHTML = categories.map(category=>`
+    <button
+      class="catBtn ${selectedCategory===category?"active":""}"
+      onclick="selectCategory('${category}')">
+      ${category}
+    </button>
+  `).join("");
 }
 
+function selectCategory(category){
+  selectedCategory = category;
+  renderCategories();
+  renderProducts();
+}
+
+/* PRODUCT DISPLAY */
 function renderProducts(){
- let q=document.getElementById('search').value.toLowerCase();
- let list=products.filter(p=>(category==="All"||p.category===category)&&p.name.toLowerCase().includes(q));
- let sort=document.getElementById('sort').value;
- if(sort==="low")list.sort((a,b)=>a.price-b.price);
- if(sort==="high")list.sort((a,b)=>b.price-a.price);
+  const search = document.getElementById("searchInput").value
+    .toLowerCase().trim();
 
- document.getElementById('productGrid').innerHTML=list.map(p=>`
- <div class="card">
- <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/600x400/17130d/d9a83b?text=COBRA+STORE'">
- <div class="cardbody">
- <h3>${p.name}</h3>
- <p style="color:#aaa">${p.category}</p>
- <div class="price">Rs. ${p.price.toLocaleString('en-PK')}</div>
- <button class="goldbtn" onclick="showProduct(${p.id})">VIEW PRODUCT</button>
- <button class="cat" style="width:100%" onclick="addCart(${p.id})">ADD TO CART +</button>
- </div></div>`).join('');
+  const sort = document.getElementById("sortSelect").value;
+
+  let list = products.filter(product=>{
+    const matchesCategory =
+      selectedCategory==="All" ||
+      product.category===selectedCategory;
+
+    const matchesSearch =
+      product.name.toLowerCase().includes(search) ||
+      product.category.toLowerCase().includes(search);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  if(sort==="low") list.sort((a,b)=>a.price-b.price);
+  if(sort==="high") list.sort((a,b)=>b.price-a.price);
+  if(sort==="name") list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  const area = document.getElementById("products");
+
+  if(!list.length){
+    area.innerHTML = `<div class="empty">No products found.</div>`;
+    return;
+  }
+
+  area.innerHTML = list.map(product=>`
+    <article class="product">
+      <img
+        src="${product.image}"
+        alt="${product.name}"
+        loading="lazy"
+        onerror="this.src='https://placehold.co/600x400/171717/d6ad55?text=COBRA+STORE'">
+
+      <div class="productInfo">
+        <div class="category">${product.category}</div>
+        <h3>${product.name}</h3>
+        <div class="price">Rs. ${product.price.toLocaleString("en-PK")}</div>
+
+        <div class="productButtons">
+          <button class="viewBtn" onclick="showDetails(${product.id})">
+            DETAILS
+          </button>
+          <button class="addBtn" onclick="addToCart(${product.id})">
+            ADD +
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join("");
 }
 
-function showProduct(id){
- let p=products.find(x=>x.id===id);selected=id;
- document.getElementById('modalImg').src=p.img;
- document.getElementById('modalName').textContent=p.name;
- document.getElementById('modalDesc').textContent=p.desc;
- document.getElementById('modalPrice').textContent="Rs. "+p.price.toLocaleString('en-PK');
- document.getElementById('modalAdd').onclick=()=>{addCart(id);closeModal()};
- document.getElementById('productModal').style.display='flex';
+/* CART FUNCTIONS */
+function addToCart(id){
+  const product = products.find(item=>item.id===id);
+  const existing = cart.find(item=>item.id===id);
+
+  if(existing){
+    existing.quantity++;
+  }else{
+    cart.push({...product,quantity:1});
+  }
+
+  renderCart();
 }
 
-function closeModal(){
- document.getElementById('productModal').style.display='none';
-}
-
-function addCart(id){
- let p=products.find(x=>x.id===id);
- cart.push(p);
- renderCart();
-}
-
-function removeCart(i){
- cart.splice(i,1);
- renderCart();
+function removeFromCart(id){
+  cart = cart.filter(item=>item.id!==id);
+  renderCart();
 }
 
 function renderCart(){
- document.getElementById('cartCount').textContent=cart.length;
- document.getElementById('total').textContent=cart.reduce((s,p)=>s+p.price,0).toLocaleString('en-PK');
- document.getElementById('cartItems').innerHTML=cart.length?cart.map((p,i)=>`
- <div class="cartLine">
- <span>${p.name} — Rs. ${p.price.toLocaleString('en-PK')}</span>
- <button onclick="removeCart(${i})" style="background:none;color:#e8bc60;border:0">Remove ✕</button>
- </div>`).join(''):"Your cart is empty.";
+  const area = document.getElementById("cartItems");
+  const count = cart.reduce((sum,item)=>sum+item.quantity,0);
+  const total = cart.reduce(
+    (sum,item)=>sum+(item.price*item.quantity),0
+  );
+
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartTotal").textContent =
+    "Total: Rs. " + total.toLocaleString("en-PK");
+
+  if(cart.length===0){
+    area.innerHTML =
+      `<p style="color:#aaa;font-size:13px">Your cart is empty.</p>`;
+    return;
+  }
+
+  area.innerHTML = cart.map(item=>`
+    <div class="cartItem">
+      <span>
+        ${item.name} × ${item.quantity}
+        <br>
+        <small style="color:#c4a96b">
+          Rs. ${(item.price*item.quantity).toLocaleString("en-PK")}
+        </small>
+      </span>
+      <button class="removeBtn" onclick="removeFromCart(${item.id})">
+        REMOVE
+      </button>
+    </div>
+  `).join("");
 }
 
-function checkout(){
- if(!cart.length){alert("Please add a product first.");return}
- let lines=cart.map(p=>p.name+" - Rs. "+p.price).join("\n");
- let total=cart.reduce((s,p)=>s+p.price,0);
- let message="Assalamualaikum! I want to order from COBRA STORE:\n"+lines+"\nTotal: Rs. "+total;
- window.open("https://wa.me/923432752543?text="+encodeURIComponent(message),"_blank");
+function goToCart(){
+  document.getElementById("cartSection").scrollIntoView({
+    behavior:"smooth"
+  });
 }
 
-function openStore(){
- const intro=document.getElementById('intro');
- if(intro.style.display==='none')return;
- intro.style.opacity='0';
- setTimeout(()=>intro.style.display='none',700);
+/* WHATSAPP CHECKOUT */
+function checkoutWhatsApp(){
+  if(cart.length===0){
+    alert("Please add a product to your cart first.");
+    return;
+  }
+
+  const total = cart.reduce(
+    (sum,item)=>sum+(item.price*item.quantity),0
+  );
+
+  let message = "Assalam-o-Alaikum! I want to order from COBRA STORE:%0A%0A";
+
+  cart.forEach(item=>{
+    message +=
+      "• "+encodeURIComponent(item.name)+
+      " x "+item.quantity+
+      " — Rs. "+item.price*item.quantity+
+      "%0A";
+  });
+
+  message +=
+    "%0ATotal: Rs. "+total+
+    "%0A%0AKindly share order details.";
+
+  window.open(
+    "https://wa.me/923432752543?text="+message,
+    "_blank"
+  );
 }
 
-function toggleSound(){
- const video=document.getElementById('cobraVideo');
- const btn=document.getElementById('soundBtn');
- video.muted=!video.muted;
- if(!video.muted){
-   video.volume=1;
-   video.play().catch(()=>{});
-   btn.textContent="🔊 SOUND ON";
- }else{
-   btn.textContent="🔇 SOUND OFF";
- }
+/* PRODUCT DETAILS MODAL */
+function showDetails(id){
+  const product = products.find(item=>item.id===id);
+
+  document.getElementById("modalImage").src = product.image;
+  document.getElementById("modalName").textContent = product.name;
+  document.getElementById("modalPrice").textContent =
+    "Rs. "+product.price.toLocaleString("en-PK");
+  document.getElementById("modalDescription").textContent =
+    product.description;
+
+  document.getElementById("modalAdd").onclick = ()=>{
+    addToCart(id);
+    closeModal();
+  };
+
+  document.getElementById("productModal").style.display = "flex";
 }
 
-const video=document.getElementById('cobraVideo');
-video.addEventListener('ended',openStore);
-video.addEventListener('error',()=>{
- video.style.display='none';
- document.getElementById('videoFallback').style.display='flex';
-});
-video.play().catch(()=>{});
+function closeModal(){
+  document.getElementById("productModal").style.display = "none";
+}
 
+function closeModalOutside(event){
+  if(event.target.id==="productModal") closeModal();
+}
+
+/* INITIAL LOAD */
+renderCategories();
 renderProducts();
 renderCart();
 </script>
+
 </body>
 </html>
