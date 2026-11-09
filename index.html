@@ -69,10 +69,12 @@ button{cursor:pointer}
  from{transform:translateX(-100px);opacity:0}
  to{transform:translateX(0);opacity:1}
 }
+
+/* SKIP INTRO: separate from brand and slogan */
 .skip-intro{
- position:absolute;right:18px;top:22px;z-index:4;
+ position:absolute;right:18px;top:22px;z-index:6;
  border:1px solid #e5bd69;
- color:#ffe5a0;background:rgba(0,0,0,.72);
+ color:#ffe5a0;background:rgba(0,0,0,.88);
  padding:10px 16px;border-radius:30px;
  font-size:11px;font-weight:800;letter-spacing:1.5px;
  animation:skipIn 1.3s ease,skipGlow 2s infinite alternate;
@@ -85,35 +87,40 @@ button{cursor:pointer}
  from{box-shadow:0 0 4px #d6ad55}
  to{box-shadow:0 0 17px #d6ad55}
 }
-.intro-bottom{
- position:absolute;bottom:18px;left:0;right:0;
- text-align:center;color:#fff;font-size:9px;
- letter-spacing:3px;opacity:.8;pointer-events:none;
+
+/* Intro credits */
+.intro-credits{
+ position:absolute;bottom:57px;left:8px;right:8px;
+ z-index:5;text-align:center;
+ color:#ffe5a0;font-size:8px;
+ line-height:1.9;letter-spacing:1px;
+ text-shadow:0 1px 6px #000;
+ pointer-events:none;
 }
+
+/* Full-width opaque bottom strip to cover video watermark */
+.intro-bottom{
+ position:absolute;bottom:0;left:0;right:0;
+ width:100%;min-height:46px;
+ z-index:5;
+ display:flex;align-items:center;justify-content:center;
+ padding:12px 8px;
+ text-align:center;
+ color:#ffe5a0;
+ background:rgba(0,0,0,.99);
+ border-top:1px solid #b88c3d;
+ font-family:Orbitron,sans-serif;
+ font-size:clamp(8px,2.5vw,12px);
+ font-weight:800;letter-spacing:1.5px;
+ text-shadow:0 0 10px #d6ad55;
+ pointer-events:none;
+}
+
 #intro.hide{
  animation:introOut .9s forwards;
 }
 @keyframes introOut{
  to{opacity:0;visibility:hidden;transform:scale(1.04)}
-}
-
-/* COBRA CORNER ANIMATION */
-.corner-cobra{
- position:fixed;z-index:100;
- right:12px;bottom:16px;
- width:54px;height:65px;
- display:flex;align-items:center;justify-content:center;
- pointer-events:none;
- animation:cobraFloat 2.4s ease-in-out infinite;
- filter:drop-shadow(0 0 9px #d6ad55);
-}
-.corner-cobra span{
- font-size:45px;
- transform:rotate(-13deg);
-}
-@keyframes cobraFloat{
- 0%,100%{transform:translateY(0) rotate(-3deg)}
- 50%{transform:translateY(-9px) rotate(3deg)}
 }
 
 /* HEADER */
@@ -313,6 +320,7 @@ header{
 .empty{
  grid-column:1/-1;text-align:center;color:#aaa;
  padding:45px 10px;border:1px dashed #55421e;border-radius:14px;
+ line-height:1.9;
 }
 
 /* PRODUCT MODAL */
@@ -379,7 +387,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 .footer-contact{color:#e7c77f;font-size:11px;margin:12px}
 .credits{
  border-top:1px solid #282116;margin:20px auto 0;padding-top:13px;
- color:#a58a57;font-size:8px;letter-spacing:.5px;
+ color:#a58a57;font-size:8px;letter-spacing:.5px;line-height:2;
 }
 .toast{
  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
@@ -412,6 +420,11 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  .product-info{padding:10px}
  .product-info h3{font-size:11px}
  .product-buttons button{font-size:8px}
+ .intro-brand{top:16px;left:10px}
+ .skip-intro{top:16px;right:10px;padding:9px 12px}
+ .intro-brand small{font-size:7px;letter-spacing:2px}
+ .intro-credits{font-size:7px;bottom:53px}
+ .intro-bottom{min-height:43px;font-size:8px}
 }
 </style>
 </head>
@@ -420,9 +433,10 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 
 <!-- INTRO VIDEO -->
 <div id="intro">
- <video id="introVideo" autoplay playsinline preload="auto">
+ <video id="introVideo" autoplay muted playsinline preload="auto">
   <source src="YTShort_09Nov2026_19_11_21.mp4" type="video/mp4">
  </video>
+
  <div class="intro-shade"></div>
 
  <div class="intro-brand">
@@ -431,16 +445,19 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  </div>
 
  <button class="skip-intro" id="skipIntro">SKIP INTRO ✦</button>
- <div class="intro-bottom">WELCOME TO THE WORLD OF COBRA STORE</div>
+
+ <div class="intro-credits">
+  OWNED &amp; MANAGED BY AQIB JAVED<br>
+  DEVELOPED BY THE COBRA DEVELOPERS
+ </div>
+
+ <div class="intro-bottom">
+  WELCOME TO THE WORLD OF COBRA STORE
+ </div>
 </div>
 
 <!-- BACKGROUND MUSIC -->
 <audio id="backgroundMusic" src="cobra-music.mp3" loop preload="none"></audio>
-
-<!-- CORNER COBRA -->
-<div class="corner-cobra" title="COBRA STORE">
- <span>🐍</span>
-</div>
 
 <!-- HEADER -->
 <header>
@@ -458,7 +475,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
   </nav>
 
   <div class="header-actions">
-   <button class="outline-btn" id="cartOpen">🛒 CART (<span id="cartCount">0</span>)</button>
+   <button class="outline-btn" id="cartOpen">CART (<span id="cartCount">0</span>)</button>
   </div>
  </div>
 </header>
@@ -605,7 +622,8 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
 
  <div class="credits">
-  OWNED &amp; MANAGED BY AQIB JAVED / DEVELOPED BY THE COBRA DEVELOPERS
+  OWNED &amp; MANAGED BY AQIB JAVED<br>
+  DEVELOPED BY THE COBRA DEVELOPERS
  </div>
 </footer>
 
@@ -613,7 +631,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <div class="modal" id="productModal" onclick="closeModalOutside(event)">
  <div class="modal-box">
   <button class="close" onclick="closeModal()">×</button>
-  <div class="modal-icon" id="modalIcon">👟</div>
+  <div class="modal-icon" id="modalIcon"></div>
   <div class="product-tag" id="modalCategory"></div>
   <h3 id="modalName"></h3>
   <p id="modalDescription"></p>
@@ -640,48 +658,12 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <div class="toast" id="toast"></div>
 
 <script>
-/* STORE PRODUCTS
-   These are the original demo products.
-   Add your actual product details here when ready.
+/*
+  PRODUCT LIST
+  Demo products have been removed.
+  Add your real products here when you are ready.
 */
-const products = [
- {
-  id:1,name:"Premium Sport Sneakers",
-  category:"boys-shoes",label:"BOYS SHOES",
-  price:2500,icon:"👟",
-  description:"Premium sporty sneakers with a stylish everyday look."
- },
- {
-  id:2,name:"Luxury Wrist Watch",
-  category:"boys-watches",label:"BOYS WATCHES",
-  price:3200,icon:"⌚",
-  description:"Elegant wristwatch for a premium everyday style."
- },
- {
-  id:3,name:"Wireless Headphones",
-  category:"electronics",label:"ELECTRONICS",
-  price:2800,icon:"🎧",
-  description:"Wireless headphones for music and everyday use."
- },
- {
-  id:4,name:"Classic Leather Bag",
-  category:"fashion",label:"FASHION",
-  price:3500,icon:"👜",
-  description:"A stylish bag for everyday use and fashion."
- },
- {
-  id:5,name:"Modern Sunglasses",
-  category:"mobile-accessories",label:"MOBILE ACCESSORIES",
-  price:1200,icon:"🕶️",
-  description:"Modern stylish accessories for your collection."
- },
- {
-  id:6,name:"Smartphone",
-  category:"electronics",label:"ELECTRONICS",
-  price:18000,icon:"📱",
-  description:"Modern smartphone product listing."
- }
-];
+const products = [];
 
 const WHATSAPP_NUMBER = "923432752543";
 let selectedCategory = "all";
@@ -752,6 +734,7 @@ function categoryName(category){
 function renderProducts(){
  const grid=$("productGrid");
  const query=$("searchInput").value.toLowerCase().trim();
+
  let list=products.filter(p=>{
   const categoryMatch=selectedCategory==="all" || p.category===selectedCategory;
   const searchMatch=(p.name+" "+p.label+" "+p.description).toLowerCase().includes(query);
@@ -764,15 +747,15 @@ function renderProducts(){
  if(sort==="az") list.sort((a,b)=>a.name.localeCompare(b.name));
 
  if(!list.length){
-  grid.innerHTML='<div class="empty">No products available in this category yet.<br><br>New products will be added soon.</div>';
+  grid.innerHTML='<div class="empty">No products added yet.<br><br>Real products will appear here when added to the store.</div>';
   return;
  }
 
  grid.innerHTML=list.map(p=>`
   <article class="product-card">
-   <div class="product-image">${p.icon}</div>
+   <div class="product-image">${escapeHTML(p.icon || "")}</div>
    <div class="product-info">
-    <div class="product-tag">${p.label}</div>
+    <div class="product-tag">${escapeHTML(p.label)}</div>
     <h3>${escapeHTML(p.name)}</h3>
     <div class="product-price">${money(p.price)}</div>
     <div class="product-note">Contact us for availability and details.</div>
@@ -794,7 +777,7 @@ function escapeHTML(value){
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);
  if(!currentProduct)return;
- $("modalIcon").textContent=currentProduct.icon;
+ $("modalIcon").textContent=currentProduct.icon || "";
  $("modalCategory").textContent=currentProduct.label;
  $("modalName").textContent=currentProduct.name;
  $("modalDescription").textContent=currentProduct.description;
@@ -880,7 +863,7 @@ $("cartClose").addEventListener("click",()=>$("cartPanel").classList.remove("ope
 $("searchInput").addEventListener("input",renderProducts);
 $("sortSelect").addEventListener("change",renderProducts);
 
-/* INTRO VIDEO: play to end, then reveal store */
+/* INTRO VIDEO */
 const intro=$("intro");
 const introVideo=$("introVideo");
 let introFinished=false;
@@ -903,7 +886,6 @@ introVideo.addEventListener("error",()=>{
  finishIntro();
 });
 
-/* Try autoplay. Some mobile browsers require a user gesture for video sound. */
 const videoPlay=introVideo.play();
 if(videoPlay && typeof videoPlay.catch==="function"){
  videoPlay.catch(()=>{
@@ -912,16 +894,17 @@ if(videoPlay && typeof videoPlay.catch==="function"){
  });
 }
 
-/* BACKGROUND MUSIC
-   First page tap attempts to start music.
-   Next page taps toggle music on/off.
-   No speaker button is displayed.
-*/
+/* BACKGROUND MUSIC */
 const music=$("backgroundMusic");
 let musicStarted=false;
 
 document.addEventListener("click",async function(event){
  if(event.target.closest("#skipIntro"))return;
+ if(event.target.closest("button") ||
+    event.target.closest("a") ||
+    event.target.closest("input") ||
+    event.target.closest("select")) return;
+
  try{
   if(!musicStarted){
    await music.play();
