@@ -23,7 +23,7 @@
 html{scroll-behavior:smooth}
 body{
  background:
- linear-gradient(rgba(0,0,0,.87),rgba(0,0,0,.91)),
+ linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.68)),
  url("IMG-20261109-WA0834(1).jpg") center center / cover fixed;
  background-color:var(--black);
  color:var(--white);
@@ -35,7 +35,7 @@ button{cursor:pointer}
 .gold{color:var(--gold2)}
 .hidden{display:none!important}
 
-/* INTRO */
+/* INTRO - ORIGINAL CODE UNCHANGED */
 #intro{
  position:fixed;inset:0;z-index:9999;
  background:#000;
@@ -129,7 +129,7 @@ button{cursor:pointer}
 /* HEADER */
 header{
  position:sticky;top:0;z-index:90;
- background:rgba(7,7,7,.95);
+ background:rgba(7,7,7,.88);
  border-bottom:1px solid rgba(214,173,85,.35);
  backdrop-filter:blur(15px);
 }
@@ -139,18 +139,38 @@ header{
  gap:12px;flex-wrap:wrap;
 }
 
-/* REAL LOGO */
+/* GOLDEN CIRCULAR HEADER LOGO */
 .logo{
+ width:65px;
+ height:65px;
+ margin:auto;
  display:flex;
  align-items:center;
  justify-content:center;
+ overflow:hidden;
+ border-radius:50%;
+ border:2px solid #e5bd69;
+ background:rgba(0,0,0,.25);
+ box-shadow:
+ 0 0 7px rgba(214,173,85,.65),
+ 0 0 17px rgba(214,173,85,.38),
+ inset 0 0 9px rgba(214,173,85,.20);
+ animation:logoGlow 2.5s ease-in-out infinite alternate;
 }
 .logo img{
- width:65px;
- height:65px;
+ width:100%;
+ height:100%;
  object-fit:contain;
  display:block;
- filter:drop-shadow(0 0 9px rgba(214,173,85,.45));
+ border-radius:50%;
+}
+@keyframes logoGlow{
+ from{
+  box-shadow:0 0 6px rgba(214,173,85,.45),0 0 12px rgba(214,173,85,.20);
+ }
+ to{
+  box-shadow:0 0 11px rgba(255,220,140,.85),0 0 25px rgba(214,173,85,.55);
+ }
 }
 
 .logo-sub{
@@ -213,8 +233,10 @@ header{
  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
 }
 .benefit{
- border:1px solid #332817;background:linear-gradient(145deg,#17130c,#0d0d0d);
+ border:1px solid #5a4524;
+ background:linear-gradient(145deg,rgba(35,27,15,.84),rgba(10,10,10,.78));
  border-radius:13px;padding:17px 8px;text-align:center;
+ backdrop-filter:blur(5px);
 }
 .benefit strong{display:block;color:var(--gold2);font-size:12px}
 .benefit span{display:block;color:#aaa;font-size:9px;margin-top:6px}
@@ -239,10 +261,11 @@ header{
 }
 .category-card{
  position:relative;overflow:hidden;
- background:linear-gradient(145deg,#191919,#090909);
+ background:linear-gradient(145deg,rgba(25,25,25,.86),rgba(9,9,9,.80));
  border:1px solid #44351c;border-radius:17px;
  padding:9px;text-align:center;cursor:pointer;
  transition:transform .3s,border-color .3s,box-shadow .3s;
+ backdrop-filter:blur(5px);
 }
 .category-card:hover,.category-card.active{
  transform:translateY(-5px);
@@ -270,7 +293,7 @@ header{
 }
 .category-card small{display:block;color:#999;font-size:8px;margin-top:4px}
 .category-card.all-card{
- background:linear-gradient(145deg,#32230e,#0a0907);
+ background:linear-gradient(145deg,rgba(50,35,14,.88),rgba(10,9,7,.82));
 }
 
 /* PRODUCTS TOOLS */
@@ -281,8 +304,9 @@ header{
 }
 .search-box{
  flex:1;min-width:190px;display:flex;
- background:#141414;border:1px solid #51401f;
+ background:rgba(20,20,20,.88);border:1px solid #51401f;
  border-radius:25px;overflow:hidden;
+ backdrop-filter:blur(5px);
 }
 .search-box input{
  width:100%;background:transparent;border:0;outline:0;
@@ -290,7 +314,7 @@ header{
 }
 .search-box input::placeholder{color:#888}
 .tools select{
- background:#141414;color:#e9d39d;
+ background:rgba(20,20,20,.92);color:#e9d39d;
  border:1px solid #51401f;border-radius:25px;
  padding:11px 14px;font-size:11px;outline:0;
 }
@@ -305,9 +329,10 @@ header{
  gap:16px;
 }
 .product-card{
- background:linear-gradient(150deg,#191919,#0d0d0d);
+ background:linear-gradient(150deg,rgba(25,25,25,.90),rgba(13,13,13,.86));
  border:1px solid #332919;border-radius:16px;
  overflow:hidden;transition:.3s;
+ backdrop-filter:blur(5px);
 }
 .product-card:hover{
  transform:translateY(-4px);
@@ -315,7 +340,7 @@ header{
  box-shadow:0 8px 25px rgba(214,173,85,.12);
 }
 .product-image{
- height:180px;background:radial-gradient(circle,#292015,#111);
+ height:180px;background:radial-gradient(circle,rgba(41,32,21,.88),rgba(17,17,17,.85));
  display:flex;align-items:center;justify-content:center;
  font-size:65px;color:#d6ad55;
 }
@@ -329,9 +354,10 @@ header{
 .product-buttons{display:flex;gap:7px}
 .product-buttons button{flex:1;padding:9px 5px;font-size:9px}
 .empty{
- grid-column:1/-1;text-align:center;color:#aaa;
- padding:45px 10px;border:1px dashed #55421e;border-radius:14px;
- line-height:1.9;
+ grid-column:1/-1;text-align:center;color:#ddd;
+ padding:45px 10px;border:1px dashed #806332;border-radius:14px;
+ line-height:1.9;background:rgba(0,0,0,.65);
+ backdrop-filter:blur(5px);
 }
 
 /* PRODUCT MODAL */
@@ -388,18 +414,34 @@ header{
 footer{
  border-top:1px solid #4a391e;
  margin-top:50px;padding:35px 18px 17px;
- text-align:center;background:#090909;
+ text-align:center;background:rgba(9,9,9,.87);
+ backdrop-filter:blur(8px);
 }
+
+/* GOLDEN CIRCULAR FOOTER LOGO */
 .footer-logo{
+ width:85px;
+ height:85px;
+ margin:0 auto;
  display:flex;
  align-items:center;
  justify-content:center;
+ overflow:hidden;
+ border-radius:50%;
+ border:2px solid #e5bd69;
+ background:rgba(0,0,0,.25);
+ box-shadow:
+ 0 0 8px rgba(214,173,85,.65),
+ 0 0 20px rgba(214,173,85,.35),
+ inset 0 0 10px rgba(214,173,85,.20);
+ animation:logoGlow 2.5s ease-in-out infinite alternate;
 }
 .footer-logo img{
- width:85px;
- height:85px;
+ width:100%;
+ height:100%;
  object-fit:contain;
- filter:drop-shadow(0 0 10px rgba(214,173,85,.4));
+ display:block;
+ border-radius:50%;
 }
 footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:500px}
 .footer-contact{color:#e7c77f;font-size:11px;margin:12px}
@@ -443,14 +485,14 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  .intro-brand small{font-size:7px;letter-spacing:2px}
  .intro-credits{font-size:7px;bottom:53px}
  .intro-bottom{min-height:43px;font-size:8px}
- .logo img{width:58px;height:58px}
+ .logo{width:58px;height:58px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO VIDEO -->
+<!-- INTRO VIDEO - ORIGINAL HTML UNCHANGED -->
 <div id="intro">
  <video id="introVideo" autoplay muted playsinline preload="auto">
   <source src="YTShort_09Nov2026_19_11_21.mp4" type="video/mp4">
@@ -886,7 +928,7 @@ $("cartClose").addEventListener("click",()=>$("cartPanel").classList.remove("ope
 $("searchInput").addEventListener("input",renderProducts);
 $("sortSelect").addEventListener("change",renderProducts);
 
-/* INTRO VIDEO */
+/* INTRO VIDEO - ORIGINAL JAVASCRIPT UNCHANGED */
 const intro=$("intro");
 const introVideo=$("introVideo");
 let introFinished=false;
