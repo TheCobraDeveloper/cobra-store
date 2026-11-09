@@ -22,7 +22,10 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
- background:var(--black);
+ background:
+ linear-gradient(rgba(0,0,0,.87),rgba(0,0,0,.91)),
+ url("IMG-20261109-WA0834(1).jpg") center center / cover fixed;
+ background-color:var(--black);
  color:var(--white);
  font-family:Montserrat,Arial,sans-serif;
  overflow-x:hidden;
@@ -70,7 +73,7 @@ button{cursor:pointer}
  to{transform:translateX(0);opacity:1}
 }
 
-/* SKIP INTRO: separate from brand and slogan */
+/* SKIP INTRO */
 .skip-intro{
  position:absolute;right:18px;top:22px;z-index:6;
  border:1px solid #e5bd69;
@@ -98,7 +101,7 @@ button{cursor:pointer}
  pointer-events:none;
 }
 
-/* Full-width opaque bottom strip to cover video watermark */
+/* Intro bottom strip */
 .intro-bottom{
  position:absolute;bottom:0;left:0;right:0;
  width:100%;min-height:46px;
@@ -135,13 +138,21 @@ header{
  display:flex;align-items:center;justify-content:space-between;
  gap:12px;flex-wrap:wrap;
 }
+
+/* REAL LOGO */
 .logo{
- font-family:Orbitron,sans-serif;
- font-size:clamp(18px,4vw,26px);
- font-weight:800;letter-spacing:2px;
- color:var(--gold2);
- text-shadow:0 0 12px rgba(214,173,85,.5);
+ display:flex;
+ align-items:center;
+ justify-content:center;
 }
+.logo img{
+ width:65px;
+ height:65px;
+ object-fit:contain;
+ display:block;
+ filter:drop-shadow(0 0 9px rgba(214,173,85,.45));
+}
+
 .logo-sub{
  font-size:8px;letter-spacing:4px;color:#aaa;
  text-align:center;margin-top:4px;
@@ -380,8 +391,15 @@ footer{
  text-align:center;background:#090909;
 }
 .footer-logo{
- font-family:Orbitron,sans-serif;color:var(--gold2);
- font-size:24px;letter-spacing:3px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+.footer-logo img{
+ width:85px;
+ height:85px;
+ object-fit:contain;
+ filter:drop-shadow(0 0 10px rgba(214,173,85,.4));
 }
 footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:500px}
 .footer-contact{color:#e7c77f;font-size:11px;margin:12px}
@@ -425,6 +443,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  .intro-brand small{font-size:7px;letter-spacing:2px}
  .intro-credits{font-size:7px;bottom:53px}
  .intro-bottom{min-height:43px;font-size:8px}
+ .logo img{width:58px;height:58px}
 }
 </style>
 </head>
@@ -463,7 +482,9 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <header>
  <div class="header-inner">
   <div>
-   <div class="logo">COBRA STORE</div>
+   <div class="logo">
+    <img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo">
+   </div>
    <div class="logo-sub">STYLE • QUALITY • TRUST</div>
   </div>
 
@@ -611,7 +632,9 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 
 <!-- CONTACT -->
 <footer id="contact">
- <div class="footer-logo">COBRA STORE</div>
+ <div class="footer-logo">
+  <img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo">
+ </div>
  <p>
   Your destination for shoes, watches, fashion, electronics
   and selected lifestyle products.
