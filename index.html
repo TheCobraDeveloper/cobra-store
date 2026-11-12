@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,6 +96,10 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .product-image{height:270px;background:#f5efec;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .product-image img{width:100%;height:100%;object-fit:contain;transition:.4s}
 .product-card:hover .product-image img{transform:scale(1.05)}
+.product-image img.campaign-logo{position:absolute;top:10px;right:10px;width:44px;height:44px;object-fit:contain;background:#fff;border-radius:8px;padding:3px;z-index:2;box-shadow:0 2px 8px #0003;transition:none}
+.product-card:hover .product-image img.campaign-logo{transform:none}
+.modal-icon{position:relative}
+.modal-icon img.campaign-logo{position:absolute;top:10px;right:10px;width:48px;height:48px;max-width:48px;max-height:48px;object-fit:contain;background:#fff;border-radius:8px;padding:3px;box-shadow:0 2px 8px #0003}
 .sale-badge{position:absolute;top:12px;left:12px;background:var(--coral);color:white;padding:7px 10px;font-size:9px;font-weight:900;z-index:2}
 .product-info{padding:17px}
 .product-tag{color:var(--coral);font-size:8px;letter-spacing:1.3px;font-weight:900}
@@ -217,6 +220,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .benefits{gap:6px}.benefit{padding:13px 5px}.benefit strong{font-size:9px}.benefit span{font-size:8px}
 .category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.category-card{padding:9px 7px 13px}.category-card img{max-width:135px}
 .product-grid{gap:10px}.product-image{height:155px}.product-info{padding:11px}.product-info h3{font-size:11px}.product-price{font-size:14px}
+.product-image img.campaign-logo{width:34px;height:34px;top:8px;right:8px}
 .product-buttons{flex-direction:column}.product-buttons button{font-size:8px}
 .intro-brand{top:16px;left:10px}.skip-intro{top:16px;right:10px;padding:9px 12px}.intro-credits{font-size:7px;bottom:53px}
 .logo{width:52px;height:52px}.section{padding:38px 14px}.tools select{width:100%}
@@ -372,9 +376,11 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <input class="form-input" id="campaignStartDate" type="date" required>
   <label class="form-label">END DATE</label>
   <input class="form-input" id="campaignEndDate" type="date" required>
-  <label class="form-label">CAMPAIGN IMAGE (OPTIONAL)</label>
+  <label class="form-label">CAMPAIGN IMAGE / LOGO — UPLOAD (OPTIONAL)</label>
   <input class="form-input" id="campaignImageFile" type="file" accept="image/*">
-  <div class="status" id="campaignImageStatus">No new campaign image selected. Existing image will remain when editing.</div>
+  <label class="form-label">یا CAMPAIGN IMAGE / LOGO کا لنک (OPTIONAL)</label>
+  <input class="form-input" id="campaignImageUrl" type="url" placeholder="https://example.com/logo.png">
+  <div class="status" id="campaignImageStatus">No new campaign image selected. Existing image will remain when editing. اگر دونوں دیے جائیں تو اپلوڈ کی ہوئی تصویر استعمال ہوگی۔</div>
   <div class="upload-preview" id="campaignImagePreview"></div>
   <label class="size-admin-item" style="display:inline-flex;margin-top:12px">
    <input type="checkbox" id="campaignActive" checked>
@@ -404,8 +410,10 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   </select>
   <label class="form-label">SELLING PRICE (PKR)</label><input class="form-input" id="productPrice" type="number" min="1" step="1" required placeholder="Example: 1599">
   <label class="form-label">SALE DISCOUNT (%)</label><input class="form-input" id="productSale" type="number" min="0" max="90" value="11">
-  <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہو جائیں گی۔</div>
+  <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہو جائیں گی۔ (لنک والا خانہ نیچے موجود ہے)</div>
   <label class="form-label">UPLOAD UP TO 4 PRODUCT IMAGES</label><input class="form-input" id="productImageFiles" type="file" accept="image/*" multiple>
+  <label class="form-label">یا PRODUCT IMAGE کے لنک (ہر لنک نئی لائن میں)</label>
+  <textarea class="form-input" id="productImageLinks" placeholder="https://example.com/photo1.jpg&#10;https://example.com/photo2.jpg"></textarea>
   <div id="imageFileStatus" class="status">No new images selected.</div><div class="upload-preview" id="imagePreview"></div>
   <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔ نئی ویڈیو منتخب نہ کرنے پر موجودہ ویڈیو برقرار رہے گی۔</div>
   <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
@@ -570,6 +578,11 @@ function campaignIsCurrentlyActive(campaign){
  const endDate=new Date(end+"T23:59:59");
  return localToday<=endDate&&localToday>=startDate;
 }
+/* Latest active campaign's image/logo — shown small on every product */
+function activeCampaignLogo(){
+ const active=campaigns.filter(c=>campaignIsCurrentlyActive(c)).sort((a,b)=>campaignDateValue(b.startDate).localeCompare(campaignDateValue(a.startDate)))[0];
+ return active?safeImageURL(active.imageUrl):"";
+}
 function startCampaignsListener(){
  if(!db)return;
  if(unsubscribeCampaigns)unsubscribeCampaigns();
@@ -578,6 +591,8 @@ function startCampaignsListener(){
   campaigns=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
   renderActiveCampaign();
   renderAdminCampaigns();
+  renderProducts();
+  if(currentProduct&&$("productModal").classList.contains("show"))refreshModalCampaignLogo();
  },error=>{
   console.error("Campaign listener:",error);
   $("activeCampaignBanner").classList.add("hidden");
@@ -632,7 +647,8 @@ function resetCampaignForm(){
  $("campaignId").value="";
  $("campaignActive").checked=true;
  $("campaignImageFile").value="";
- $("campaignImageStatus").textContent="No new campaign image selected. Existing image will remain when editing.";
+ $("campaignImageUrl").value="";
+ $("campaignImageStatus").textContent="No new campaign image selected. Existing image will remain when editing. اگر دونوں دیے جائیں تو اپلوڈ کی ہوئی تصویر استعمال ہوگی۔";
  $("campaignImagePreview").innerHTML="";
  $("campaignStatus").textContent="";
  $("saveCampaignButton").textContent="SAVE CAMPAIGN";
@@ -647,7 +663,8 @@ function editCampaign(id){
  $("campaignEndDate").value=campaignDateValue(c.endDate);
  $("campaignActive").checked=c.active===true;
  $("campaignImageFile").value="";
- $("campaignImageStatus").textContent=c.imageUrl?"Existing campaign image will remain unless you select a replacement.":"No existing campaign image.";
+ $("campaignImageUrl").value=(c.imageUrl&&!c.imagePath)?c.imageUrl:"";
+ $("campaignImageStatus").textContent=c.imageUrl?"Existing campaign image will remain unless you select a replacement or enter a new link.":"No existing campaign image.";
  $("campaignImagePreview").innerHTML=safeImageURL(c.imageUrl)?`<img src="${escapeHTML(c.imageUrl)}" alt="Current campaign image">`:"";
  $("campaignStatus").textContent="Editing campaign. Save changes when finished.";
  $("saveCampaignButton").textContent="UPDATE CAMPAIGN";
@@ -666,6 +683,12 @@ $("campaignImageFile").addEventListener("change",()=>{
  const img=document.createElement("img");
  img.src=URL.createObjectURL(file);
  $("campaignImagePreview").appendChild(img);
+});
+$("campaignImageUrl").addEventListener("input",()=>{
+ const url=safeImageURL($("campaignImageUrl").value.trim());
+ if($("campaignImageFile").files[0])return;
+ $("campaignImagePreview").innerHTML=url?`<img src="${escapeHTML(url)}" alt="Linked campaign image">`:"";
+ $("campaignImageStatus").textContent=url?"Image link will be used for this campaign.":"No new campaign image selected.";
 });
 function uploadCampaignImageWithProgress(file,path){
  return new Promise((resolve,reject)=>{
@@ -697,12 +720,15 @@ $("campaignForm").addEventListener("submit",async event=>{
  const endDate=$("campaignEndDate").value;
  const active=$("campaignActive").checked;
  const imageFile=$("campaignImageFile").files[0]||null;
+ const typedLink=$("campaignImageUrl").value.trim();
+ const linkUrl=safeImageURL(typedLink);
  if(!name){$("campaignStatus").textContent="Campaign title is required.";return}
  if(!startDate||!endDate){$("campaignStatus").textContent="Start date and end date are required.";return}
  if(endDate<startDate){$("campaignStatus").textContent="End date cannot be earlier than start date.";return}
  if(imageFile&&(!imageFile.type.startsWith("image/")||imageFile.size>MAX_CAMPAIGN_IMAGE_SIZE)){
   $("campaignStatus").textContent="Campaign image must be an image file of 5 MB or less.";return;
  }
+ if(typedLink&&!linkUrl){$("campaignStatus").textContent="تصویر کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔";return}
  const button=$("saveCampaignButton"),oldButtonText=button.textContent;
  button.disabled=true;button.textContent="SAVING...";
  let newImagePath="";
@@ -718,6 +744,9 @@ $("campaignForm").addEventListener("submit",async event=>{
    newImagePath="campaign-media/"+docRef.id+"/"+Date.now()+"."+ext;
    const uploaded=await uploadCampaignImageWithProgress(imageFile,newImagePath);
    imageUrl=uploaded.url;imagePath=uploaded.path;
+  }else if(linkUrl&&linkUrl!==old.imageUrl){
+   // Use the pasted image link (no upload needed)
+   imageUrl=linkUrl;imagePath="";
   }
   const data={
    name,description,startDate,endDate,active,imageUrl,imagePath,
@@ -727,8 +756,8 @@ $("campaignForm").addEventListener("submit",async event=>{
   if(id)await docRef.update(data);
   else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   saved=true;
-  // Only remove the old file after Firestore confirms the new campaign data is saved.
-  if(imageFile&&old.imagePath&&old.imagePath!==imagePath){
+  // Only remove the old uploaded file after Firestore confirms the new campaign data is saved.
+  if(old.imagePath&&old.imagePath!==imagePath){
    await storage.ref().child(old.imagePath).delete().catch(error=>console.warn("Old campaign image cleanup failed:",error));
   }
   $("campaignStatus").textContent="Campaign saved successfully.";
@@ -793,11 +822,13 @@ function renderProducts(){
  if(sort==="high")list.sort((a,b)=>finalPrice(b)-finalPrice(a));
  if(sort==="az")list.sort((a,b)=>cleanProductName(a.name).localeCompare(cleanProductName(b.name)));
  if(!list.length){grid.innerHTML='<div class="empty">No products found in this section.</div>';return}
+ const campaignLogo=activeCampaignLogo();
+ const logoHTML=campaignLogo?`<img class="campaign-logo" src="${escapeHTML(campaignLogo)}" alt="Campaign">`:"";
  grid.innerHTML=list.map(p=>{
   const images=productImages(p),name=cleanProductName(p.name);
   const imageHTML=images.length?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(name)}" loading="lazy">`:'<span style="font-size:55px;color:#ec6c5a">🐍</span>';
   const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":"");
-  return `<article class="product-card"><div class="product-image"><span class="sale-badge">${salePercent(p)}% OFF</span>${imageHTML}</div>
+  return `<article class="product-card"><div class="product-image"><span class="sale-badge">${salePercent(p)}% OFF</span>${logoHTML}${imageHTML}</div>
    <div class="product-info"><div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div>
    <h3>${escapeHTML(name)}</h3><div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
    <div class="product-note">${mediaNote} • ${escapeHTML(p.stock||"Check availability")}</div>
@@ -860,11 +891,22 @@ function refreshSizeAvailability(){
  renderSizeOptions();
  renderCustomerColors();
 }
+/* Small campaign logo on the product popup image */
+function refreshModalCampaignLogo(){
+ const box=$("modalIcon");if(!box)return;
+ const old=box.querySelector(".campaign-logo");if(old)old.remove();
+ const logo=activeCampaignLogo();
+ if(!logo||!box.querySelector("#mainProductPhoto"))return;
+ const img=document.createElement("img");
+ img.className="campaign-logo";img.src=logo;img.alt="Campaign";
+ box.appendChild(img);
+}
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);if(!currentProduct)return;
  selectedSize="";selectedColor="";
  const p=currentProduct,images=productImages(p),sizes=getProductSizes(p);
  $("modalIcon").innerHTML=images.length?`<img id="mainProductPhoto" src="${escapeHTML(images[0])}" alt="${escapeHTML(cleanProductName(p.name))}">`:"🐍";
+ refreshModalCampaignLogo();
  $("modalGallery").innerHTML=images.map(url=>`<img src="${escapeHTML(url)}" alt="Product photo" onclick="changeMainPhoto('${escapeHTML(url)}')">`).join("");
  const video=$("modalVideo");
  if(p.videoUrl&&safeImageURL(p.videoUrl)){video.src=p.videoUrl;video.classList.remove("hidden")}else{video.pause();video.removeAttribute("src");video.classList.add("hidden")}
@@ -1282,9 +1324,27 @@ function renderSizeAvailabilityEditor(){
 }
 $("productSizes").addEventListener("input",renderSizeAvailabilityEditor);
 
+/* PRODUCT IMAGE LINKS (paste links instead of / in addition to uploading) */
+function getImageLinksFromInput(){
+ return [...new Set($("productImageLinks").value.split(/[\s,]+/).map(x=>x.trim()).filter(Boolean))];
+}
+function renderProductImagePreview(){
+ const preview=$("imagePreview");preview.innerHTML="";
+ [...$("productImageFiles").files].forEach(file=>{const img=document.createElement("img");img.src=URL.createObjectURL(file);preview.appendChild(img)});
+ getImageLinksFromInput().map(safeImageURL).filter(Boolean).forEach(url=>{const img=document.createElement("img");img.src=url;img.alt="Linked product image";preview.appendChild(img)});
+}
+$("productImageLinks").addEventListener("input",()=>{
+ const links=getImageLinksFromInput();
+ const files=$("productImageFiles").files.length;
+ if(!links.length&&!files){$("imageFileStatus").textContent="No new images selected.";}
+ else $("imageFileStatus").textContent=files+" file(s) + "+links.length+" link(s) selected (maximum 4 total).";
+ renderProductImagePreview();
+});
+
 function resetProductForm(){
  $("productForm").reset();$("editProductId").value="";$("productSale").value=DEFAULT_SALE;
  adminUnavailableSizes=[];$("productFormTitle").textContent="ADD NEW PRODUCT";$("saveProductButton").textContent="SAVE PRODUCT";
+ $("productImageLinks").value="";
  $("imageFileStatus").textContent="No new images selected.";$("videoFileStatus").textContent="No new video selected.";
  $("imagePreview").innerHTML="";$("uploadStatus").textContent="";renderSizeAvailabilityEditor();
 }
@@ -1296,8 +1356,8 @@ function editProduct(id){
  $("productSizes").value=Array.isArray(p.sizes)?p.sizes.join(", "):(p.sizes||"");
  adminUnavailableSizes=getUnavailableSizes(p).filter(s=>getProductSizes(p).includes(s));renderSizeAvailabilityEditor();
  $("productStock").value=p.stock||"";$("productDescription").value=p.description||"";$("productDetails").value=p.details||"";
- $("productImageFiles").value="";$("productVideoFile").value="";
- $("imageFileStatus").textContent="Existing photos: "+productImages(p).length+". Select new images only if you want to replace them.";
+ $("productImageFiles").value="";$("productImageLinks").value="";$("productVideoFile").value="";
+ $("imageFileStatus").textContent="Existing photos: "+productImages(p).length+". Select new images or paste new links only if you want to replace them.";
  $("videoFileStatus").textContent=p.videoUrl?"An existing video is saved. Select a new one to replace it.":"No existing video.";
  $("imagePreview").innerHTML=productImages(p).map(url=>`<img src="${escapeHTML(url)}" alt="Current product image">`).join("");
  $("productFormTitle").textContent="EDIT PRODUCT";$("saveProductButton").textContent="UPDATE PRODUCT";
@@ -1305,10 +1365,11 @@ function editProduct(id){
 }
 $("productImageFiles").addEventListener("change",()=>{
  const files=[...$("productImageFiles").files];$("imagePreview").innerHTML="";
- if(files.length>MAX_IMAGES){$("imageFileStatus").textContent="زیادہ سے زیادہ 4 تصاویر منتخب کریں۔";$("productImageFiles").value="";return}
- for(const f of files){if(!f.type.startsWith("image/")||f.size>MAX_IMAGE_SIZE){$("imageFileStatus").textContent="ہر تصویر image format اور 5 MB یا اس سے کم ہونی چاہیے۔";$("productImageFiles").value="";return}}
- $("imageFileStatus").textContent=files.length+" new image(s) selected.";
- files.forEach(file=>{const img=document.createElement("img");img.src=URL.createObjectURL(file);$("imagePreview").appendChild(img)});
+ const links=getImageLinksFromInput();
+ if(files.length+links.length>MAX_IMAGES){$("imageFileStatus").textContent="اپلوڈ اور لنک ملا کر زیادہ سے زیادہ 4 تصاویر۔";$("productImageFiles").value="";renderProductImagePreview();return}
+ for(const f of files){if(!f.type.startsWith("image/")||f.size>MAX_IMAGE_SIZE){$("imageFileStatus").textContent="ہر تصویر image format اور 5 MB یا اس سے کم ہونی چاہیے۔";$("productImageFiles").value="";renderProductImagePreview();return}}
+ $("imageFileStatus").textContent=files.length+" file(s) + "+links.length+" link(s) selected (maximum 4 total).";
+ renderProductImagePreview();
 });
 $("productVideoFile").addEventListener("change",()=>{
  const file=$("productVideoFile").files[0];if(!file){$("videoFileStatus").textContent="No new video selected.";return}
@@ -1335,67 +1396,11 @@ $("productForm").addEventListener("submit",async event=>{
  const unavailableSizes=adminUnavailableSizes.filter(s=>sizes.includes(s));
  const stock=$("productStock").value.trim(),description=$("productDescription").value.trim(),details=$("productDetails").value.trim();
  const imageFiles=[...$("productImageFiles").files],videoFile=$("productVideoFile").files[0]||null,editId=$("editProductId").value;
+ const rawLinks=getImageLinksFromInput();
+ const imageLinks=rawLinks.map(safeImageURL).filter(Boolean);
  if(!name||name.length>100||!Number.isFinite(price)||price<=0){showToast("Enter a valid product name and price.");return}
  if(!Number.isFinite(sale)||sale<0||sale>90){showToast("Sale must be between 0 and 90 percent.");return}
  if(imageFiles.length>MAX_IMAGES||imageFiles.some(f=>!f.type.startsWith("image/")||f.size>MAX_IMAGE_SIZE)){showToast("Maximum 4 images, 5 MB each.");return}
- if(videoFile&&(!["video/mp4","video/webm"].includes(videoFile.type)||videoFile.size>MAX_VIDEO_SIZE)){showToast("Video must be MP4/WebM and maximum 25 MB.");return}
- const button=$("saveProductButton");button.disabled=true;button.textContent="SAVING...";$("uploadStatus").textContent="Saving product details...";
- let productRef=null;
- try{
-  if(editId){
-   productRef=db.collection(COLLECTION_NAME).doc(editId);
-   await productRef.update({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  }else{
-   productRef=db.collection(COLLECTION_NAME).doc();
-   await productRef.set({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,availableColors:[],stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  }
-  const old=(products.find(p=>p.id===productRef.id))||{};
-  let image=old.image||"",extraImages=Array.isArray(old.extraImages)?old.extraImages:[],videoUrl=old.videoUrl||"";
-  let mediaPaths=Array.isArray(old.mediaPaths)?old.mediaPaths:[];
-  if(imageFiles.length){
-   $("uploadStatus").textContent="Uploading product photos...";
-   const oldImagePaths=mediaPaths.filter(p=>p.includes("/images/")),uploaded=[];
-   for(let i=0;i<imageFiles.length;i++)uploaded.push(await uploadFile(imageFiles[i],storagePath(productRef.id,"images",i,imageFiles[i].name)));
-   image=uploaded[0]?.url||"";extraImages=uploaded.slice(1).map(x=>x.url);
-   mediaPaths=[...mediaPaths.filter(p=>!p.includes("/images/")),...uploaded.map(x=>x.path)];
-   await deleteStorageFiles(oldImagePaths);
-  }
-  if(videoFile){
-   $("uploadStatus").textContent="Uploading product video...";
-   const oldVideoPaths=mediaPaths.filter(p=>p.includes("/videos/"));
-   const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"videos",0,videoFile.name));
-   videoUrl=uploadedVideo.url;mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
-   await deleteStorageFiles(oldVideoPaths);
-  }
-  await productRef.update({image,extraImages,videoUrl,mediaPaths,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  $("uploadStatus").textContent="Product and media saved successfully!";
-  showToast(editId?"Product updated successfully!":"New product added successfully!");
-  resetProductForm();
- }catch(error){
-  console.error("Product save/upload error:",error);
-  $("uploadStatus").textContent="Save/upload error: "+getErrorMessage(error)+" If the product was created, check its entry in the Admin Panel before retrying.";
- }finally{button.disabled=false;button.textContent=$("editProductId").value?"UPDATE PRODUCT":"SAVE PRODUCT"}
-});
-async function deleteProduct(id){
- if(!requireAdmin())return;const p=products.find(x=>x.id===id);if(!p)return;
- if(!confirm("Are you sure you want to delete: "+cleanProductName(p.name)+"?"))return;
- try{
-  await db.collection(COLLECTION_NAME).doc(id).delete();
-  await deleteStorageFiles(p.mediaPaths||[]);
-  delete sizeManagerDrafts[id];cart=cart.filter(x=>x.id!==id);updateCart();showToast("Product deleted.");
- }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
-}
-
-const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
-function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause()},950)}
-$("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
-const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
-const music=$("backgroundMusic");
-$("musicToggle").addEventListener("click",async()=>{
- try{if(music.paused){await music.play();$("musicToggle").textContent="♫"}else{music.pause();$("musicToggle").textContent="♪"}}
- catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
-});
-updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
-</script>
-</body>
-</html>
+ if(rawLinks.length!==imageLinks.length){showToast("کوئی تصویر کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔");return}
+ if(imageFiles.length+imageLinks.length>MAX_IMAGES){showToast("اپلوڈ اور لنک ملا کر زیادہ سے زیادہ 4 تصاویر۔");return}
+ if(videoFile&&(!["video/mp4","video/webm"].includes(videoFile.type)||videoFile.size>MAX_VIDEO_SIZE)){showTo
