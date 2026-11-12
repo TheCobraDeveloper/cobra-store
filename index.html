@@ -376,11 +376,11 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <input class="form-input" id="campaignStartDate" type="date" required>
   <label class="form-label">END DATE</label>
   <input class="form-input" id="campaignEndDate" type="date" required>
-  <label class="form-label">CAMPAIGN IMAGE / LOGO — UPLOAD (OPTIONAL)</label>
+  <label class="form-label">CAMPAIGN IMAGE (OPTIONAL)</label>
   <input class="form-input" id="campaignImageFile" type="file" accept="image/*">
   <label class="form-label">یا CAMPAIGN IMAGE / LOGO کا لنک (OPTIONAL)</label>
   <input class="form-input" id="campaignImageUrl" type="url" placeholder="https://example.com/logo.png">
-  <div class="status" id="campaignImageStatus">No new campaign image selected. Existing image will remain when editing. اگر دونوں دیے جائیں تو اپلوڈ کی ہوئی تصویر استعمال ہوگی۔</div>
+  <div class="status" id="campaignImageStatus">No new campaign image selected. Existing image will remain when editing.</div>
   <div class="upload-preview" id="campaignImagePreview"></div>
   <label class="size-admin-item" style="display:inline-flex;margin-top:12px">
    <input type="checkbox" id="campaignActive" checked>
@@ -648,7 +648,7 @@ function resetCampaignForm(){
  $("campaignActive").checked=true;
  $("campaignImageFile").value="";
  $("campaignImageUrl").value="";
- $("campaignImageStatus").textContent="No new campaign image selected. Existing image will remain when editing. اگر دونوں دیے جائیں تو اپلوڈ کی ہوئی تصویر استعمال ہوگی۔";
+ $("campaignImageStatus").textContent="No new campaign image selected. Existing image will remain when editing.";
  $("campaignImagePreview").innerHTML="";
  $("campaignStatus").textContent="";
  $("saveCampaignButton").textContent="SAVE CAMPAIGN";
@@ -664,7 +664,7 @@ function editCampaign(id){
  $("campaignActive").checked=c.active===true;
  $("campaignImageFile").value="";
  $("campaignImageUrl").value=(c.imageUrl&&!c.imagePath)?c.imageUrl:"";
- $("campaignImageStatus").textContent=c.imageUrl?"Existing campaign image will remain unless you select a replacement or enter a new link.":"No existing campaign image.";
+ $("campaignImageStatus").textContent=c.imageUrl?"Existing campaign image will remain unless you select a replacement.":"No existing campaign image.";
  $("campaignImagePreview").innerHTML=safeImageURL(c.imageUrl)?`<img src="${escapeHTML(c.imageUrl)}" alt="Current campaign image">`:"";
  $("campaignStatus").textContent="Editing campaign. Save changes when finished.";
  $("saveCampaignButton").textContent="UPDATE CAMPAIGN";
@@ -756,7 +756,7 @@ $("campaignForm").addEventListener("submit",async event=>{
   if(id)await docRef.update(data);
   else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   saved=true;
-  // Only remove the old uploaded file after Firestore confirms the new campaign data is saved.
+  // Only remove the old file after Firestore confirms the new campaign data is saved.
   if(old.imagePath&&old.imagePath!==imagePath){
    await storage.ref().child(old.imagePath).delete().catch(error=>console.warn("Old campaign image cleanup failed:",error));
   }
@@ -1403,4 +1403,66 @@ $("productForm").addEventListener("submit",async event=>{
  if(imageFiles.length>MAX_IMAGES||imageFiles.some(f=>!f.type.startsWith("image/")||f.size>MAX_IMAGE_SIZE)){showToast("Maximum 4 images, 5 MB each.");return}
  if(rawLinks.length!==imageLinks.length){showToast("کوئی تصویر کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔");return}
  if(imageFiles.length+imageLinks.length>MAX_IMAGES){showToast("اپلوڈ اور لنک ملا کر زیادہ سے زیادہ 4 تصاویر۔");return}
- if(videoFile&&(!["video/mp4","video/webm"].includes(videoFile.type)||videoFile.size>MAX_VIDEO_SIZE)){showTo
+ if(videoFile&&(!["video/mp4","video/webm"].includes(videoFile.type)||videoFile.size>MAX_VIDEO_SIZE)){showToast("Video must be MP4/WebM and maximum 25 MB.");return}
+ const button=$("saveProductButton");button.disabled=true;button.textContent="SAVING...";$("uploadStatus").textContent="Saving product details...";
+ let productRef=null;
+ try{
+  if(editId){
+   productRef=db.collection(COLLECTION_NAME).doc(editId);
+   await productRef.update({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  }else{
+   productRef=db.collection(COLLECTION_NAME).doc();
+   await productRef.set({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,availableColors:[],stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  }
+  const old=(products.find(p=>p.id===productRef.id))||{};
+  let image=old.image||"",extraImages=Array.isArray(old.extraImages)?old.extraImages:[],videoUrl=old.videoUrl||"";
+  let mediaPaths=Array.isArray(old.mediaPaths)?old.mediaPaths:[];
+  if(imageFiles.length||imageLinks.length){
+   const oldImagePaths=mediaPaths.filter(p=>p.includes("/images/")),uploaded=[];
+   if(imageFiles.length)$("uploadStatus").textContent="Uploading product photos...";
+   for(let i=0;i<imageFiles.length;i++)uploaded.push(await uploadFile(imageFiles[i],storagePath(productRef.id,"images",i,imageFiles[i].name)));
+   // Uploaded photos first, then pasted links (maximum 4 total)
+   const allImages=[...uploaded.map(x=>x.url),...imageLinks].slice(0,MAX_IMAGES);
+   image=allImages[0]||"";extraImages=allImages.slice(1);
+   mediaPaths=[...mediaPaths.filter(p=>!p.includes("/images/")),...uploaded.map(x=>x.path)];
+   await deleteStorageFiles(oldImagePaths);
+  }
+  if(videoFile){
+   $("uploadStatus").textContent="Uploading product video...";
+   const oldVideoPaths=mediaPaths.filter(p=>p.includes("/videos/"));
+   const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"videos",0,videoFile.name));
+   videoUrl=uploadedVideo.url;mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
+   await deleteStorageFiles(oldVideoPaths);
+  }
+  await productRef.update({image,extraImages,videoUrl,mediaPaths,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  $("uploadStatus").textContent="Product and media saved successfully!";
+  showToast(editId?"Product updated successfully!":"New product added successfully!");
+  resetProductForm();
+ }catch(error){
+  console.error("Product save/upload error:",error);
+  $("uploadStatus").textContent="Save/upload error: "+getErrorMessage(error)+" If the product was created, check its entry in the Admin Panel before retrying.";
+ }finally{button.disabled=false;button.textContent=$("editProductId").value?"UPDATE PRODUCT":"SAVE PRODUCT"}
+});
+async function deleteProduct(id){
+ if(!requireAdmin())return;const p=products.find(x=>x.id===id);if(!p)return;
+ if(!confirm("Are you sure you want to delete: "+cleanProductName(p.name)+"?"))return;
+ try{
+  await db.collection(COLLECTION_NAME).doc(id).delete();
+  await deleteStorageFiles(p.mediaPaths||[]);
+  delete sizeManagerDrafts[id];cart=cart.filter(x=>x.id!==id);updateCart();showToast("Product deleted.");
+ }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
+}
+
+const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
+function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause()},950)}
+$("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
+const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
+const music=$("backgroundMusic");
+$("musicToggle").addEventListener("click",async()=>{
+ try{if(music.paused){await music.play();$("musicToggle").textContent="♫"}else{music.pause();$("musicToggle").textContent="♪"}}
+ catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
+});
+updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
+</script>
+</body>
+</html>
