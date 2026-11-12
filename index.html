@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,8 +118,6 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .size-preset-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0}
 .size-preset-row select{min-width:0}
 .size-preset-help{font-size:10px;color:#8a6258;line-height:1.7;margin:5px 0}
-
-/* CENTRAL SIZE MANAGER STYLES */
 .size-manager-product{border:1px solid var(--line);background:#fff;padding:14px;margin:12px 0;border-radius:4px}
 .size-manager-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .size-manager-head img{width:65px;height:65px;object-fit:contain;background:var(--light);border:1px solid var(--line)}
@@ -133,7 +130,16 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .size-manager-add{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
 .size-manager-add input{min-width:0}
 .size-manager-empty{color:#999;font-size:10px;padding:10px 0}
-
+.color-list{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.color-option{display:flex;align-items:center;gap:7px;border:1px solid #e6dcd7;background:white;padding:7px 10px;border-radius:25px;font-size:10px;cursor:pointer}
+.color-dot{width:23px;height:23px;border-radius:50%;display:inline-block;border:1px solid #bbb;flex-shrink:0}
+.color-option.selected{border:2px solid var(--coral);background:#fff4f1}
+.color-option.disabled-color{opacity:.35;filter:grayscale(1);cursor:not-allowed}
+.color-admin-option{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid var(--line);border-radius:25px;background:#fff;font-size:10px}
+.color-admin-option input{accent-color:var(--coral)}
+.color-admin-option.active{border-color:var(--coral);background:#fff4f1}
+.manager-save-row{display:flex;justify-content:flex-end;margin-top:15px}
+.manager-save-row button{min-width:150px}
 .form-title{font-size:22px;margin:5px 0 16px}
 .form-label{display:block;color:#6c625d;font-size:10px;font-weight:900;margin:12px 0 6px}
 .form-input:focus{border-color:var(--coral)}
@@ -284,6 +290,8 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="detail-line" id="modalSizes"></div><div class="detail-line" id="modalExtraDetails"></div>
  <div class="form-label">SELECT SIZE / OPTION</div><div class="size-list" id="sizeOptions"></div>
  <div class="status" id="sizeStatus"></div>
+ <div class="form-label">SELECT COLOR</div><div class="color-list" id="customerColorOptions"></div>
+ <div class="status" id="colorStatus"></div>
  <div class="form-actions"><button class="gold-btn" id="modalAdd">ADD TO CART</button><button class="outline-btn" id="modalWhatsApp">WHATSAPP ORDER</button></div>
  <button class="gold-btn" style="width:100%;margin-top:10px" id="modalCOD">BUY NOW • CASH ON DELIVERY</button>
  <hr style="border:0;border-top:1px solid #eee5e1;margin:22px 0">
@@ -325,19 +333,13 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
  <div class="status" id="adminStatus">Administrator access enabled.</div>
-
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
  <div class="status">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
  <div id="adminOrdersList"><div class="status">Orders loading...</div></div>
-
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
- <h3 class="admin-section-title">SIZE & STOCK MANAGEMENT</h3>
- <div class="status">
- تمام موجودہ اور نئے پروڈکٹس یہاں خودکار طور پر نظر آئیں گے۔
- جس سائز کا اسٹاک ختم ہو اسے Sold Out کریں، اور دوبارہ آنے پر Available کر دیں۔
- </div>
+ <h3 class="admin-section-title">SIZE & COLOR STOCK MANAGEMENT</h3>
+ <div class="status">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ Available / Sold Out یا رنگ منتخب کرنے کے بعد تبدیلی صرف SAVE CHANGES دبانے پر Firebase میں محفوظ ہوگی۔</div>
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
-
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
  <form id="productForm">
@@ -350,25 +352,19 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <label class="form-label">SALE DISCOUNT (%)</label><input class="form-input" id="productSale" type="number" min="0" max="90" value="11">
   <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہو جائیں گی۔</div>
   <label class="form-label">UPLOAD UP TO 4 PRODUCT IMAGES</label><input class="form-input" id="productImageFiles" type="file" accept="image/*" multiple>
-  <div id="imageFileStatus" class="status">No new images selected.</div>
-  <div class="upload-preview" id="imagePreview"></div>
+  <div id="imageFileStatus" class="status">No new images selected.</div><div class="upload-preview" id="imagePreview"></div>
   <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔ نئی ویڈیو منتخب نہ کرنے پر موجودہ ویڈیو برقرار رہے گی۔</div>
   <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
   <div id="videoFileStatus" class="status">No new video selected.</div>
   <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
   <label class="form-label">SIZES / OPTIONS</label>
   <div class="size-preset-row">
-   <select class="form-input" id="sizePreset">
-    <option value="">Choose size preset to add...</option>
-    <option value="shoes">Shoes Sizes (36–45)</option>
-    <option value="clothes">Clothing Sizes (XS–XXXL)</option>
-    <option value="one">One Size</option>
-   </select>
+   <select class="form-input" id="sizePreset"><option value="">Choose size preset to add...</option><option value="shoes">Shoes Sizes (36–45)</option><option value="clothes">Clothing Sizes (XS–XXXL)</option><option value="one">One Size</option></select>
    <button class="outline-btn" type="button" id="addSizePreset">ADD SIZES</button>
   </div>
-  <div class="size-preset-help">Preset منتخب کرکے ADD SIZES دبائیں۔ یہ موجودہ سائز کو ختم نہیں کرے گا، صرف نئے سائز شامل کرے گا۔ آپ نیچے اپنی مرضی کے سائز بھی لکھ سکتے ہیں۔</div>
+  <div class="size-preset-help">Preset منتخب کرکے ADD SIZES دبائیں۔ یہ موجودہ سائز کو ختم نہیں کرے گا، صرف نئے سائز شامل کرے گا۔</div>
   <input class="form-input" id="productSizes" placeholder="40, 41, 42, 43 or S, M, L, XL">
-  <div class="upload-help">ہر سائز کے سامنے موجود چیک باکس سے اسے Sold Out یا Available کریں۔ Sold Out سائز ویب سائٹ پر کراس کے ساتھ نظر آئے گا اور خریدا نہیں جا سکے گا۔</div>
+  <div class="upload-help">ہر سائز کے سامنے موجود چیک باکس سے اسے Sold Out یا Available کریں۔</div>
   <div id="sizeAvailabilityEditor" class="size-admin-list"></div>
   <label class="form-label">STOCK / AVAILABILITY</label><input class="form-input" id="productStock" maxlength="80" placeholder="In Stock">
   <label class="form-label">PRODUCT DESCRIPTION</label><textarea class="form-input" id="productDescription" maxlength="1500" placeholder="Product details, material, features..."></textarea>
@@ -414,10 +410,21 @@ const SIZE_PRESETS={
  one:["One Size"]
 };
 
+const COLOR_PALETTE=[
+ {name:"Black",hex:"#171717"},{name:"White",hex:"#ffffff"},
+ {name:"Red",hex:"#e53935"},{name:"Blue",hex:"#1976d2"},
+ {name:"Green",hex:"#2e8b57"},{name:"Yellow",hex:"#fdd835"},
+ {name:"Pink",hex:"#f48fb1"},{name:"Purple",hex:"#8e44ad"},
+ {name:"Brown",hex:"#795548"},{name:"Grey",hex:"#9e9e9e"},
+ {name:"Orange",hex:"#f57c00"},{name:"Navy",hex:"#172554"},
+ {name:"Beige",hex:"#d8c3a5"},{name:"Maroon",hex:"#800000"}
+];
+
 let auth=null,db=null,storage=null,currentUser=null,isAdmin=false;
 let products=[],cart=[],currentProduct=null,selectedCategory="all";
-let selectedSize="",orderItems=[],unsubscribeProducts=null,unsubscribeOrders=null,reviewRequestToken=0;
+let selectedSize="",selectedColor="",orderItems=[],unsubscribeProducts=null,unsubscribeOrders=null,reviewRequestToken=0;
 let adminUnavailableSizes=[];
+let sizeManagerDrafts={};
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
@@ -435,12 +442,15 @@ function productImages(p){const all=[p.image,...(Array.isArray(p.extraImages)?p.
 function getProductSizes(p){const raw=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==="string"?p.sizes.split(","):[]);return [...new Set(raw.map(s=>String(s).trim()).filter(Boolean))]}
 function getUnavailableSizes(p){return Array.isArray(p.unavailableSizes)?p.unavailableSizes.map(String):[]}
 function isSizeUnavailable(p,size){return getUnavailableSizes(p).includes(String(size))}
+function getProductColors(p){return Array.isArray(p.availableColors)?[...new Set(p.availableColors.map(String))]:[]}
+function colorInfo(name){return COLOR_PALETTE.find(c=>c.name===name)||{name,hex:"#999999"}}
 function getErrorMessage(error){
  const code=error&&error.code?error.code:"";
  const messages={"permission-denied":"Firebase Rules نے اس عمل کی اجازت نہیں دی۔","unavailable":"Firebase عارضی طور پر دستیاب نہیں۔","network-request-failed":"انٹرنیٹ کنکشن کا مسئلہ ہے۔","unauthenticated":"براہ کرم دوبارہ Admin Login کریں۔","storage/unauthorized":"Storage Rules نے اپلوڈ کی اجازت نہیں دی۔","storage/canceled":"اپلوڈ منسوخ ہوگیا۔","storage/retry-limit-exceeded":"اپلوڈ بار بار ناکام ہوا۔"};
  return messages[code]||((error&&error.message)||"Unknown error");
 }
 function requireAdmin(){return !!(isAdmin&&currentUser&&currentUser.uid===ADMIN_UID)}
+
 try{
  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
  auth=firebase.auth();db=firebase.firestore();storage=firebase.storage();
@@ -519,17 +529,39 @@ function renderSizeOptions(){
  });
  const available=sizes.filter(s=>!unavailable.includes(s));
  $("sizeStatus").textContent=sizes.length?(available.length?available.length+" size(s) available. Crossed-out sizes are sold out.":"تمام سائز Sold Out ہیں۔ فی الحال آرڈر دستیاب نہیں۔"):"";
- const disabled=sizes.length>0&&available.length===0;
- ["modalAdd","modalWhatsApp","modalCOD"].forEach(id=>$(id).disabled=disabled);
+}
+function renderCustomerColors(){
+ const colors=getProductColors(currentProduct||{});
+ const box=$("customerColorOptions");
+ if(!colors.length){
+  box.innerHTML='<span class="status">No color options for this product.</span>';
+  $("colorStatus").textContent="";
+  return;
+ }
+ box.innerHTML=colors.map(name=>{
+  const c=colorInfo(name);
+  return `<button type="button" class="color-option ${selectedColor===name?"selected":""}" data-color="${escapeHTML(name)}"><span class="color-dot" style="background:${c.hex}"></span>${escapeHTML(name)}</button>`;
+ }).join("");
+ box.querySelectorAll("[data-color]").forEach(button=>{
+  button.addEventListener("click",()=>{
+   selectedColor=button.dataset.color;
+   renderCustomerColors();
+   $("colorStatus").textContent="Selected color: "+selectedColor;
+  });
+ });
+ $("colorStatus").textContent=selectedColor?"Selected color: "+selectedColor:"Please select a color.";
 }
 function refreshSizeAvailability(){
  const p=currentProduct;if(!p)return;
  if(selectedSize&&isSizeUnavailable(p,selectedSize))selectedSize="";
+ if(selectedColor&&!getProductColors(p).includes(selectedColor))selectedColor="";
  renderSizeOptions();
+ renderCustomerColors();
 }
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);if(!currentProduct)return;
- selectedSize="";const p=currentProduct,images=productImages(p),sizes=getProductSizes(p);
+ selectedSize="";selectedColor="";
+ const p=currentProduct,images=productImages(p),sizes=getProductSizes(p);
  $("modalIcon").innerHTML=images.length?`<img id="mainProductPhoto" src="${escapeHTML(images[0])}" alt="${escapeHTML(cleanProductName(p.name))}">`:"🐍";
  $("modalGallery").innerHTML=images.map(url=>`<img src="${escapeHTML(url)}" alt="Product photo" onclick="changeMainPhoto('${escapeHTML(url)}')">`).join("");
  const video=$("modalVideo");
@@ -540,16 +572,19 @@ function openProduct(id){
  $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
  $("modalSizes").innerHTML="<b>Product options:</b> "+escapeHTML(sizes.join(", ")||"No options specified");
  $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
- renderSizeOptions();
- $("modalAdd").onclick=()=>{if(!validateSelectedSize(p))return;addToCart(p.id,selectedSize);closeModal()};
- $("modalWhatsApp").onclick=()=>{if(!validateSelectedSize(p))return;orderSingle(p,selectedSize)};
- $("modalCOD").onclick=()=>{if(!validateSelectedSize(p))return;orderItems=[{...p,qty:1,selectedSize}];openOrderModal()};
+ renderSizeOptions();renderCustomerColors();
+ $("modalAdd").onclick=()=>{if(!validateSelections(p))return;addToCart(p.id,selectedSize,selectedColor);closeModal()};
+ $("modalWhatsApp").onclick=()=>{if(!validateSelections(p))return;orderSingle(p,selectedSize,selectedColor)};
+ $("modalCOD").onclick=()=>{if(!validateSelections(p))return;orderItems=[{...p,qty:1,selectedSize,selectedColor}];openOrderModal()};
  $("reviewStatus").textContent="";loadReviews(p.id);$("productModal").classList.add("show");
 }
-function validateSelectedSize(p){
- const sizes=getProductSizes(p);
+function validateSelections(p){
+ const sizes=getProductSizes(p),colors=getProductColors(p);
  if(sizes.length&&!selectedSize){showToast("پہلے Available Size منتخب کریں۔");return false}
  if(selectedSize&&isSizeUnavailable(p,selectedSize)){selectedSize="";renderSizeOptions();showToast("یہ سائز Sold Out ہو چکا ہے۔");return false}
+ if(sizes.length&&!sizes.includes(String(selectedSize))){showToast("منتخب سائز اب دستیاب نہیں۔");return false}
+ if(colors.length&&!selectedColor){showToast("براہ کرم پہلے رنگ منتخب کریں۔");return false}
+ if(selectedColor&&!colors.includes(selectedColor)){selectedColor="";renderCustomerColors();showToast("منتخب رنگ اب دستیاب نہیں۔");return false}
  return true;
 }
 function changeMainPhoto(url){const photo=$("mainProductPhoto");if(photo)photo.src=url}
@@ -560,33 +595,40 @@ function chooseSize(button,size){
 }
 function closeModal(){$("productModal").classList.remove("show");$("modalVideo").pause()}
 function closeModalOutside(event){if(event.target===$("productModal"))closeModal()}
-function orderSingle(p,size){
+function orderSingle(p,size,color){
  if(size&&isSizeUnavailable(p,size)){showToast("یہ سائز Sold Out ہے۔");return}
- const message="Assalam-o-Alaikum! I want to order from COBRA STORE:\nProduct: "+cleanProductName(p.name)+"\nCategory: "+categoryName(p.category)+"\nSize/Option: "+(size||"Not specified")+"\nPrice: "+money(finalPrice(p))+"\nPlease share availability and delivery details.";
+ const message="Assalam-o-Alaikum! I want to order from COBRA STORE:\nProduct: "+cleanProductName(p.name)+"\nCategory: "+categoryName(p.category)+"\nSelected Size: "+(size||"Not specified")+"\nSelected Color: "+(color||"Not specified")+"\nPrice: "+money(finalPrice(p))+"\nPlease share availability and delivery details.";
  window.open(whatsappURL(message),"_blank","noopener");
 }
-function quickAdd(id){const p=products.find(x=>x.id===id);if(!p)return;if(getProductSizes(p).length){openProduct(id);showToast("آرڈر سے پہلے Available Size منتخب کریں۔");return}addToCart(id,"")}
-function addToCart(id,size=""){
+function quickAdd(id){
+ const p=products.find(x=>x.id===id);if(!p)return;
+ if(getProductSizes(p).length||getProductColors(p).length){openProduct(id);showToast("آرڈر سے پہلے سائز اور رنگ منتخب کریں۔");return}
+ addToCart(id,"","");
+}
+function addToCart(id,size="",color=""){
  const p=products.find(x=>x.id===id);if(!p)return;
  if(size&&isSizeUnavailable(p,size)){showToast("یہ سائز Sold Out ہے۔");return}
- const found=cart.find(x=>x.id===id&&x.selectedSize===size);
- if(found)found.qty++;else cart.push({...p,qty:1,selectedSize:size});
+ if(getProductColors(p).length&&!getProductColors(p).includes(color)){showToast("براہ کرم دستیاب رنگ منتخب کریں۔");return}
+ const found=cart.find(x=>x.id===id&&x.selectedSize===size&&x.selectedColor===color);
+ if(found)found.qty++;else cart.push({...p,qty:1,selectedSize:size,selectedColor:color});
  updateCart();showToast("Product added to your cart!");
 }
-function removeFromCart(id,size){cart=cart.filter(x=>!(x.id===id&&x.selectedSize===size));updateCart()}
+function removeFromCart(id,size,color){cart=cart.filter(x=>!(x.id===id&&x.selectedSize===size&&x.selectedColor===color));updateCart()}
 function updateCart(){
  const count=cart.reduce((s,x)=>s+x.qty,0),total=cart.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
  $("cartCount").textContent=count;$("cartTotal").textContent=money(total);
  if(!cart.length){$("cartItems").innerHTML='<div class="cart-empty">Your cart is empty.</div>';return}
- $("cartItems").innerHTML=cart.map(item=>`<div class="cart-item"><div><strong>${escapeHTML(cleanProductName(item.name))}</strong><small>${item.qty} × ${money(finalPrice(item))} ${item.selectedSize?"• Option: "+escapeHTML(item.selectedSize):""}</small></div><button onclick="removeFromCart('${escapeHTML(item.id)}','${escapeHTML(item.selectedSize||"")}')">REMOVE</button></div>`).join("");
+ $("cartItems").innerHTML=cart.map(item=>`<div class="cart-item"><div><strong>${escapeHTML(cleanProductName(item.name))}</strong><small>${item.qty} × ${money(finalPrice(item))}<br>Selected Size: ${escapeHTML(item.selectedSize||"Not specified")}<br>Selected Color: ${escapeHTML(item.selectedColor||"Not specified")}</small></div><button onclick="removeFromCart('${escapeHTML(item.id)}','${escapeHTML(item.selectedSize||"")}','${escapeHTML(item.selectedColor||"")}')">REMOVE</button></div>`).join("");
 }
 function validateOrderItems(items){
  for(const item of items){
   const latest=products.find(p=>p.id===item.id)||item;
-  const sizes=getProductSizes(latest);
+  const sizes=getProductSizes(latest),colors=getProductColors(latest);
   if(sizes.length&&!item.selectedSize){showToast("ہر پروڈکٹ کے لیے سائز منتخب کریں: "+cleanProductName(item.name));return false}
   if(item.selectedSize&&isSizeUnavailable(latest,item.selectedSize)){showToast(cleanProductName(item.name)+" کا سائز "+item.selectedSize+" Sold Out ہو چکا ہے۔");return false}
   if(sizes.length&&!sizes.includes(String(item.selectedSize))){showToast("منتخب سائز اب دستیاب نہیں۔");return false}
+  if(colors.length&&!item.selectedColor){showToast("ہر پروڈکٹ کے لیے رنگ منتخب کریں: "+cleanProductName(item.name));return false}
+  if(item.selectedColor&&!colors.includes(String(item.selectedColor))){showToast(cleanProductName(item.name)+" کا منتخب رنگ اب دستیاب نہیں۔");return false}
  }
  return true;
 }
@@ -594,8 +636,11 @@ function checkoutWhatsApp(){
  if(!cart.length){showToast("Your cart is empty!");return}
  if(!validateOrderItems(cart))return;
  let total=0,message="Assalam-o-Alaikum! I want to place an order from COBRA STORE:\n\n";
- cart.forEach(item=>{const sub=finalPrice(item)*item.qty;total+=sub;message+=cleanProductName(item.name)+" × "+item.qty+(item.selectedSize?" | Option: "+item.selectedSize:"")+" = "+money(sub)+"\n"});
- message+="\nTOTAL: "+money(total)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
+ cart.forEach(item=>{
+  const sub=finalPrice(item)*item.qty;total+=sub;
+  message+=cleanProductName(item.name)+" × "+item.qty+"\nSelected Size: "+(item.selectedSize||"Not specified")+"\nSelected Color: "+(item.selectedColor||"Not specified")+"\nSubtotal: "+money(sub)+"\n\n";
+ });
+ message+="TOTAL: "+money(total)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
  window.open(whatsappURL(message),"_blank","noopener");
 }
 $("cartOpen").addEventListener("click",()=>$("cartPanel").classList.add("open"));
@@ -606,7 +651,7 @@ function openOrderModal(){
  if(!orderItems.length){showToast("No order items found.");return}
  if(!validateOrderItems(orderItems))return;
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
- $("orderSummary").textContent=orderItems.map(x=>cleanProductName(x.name)+" × "+x.qty+(x.selectedSize?" ("+x.selectedSize+")":"")).join(" | ")+" — TOTAL: "+money(total);
+ $("orderSummary").innerHTML=orderItems.map(x=>`<div style="padding:7px 0;border-bottom:1px solid #eee5e1"><b>${escapeHTML(cleanProductName(x.name))} × ${x.qty}</b><br>Selected Size: ${escapeHTML(x.selectedSize||"Not specified")}<br>Selected Color: ${escapeHTML(x.selectedColor||"Not specified")}<br>Price: ${money(finalPrice(x)*x.qty)}</div>`).join("")+`<div style="padding:10px 0"><b>TOTAL: ${money(total)}</b></div>`;
  $("orderStatus").textContent="";$("cartPanel").classList.remove("open");$("orderModal").classList.add("show");
 }
 function closeOrder(){$("orderModal").classList.remove("show")}
@@ -618,7 +663,7 @@ $("orderForm").addEventListener("submit",async event=>{
  if(!name||!phone||!city||!address){$("orderStatus").textContent="Please complete all required delivery details.";return}
  if(!/^[0-9+() -]{7,20}$/.test(phone)){$("orderStatus").textContent="Please enter a valid phone number.";return}
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
- const order={customerName:name,phone,city,address,notes,items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||""})),total,paymentMethod:"Cash on Delivery",status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ const order={customerName:name,phone,city,address,notes,items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),total,paymentMethod:"Cash on Delivery",status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()};
  const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
  try{
   if(!db)throw new Error("Firebase is not connected");
@@ -684,6 +729,7 @@ function closeAdmin(){
  $("adminModal").classList.remove("show");
  if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null}
 }
+
 $("adminPanelButton").addEventListener("click",openAdmin);
 
 function formatOrderDate(value){
@@ -720,7 +766,7 @@ function renderAdminOrders(orders){
  function orderCard(o,isConfirmed){
   const items=Array.isArray(o.items)?o.items:[];
   const itemHTML=items.map(item=>
-   `<div>${escapeHTML(item.name||"Product")} × ${Number(item.quantity)||1}${item.size?" | Size: "+escapeHTML(item.size):""} — ${money(item.price)}</div>`
+   `<div>${escapeHTML(item.name||"Product")} × ${Number(item.quantity)||1}<br>Size: ${escapeHTML(item.size||"Not specified")} | Color: ${escapeHTML(item.color||"Not specified")} — ${money(item.price)}</div>`
   ).join("");
   return `<div class="order-card ${isConfirmed?"confirmed":"pending"}">
    <div class="order-head"><strong>ORDER #${escapeHTML(o.id.slice(-8).toUpperCase())}</strong>
@@ -765,7 +811,7 @@ async function contactOrderCustomer(orderId){
   const o=snap.data(),items=Array.isArray(o.items)?o.items:[];
   let msg="Assalam-o-Alaikum "+(o.customerName||"Customer")+", your COBRA STORE order update:\n";
   msg+="Order: "+orderId+"\nStatus: "+(o.status||"Pending")+"\n";
-  items.forEach(x=>msg+=(x.name||"Product")+" × "+(x.quantity||1)+(x.size?" | Size: "+x.size:"")+"\n");
+  items.forEach(x=>msg+=(x.name||"Product")+" × "+(x.quantity||1)+"\nSelected Size: "+(x.size||"Not specified")+"\nSelected Color: "+(x.color||"Not specified")+"\n");
   msg+="Total: "+money(o.total)+"\nThank you for shopping with COBRA STORE.";
   const phone=String(o.phone||"").replace(/[^\d]/g,"").replace(/^0/,"92");
   if(!phone){showToast("Customer phone number is missing.");return}
@@ -780,212 +826,160 @@ function renderAdminProducts(){
  list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
 }
 
-/* CENTRAL SIZE & STOCK MANAGEMENT */
+/* CENTRAL SIZE + COLOR MANAGER WITH SAVE BUTTON */
 
+function getManagerDraft(product){
+ const saved=sizeManagerDrafts[product.id];
+ if(saved)return saved;
+ return {
+  sizes:getProductSizes(product),
+  unavailableSizes:getUnavailableSizes(product),
+  availableColors:getProductColors(product)
+ };
+}
+function managerDraftFor(product){
+ if(!sizeManagerDrafts[product.id])sizeManagerDrafts[product.id]={
+  sizes:getProductSizes(product),
+  unavailableSizes:getUnavailableSizes(product),
+  availableColors:getProductColors(product)
+ };
+ return sizeManagerDrafts[product.id];
+}
 function renderAdminSizeManager(){
  const box=$("adminSizeManager");
  if(!box)return;
-
  if(!requireAdmin()){
   box.innerHTML='<div class="status">Please sign in as administrator.</div>';
   return;
  }
-
  if(!products.length){
   box.innerHTML='<div class="status">ابھی کوئی پروڈکٹ موجود نہیں۔ نئی پروڈکٹس یہاں خودکار طور پر ظاہر ہوں گی۔</div>';
   return;
  }
-
  box.innerHTML=products.map(p=>{
-  const sizes=getProductSizes(p);
-  const unavailable=getUnavailableSizes(p);
+  const draft=getManagerDraft(p);
+  const sizes=draft.sizes;
+  const unavailable=draft.unavailableSizes;
+  const colors=draft.availableColors;
   const images=productImages(p);
-
-  const image=images.length
-   ? `<img src="${escapeHTML(images[0])}" alt="Product">`
-   : `<div style="width:65px;height:65px;background:var(--light);display:grid;place-items:center;font-size:25px">🐍</div>`;
-
-  const sizeHTML=sizes.length
-   ? sizes.map(size=>{
-      const sold=unavailable.includes(size);
-      return `
-       <label class="size-manager-option ${sold?"sold":""}">
-        <input
-         type="checkbox"
-         data-size-toggle
-         data-product-id="${escapeHTML(p.id)}"
-         data-size="${escapeHTML(size)}"
-         ${sold?"checked":""}
-        >
-        <b>${escapeHTML(size)}</b>
-        <span>${sold?"Sold Out":"Available"}</span>
-       </label>`;
-     }).join("")
-   : '<div class="size-manager-empty">اس پروڈکٹ میں ابھی کوئی سائز شامل نہیں۔ نیچے سے سائز شامل کر سکتے ہیں۔</div>';
-
-  return `
-   <div class="size-manager-product" data-size-product="${escapeHTML(p.id)}">
-    <div class="size-manager-head">
-     ${image}
-     <div>
-      <strong>${escapeHTML(cleanProductName(p.name))}</strong>
-      <small>${escapeHTML(categoryName(p.category))} • ${sizes.length} Size(s)</small>
-     </div>
-    </div>
-
-    <div class="size-manager-options">
-     ${sizeHTML}
-    </div>
-
-    <div class="size-manager-add">
-     <input
-      class="form-input"
-      type="text"
-      data-size-input
-      placeholder="نئے سائز لکھیں، مثال: 40, 41, 42 یا S, M, L"
-     >
-     <button type="button" class="gold-btn" data-size-add>ADD SIZES</button>
-    </div>
-   </div>`;
+  const image=images.length?`<img src="${escapeHTML(images[0])}" alt="Product">`:`<div style="width:65px;height:65px;background:var(--light);display:grid;place-items:center;font-size:25px">🐍</div>`;
+  const sizeHTML=sizes.length?sizes.map(size=>{
+   const sold=unavailable.includes(size);
+   return `<label class="size-manager-option ${sold?"sold":""}">
+    <input type="checkbox" data-manager-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" ${sold?"checked":""}>
+    <b>${escapeHTML(size)}</b><span>${sold?"Sold Out":"Available"}</span>
+   </label>`;
+  }).join(""):'<div class="size-manager-empty">اس پروڈکٹ میں ابھی کوئی سائز شامل نہیں۔ نیچے سے نئے سائز شامل کریں۔</div>';
+  const colorHTML=COLOR_PALETTE.map(c=>{
+   const active=colors.includes(c.name);
+   return `<label class="color-admin-option ${active?"active":""}">
+    <input type="checkbox" data-manager-color data-product-id="${escapeHTML(p.id)}" data-color="${c.name}" ${active?"checked":""}>
+    <span class="color-dot" style="background:${c.hex}"></span>${c.name}
+   </label>`;
+  }).join("");
+  return `<div class="size-manager-product" data-size-product="${escapeHTML(p.id)}">
+   <div class="size-manager-head">${image}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${sizes.length} Size(s) • ${colors.length} Color(s)</small></div></div>
+   <b style="font-size:11px">SIZE AVAILABILITY</b>
+   <div class="size-manager-options">${sizeHTML}</div>
+   <div class="size-manager-add">
+    <input class="form-input" type="text" data-size-input placeholder="نئے سائز لکھیں، مثال: 40, 41, 42 یا S, M, L">
+    <button type="button" class="outline-btn" data-size-add>ADD SIZES</button>
+   </div>
+   <hr style="border:0;border-top:1px solid #eee5e1;margin:15px 0">
+   <b style="font-size:11px">AVAILABLE COLORS</b>
+   <div class="color-list">${colorHTML}</div>
+   <div class="manager-save-row"><button type="button" class="gold-btn" data-manager-save data-product-id="${escapeHTML(p.id)}">SAVE CHANGES</button></div>
+   <div class="status" data-manager-status="${escapeHTML(p.id)}">Changes are not saved until you press SAVE CHANGES.</div>
+  </div>`;
  }).join("");
 }
-
-/* UPDATE ONE SIZE: SOLD OUT / AVAILABLE */
-
-async function setCentralSizeAvailability(productId,size,soldOut,checkbox){
- if(!requireAdmin()||!db)return;
-
- if(checkbox)checkbox.disabled=true;
-
- try{
-  const ref=db.collection(COLLECTION_NAME).doc(productId);
-
-  await db.runTransaction(async transaction=>{
-   const snap=await transaction.get(ref);
-
-   if(!snap.exists)throw new Error("Product not found.");
-
-   const data=snap.data();
-   const sizes=getProductSizes(data);
-
-   if(!sizes.includes(size)){
-    throw new Error("یہ سائز اب اس پروڈکٹ میں موجود نہیں۔");
-   }
-
-   let unavailable=getUnavailableSizes(data);
-
-   if(soldOut){
-    if(!unavailable.includes(size))unavailable.push(size);
-   }else{
-    unavailable=unavailable.filter(item=>item!==size);
-   }
-
-   transaction.update(ref,{
-    unavailableSizes:unavailable,
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-   });
-  });
-
-  showToast(soldOut
-   ? size+" — Sold Out ہوگیا۔"
-   : size+" — دوبارہ Available ہوگیا۔"
-  );
-
- }catch(error){
-  console.error("Size availability error:",error);
-  showToast("سائز تبدیل نہیں ہو سکا: "+getErrorMessage(error));
-  renderAdminSizeManager();
- }
+function updateManagerDraftStatus(productId,message){
+ const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);
+ if(status)status.textContent=message||"Unsaved changes — press SAVE CHANGES to store them.";
 }
-
-/* ADD SIZES TO ANY EXISTING PRODUCT */
-
-async function addCentralProductSizes(productId,input){
- if(!requireAdmin()||!db||!input)return;
-
- const entered=input.value.trim();
-
- if(!entered){
-  showToast("پہلے نئے سائز لکھیں۔");
+$("adminSizeManager").addEventListener("change",event=>{
+ const sizeBox=event.target.closest("[data-manager-size]");
+ const colorBox=event.target.closest("[data-manager-color]");
+ if(!sizeBox&&!colorBox)return;
+ const productId=(sizeBox||colorBox).dataset.productId;
+ const product=products.find(p=>p.id===productId);
+ if(!product)return;
+ const draft=managerDraftFor(product);
+ if(sizeBox){
+  const size=sizeBox.dataset.size;
+  if(sizeBox.checked){
+   if(!draft.unavailableSizes.includes(size))draft.unavailableSizes.push(size);
+  }else{
+   draft.unavailableSizes=draft.unavailableSizes.filter(x=>x!==size);
+  }
+  const label=sizeBox.closest("label");
+  label.classList.toggle("sold",sizeBox.checked);
+  const span=label.querySelector("span");
+  if(span)span.textContent=sizeBox.checked?"Sold Out":"Available";
+ }else{
+  const color=colorBox.dataset.color;
+  if(colorBox.checked){
+   if(!draft.availableColors.includes(color))draft.availableColors.push(color);
+  }else{
+   draft.availableColors=draft.availableColors.filter(x=>x!==color);
+  }
+  colorBox.closest("label").classList.toggle("active",colorBox.checked);
+ }
+ updateManagerDraftStatus(productId);
+});
+$("adminSizeManager").addEventListener("click",async event=>{
+ const addButton=event.target.closest("[data-size-add]");
+ if(addButton){
+  const productBox=addButton.closest("[data-size-product]");
+  const productId=productBox.dataset.sizeProduct;
+  const product=products.find(p=>p.id===productId);
+  const input=productBox.querySelector("[data-size-input]");
+  const entered=input.value.trim();
+  if(!entered){showToast("پہلے نئے سائز لکھیں۔");return}
+  const additions=entered.split(",").map(s=>s.trim()).filter(Boolean);
+  const draft=managerDraftFor(product);
+  additions.forEach(size=>{
+   if(!draft.sizes.some(old=>old.toLowerCase()===size.toLowerCase()))draft.sizes.push(size);
+  });
+  input.value="";
+  renderAdminSizeManager();
+  updateManagerDraftStatus(productId,"New sizes added to draft. Press SAVE CHANGES to save.");
+  showToast("سائز ڈرافٹ میں شامل ہوگئے۔ SAVE CHANGES دبائیں۔");
   return;
  }
-
- const additions=[...new Set(
-  entered.split(",").map(s=>s.trim()).filter(Boolean)
- )];
-
- if(!additions.length)return;
-
- const button=input.parentElement.querySelector("[data-size-add]");
- if(button){
-  button.disabled=true;
-  button.textContent="SAVING...";
+ const saveButton=event.target.closest("[data-manager-save]");
+ if(saveButton){
+  await saveManagerDraft(saveButton.dataset.productId,saveButton);
  }
-
+});
+async function saveManagerDraft(productId,button){
+ if(!requireAdmin()||!db)return;
+ const product=products.find(p=>p.id===productId);
+ if(!product)return;
+ const draft=managerDraftFor(product);
+ const oldText=button.textContent;
+ button.disabled=true;button.textContent="SAVING...";
  try{
-  const ref=db.collection(COLLECTION_NAME).doc(productId);
-
-  await db.runTransaction(async transaction=>{
-   const snap=await transaction.get(ref);
-
-   if(!snap.exists)throw new Error("Product not found.");
-
-   const data=snap.data();
-   const existing=getProductSizes(data);
-   const merged=[...existing];
-
-   additions.forEach(size=>{
-    if(!merged.some(old=>old.toLowerCase()===size.toLowerCase())){
-     merged.push(size);
-    }
-   });
-
-   transaction.update(ref,{
-    sizes:merged,
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-   });
+  const sizes=[...new Set(draft.sizes.map(s=>String(s).trim()).filter(Boolean))];
+  const unavailableSizes=draft.unavailableSizes.filter(s=>sizes.includes(s));
+  const availableColors=COLOR_PALETTE.map(c=>c.name).filter(name=>draft.availableColors.includes(name));
+  await db.collection(COLLECTION_NAME).doc(productId).update({
+   sizes,
+   unavailableSizes,
+   availableColors,
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
   });
-
-  input.value="";
-  showToast("نئے سائز کامیابی سے شامل ہوگئے۔");
-
+  delete sizeManagerDrafts[productId];
+  showToast("سائز اور رنگ کامیابی سے محفوظ ہوگئے۔");
+  const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);
+  if(status)status.textContent="Changes saved successfully.";
  }catch(error){
-  console.error("Adding product sizes error:",error);
-  showToast("سائز شامل نہیں ہو سکے: "+getErrorMessage(error));
+  console.error("Size/color save error:",error);
+  showToast("تبدیلیاں محفوظ نہیں ہو سکیں: "+getErrorMessage(error));
  }finally{
-  if(button){
-   button.disabled=false;
-   button.textContent="ADD SIZES";
-  }
+  button.disabled=false;button.textContent=oldText;
  }
 }
-
-/* CENTRAL SIZE MANAGER EVENTS */
-
-$("adminSizeManager").addEventListener("change",event=>{
- const checkbox=event.target.closest("[data-size-toggle]");
- if(!checkbox)return;
-
- setCentralSizeAvailability(
-  checkbox.dataset.productId,
-  checkbox.dataset.size,
-  checkbox.checked,
-  checkbox
- );
-});
-
-$("adminSizeManager").addEventListener("click",event=>{
- const button=event.target.closest("[data-size-add]");
- if(!button)return;
-
- const productBox=button.closest("[data-size-product]");
- if(!productBox)return;
-
- const productId=productBox.dataset.sizeProduct;
- const input=productBox.querySelector("[data-size-input]");
-
- addCentralProductSizes(productId,input);
-});
 
 /* SIZE PRESETS: existing sizes are preserved; only missing sizes are appended. */
 function addSelectedSizePreset(){
@@ -1096,7 +1090,7 @@ $("productForm").addEventListener("submit",async event=>{
    await productRef.update({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
   }else{
    productRef=db.collection(COLLECTION_NAME).doc();
-   await productRef.set({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+   await productRef.set({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,availableColors:[],stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   }
   const old=(products.find(p=>p.id===productRef.id))||{};
   let image=old.image||"",extraImages=Array.isArray(old.extraImages)?old.extraImages:[],videoUrl=old.videoUrl||"";
@@ -1133,6 +1127,7 @@ async function deleteProduct(id){
  try{
   await db.collection(COLLECTION_NAME).doc(id).delete();
   await deleteStorageFiles(p.mediaPaths||[]);
+  delete sizeManagerDrafts[id];
   cart=cart.filter(x=>x.id!==id);updateCart();showToast("Product deleted.");
  }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
 }
