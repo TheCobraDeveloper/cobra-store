@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +60,20 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .promo-banner{margin:20px auto 30px;padding:30px 15px;text-align:center;background:var(--dark);color:white}
 .promo-banner strong{display:block;font-family:"Syne";font-size:clamp(22px,4vw,34px);letter-spacing:2px}
 .promo-banner span{display:block;color:#d5c7c1;font-size:11px;margin-top:8px}
+.campaign-public{max-width:1240px;margin:22px auto;padding:0 22px}
+.campaign-public-inner{display:grid;grid-template-columns: minmax(0,1fr) minmax(180px,38%);background:#171514;color:white;overflow:hidden;min-height:180px}
+.campaign-public-copy{padding:28px;align-self:center}
+.campaign-public-copy small{color:#ff9b8d;font-weight:900;letter-spacing:3px;font-size:9px}
+.campaign-public-copy h2{font-size:clamp(22px,4vw,36px);margin:10px 0}
+.campaign-public-copy p{color:#ddd;font-size:12px;line-height:1.8}
+.campaign-public-image{width:100%;height:100%;min-height:180px;object-fit:cover}
+.campaign-admin-card{border:1px solid var(--line);padding:14px;margin:12px 0;background:#fffdfc}
+.campaign-admin-card img{width:85px;height:85px;object-fit:cover;background:var(--light);border:1px solid var(--line)}
+.campaign-admin-head{display:flex;gap:13px;align-items:center}
+.campaign-admin-head strong{font-size:12px}
+.campaign-admin-head small{display:block;color:var(--muted);font-size:10px;margin-top:5px;line-height:1.7}
+.campaign-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.campaign-admin-actions button{font-size:9px;padding:8px 12px}
 .section{max-width:1280px;margin:auto;padding:55px 22px}
 .section-heading{text-align:center;margin-bottom:32px}
 .section-heading .eyebrow{color:var(--coral);font-size:9px;letter-spacing:4px;font-weight:900}
@@ -208,6 +223,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .admin-product{align-items:flex-start;flex-direction:column}.modal-box{padding:18px}
 .size-preset-row{grid-template-columns:1fr}.size-preset-row button{width:100%}
 .size-manager-add{grid-template-columns:1fr}.size-manager-add button{width:100%}
+.campaign-public{padding:0 12px}.campaign-public-inner{grid-template-columns:1fr}.campaign-public-image{max-height:210px;min-height:150px;grid-row:1}
 }
 </style>
 </head>
@@ -249,6 +265,9 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="benefit"><strong>✦ WHATSAPP SUPPORT</strong><span>We are here to help you</span></div>
 </div>
 <div class="promo-banner"><strong>11.11 MEGA SALE</strong><span>Explore the COBRA STORE collection and enjoy special discounted prices</span></div>
+
+<!-- Public campaign banner: active campaign only -->
+<section id="activeCampaignBanner" class="campaign-public hidden"></section>
 
 <section class="section" id="categories">
  <div class="section-heading"><div class="eyebrow">FIND YOUR STYLE</div><h2>SHOP BY CATEGORY</h2><p>Explore our collections and find something you love.</p></div>
@@ -311,6 +330,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div id="orderSummary" class="detail-line"></div>
  <form id="orderForm">
   <label class="form-label">FULL NAME</label><input class="form-input" id="customerName" required maxlength="80" placeholder="Your full name">
+  <label class="form-label">EMAIL ADDRESS</label><input class="form-input" id="customerEmail" type="email" required maxlength="120" autocomplete="email" placeholder="example@email.com">
   <label class="form-label">PHONE NUMBER</label><input class="form-input" id="customerPhone" required type="tel" maxlength="20" pattern="[0-9+() -]{7,20}" placeholder="03XXXXXXXXX">
   <label class="form-label">CITY</label><input class="form-input" id="customerCity" required maxlength="60" placeholder="Your city">
   <label class="form-label">COMPLETE DELIVERY ADDRESS</label><textarea class="form-input" id="customerAddress" required maxlength="500" placeholder="House number, street, area, landmark..."></textarea>
@@ -333,13 +353,47 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
  <div class="status" id="adminStatus">Administrator access enabled.</div>
+
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
  <div class="status">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
  <div id="adminOrdersList"><div class="status">Orders loading...</div></div>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">CAMPAIGN / PROMOTION MANAGEMENT</h3>
+ <div class="status">یہاں اپنی ویب سائٹ کے لیے مہم یا آفر بنائیں۔ فعال مہم مقررہ تاریخوں کے دوران ویب سائٹ پر خودکار طور پر دکھائی جائے گی۔</div>
+
+ <form id="campaignForm">
+  <input type="hidden" id="campaignId">
+  <label class="form-label">CAMPAIGN NAME / TITLE</label>
+  <input class="form-input" id="campaignName" required maxlength="100" placeholder="Example: Winter Mega Sale">
+  <label class="form-label">CAMPAIGN DESCRIPTION</label>
+  <textarea class="form-input" id="campaignDescription" maxlength="700" placeholder="Write your promotion details..."></textarea>
+  <label class="form-label">START DATE</label>
+  <input class="form-input" id="campaignStartDate" type="date" required>
+  <label class="form-label">END DATE</label>
+  <input class="form-input" id="campaignEndDate" type="date" required>
+  <label class="form-label">CAMPAIGN IMAGE (OPTIONAL)</label>
+  <input class="form-input" id="campaignImageFile" type="file" accept="image/*">
+  <div class="status" id="campaignImageStatus">No new campaign image selected. Existing image will remain when editing.</div>
+  <div class="upload-preview" id="campaignImagePreview"></div>
+  <label class="size-admin-item" style="display:inline-flex;margin-top:12px">
+   <input type="checkbox" id="campaignActive" checked>
+   <b>CAMPAIGN ACTIVE</b>
+  </label>
+  <div class="form-actions">
+   <button class="gold-btn" type="submit" id="saveCampaignButton">SAVE CAMPAIGN</button>
+   <button class="outline-btn" type="button" onclick="resetCampaignForm()">CLEAR FORM</button>
+  </div>
+  <div class="status" id="campaignStatus"></div>
+ </form>
+ <h4 class="admin-section-title">SAVED CAMPAIGNS</h4>
+ <div id="adminCampaignList"><div class="status">Campaigns loading...</div></div>
+
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">SIZE & COLOR STOCK MANAGEMENT</h3>
  <div class="status">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ Available / Sold Out یا رنگ منتخب کرنے کے بعد تبدیلی صرف SAVE CHANGES دبانے پر Firebase میں محفوظ ہوگی۔</div>
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
+
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
  <form id="productForm">
@@ -403,6 +457,7 @@ const WHATSAPP_NUMBER="923432752543";
 const COLLECTION_NAME="products";
 const DEFAULT_SALE=11;
 const MAX_IMAGES=4,MAX_IMAGE_SIZE=5*1024*1024,MAX_VIDEO_SIZE=25*1024*1024;
+const MAX_CAMPAIGN_IMAGE_SIZE=5*1024*1024;
 
 const SIZE_PRESETS={
  shoes:["36","37","38","39","40","41","42","43","44","45"],
@@ -425,6 +480,7 @@ let products=[],cart=[],currentProduct=null,selectedCategory="all";
 let selectedSize="",selectedColor="",orderItems=[],unsubscribeProducts=null,unsubscribeOrders=null,reviewRequestToken=0;
 let adminUnavailableSizes=[];
 let sizeManagerDrafts={};
+let campaigns=[],unsubscribeCampaigns=null;
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
@@ -455,6 +511,7 @@ try{
  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
  auth=firebase.auth();db=firebase.firestore();storage=firebase.storage();
  startProductsListener();
+ startCampaignsListener();
  auth.onAuthStateChanged(user=>{
   currentUser=user;isAdmin=!!user&&user.uid===ADMIN_UID;updateAdminButtons();
   if(user&&!isAdmin){auth.signOut().catch(()=>{});showToast("یہ اکاؤنٹ مجاز Admin نہیں ہے۔")}
@@ -481,6 +538,202 @@ function startProductsListener(){
   showToast(getErrorMessage(error));
  });
 }
+
+/* CAMPAIGN MANAGEMENT */
+function campaignDateValue(value){
+ if(!value)return "";
+ if(typeof value==="string")return value.slice(0,10);
+ if(value&&typeof value.toDate==="function")return value.toDate().toISOString().slice(0,10);
+ if(value&&value.seconds)return new Date(value.seconds*1000).toISOString().slice(0,10);
+ return "";
+}
+function campaignIsCurrentlyActive(campaign){
+ if(!campaign||campaign.active!==true)return false;
+ const start=campaignDateValue(campaign.startDate);
+ const end=campaignDateValue(campaign.endDate);
+ if(!start||!end)return false;
+ const today=new Date();
+ const localToday=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+ const startDate=new Date(start+"T00:00:00");
+ const endDate=new Date(end+"T23:59:59");
+ return localToday<=endDate&&localToday>=startDate;
+}
+function startCampaignsListener(){
+ if(!db)return;
+ if(unsubscribeCampaigns)unsubscribeCampaigns();
+ $("activeCampaignBanner").classList.add("hidden");
+ unsubscribeCampaigns=db.collection("campaigns").onSnapshot(snapshot=>{
+  campaigns=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+  renderActiveCampaign();
+  renderAdminCampaigns();
+ },error=>{
+  console.error("Campaign listener:",error);
+  $("activeCampaignBanner").classList.add("hidden");
+  if(requireAdmin())$("adminCampaignList").innerHTML='<div class="status">Campaigns could not load: '+escapeHTML(getErrorMessage(error))+'</div>';
+ });
+}
+function renderActiveCampaign(){
+ const box=$("activeCampaignBanner");
+ const active=campaigns.filter(c=>campaignIsCurrentlyActive(c)).sort((a,b)=>{
+  const ad=campaignDateValue(a.startDate),bd=campaignDateValue(b.startDate);
+  return bd.localeCompare(ad);
+ })[0];
+ if(!active){box.innerHTML="";box.classList.add("hidden");return}
+ const image=safeImageURL(active.imageUrl);
+ box.innerHTML=`<div class="campaign-public-inner">
+  <div class="campaign-public-copy">
+   <small>✦ COBRA STORE SPECIAL CAMPAIGN</small>
+   <h2>${escapeHTML(active.name||"Special Promotion")}</h2>
+   <p>${escapeHTML(active.description||"Explore our special offers at COBRA STORE.")}</p>
+  </div>
+  ${image?`<img class="campaign-public-image" src="${escapeHTML(image)}" alt="${escapeHTML(active.name||"Campaign")}">`:""}
+ </div>`;
+ box.classList.remove("hidden");
+}
+function renderAdminCampaigns(){
+ const box=$("adminCampaignList");
+ if(!box)return;
+ if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
+ if(!campaigns.length){box.innerHTML='<div class="status">ابھی کوئی Campaign محفوظ نہیں۔ اوپر فارم سے نئی مہم بنائیں۔</div>';return}
+ box.innerHTML=campaigns.map(c=>{
+  const image=safeImageURL(c.imageUrl);
+  const active=campaignIsCurrentlyActive(c);
+  return `<div class="campaign-admin-card">
+   <div class="campaign-admin-head">
+    ${image?`<img src="${escapeHTML(image)}" alt="Campaign image">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center">✦</div>'}
+    <div><strong>${escapeHTML(c.name||"Untitled campaign")}</strong>
+     <small>${escapeHTML(campaignDateValue(c.startDate))} → ${escapeHTML(campaignDateValue(c.endDate))}<br>
+     ${c.active===true?"Enabled":"Disabled"} • ${active?"Currently showing on website":"Not currently showing"}</small>
+    </div>
+   </div>
+   ${c.description?`<div class="status">${escapeHTML(c.description)}</div>`:""}
+   <div class="campaign-admin-actions">
+    <button class="outline-btn" type="button" onclick="editCampaign('${escapeHTML(c.id)}')">EDIT</button>
+    <button class="outline-btn" type="button" onclick="toggleCampaign('${escapeHTML(c.id)}')">${c.active===true?"DEACTIVATE":"ACTIVATE"}</button>
+    <button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCampaign('${escapeHTML(c.id)}')">DELETE</button>
+   </div>
+  </div>`;
+ }).join("");
+}
+function resetCampaignForm(){
+ $("campaignForm").reset();
+ $("campaignId").value="";
+ $("campaignActive").checked=true;
+ $("campaignImageFile").value="";
+ $("campaignImageStatus").textContent="No new campaign image selected. Existing image will remain when editing.";
+ $("campaignImagePreview").innerHTML="";
+ $("campaignStatus").textContent="";
+ $("saveCampaignButton").textContent="SAVE CAMPAIGN";
+}
+function editCampaign(id){
+ if(!requireAdmin())return;
+ const c=campaigns.find(x=>x.id===id);if(!c)return;
+ $("campaignId").value=c.id;
+ $("campaignName").value=c.name||"";
+ $("campaignDescription").value=c.description||"";
+ $("campaignStartDate").value=campaignDateValue(c.startDate);
+ $("campaignEndDate").value=campaignDateValue(c.endDate);
+ $("campaignActive").checked=c.active===true;
+ $("campaignImageFile").value="";
+ $("campaignImageStatus").textContent=c.imageUrl?"Existing campaign image will remain unless you select a replacement.":"No existing campaign image.";
+ $("campaignImagePreview").innerHTML=safeImageURL(c.imageUrl)?`<img src="${escapeHTML(c.imageUrl)}" alt="Current campaign image">`:"";
+ $("campaignStatus").textContent="Editing campaign. Save changes when finished.";
+ $("saveCampaignButton").textContent="UPDATE CAMPAIGN";
+ $("campaignForm").scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("campaignImageFile").addEventListener("change",()=>{
+ const file=$("campaignImageFile").files[0];
+ $("campaignImagePreview").innerHTML="";
+ if(!file){$("campaignImageStatus").textContent="No new campaign image selected.";return}
+ if(!file.type.startsWith("image/")||file.size>MAX_CAMPAIGN_IMAGE_SIZE){
+  $("campaignImageStatus").textContent="صرف image فائل منتخب کریں، زیادہ سے زیادہ 5 MB۔";
+  $("campaignImageFile").value="";
+  return;
+ }
+ $("campaignImageStatus").textContent="Selected: "+file.name;
+ const img=document.createElement("img");
+ img.src=URL.createObjectURL(file);
+ $("campaignImagePreview").appendChild(img);
+});
+$("campaignForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ if(!requireAdmin()||!db||!storage){showToast("Admin access required.");return}
+ const id=$("campaignId").value;
+ const name=$("campaignName").value.trim();
+ const description=$("campaignDescription").value.trim();
+ const startDate=$("campaignStartDate").value;
+ const endDate=$("campaignEndDate").value;
+ const active=$("campaignActive").checked;
+ const imageFile=$("campaignImageFile").files[0]||null;
+ if(!name){$("campaignStatus").textContent="Campaign title is required.";return}
+ if(!startDate||!endDate){$("campaignStatus").textContent="Start date and end date are required.";return}
+ if(endDate<startDate){$("campaignStatus").textContent="End date cannot be earlier than start date.";return}
+ if(imageFile&&(!imageFile.type.startsWith("image/")||imageFile.size>MAX_CAMPAIGN_IMAGE_SIZE)){
+  $("campaignStatus").textContent="Campaign image must be an image file of 5 MB or less.";return;
+ }
+ const button=$("saveCampaignButton");
+ button.disabled=true;button.textContent="SAVING...";
+ $("campaignStatus").textContent="Saving campaign details...";
+ let docRef=null;
+ try{
+  docRef=id?db.collection("campaigns").doc(id):db.collection("campaigns").doc();
+  const old=campaigns.find(c=>c.id===id)||{};
+  let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
+  if(imageFile){
+   $("campaignStatus").textContent="Uploading campaign image...";
+   const ext=(imageFile.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");
+   const newPath="campaign-media/"+docRef.id+"/"+Date.now()+"."+ext;
+   const ref=storage.ref().child(newPath);
+   await ref.put(imageFile,{contentType:imageFile.type});
+   imageUrl=await ref.getDownloadURL();
+   const oldPath=imagePath;
+   imagePath=newPath;
+   if(oldPath&&oldPath!==newPath){
+    await storage.ref().child(oldPath).delete().catch(err=>console.warn("Old campaign image cleanup:",err));
+   }
+  }
+  const data={
+   name,description,startDate,endDate,active,imageUrl,imagePath,
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if(id)await docRef.update(data);
+  else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  $("campaignStatus").textContent="Campaign saved successfully.";
+  showToast(id?"Campaign updated successfully!":"Campaign created successfully!");
+  resetCampaignForm();
+ }catch(error){
+  console.error("Campaign save error:",error);
+  $("campaignStatus").textContent="Campaign save failed: "+getErrorMessage(error);
+ }finally{
+  button.disabled=false;
+  button.textContent=$("campaignId").value?"UPDATE CAMPAIGN":"SAVE CAMPAIGN";
+ }
+});
+async function toggleCampaign(id){
+ if(!requireAdmin()||!db)return;
+ const c=campaigns.find(x=>x.id===id);if(!c)return;
+ try{
+  await db.collection("campaigns").doc(id).update({
+   active:c.active!==true,
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  showToast(c.active===true?"Campaign deactivated.":"Campaign activated.");
+ }catch(error){showToast("Campaign update failed: "+getErrorMessage(error))}
+}
+async function deleteCampaign(id){
+ if(!requireAdmin()||!db)return;
+ const c=campaigns.find(x=>x.id===id);if(!c)return;
+ if(!confirm("کیا آپ اس Campaign کو مستقل طور پر حذف کرنا چاہتے ہیں؟"))return;
+ try{
+  await db.collection("campaigns").doc(id).delete();
+  if(c.imagePath&&storage){
+   await storage.ref().child(c.imagePath).delete().catch(err=>console.warn("Campaign image cleanup:",err));
+  }
+  if($("campaignId").value===id)resetCampaignForm();
+  showToast("Campaign deleted successfully.");
+ }catch(error){showToast("Campaign delete failed: "+getErrorMessage(error))}
+}
+
 function selectCategory(category,element){
  selectedCategory=category;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
  if(element)element.classList.add("active");$("activeLabel").textContent=categoryName(category);renderProducts();
@@ -588,11 +841,6 @@ function validateSelections(p){
  return true;
 }
 function changeMainPhoto(url){const photo=$("mainProductPhoto");if(photo)photo.src=url}
-function chooseSize(button,size){
- if(!currentProduct||isSizeUnavailable(currentProduct,size)){showToast("یہ سائز دستیاب نہیں ہے۔");return}
- selectedSize=size;document.querySelectorAll(".size-chip").forEach(el=>el.classList.remove("selected"));button.classList.add("selected");
- $("sizeStatus").textContent="Selected size: "+size;
-}
 function closeModal(){$("productModal").classList.remove("show");$("modalVideo").pause()}
 function closeModalOutside(event){if(event.target===$("productModal"))closeModal()}
 function orderSingle(p,size,color){
@@ -658,12 +906,22 @@ function closeOrder(){$("orderModal").classList.remove("show")}
 $("orderForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!orderItems.length){showToast("No order items found.");return}
  if(!validateOrderItems(orderItems))return;
- const name=$("customerName").value.trim(),phone=$("customerPhone").value.trim();
+ const name=$("customerName").value.trim();
+ const email=$("customerEmail").value.trim().toLowerCase();
+ const phone=$("customerPhone").value.trim();
  const city=$("customerCity").value.trim(),address=$("customerAddress").value.trim(),notes=$("customerNotes").value.trim();
- if(!name||!phone||!city||!address){$("orderStatus").textContent="Please complete all required delivery details.";return}
+ if(!name||!email||!phone||!city||!address){$("orderStatus").textContent="Please complete all required details, including your email address.";return}
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$("orderStatus").textContent="Please enter a valid email address.";return}
  if(!/^[0-9+() -]{7,20}$/.test(phone)){$("orderStatus").textContent="Please enter a valid phone number.";return}
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
- const order={customerName:name,phone,city,address,notes,items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),total,paymentMethod:"Cash on Delivery",status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ const order={
+  customerName:name,
+  email:email,
+  phone,city,address,notes,
+  items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),
+  total,paymentMethod:"Cash on Delivery",status:"Pending",
+  createdAt:firebase.firestore.FieldValue.serverTimestamp()
+ };
  const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
  try{
   if(!db)throw new Error("Firebase is not connected");
@@ -723,13 +981,13 @@ function openAdmin(){
  $("adminModal").classList.add("show");
  renderAdminProducts();
  renderAdminSizeManager();
+ renderAdminCampaigns();
  startOrdersListener();
 }
 function closeAdmin(){
  $("adminModal").classList.remove("show");
  if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null}
 }
-
 $("adminPanelButton").addEventListener("click",openAdmin);
 
 function formatOrderDate(value){
@@ -773,6 +1031,7 @@ function renderAdminOrders(orders){
    <span class="order-status ${isConfirmed?"confirmed":""}">${isConfirmed?"CONFIRMED":"PENDING"}</span></div>
    <div class="order-info">
     <b>Customer:</b> ${escapeHTML(o.customerName||"Not provided")}<br>
+    <b>Email:</b> ${escapeHTML(o.email||"Not provided")}<br>
     <b>Phone:</b> ${escapeHTML(o.phone||"")}<br>
     <b>City:</b> ${escapeHTML(o.city||"")}<br>
     <b>Address:</b> ${escapeHTML(o.address||"")}<br>
@@ -827,15 +1086,10 @@ function renderAdminProducts(){
 }
 
 /* CENTRAL SIZE + COLOR MANAGER WITH SAVE BUTTON */
-
 function getManagerDraft(product){
  const saved=sizeManagerDrafts[product.id];
  if(saved)return saved;
- return {
-  sizes:getProductSizes(product),
-  unavailableSizes:getUnavailableSizes(product),
-  availableColors:getProductColors(product)
- };
+ return {sizes:getProductSizes(product),unavailableSizes:getUnavailableSizes(product),availableColors:getProductColors(product)};
 }
 function managerDraftFor(product){
  if(!sizeManagerDrafts[product.id])sizeManagerDrafts[product.id]={
@@ -848,45 +1102,24 @@ function managerDraftFor(product){
 function renderAdminSizeManager(){
  const box=$("adminSizeManager");
  if(!box)return;
- if(!requireAdmin()){
-  box.innerHTML='<div class="status">Please sign in as administrator.</div>';
-  return;
- }
- if(!products.length){
-  box.innerHTML='<div class="status">ابھی کوئی پروڈکٹ موجود نہیں۔ نئی پروڈکٹس یہاں خودکار طور پر ظاہر ہوں گی۔</div>';
-  return;
- }
+ if(!requireAdmin()){box.innerHTML='<div class="status">Please sign in as administrator.</div>';return}
+ if(!products.length){box.innerHTML='<div class="status">ابھی کوئی پروڈکٹ موجود نہیں۔ نئی پروڈکٹس یہاں خودکار طور پر ظاہر ہوں گی۔</div>';return}
  box.innerHTML=products.map(p=>{
-  const draft=getManagerDraft(p);
-  const sizes=draft.sizes;
-  const unavailable=draft.unavailableSizes;
-  const colors=draft.availableColors;
-  const images=productImages(p);
+  const draft=getManagerDraft(p),sizes=draft.sizes,unavailable=draft.unavailableSizes,colors=draft.availableColors,images=productImages(p);
   const image=images.length?`<img src="${escapeHTML(images[0])}" alt="Product">`:`<div style="width:65px;height:65px;background:var(--light);display:grid;place-items:center;font-size:25px">🐍</div>`;
   const sizeHTML=sizes.length?sizes.map(size=>{
    const sold=unavailable.includes(size);
-   return `<label class="size-manager-option ${sold?"sold":""}">
-    <input type="checkbox" data-manager-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" ${sold?"checked":""}>
-    <b>${escapeHTML(size)}</b><span>${sold?"Sold Out":"Available"}</span>
-   </label>`;
+   return `<label class="size-manager-option ${sold?"sold":""}"><input type="checkbox" data-manager-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" ${sold?"checked":""}><b>${escapeHTML(size)}</b><span>${sold?"Sold Out":"Available"}</span></label>`;
   }).join(""):'<div class="size-manager-empty">اس پروڈکٹ میں ابھی کوئی سائز شامل نہیں۔ نیچے سے نئے سائز شامل کریں۔</div>';
   const colorHTML=COLOR_PALETTE.map(c=>{
    const active=colors.includes(c.name);
-   return `<label class="color-admin-option ${active?"active":""}">
-    <input type="checkbox" data-manager-color data-product-id="${escapeHTML(p.id)}" data-color="${c.name}" ${active?"checked":""}>
-    <span class="color-dot" style="background:${c.hex}"></span>${c.name}
-   </label>`;
+   return `<label class="color-admin-option ${active?"active":""}"><input type="checkbox" data-manager-color data-product-id="${escapeHTML(p.id)}" data-color="${c.name}" ${active?"checked":""}><span class="color-dot" style="background:${c.hex}"></span>${c.name}</label>`;
   }).join("");
   return `<div class="size-manager-product" data-size-product="${escapeHTML(p.id)}">
    <div class="size-manager-head">${image}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${sizes.length} Size(s) • ${colors.length} Color(s)</small></div></div>
-   <b style="font-size:11px">SIZE AVAILABILITY</b>
-   <div class="size-manager-options">${sizeHTML}</div>
-   <div class="size-manager-add">
-    <input class="form-input" type="text" data-size-input placeholder="نئے سائز لکھیں، مثال: 40, 41, 42 یا S, M, L">
-    <button type="button" class="outline-btn" data-size-add>ADD SIZES</button>
-   </div>
-   <hr style="border:0;border-top:1px solid #eee5e1;margin:15px 0">
-   <b style="font-size:11px">AVAILABLE COLORS</b>
+   <b style="font-size:11px">SIZE AVAILABILITY</b><div class="size-manager-options">${sizeHTML}</div>
+   <div class="size-manager-add"><input class="form-input" type="text" data-size-input placeholder="نئے سائز لکھیں، مثال: 40, 41, 42 یا S, M, L"><button type="button" class="outline-btn" data-size-add>ADD SIZES</button></div>
+   <hr style="border:0;border-top:1px solid #eee5e1;margin:15px 0"><b style="font-size:11px">AVAILABLE COLORS</b>
    <div class="color-list">${colorHTML}</div>
    <div class="manager-save-row"><button type="button" class="gold-btn" data-manager-save data-product-id="${escapeHTML(p.id)}">SAVE CHANGES</button></div>
    <div class="status" data-manager-status="${escapeHTML(p.id)}">Changes are not saved until you press SAVE CHANGES.</div>
@@ -898,31 +1131,21 @@ function updateManagerDraftStatus(productId,message){
  if(status)status.textContent=message||"Unsaved changes — press SAVE CHANGES to store them.";
 }
 $("adminSizeManager").addEventListener("change",event=>{
- const sizeBox=event.target.closest("[data-manager-size]");
- const colorBox=event.target.closest("[data-manager-color]");
+ const sizeBox=event.target.closest("[data-manager-size]"),colorBox=event.target.closest("[data-manager-color]");
  if(!sizeBox&&!colorBox)return;
- const productId=(sizeBox||colorBox).dataset.productId;
- const product=products.find(p=>p.id===productId);
+ const productId=(sizeBox||colorBox).dataset.productId,product=products.find(p=>p.id===productId);
  if(!product)return;
  const draft=managerDraftFor(product);
  if(sizeBox){
   const size=sizeBox.dataset.size;
-  if(sizeBox.checked){
-   if(!draft.unavailableSizes.includes(size))draft.unavailableSizes.push(size);
-  }else{
-   draft.unavailableSizes=draft.unavailableSizes.filter(x=>x!==size);
-  }
-  const label=sizeBox.closest("label");
-  label.classList.toggle("sold",sizeBox.checked);
-  const span=label.querySelector("span");
-  if(span)span.textContent=sizeBox.checked?"Sold Out":"Available";
+  if(sizeBox.checked){if(!draft.unavailableSizes.includes(size))draft.unavailableSizes.push(size)}
+  else draft.unavailableSizes=draft.unavailableSizes.filter(x=>x!==size);
+  const label=sizeBox.closest("label");label.classList.toggle("sold",sizeBox.checked);
+  const span=label.querySelector("span");if(span)span.textContent=sizeBox.checked?"Sold Out":"Available";
  }else{
   const color=colorBox.dataset.color;
-  if(colorBox.checked){
-   if(!draft.availableColors.includes(color))draft.availableColors.push(color);
-  }else{
-   draft.availableColors=draft.availableColors.filter(x=>x!==color);
-  }
+  if(colorBox.checked){if(!draft.availableColors.includes(color))draft.availableColors.push(color)}
+  else draft.availableColors=draft.availableColors.filter(x=>x!==color);
   colorBox.closest("label").classList.toggle("active",colorBox.checked);
  }
  updateManagerDraftStatus(productId);
@@ -930,78 +1153,43 @@ $("adminSizeManager").addEventListener("change",event=>{
 $("adminSizeManager").addEventListener("click",async event=>{
  const addButton=event.target.closest("[data-size-add]");
  if(addButton){
-  const productBox=addButton.closest("[data-size-product]");
-  const productId=productBox.dataset.sizeProduct;
-  const product=products.find(p=>p.id===productId);
-  const input=productBox.querySelector("[data-size-input]");
-  const entered=input.value.trim();
+  const productBox=addButton.closest("[data-size-product]"),productId=productBox.dataset.sizeProduct,product=products.find(p=>p.id===productId),input=productBox.querySelector("[data-size-input]"),entered=input.value.trim();
   if(!entered){showToast("پہلے نئے سائز لکھیں۔");return}
-  const additions=entered.split(",").map(s=>s.trim()).filter(Boolean);
-  const draft=managerDraftFor(product);
-  additions.forEach(size=>{
-   if(!draft.sizes.some(old=>old.toLowerCase()===size.toLowerCase()))draft.sizes.push(size);
-  });
-  input.value="";
-  renderAdminSizeManager();
-  updateManagerDraftStatus(productId,"New sizes added to draft. Press SAVE CHANGES to save.");
-  showToast("سائز ڈرافٹ میں شامل ہوگئے۔ SAVE CHANGES دبائیں۔");
-  return;
+  const additions=entered.split(",").map(s=>s.trim()).filter(Boolean),draft=managerDraftFor(product);
+  additions.forEach(size=>{if(!draft.sizes.some(old=>old.toLowerCase()===size.toLowerCase()))draft.sizes.push(size)});
+  input.value="";renderAdminSizeManager();updateManagerDraftStatus(productId,"New sizes added to draft. Press SAVE CHANGES to save.");
+  showToast("سائز ڈرافٹ میں شامل ہوگئے۔ SAVE CHANGES دبائیں۔");return;
  }
  const saveButton=event.target.closest("[data-manager-save]");
- if(saveButton){
-  await saveManagerDraft(saveButton.dataset.productId,saveButton);
- }
+ if(saveButton)await saveManagerDraft(saveButton.dataset.productId,saveButton);
 });
 async function saveManagerDraft(productId,button){
  if(!requireAdmin()||!db)return;
- const product=products.find(p=>p.id===productId);
- if(!product)return;
- const draft=managerDraftFor(product);
- const oldText=button.textContent;
+ const product=products.find(p=>p.id===productId);if(!product)return;
+ const draft=managerDraftFor(product),oldText=button.textContent;
  button.disabled=true;button.textContent="SAVING...";
  try{
   const sizes=[...new Set(draft.sizes.map(s=>String(s).trim()).filter(Boolean))];
   const unavailableSizes=draft.unavailableSizes.filter(s=>sizes.includes(s));
   const availableColors=COLOR_PALETTE.map(c=>c.name).filter(name=>draft.availableColors.includes(name));
-  await db.collection(COLLECTION_NAME).doc(productId).update({
-   sizes,
-   unavailableSizes,
-   availableColors,
-   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-  delete sizeManagerDrafts[productId];
-  showToast("سائز اور رنگ کامیابی سے محفوظ ہوگئے۔");
-  const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);
-  if(status)status.textContent="Changes saved successfully.";
- }catch(error){
-  console.error("Size/color save error:",error);
-  showToast("تبدیلیاں محفوظ نہیں ہو سکیں: "+getErrorMessage(error));
- }finally{
-  button.disabled=false;button.textContent=oldText;
- }
+  await db.collection(COLLECTION_NAME).doc(productId).update({sizes,unavailableSizes,availableColors,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  delete sizeManagerDrafts[productId];showToast("سائز اور رنگ کامیابی سے محفوظ ہوگئے۔");
+  const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);if(status)status.textContent="Changes saved successfully.";
+ }catch(error){console.error("Size/color save error:",error);showToast("تبدیلیاں محفوظ نہیں ہو سکیں: "+getErrorMessage(error))}
+ finally{button.disabled=false;button.textContent=oldText}
 }
 
-/* SIZE PRESETS: existing sizes are preserved; only missing sizes are appended. */
+/* SIZE PRESETS */
 function addSelectedSizePreset(){
  const preset=$("sizePreset").value;
- if(!preset||!SIZE_PRESETS[preset]){
-  showToast("پہلے Shoes، Clothes یا One Size منتخب کریں۔");
-  return;
- }
- const current=$("productSizes").value.split(",").map(s=>s.trim()).filter(Boolean);
- const additions=SIZE_PRESETS[preset];
- const merged=[...current];
- additions.forEach(size=>{
-  if(!merged.some(existing=>existing.toLowerCase()===size.toLowerCase()))merged.push(size);
- });
- $("productSizes").value=merged.join(", ");
- renderSizeAvailabilityEditor();
- $("sizePreset").value="";
+ if(!preset||!SIZE_PRESETS[preset]){showToast("پہلے Shoes، Clothes یا One Size منتخب کریں۔");return}
+ const current=$("productSizes").value.split(",").map(s=>s.trim()).filter(Boolean),additions=SIZE_PRESETS[preset],merged=[...current];
+ additions.forEach(size=>{if(!merged.some(existing=>existing.toLowerCase()===size.toLowerCase()))merged.push(size)});
+ $("productSizes").value=merged.join(", ");renderSizeAvailabilityEditor();$("sizePreset").value="";
  showToast("Preset sizes شامل ہوگئے۔ اب ہر سائز کی availability منتخب کریں۔");
  $("productSizes").scrollIntoView({behavior:"smooth",block:"center"});
 }
 $("addSizePreset").addEventListener("click",addSelectedSizePreset);
-
 function renderSizeAvailabilityEditor(){
  const box=$("sizeAvailabilityEditor");if(!box)return;
  const sizes=[...new Set($("productSizes").value.split(",").map(s=>s.trim()).filter(Boolean))];
@@ -1015,7 +1203,7 @@ function renderSizeAvailabilityEditor(){
   input.addEventListener("change",()=>{
    const size=sizes[Number(input.dataset.sizeIndex)];
    if(input.checked){if(!adminUnavailableSizes.includes(size))adminUnavailableSizes.push(size)}
-   else{adminUnavailableSizes=adminUnavailableSizes.filter(x=>x!==size)}
+   else adminUnavailableSizes=adminUnavailableSizes.filter(x=>x!==size);
    renderSizeAvailabilityEditor();
   });
  });
@@ -1024,8 +1212,7 @@ $("productSizes").addEventListener("input",renderSizeAvailabilityEditor);
 
 function resetProductForm(){
  $("productForm").reset();$("editProductId").value="";$("productSale").value=DEFAULT_SALE;
- adminUnavailableSizes=[];
- $("productFormTitle").textContent="ADD NEW PRODUCT";$("saveProductButton").textContent="SAVE PRODUCT";
+ adminUnavailableSizes=[];$("productFormTitle").textContent="ADD NEW PRODUCT";$("saveProductButton").textContent="SAVE PRODUCT";
  $("imageFileStatus").textContent="No new images selected.";$("videoFileStatus").textContent="No new video selected.";
  $("imagePreview").innerHTML="";$("uploadStatus").textContent="";renderSizeAvailabilityEditor();
 }
@@ -1035,8 +1222,7 @@ function editProduct(id){
  $("productCategory").value=p.category||"fashion";$("productPrice").value=p.price||"";
  $("productSale").value=salePercent(p);$("productLabel").value=p.label||"";
  $("productSizes").value=Array.isArray(p.sizes)?p.sizes.join(", "):(p.sizes||"");
- adminUnavailableSizes=getUnavailableSizes(p).filter(s=>getProductSizes(p).includes(s));
- renderSizeAvailabilityEditor();
+ adminUnavailableSizes=getUnavailableSizes(p).filter(s=>getProductSizes(p).includes(s));renderSizeAvailabilityEditor();
  $("productStock").value=p.stock||"";$("productDescription").value=p.description||"";$("productDetails").value=p.details||"";
  $("productImageFiles").value="";$("productVideoFile").value="";
  $("imageFileStatus").textContent="Existing photos: "+productImages(p).length+". Select new images only if you want to replace them.";
@@ -1062,8 +1248,7 @@ function storagePath(productId,type,index,filename){
  return "product-media/"+productId+"/"+type+"/"+Date.now()+"-"+index+"."+ext;
 }
 async function uploadFile(file,path){
- const ref=storage.ref().child(path);
- await ref.put(file,{contentType:file.type});
+ const ref=storage.ref().child(path);await ref.put(file,{contentType:file.type});
  return {url:await ref.getDownloadURL(),path};
 }
 async function deleteStorageFiles(paths){
@@ -1097,8 +1282,7 @@ $("productForm").addEventListener("submit",async event=>{
   let mediaPaths=Array.isArray(old.mediaPaths)?old.mediaPaths:[];
   if(imageFiles.length){
    $("uploadStatus").textContent="Uploading product photos...";
-   const oldImagePaths=mediaPaths.filter(p=>p.includes("/images/"));
-   const uploaded=[];
+   const oldImagePaths=mediaPaths.filter(p=>p.includes("/images/")),uploaded=[];
    for(let i=0;i<imageFiles.length;i++)uploaded.push(await uploadFile(imageFiles[i],storagePath(productRef.id,"images",i,imageFiles[i].name)));
    image=uploaded[0]?.url||"";extraImages=uploaded.slice(1).map(x=>x.url);
    mediaPaths=[...mediaPaths.filter(p=>!p.includes("/images/")),...uploaded.map(x=>x.path)];
@@ -1108,8 +1292,7 @@ $("productForm").addEventListener("submit",async event=>{
    $("uploadStatus").textContent="Uploading product video...";
    const oldVideoPaths=mediaPaths.filter(p=>p.includes("/videos/"));
    const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"videos",0,videoFile.name));
-   videoUrl=uploadedVideo.url;
-   mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
+   videoUrl=uploadedVideo.url;mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
    await deleteStorageFiles(oldVideoPaths);
   }
   await productRef.update({image,extraImages,videoUrl,mediaPaths,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
@@ -1127,8 +1310,7 @@ async function deleteProduct(id){
  try{
   await db.collection(COLLECTION_NAME).doc(id).delete();
   await deleteStorageFiles(p.mediaPaths||[]);
-  delete sizeManagerDrafts[id];
-  cart=cart.filter(x=>x.id!==id);updateCart();showToast("Product deleted.");
+  delete sizeManagerDrafts[id];cart=cart.filter(x=>x.id!==id);updateCart();showToast("Product deleted.");
  }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
 }
 
