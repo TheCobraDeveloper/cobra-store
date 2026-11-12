@@ -5,39 +5,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080808">
-<title>COBRA STORE | VIP Premium Shopping</title>
+<meta name="description" content="COBRA STORE - Premium online shopping in Pakistan. Shoes, watches, fashion, electronics and more.">
+<title>COBRA STORE | VIP CRAZY EDITION</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- MDB UI KIT -->
 <link href="https://cdn.jsdelivr.net/npm/mdb-ui-kit@8.2.0/css/mdb.min.css" rel="stylesheet">
 
 <style>
 :root{
- --gold:#dfb85e;
- --gold2:#ffedb8;
- --black:#080808;
- --panel:#151515;
+ --gold:#e5bd65;
+ --gold2:#fff0bf;
+ --black:#070707;
+ --panel:#121212;
  --muted:#aaa;
- --border:rgba(223,184,94,.35);
+ --border:rgba(229,189,101,.3);
+ --glow:0 0 25px rgba(229,189,101,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
 body{
  background:
- radial-gradient(ellipse at 50% 0%,rgba(160,112,35,.18),transparent 45%),
- linear-gradient(180deg,#080808,#101010 50%,#070707);
- color:#fff;
- font-family:Montserrat,Arial,sans-serif;
- overflow-x:hidden;
+ radial-gradient(ellipse at 50% -10%,rgba(180,125,35,.22),transparent 48%),
+ radial-gradient(ellipse at 0% 50%,rgba(110,75,20,.07),transparent 35%),
+ #080808;
+ color:#fff;font-family:Montserrat,Arial,sans-serif;overflow-x:hidden
 }
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
+.container{max-width:1350px;margin:auto;padding:0 18px}
 .gold{color:var(--gold2)}
-.container{max-width:1350px;margin:auto;padding-left:18px;padding-right:18px}
+::selection{background:var(--gold);color:#000}
 
 /* INTRO */
 #intro{
@@ -45,12 +45,12 @@ button{cursor:pointer}
  display:flex;align-items:center;justify-content:center;overflow:hidden
 }
 #intro video{position:absolute;width:100%;height:100%;object-fit:cover}
-.intro-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),transparent 45%,rgba(0,0,0,.6))}
+.intro-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.2) 45%,#000)}
 .intro-brand{
  position:absolute;top:22px;left:18px;z-index:3;
  font-family:Orbitron,sans-serif;color:var(--gold2);
  font-size:clamp(17px,4vw,27px);font-weight:800;letter-spacing:2px;
- text-shadow:0 0 15px var(--gold)
+ text-shadow:0 0 18px var(--gold)
 }
 .intro-brand small{display:block;font-size:8px;letter-spacing:4px;text-align:center;margin-top:4px;color:#fff}
 .skip-intro{
@@ -75,10 +75,8 @@ button{cursor:pointer}
 /* HEADER */
 header{
  position:sticky;top:0;z-index:90;
- background:rgba(5,5,5,.96);
- border-bottom:1px solid var(--border);
- backdrop-filter:blur(18px);
- box-shadow:0 5px 25px rgba(0,0,0,.4)
+ background:rgba(5,5,5,.94);border-bottom:1px solid var(--border);
+ backdrop-filter:blur(20px);box-shadow:0 7px 30px #0008
 }
 .header-inner{
  max-width:1350px;margin:auto;padding:12px 18px;
@@ -88,81 +86,89 @@ header{
 .logo,.footer-logo{
  display:flex;align-items:center;justify-content:center;overflow:hidden;
  border-radius:50%;border:2px solid var(--gold);background:#080808;
- box-shadow:0 0 20px rgba(223,184,94,.3)
+ box-shadow:0 0 22px rgba(229,189,101,.3)
 }
 .logo{width:65px;height:65px;margin:auto}
 .logo img,.footer-logo img{width:100%;height:100%;object-fit:contain;border-radius:50%}
 .logo-sub{font-size:8px;letter-spacing:3px;color:#aaa;text-align:center;margin-top:5px}
-.nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .nav a{
  color:#ddd;text-decoration:none;font-size:10px;font-weight:800;
  padding:10px 12px;border-radius:25px;transition:.25s
 }
-.nav a:hover{color:var(--gold2);background:rgba(223,184,94,.12)}
+.nav a:hover{color:var(--gold2);background:#e5bd651c}
 .header-actions{display:flex;gap:7px;flex-wrap:wrap}
 .gold-btn{
  background:linear-gradient(125deg,#946a25,#ffe5a0,#b18132);
- color:#090909;border:0;border-radius:30px;padding:11px 17px;
+ color:#090909;border:0;border-radius:30px;padding:12px 18px;
  font-weight:800;font-size:10px;transition:.25s;
- box-shadow:0 4px 15px rgba(223,184,94,.13)
+ box-shadow:0 4px 18px rgba(223,184,94,.16)
 }
-.gold-btn:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(223,184,94,.4)}
+.gold-btn:hover{transform:translateY(-3px);box-shadow:0 0 25px #dfb85e66}
 .outline-btn{
  background:transparent;color:var(--gold2);
  border:1px solid var(--gold);border-radius:30px;
  padding:10px 15px;font-weight:800;font-size:10px;transition:.25s
 }
-.outline-btn:hover{background:rgba(223,184,94,.12);border-color:var(--gold2)}
+.outline-btn:hover{background:#e5bd651c;box-shadow:var(--glow)}
 .music-btn{min-width:42px}
 
 /* HERO */
 .hero{
- min-height:440px;max-width:1350px;margin:auto;padding:75px 20px 65px;
+ min-height:490px;max-width:1350px;margin:auto;padding:80px 20px 70px;
  display:flex;align-items:center;justify-content:center;text-align:center;
- position:relative;overflow:hidden;border-radius:0 0 35px 35px;
- background:linear-gradient(135deg,rgba(0,0,0,.25),rgba(30,21,8,.35));
- border:1px solid rgba(223,184,94,.12)
+ position:relative;overflow:hidden;border-radius:0 0 38px 38px;
+ background:
+ linear-gradient(120deg,rgba(0,0,0,.82),rgba(20,15,7,.7)),
+ url("IMG-20261109-WA0834(1).jpg") center/cover no-repeat;
+ border:1px solid #dfb85e22
 }
 .hero:before{
  content:"";position:absolute;width:340px;height:340px;border-radius:50%;
- border:1px solid rgba(223,184,94,.18);
- background:linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.48)),url("IMG-20261109-WA0835.jpg") center/contain no-repeat;
- opacity:.35;pointer-events:none
+ border:1px solid #dfb85e44;
+ background:linear-gradient(#0008,#0008),url("IMG-20261109-WA0835.jpg") center/contain no-repeat;
+ opacity:.22;pointer-events:none;animation:float 7s ease-in-out infinite
 }
+@keyframes float{50%{transform:translateY(-15px) rotate(3deg)}}
 .hero-content{position:relative;z-index:1}
 .hero-kicker{color:var(--gold);font-size:10px;letter-spacing:6px;margin-bottom:16px;font-weight:800}
 .hero h1{
- font-family:Cinzel,serif;font-size:clamp(38px,8vw,78px);
+ font-family:Cinzel,serif;font-size:clamp(38px,8vw,82px);
  line-height:1.12;color:var(--gold2);
- text-shadow:0 0 25px rgba(223,184,94,.3);letter-spacing:3px
+ text-shadow:0 0 30px #dfb85e77;letter-spacing:3px
 }
-.hero p{color:#bbb;font-size:13px;line-height:1.9;max-width:560px;margin:18px auto 25px}
+.hero p{color:#ddd;font-size:13px;line-height:2;max-width:570px;margin:20px auto 26px}
 .hero-buttons{display:flex;justify-content:center;gap:11px;flex-wrap:wrap}
+.hero-stamp{
+ display:inline-block;border:1px solid #dfb85e77;color:var(--gold2);
+ padding:8px 18px;border-radius:30px;font-size:9px;letter-spacing:3px;
+ margin-bottom:18px;background:#0007
+}
 
 /* BENEFITS */
 .benefits{
- max-width:1150px;margin:0 auto 35px;padding:0 16px;
- display:grid;grid-template-columns:repeat(3,1fr);gap:13px
+ max-width:1150px;margin:-20px auto 35px;padding:0 16px;
+ position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:13px
 }
 .benefit{
  border:1px solid var(--border);
  background:linear-gradient(145deg,#211a0d,#101010);
- border-radius:18px;padding:19px 9px;text-align:center;
- box-shadow:0 8px 25px rgba(0,0,0,.2);transition:.3s
+ border-radius:18px;padding:20px 9px;text-align:center;
+ box-shadow:0 8px 25px #0008;transition:.3s
 }
-.benefit:hover{transform:translateY(-4px);border-color:var(--gold2)}
+.benefit:hover{transform:translateY(-5px);border-color:var(--gold2);box-shadow:var(--glow)}
 .benefit strong{display:block;color:var(--gold2);font-size:11px}
 .benefit span{display:block;color:#aaa;font-size:9px;margin-top:7px}
 
 /* SECTIONS */
-.section{max-width:1350px;margin:0 auto;padding:42px 18px}
-.section-heading{text-align:center;margin-bottom:27px}
+.section{max-width:1350px;margin:0 auto;padding:45px 18px}
+.section-heading{text-align:center;margin-bottom:28px}
 .section-heading .eyebrow{color:var(--gold);font-size:9px;letter-spacing:4px;font-weight:800}
 .section-heading h2{
  font-family:Cinzel,serif;color:var(--gold2);
- font-size:clamp(24px,5vw,36px);margin-top:9px
+ font-size:clamp(24px,5vw,38px);margin-top:9px;text-shadow:0 0 15px #dfb85e33
 }
-.section-heading p{color:#999;font-size:11px;margin-top:9px;line-height:1.7}
+.section-heading p{color:#999;font-size:11px;margin-top:10px;line-height:1.8}
 
 /* CATEGORIES */
 .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
@@ -171,21 +177,26 @@ header{
  background:linear-gradient(145deg,#201a10,#0d0d0d);
  border:1px solid #594522;border-radius:20px;padding:10px;
  text-align:center;cursor:pointer;transition:.3s;
- box-shadow:0 8px 22px rgba(0,0,0,.25)
+ box-shadow:0 8px 22px #0007
 }
 .category-card:hover,.category-card.active{
- transform:translateY(-5px);border-color:var(--gold2);
- box-shadow:0 0 22px rgba(223,184,94,.22)
+ transform:translateY(-6px);border-color:var(--gold2);
+ box-shadow:0 0 25px #dfb85e33
 }
 .category-card img{
  width:100%;aspect-ratio:1;object-fit:cover;
- border-radius:15px;border:1px solid rgba(223,184,94,.45);
- display:block;background:#171717;transition:.35s
+ border-radius:15px;border:1px solid #dfb85e66;
+ display:block;background:#171717;transition:.4s
 }
-.category-card:hover img{transform:scale(1.04)}
-.category-card h3{color:var(--gold2);font-size:10px;margin-top:11px;font-weight:800}
+.category-card:hover img{transform:scale(1.06)}
+.category-card h3{color:var(--gold2);font-size:10px;margin-top:12px;font-weight:800}
 .category-card small{display:block;color:#999;font-size:8px;margin-top:5px}
 .category-card.all-card{background:linear-gradient(145deg,#33250e,#0c0b09)}
+.category-card.active:after{
+ content:"SELECTED";position:absolute;top:17px;left:17px;
+ background:var(--gold);color:#080808;font-size:7px;font-weight:900;
+ padding:5px 8px;border-radius:20px
+}
 
 /* PRODUCT TOOLS */
 .tools{
@@ -195,8 +206,9 @@ header{
 .search-box{
  flex:1;min-width:190px;display:flex;
  background:#151515;border:1px solid #806332;
- border-radius:14px;overflow:hidden
+ border-radius:14px;overflow:hidden;transition:.2s
 }
+.search-box:focus-within{border-color:var(--gold2);box-shadow:var(--glow)}
 .search-box input{
  width:100%;background:transparent;border:0;outline:0;
  padding:14px 17px;color:#fff;font-size:12px
@@ -209,49 +221,48 @@ header{
 .active-label{color:var(--gold2);font-size:12px;font-weight:800;margin:14px 0}
 
 /* PRODUCTS */
-.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .product-card{
  background:linear-gradient(155deg,#202020,#0b0b0b);
- border:1px solid rgba(223,184,94,.3);
- border-radius:20px;overflow:hidden;transition:.3s;
- box-shadow:0 10px 30px rgba(0,0,0,.3)
+ border:1px solid #dfb85e44;border-radius:21px;overflow:hidden;transition:.3s;
+ box-shadow:0 10px 30px #0008;position:relative
 }
 .product-card:hover{
- transform:translateY(-6px);border-color:var(--gold);
- box-shadow:0 12px 35px rgba(223,184,94,.16)
+ transform:translateY(-7px);border-color:var(--gold);
+ box-shadow:0 14px 38px #dfb85e20
 }
 .product-image{
- height:215px;background:radial-gradient(circle,#302516,#101010);
+ height:225px;background:radial-gradient(circle,#302516,#101010);
  display:flex;align-items:center;justify-content:center;
- color:var(--gold);font-size:60px;overflow:hidden
+ color:var(--gold);font-size:60px;overflow:hidden;position:relative
 }
-.product-image img{width:100%;height:100%;object-fit:contain}
-.product-info{padding:16px}
+.product-image img{width:100%;height:100%;object-fit:contain;padding:8px;transition:.4s}
+.product-card:hover .product-image img{transform:scale(1.06)}
+.product-info{padding:17px}
 .product-tag{color:#caa45d;font-size:8px;letter-spacing:1px;font-weight:800}
-.product-info h3{font-size:13px;margin:9px 0;color:#fff;line-height:1.6}
-.product-price{font-size:18px;color:var(--gold2);font-weight:800}
-.product-note{font-size:9px;color:#999;margin:8px 0 13px}
+.product-info h3{font-size:13px;margin:10px 0;color:#fff;line-height:1.7;min-height:42px}
+.product-price{font-size:19px;color:var(--gold2);font-weight:800}
+.product-note{font-size:9px;color:#999;margin:8px 0 14px}
 .product-buttons{display:flex;gap:8px}
-.product-buttons button{flex:1;padding:10px 5px;font-size:9px}
+.product-buttons button{flex:1;padding:11px 5px;font-size:9px}
 .empty{
  grid-column:1/-1;text-align:center;color:#ddd;padding:45px 10px;
  border:1px dashed #806332;border-radius:16px;line-height:1.9;
- background:rgba(0,0,0,.65)
+ background:#0009
 }
 
-/* MODALS & FORMS */
+/* MODALS */
 .modal{
- position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.88);
+ position:fixed;inset:0;z-index:300;background:#000e;
  display:none;align-items:center;justify-content:center;
- padding:16px;overflow-y:auto
+ padding:16px;overflow-y:auto;backdrop-filter:blur(7px)
 }
 .modal.show{display:flex}
 .modal-box{
  width:min(480px,100%);max-height:92vh;overflow-y:auto;
  background:linear-gradient(145deg,#1c1a16,#090909);
  border:1px solid var(--gold);border-radius:23px;
- padding:24px;position:relative;
- box-shadow:0 20px 70px rgba(0,0,0,.7)
+ padding:24px;position:relative;box-shadow:0 20px 70px #000
 }
 .close{position:absolute;right:14px;top:10px;background:transparent;color:#fff;border:0;font-size:25px}
 .modal-icon{text-align:center;font-size:65px;padding:12px;color:var(--gold2)}
@@ -264,7 +275,7 @@ header{
  width:100%;background:#090909;border:1px solid #594522;
  border-radius:12px;padding:13px;color:#fff;outline:none;font-size:12px
 }
-.form-input:focus{border-color:var(--gold2);box-shadow:0 0 0 2px rgba(223,184,94,.1)}
+.form-input:focus{border-color:var(--gold2);box-shadow:0 0 0 2px #dfb85e22}
 textarea.form-input{min-height:75px;resize:vertical}
 .form-actions{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}
 .form-actions button{flex:1}
@@ -274,7 +285,7 @@ textarea.form-input{min-height:75px;resize:vertical}
  width:min(680px,100%);max-height:92vh;overflow-y:auto;
  background:linear-gradient(145deg,#1b1915,#090909);
  border:1px solid var(--gold);border-radius:22px;padding:22px;
- box-shadow:0 20px 70px rgba(0,0,0,.7)
+ box-shadow:0 20px 70px #000
 }
 .admin-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
 .admin-top h2{font-family:Cinzel;color:var(--gold2);font-size:21px}
@@ -295,7 +306,7 @@ textarea.form-input{min-height:75px;resize:vertical}
  background:linear-gradient(180deg,#181818,#080808);
  z-index:400;border-left:1px solid var(--gold);
  padding:20px;transition:.35s;overflow-y:auto;
- box-shadow:-15px 0 40px rgba(0,0,0,.5)
+ box-shadow:-15px 0 40px #0008
 }
 .cart-panel.open{right:0}
 .cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
@@ -309,7 +320,7 @@ textarea.form-input{min-height:75px;resize:vertical}
 
 /* FOOTER */
 footer{
- border-top:1px solid #806332;margin-top:45px;padding:35px 18px 17px;
+ border-top:1px solid #806332;margin-top:45px;padding:38px 18px 17px;
  text-align:center;background:linear-gradient(180deg,#111,#050505)
 }
 .footer-logo{width:85px;height:85px;margin:0 auto}
@@ -325,18 +336,20 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 }
 .toast.show{opacity:1;bottom:35px}
 
+/* MOBILE */
 @media(max-width:850px){
  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .hero{min-height:370px}
+ .hero{min-height:390px}
 }
 @media(max-width:520px){
  .header-inner{justify-content:center;padding:11px}
  .nav{justify-content:center;width:100%;gap:3px}
  .nav a{font-size:9px;padding:8px}
  .header-actions{justify-content:center;width:100%}
- .hero{min-height:330px;padding:48px 15px;border-radius:0 0 24px 24px}
+ .hero{min-height:340px;padding:48px 15px;border-radius:0 0 24px 24px}
  .hero h1{letter-spacing:1px}
+ .hero-kicker{letter-spacing:3px}
  .benefits{gap:7px;margin-bottom:20px}
  .benefit{padding:13px 5px}
  .benefit strong{font-size:9px}
@@ -345,9 +358,9 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  .category-card{padding:7px}
  .category-card h3{font-size:9px}
  .product-grid{gap:10px}
- .product-image{height:145px;font-size:48px}
- .product-info{padding:10px}
- .product-info h3{font-size:11px}
+ .product-image{height:150px;font-size:48px}
+ .product-info{padding:11px}
+ .product-info h3{font-size:11px;min-height:38px}
  .product-price{font-size:15px}
  .product-buttons{gap:5px}
  .product-buttons button{font-size:8px;padding:9px 3px}
@@ -359,11 +372,11 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
  .admin-product{align-items:flex-start;flex-direction:column}
  .admin-product-actions{width:100%}
  .admin-product-actions button{flex:1}
- .section{padding-top:30px;padding-bottom:30px}
+ .section{padding-top:32px;padding-bottom:32px}
+ .tools select{width:100%}
 }
 </style>
 </head>
-
 <body>
 
 <!-- INTRO -->
@@ -387,17 +400,15 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <div class="logo"><img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo"></div>
    <div class="logo-sub">STYLE • QUALITY • TRUST</div>
   </div>
-
   <nav class="nav">
    <a href="#home">HOME</a>
    <a href="#categories">CATEGORIES</a>
    <a href="#products">PRODUCTS</a>
    <a href="#contact">CONTACT</a>
   </nav>
-
   <div class="header-actions">
    <button class="outline-btn" id="cartOpen">CART (<span id="cartCount">0</span>)</button>
-   <button class="outline-btn" id="musicToggle" title="Music">♫ MUSIC</button>
+   <button class="outline-btn" id="musicToggle">♫ MUSIC OFF</button>
    <button class="outline-btn" id="adminLoginButton">ADMIN LOGIN</button>
    <button class="outline-btn hidden" id="adminPanelButton">ADMIN PANEL</button>
    <button class="outline-btn hidden" id="adminLogoutButton">LOGOUT</button>
@@ -408,9 +419,10 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <!-- HERO -->
 <section class="hero" id="home">
  <div class="hero-content">
+  <div class="hero-stamp">✦ EXCLUSIVE ONLINE COLLECTION ✦</div>
   <div class="hero-kicker">WELCOME TO THE PREMIUM WORLD</div>
   <h1>COBRA STORE</h1>
-  <p>Discover your style with our selected collection. Explore shoes, fashion, watches, electronics and more.</p>
+  <p>Discover your style with our selected collection. Explore shoes, fashion, watches, electronics and more — all in one place.</p>
   <div class="hero-buttons">
    <button class="gold-btn" onclick="goToCategories()">EXPLORE COLLECTION</button>
    <button class="outline-btn" onclick="showAllProducts()">VIEW ALL PRODUCTS</button>
@@ -432,7 +444,6 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
   <h2>SHOP BY CATEGORY</h2>
   <p>Choose your favourite category and discover products.</p>
  </div>
-
  <div class="category-grid" id="categoryGrid">
   <div class="category-card" data-category="girls-shoes" onclick="selectCategory('girls-shoes',this)">
    <img src="IMG-20261109-WA0584.jpg" alt="Girls Shoes" loading="lazy"><h3>GIRLS SHOES</h3><small>Explore collection</small>
@@ -474,10 +485,9 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
   <h2>OUR PRODUCTS</h2>
   <p>Browse products and contact us to place your order.</p>
  </div>
-
  <div class="tools">
   <div class="search-box">
-   <input id="searchInput" type="search" placeholder="Search products...">
+   <input id="searchInput" type="search" placeholder="⌕  Search products...">
   </div>
   <select id="sortSelect">
    <option value="default">Sort: Default</option>
@@ -486,7 +496,6 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <option value="az">Name: A to Z</option>
   </select>
  </div>
-
  <div class="active-label" id="activeLabel">ALL PRODUCTS</div>
  <div class="product-grid" id="productGrid">
   <div class="empty">Connecting to COBRA STORE...</div>
@@ -543,16 +552,12 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <h2>COBRA ADMIN PANEL</h2>
    <button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button>
   </div>
-
   <div class="status" id="adminStatus">Administrator access enabled.</div>
   <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
-
   <form id="productForm">
    <input type="hidden" id="editProductId">
-
    <label class="form-label">PRODUCT NAME</label>
    <input class="form-input" id="productName" required maxlength="100" placeholder="Example: Men's Black Casual Loafers">
-
    <label class="form-label">CATEGORY</label>
    <select class="form-input" id="productCategory" required>
     <option value="girls-shoes">Girls Shoes</option>
@@ -565,26 +570,20 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
     <option value="electronics">Electronics</option>
     <option value="fashion">Fashion</option>
    </select>
-
    <label class="form-label">SELLING PRICE (PKR)</label>
    <input class="form-input" id="productPrice" type="number" min="1" step="1" required placeholder="Example: 1599">
-
    <label class="form-label">PRODUCT IMAGE URL</label>
    <input class="form-input" id="productImage" type="url" placeholder="https://...">
    <p>Paste the direct image link from your GitHub repository. Use a public image URL.</p>
-
    <label class="form-label">SHORT LABEL</label>
    <input class="form-input" id="productLabel" maxlength="50" placeholder="Example: NEW ARRIVAL">
-
    <label class="form-label">DESCRIPTION</label>
    <textarea class="form-input" id="productDescription" maxlength="1000" placeholder="Product details, sizes, material, etc."></textarea>
-
    <div class="form-actions">
     <button class="gold-btn" type="submit" id="saveProductButton">SAVE PRODUCT</button>
     <button class="outline-btn" type="button" onclick="resetProductForm()">CLEAR FORM</button>
    </div>
   </form>
-
   <hr style="border:0;border-top:1px solid #49391e;margin:24px 0">
   <h3 class="form-title">YOUR PRODUCTS</h3>
   <div id="adminProductList"></div>
@@ -610,7 +609,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* ORIGINAL FIREBASE CONFIG */
+/* ORIGINAL FIREBASE CONFIG - PRESERVED */
 const firebaseConfig={
  apiKey:"AIzaSyC-SpH1_1FJLhz8AP_zbDTYFw-ID4_bnPY",
  authDomain:"cobra-store-a24c8.firebaseapp.com",
@@ -629,27 +628,6 @@ let products=[],cart=[],currentProduct=null;
 let selectedCategory="all",unsubscribeProducts=null;
 
 const $=id=>document.getElementById(id);
-
-try{
- if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
- auth=firebase.auth();
- db=firebase.firestore();
- startProductsListener();
-
- auth.onAuthStateChanged(user=>{
-  currentUser=user;
-  isAdmin=!!user&&user.uid===ADMIN_UID;
-  updateAdminButtons();
-
-  if(user&&!isAdmin){
-   auth.signOut().catch(()=>{});
-   showToast("This account is not the authorized administrator.");
-  }
- });
-}catch(error){
- console.error(error);
- showToast("Firebase initialization error.");
-}
 
 function money(amount){
  return "Rs. "+Number(amount||0).toLocaleString("en-PK");
@@ -688,13 +666,34 @@ function goToCategories(){
  $("categories").scrollIntoView({behavior:"smooth"});
 }
 
+/* FIREBASE INITIALIZATION */
+try{
+ if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+ auth=firebase.auth();
+ db=firebase.firestore();
+ startProductsListener();
+
+ auth.onAuthStateChanged(user=>{
+  currentUser=user;
+  isAdmin=!!user&&user.uid===ADMIN_UID;
+  updateAdminButtons();
+
+  if(user&&!isAdmin){
+   auth.signOut().catch(()=>{});
+   showToast("This account is not the authorized administrator.");
+  }
+ });
+}catch(error){
+ console.error(error);
+ showToast("Firebase initialization error.");
+}
+
 /* FIRESTORE PRODUCTS */
 function startProductsListener(){
  if(!db){
   $("productGrid").innerHTML='<div class="empty">Firebase is not connected.</div>';
   return;
  }
-
  if(unsubscribeProducts)unsubscribeProducts();
 
  unsubscribeProducts=db.collection(COLLECTION_NAME).onSnapshot(snapshot=>{
@@ -743,12 +742,12 @@ function showAllProducts(element){
  $("products").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
+/* PRODUCT DISPLAY */
 function renderProducts(){
  const grid=$("productGrid");
  if(!grid)return;
 
  const query=$("searchInput").value.toLowerCase().trim();
-
  let list=products.filter(p=>{
   const categoryMatch=selectedCategory==="all"||p.category===selectedCategory;
   const searchable=[p.name,p.label,p.description].join(" ").toLowerCase();
@@ -761,7 +760,7 @@ function renderProducts(){
  if(sort==="az")list.sort((a,b)=>(a.name||"").localeCompare(b.name||""));
 
  if(!list.length){
-  grid.innerHTML='<div class="empty">No products added yet.<br><br>New products will appear here when added by the COBRA STORE administrator.</div>';
+  grid.innerHTML='<div class="empty">No products found.<br><br>Try another search or category. New products will appear here when added by the COBRA STORE administrator.</div>';
   return;
  }
 
@@ -817,7 +816,6 @@ function openProduct(id){
 function closeModal(){
  $("productModal").classList.remove("show");
 }
-
 function closeModalOutside(event){
  if(event.target===$("productModal"))closeModal();
 }
@@ -829,7 +827,6 @@ function orderSingle(product){
   "Category: "+categoryName(product.category)+"\n"+
   "Price: "+money(product.price)+
   "\nPlease share availability and order details.";
-
  window.open(whatsappURL(message),"_blank");
 }
 
@@ -837,11 +834,9 @@ function orderSingle(product){
 function addToCart(id){
  const product=products.find(p=>p.id===id);
  if(!product)return;
-
  const found=cart.find(item=>item.id===id);
  if(found)found.qty++;
  else cart.push({...product,qty:1});
-
  updateCart();
  showToast("Product added to your cart!");
 }
@@ -854,7 +849,6 @@ function removeFromCart(id){
 function updateCart(){
  const count=cart.reduce((sum,item)=>sum+item.qty,0);
  const total=cart.reduce((sum,item)=>sum+Number(item.price)*item.qty,0);
-
  $("cartCount").textContent=count;
  $("cartTotal").textContent=money(total);
 
@@ -865,10 +859,8 @@ function updateCart(){
 
  $("cartItems").innerHTML=cart.map(item=>`
   <div class="cart-item">
-   <div>
-    <strong>${escapeHTML(item.name)}</strong>
-    <small>${item.qty} × ${money(item.price)}</small>
-   </div>
+   <div><strong>${escapeHTML(item.name)}</strong>
+   <small>${item.qty} × ${money(item.price)}</small></div>
    <button onclick="removeFromCart('${escapeHTML(item.id)}')">REMOVE</button>
   </div>
  `).join("");
@@ -879,16 +871,13 @@ function checkoutWhatsApp(){
   showToast("Your cart is empty!");
   return;
  }
-
  let total=0;
  let message="Assalam-o-Alaikum! I want to place an order from COBRA STORE:\n\n";
-
  cart.forEach(item=>{
   const subtotal=Number(item.price)*item.qty;
   total+=subtotal;
   message+=item.name+" × "+item.qty+" = "+money(subtotal)+"\n";
  });
-
  message+="\nTOTAL: "+money(total)+"\n\nPlease confirm availability and order details.";
  window.open(whatsappURL(message),"_blank");
 }
@@ -914,7 +903,6 @@ function closeLogin(){
 
 $("loginForm").addEventListener("submit",async event=>{
  event.preventDefault();
-
  if(!auth){
   $("loginStatus").textContent="Firebase is not initialized.";
   return;
@@ -923,32 +911,26 @@ $("loginForm").addEventListener("submit",async event=>{
  const email=$("loginEmail").value.trim();
  const password=$("loginPassword").value;
  const button=$("loginSubmit");
-
  button.disabled=true;
  button.textContent="PLEASE WAIT...";
  $("loginStatus").textContent="Signing in...";
 
  try{
   const result=await auth.signInWithEmailAndPassword(email,password);
-
   if(result.user.uid!==ADMIN_UID){
    await auth.signOut();
    $("loginStatus").textContent="Access denied. This is not the authorized admin account.";
    return;
   }
-
   $("loginStatus").textContent="Admin login successful!";
   $("loginPassword").value="";
-
   setTimeout(()=>{
    closeLogin();
    openAdmin();
    showToast("Welcome, COBRA STORE Admin!");
   },500);
-
  }catch(error){
   console.error(error);
-
   const messages={
    "auth/invalid-credential":"Email or password is incorrect. Check your Firebase Authentication user and password.",
    "auth/user-not-found":"No user found with this email.",
@@ -956,9 +938,7 @@ $("loginForm").addEventListener("submit",async event=>{
    "auth/too-many-requests":"Too many attempts. Please wait and try again.",
    "auth/network-request-failed":"Network connection failed. Please try again."
   };
-
   $("loginStatus").textContent=messages[error.code]||error.message||"Login failed. Check your email and password.";
-
  }finally{
   button.disabled=false;
   button.textContent="LOGIN";
@@ -967,7 +947,6 @@ $("loginForm").addEventListener("submit",async event=>{
 
 $("adminLogoutButton").addEventListener("click",async()=>{
  if(!auth)return;
-
  try{
   await auth.signOut();
   closeAdmin();
@@ -985,34 +964,27 @@ function openAdmin(){
  $("adminModal").classList.add("show");
  renderAdminProducts();
 }
-
 function closeAdmin(){
  $("adminModal").classList.remove("show");
 }
-
 $("adminPanelButton").addEventListener("click",openAdmin);
 
 /* ADMIN PRODUCT LIST */
 function renderAdminProducts(){
  const list=$("adminProductList");
  if(!list)return;
-
  if(!isAdmin){
   list.innerHTML='<div class="status">Please sign in as administrator.</div>';
   return;
  }
-
  if(!products.length){
   list.innerHTML='<div class="status">No products added yet. Use the form above to add your first product.</div>';
   return;
  }
-
  list.innerHTML=products.map(p=>`
   <div class="admin-product">
-   <div>
-    <strong>${escapeHTML(p.name)}</strong>
-    <small>${escapeHTML(categoryName(p.category))} • ${money(p.price)}</small>
-   </div>
+   <div><strong>${escapeHTML(p.name)}</strong>
+   <small>${escapeHTML(categoryName(p.category))} • ${money(p.price)}</small></div>
    <div class="admin-product-actions">
     <button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button>
     <button class="outline-btn" style="color:#ff7777;border-color:#a44" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button>
@@ -1030,7 +1002,6 @@ function resetProductForm(){
 
 function editProduct(id){
  if(!isAdmin)return;
-
  const p=products.find(item=>item.id===id);
  if(!p)return;
 
@@ -1041,7 +1012,6 @@ function editProduct(id){
  $("productImage").value=p.image||"";
  $("productLabel").value=p.label||"";
  $("productDescription").value=p.description||"";
-
  $("productFormTitle").textContent="EDIT PRODUCT";
  $("saveProductButton").textContent="UPDATE PRODUCT";
  $("productFormTitle").scrollIntoView({behavior:"smooth",block:"center"});
@@ -1050,7 +1020,6 @@ function editProduct(id){
 /* SAVE / UPDATE PRODUCT */
 $("productForm").addEventListener("submit",async event=>{
  event.preventDefault();
-
  if(!isAdmin||!currentUser||currentUser.uid!==ADMIN_UID){
   showToast("Admin access required.");
   return;
@@ -1069,7 +1038,6 @@ $("productForm").addEventListener("submit",async event=>{
   showToast("Enter a valid product name and price.");
   return;
  }
-
  if(imageInput&&!image){
   showToast("Please enter a valid image URL.");
   return;
@@ -1095,9 +1063,7 @@ $("productForm").addEventListener("submit",async event=>{
    await db.collection(COLLECTION_NAME).add(productData);
    showToast("New product added successfully!");
   }
-
   resetProductForm();
-
  }catch(error){
   console.error("Save product:",error);
   showToast("Could not save product. Check Firestore Rules.");
@@ -1113,10 +1079,8 @@ async function deleteProduct(id){
   showToast("Admin access required.");
   return;
  }
-
  const product=products.find(p=>p.id===id);
  if(!product)return;
-
  if(!confirm("Are you sure you want to delete: "+product.name+"?"))return;
 
  try{
@@ -1139,32 +1103,25 @@ function finishIntro(){
  if(introFinished)return;
  introFinished=true;
  intro.classList.add("hide");
-
  setTimeout(()=>{
   intro.style.display="none";
   introVideo.pause();
  },950);
 }
-
 $("skipIntro").addEventListener("click",finishIntro);
 introVideo.addEventListener("ended",finishIntro);
 introVideo.addEventListener("error",finishIntro);
-
 const videoPlay=introVideo.play();
-if(videoPlay&&typeof videoPlay.catch==="function"){
- videoPlay.catch(()=>{});
-}
+if(videoPlay&&typeof videoPlay.catch==="function")videoPlay.catch(()=>{});
 
 /* BACKGROUND MUSIC */
 const music=$("backgroundMusic");
 const musicButton=$("musicToggle");
-let musicStarted=false;
 
 async function toggleMusic(){
  try{
   if(music.paused){
    await music.play();
-   musicStarted=true;
    musicButton.textContent="♫ MUSIC ON";
    showToast("Background music is ON.");
   }else{
@@ -1176,20 +1133,14 @@ async function toggleMusic(){
   showToast("Music file could not be played. Check cobra-music.mp3.");
  }
 }
-
 musicButton.addEventListener("click",toggleMusic);
-music.addEventListener("pause",()=>{
- musicButton.textContent="♫ MUSIC OFF";
-});
-music.addEventListener("play",()=>{
- musicButton.textContent="♫ MUSIC ON";
-});
+music.addEventListener("pause",()=>musicButton.textContent="♫ MUSIC OFF");
+music.addEventListener("play",()=>musicButton.textContent="♫ MUSIC ON");
 
 /* INITIAL SETUP */
 updateCart();
 updateAdminButtons();
 renderProducts();
 </script>
-
 </body>
 </html>
