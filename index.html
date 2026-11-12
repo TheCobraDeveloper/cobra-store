@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#faf7f5">
 <title>COBRA STORE | Premium Shopping</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,39 +33,50 @@ h1,h2,h3,.brand-name,.form-title{font-family:"Syne",sans-serif}
 .skip-intro{position:absolute;right:18px;top:22px;z-index:6;border:1px solid white;color:white;background:#17151499;padding:10px 16px;border-radius:3px;font-size:10px;font-weight:800}
 .intro-credits{position:absolute;bottom:55px;left:8px;right:8px;z-index:5;text-align:center;color:white;font-size:9px;line-height:1.9}
 .intro-bottom{position:absolute;bottom:0;left:0;right:0;min-height:45px;z-index:5;display:flex;align-items:center;justify-content:center;padding:12px;color:white;background:#171514;font-family:"Syne";font-size:10px;font-weight:800;letter-spacing:2px}
-#intro.hide{animation:introOut .9s forwards}@keyframes introOut{to{opacity:0;visibility:hidden;transform:scale(1.04)}}
+#intro.hide{animation:introOut .9s forwards}
+@keyframes introOut{to{opacity:0;visibility:hidden;transform:scale(1.04)}}
 header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid var(--line)}
 .header-inner{max-width:1280px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .logo{width:55px;height:55px;margin:auto;border-radius:50%;border:1px solid var(--line);overflow:hidden;background:white}
-.logo img{width:100%;height:100%;object-fit:contain}.logo-sub{text-align:center;font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:5px}
-.nav{display:flex;gap:25px;flex-wrap:wrap}.nav a{color:#45403e;font-size:10px;font-weight:800;letter-spacing:1px}.nav a:hover{color:var(--coral)}
-.header-actions{display:flex;gap:7px;flex-wrap:wrap}.header-actions button{font-size:9px;padding:10px 13px}
+.logo img{width:100%;height:100%;object-fit:contain}
+.logo-sub{text-align:center;font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:5px}
+.nav{display:flex;gap:25px;flex-wrap:wrap}
+.nav a{color:#45403e;font-size:10px;font-weight:800;letter-spacing:1px}
+.nav a:hover{color:var(--coral)}
+.header-actions{display:flex;gap:7px;flex-wrap:wrap}
+.header-actions button{font-size:9px;padding:10px 13px}
 .hero{min-height:520px;max-width:1280px;margin:20px auto 0;padding:75px 25px;display:flex;align-items:center;position:relative;overflow:hidden;background:#f1e4e1}
 .hero:before{content:"";position:absolute;right:5%;top:50%;transform:translateY(-50%);width:min(43vw,470px);height:min(43vw,470px);border-radius:50%;background:url("IMG-20261109-WA0835.jpg") center/contain no-repeat;opacity:.55}
-.hero-content{position:relative;z-index:1;max-width:620px}.hero-kicker{color:var(--coral);font-size:10px;letter-spacing:4px;font-weight:900;margin-bottom:20px}
+.hero-content{position:relative;z-index:1;max-width:620px}
+.hero-kicker{color:var(--coral);font-size:10px;letter-spacing:4px;font-weight:900;margin-bottom:20px}
 .hero h1{font-size:clamp(55px,9vw,105px);line-height:.98;font-weight:800;letter-spacing:-5px}
 .hero p{color:#6e6662;font-size:14px;line-height:2;max-width:510px;margin:23px 0 27px}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}.hero-sale{display:inline-block;margin-top:25px;padding:9px 15px;background:white;color:var(--coral);font-size:10px;letter-spacing:2px;font-weight:900}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.hero-sale{display:inline-block;margin-top:25px;padding:9px 15px;background:white;color:var(--coral);font-size:10px;letter-spacing:2px;font-weight:900}
 .benefits{max-width:1200px;margin:22px auto 35px;padding:0 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
 .benefit{background:white;padding:21px 13px;text-align:center;border:1px solid var(--line)}
-.benefit strong{display:block;font-size:11px;letter-spacing:1px}.benefit span{display:block;color:var(--muted);font-size:10px;margin-top:7px}
+.benefit strong{display:block;font-size:11px;letter-spacing:1px}
+.benefit span{display:block;color:var(--muted);font-size:10px;margin-top:7px}
 .promo-banner{margin:20px auto 30px;padding:30px 15px;text-align:center;background:var(--dark);color:white}
 .promo-banner strong{display:block;font-family:"Syne";font-size:clamp(22px,4vw,34px);letter-spacing:2px}
 .promo-banner span{display:block;color:#d5c7c1;font-size:11px;margin-top:8px}
 .section{max-width:1280px;margin:auto;padding:55px 22px}
-.section-heading{text-align:center;margin-bottom:32px}.section-heading .eyebrow{color:var(--coral);font-size:9px;letter-spacing:4px;font-weight:900}
+.section-heading{text-align:center;margin-bottom:32px}
+.section-heading .eyebrow{color:var(--coral);font-size:9px;letter-spacing:4px;font-weight:900}
 .section-heading h2{font-size:clamp(27px,5vw,42px);margin-top:10px;font-weight:800}
 .section-heading p{color:var(--muted);font-size:12px;margin-top:9px}
 .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
 .category-card{min-width:0;cursor:pointer;text-align:center;background:white;border:1px solid var(--line);padding:13px 10px 17px;transition:.25s}
 .category-card:hover,.category-card.active{transform:translateY(-5px);border-color:var(--coral);box-shadow:var(--shadow)}
 .category-card img{width:100%;max-width:155px;aspect-ratio:1;object-fit:contain;display:block;margin:auto;background:var(--light)}
-.category-card h3{font-size:11px;margin-top:13px;font-weight:900}.category-card small{display:block;color:var(--coral);font-size:9px;margin-top:7px}
+.category-card h3{font-size:11px;margin-top:13px;font-weight:900}
+.category-card small{display:block;color:var(--coral);font-size:9px;margin-top:7px}
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:25px 0 20px}
 .search-box{flex:1;min-width:190px;display:flex;background:white;border:1px solid var(--line);overflow:hidden}
 .search-box input{width:100%;background:transparent;border:0;outline:0;padding:14px 17px;font-size:12px}
 .tools select,.form-input{background:white;color:var(--dark);border:1px solid #e6dcd7;border-radius:3px;padding:12px;font-size:11px;outline:0;width:100%}
-.tools select{width:auto}.active-label{color:var(--coral);font-size:11px;font-weight:900;letter-spacing:1px;margin:18px 0}
+.tools select{width:auto}
+.active-label{color:var(--coral);font-size:11px;font-weight:900;letter-spacing:1px;margin:18px 0}
 .product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .product-card{background:white;border:1px solid var(--line);overflow:hidden;transition:.3s;position:relative;min-width:0}
 .product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
@@ -73,51 +84,59 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .product-image img{width:100%;height:100%;object-fit:contain;transition:.4s}
 .product-card:hover .product-image img{transform:scale(1.05)}
 .sale-badge{position:absolute;top:12px;left:12px;background:var(--coral);color:white;padding:7px 10px;font-size:9px;font-weight:900;z-index:2}
-.product-info{padding:17px}.product-tag{color:var(--coral);font-size:8px;letter-spacing:1.3px;font-weight:900}
+.product-info{padding:17px}
+.product-tag{color:var(--coral);font-size:8px;letter-spacing:1.3px;font-weight:900}
 .product-info h3{font-size:14px;margin:9px 0;line-height:1.5;overflow-wrap:anywhere}
-.product-price{font-size:17px;font-weight:900}.old-price{font-size:10px;color:#aaa;text-decoration:line-through;margin-left:7px}
-.product-note{font-size:9px;color:#999;margin:8px 0 13px}.product-buttons{display:flex;gap:7px}
+.product-price{font-size:17px;font-weight:900}
+.old-price{font-size:10px;color:#aaa;text-decoration:line-through;margin-left:7px}
+.product-note{font-size:9px;color:#999;margin:8px 0 13px}
+.product-buttons{display:flex;gap:7px}
 .product-buttons button{flex:1;padding:11px 5px;font-size:9px}
 .empty{grid-column:1/-1;text-align:center;color:#777;padding:45px 10px;border:1px solid var(--line);line-height:1.9;background:white}
 .modal{position:fixed;inset:0;z-index:300;background:#191412bf;display:none;align-items:center;justify-content:center;padding:14px;overflow-y:auto}
-.modal.show{display:flex}.modal-box{width:min(700px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:25px;position:relative;box-shadow:0 15px 60px #0002}
+.modal.show{display:flex}
+.modal-box{width:min(650px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:25px;position:relative;box-shadow:0 15px 60px #0002}
 .close{position:absolute;right:13px;top:9px;background:transparent;border:0;font-size:27px;z-index:5}
-.modal-icon{text-align:center;padding:12px;background:var(--light)}.modal-icon img{max-width:100%;max-height:290px;object-fit:contain}
+.modal-icon{text-align:center;padding:12px;background:var(--light)}
+.modal-icon img{max-width:100%;max-height:290px;object-fit:contain}
 .modal-gallery{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px}
 .modal-gallery img{width:85px;height:85px;object-fit:contain;background:var(--light);border:1px solid var(--line);cursor:pointer;flex-shrink:0}
 .modal-video{width:100%;max-height:340px;background:#111;margin:8px 0;display:block}
-.modal-box h3{font-size:20px;margin:12px 0}.modal-box p{font-size:11px;color:#777;line-height:1.9;margin:10px 0}
+.modal-box h3{font-size:20px;margin:12px 0}
+.modal-box p{font-size:11px;color:#777;line-height:1.9;margin:10px 0}
 .modal-price{font-size:23px;font-weight:900;margin:13px 0}
 .detail-line{padding:10px 0;border-bottom:1px solid var(--line);font-size:11px;color:#555;overflow-wrap:anywhere}
-.detail-line b{color:var(--dark)}.size-list{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.detail-line b{color:var(--dark)}
+.size-list{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .size-chip{border:1px solid #ddd;background:white;padding:8px 12px;font-size:10px}
 .size-chip.selected{background:var(--coral);color:white;border-color:var(--coral)}
-.form-title{font-size:22px;margin:5px 0 16px}.form-label{display:block;color:#6c625d;font-size:10px;font-weight:900;margin:12px 0 6px}
-.form-input:focus{border-color:var(--coral)}textarea.form-input{min-height:85px;resize:vertical}
-.form-actions{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}.form-actions button{flex:1}
+.form-title{font-size:22px;margin:5px 0 16px}
+.form-label{display:block;color:#6c625d;font-size:10px;font-weight:900;margin:12px 0 6px}
+.form-input:focus{border-color:var(--coral)}
+textarea.form-input{min-height:85px;resize:vertical}
+.form-actions{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}
+.form-actions button{flex:1}
 .status{font-size:11px;color:#8a6258;margin:10px 0;line-height:1.7;overflow-wrap:anywhere}
-.review-card{border-bottom:1px solid var(--line);padding:13px 0}.review-card strong{font-size:11px}
-.review-card p{margin:5px 0;color:#666}.review-card small{font-size:9px;color:#999}
+.review-card{border-bottom:1px solid var(--line);padding:13px 0}
+.review-card strong{font-size:11px}
+.review-card p{margin:5px 0;color:#666}
+.review-card small{font-size:9px;color:#999}
 .stars{color:var(--coral);letter-spacing:2px}
-.admin-panel{width:min(950px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:22px}
+.admin-panel{width:min(760px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:22px}
 .admin-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-.admin-top h2{font-family:"Syne";font-size:22px}.admin-product{border-bottom:1px solid var(--line);padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.admin-product strong{font-size:11px}.admin-product small{display:block;color:#999;margin-top:5px}
-.admin-product-actions{display:flex;gap:6px;flex-wrap:wrap}.admin-product-actions button{font-size:9px;padding:8px 10px}
-.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
-.admin-tab{padding:10px 14px;border:1px solid var(--line);background:white;font-size:10px;font-weight:800}
-.admin-tab.active{background:var(--coral);color:white;border-color:var(--coral)}
-.order-card{border:1px solid var(--line);padding:15px;margin:10px 0;background:#fffdfc}
-.order-card-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.order-card h4{font-family:"Syne";font-size:14px}.order-meta{font-size:10px;color:#777;line-height:1.9;margin:9px 0}
-.order-status{font-size:9px;font-weight:900;padding:6px 9px;background:#f8efed;color:#8a6258;display:inline-block}
-.order-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.order-actions button{font-size:9px;padding:9px 12px}
+.admin-top h2{font-family:"Syne";font-size:22px}
+.admin-product{border-bottom:1px solid var(--line);padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-product strong{font-size:11px}
+.admin-product small{display:block;color:#999;margin-top:5px}
+.admin-product-actions{display:flex;gap:6px}
+.admin-product-actions button{font-size:9px;padding:8px 10px}
 .cart-panel{position:fixed;top:0;right:-430px;width:min(400px,94vw);height:100%;background:white;z-index:400;border-left:1px solid var(--line);padding:20px;transition:.35s;overflow-y:auto}
-.cart-panel.open{right:0}.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cart-panel.open{right:0}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .cart-head h2{font-family:"Syne";font-size:20px}
 .cart-item{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}
-.cart-item strong{font-size:11px}.cart-item small{display:block;color:#999;margin-top:5px}
+.cart-item strong{font-size:11px}
+.cart-item small{display:block;color:#999;margin-top:5px}
 .cart-item button{background:none;border:0;color:#d95746;font-size:10px}
 .cart-total{display:flex;justify-content:space-between;padding:18px 0;font-weight:900}
 .cart-empty{color:#aaa;text-align:center;padding:30px 0;font-size:12px}
@@ -128,9 +147,11 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .footer-contact{color:var(--coral);font-size:11px;margin:12px}
 .credits{border-top:1px solid var(--line);margin:20px auto 0;padding-top:13px;color:#999;font-size:9px;line-height:2}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 20px;font-size:11px;font-weight:900;z-index:800;opacity:0;pointer-events:none;transition:.3s;max-width:90%;text-align:center}
-.toast.show{opacity:1;bottom:35px}.music-button{position:fixed;bottom:17px;right:14px;z-index:120;background:var(--coral);border:0;color:white;border-radius:50%;width:43px;height:43px;font-size:17px}
+.toast.show{opacity:1;bottom:35px}
+.music-button{position:fixed;bottom:17px;right:14px;z-index:120;background:var(--coral);border:0;color:white;border-radius:50%;width:43px;height:43px;font-size:17px}
 .upload-help{background:#fff8f5;border:1px solid #f0d8d1;padding:12px;margin:12px 0;font-size:10px;line-height:1.8;color:#775b54}
-.upload-preview{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.upload-preview img{width:65px;height:65px;object-fit:cover;border:1px solid var(--line)}
+.upload-preview{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.upload-preview img{width:65px;height:65px;object-fit:cover;border:1px solid var(--line)}
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:210px}.hero:before{right:-10%;opacity:.3}}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
@@ -244,7 +265,6 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <form id="orderForm">
   <label class="form-label">FULL NAME</label><input class="form-input" id="customerName" required maxlength="80" placeholder="Your full name">
   <label class="form-label">PHONE NUMBER</label><input class="form-input" id="customerPhone" required type="tel" maxlength="20" pattern="[0-9+() -]{7,20}" placeholder="03XXXXXXXXX">
-  <label class="form-label">EMAIL (OPTIONAL)</label><input class="form-input" id="customerEmail" type="email" maxlength="120" placeholder="Your email address">
   <label class="form-label">CITY</label><input class="form-input" id="customerCity" required maxlength="60" placeholder="Your city">
   <label class="form-label">COMPLETE DELIVERY ADDRESS</label><textarea class="form-input" id="customerAddress" required maxlength="500" placeholder="House number, street, area, landmark..."></textarea>
   <label class="form-label">ORDER NOTES (OPTIONAL)</label><textarea class="form-input" id="customerNotes" maxlength="300" placeholder="Any special instructions"></textarea>
@@ -266,48 +286,32 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
  <div class="status" id="adminStatus">Administrator access enabled.</div>
- <div class="admin-tabs">
-  <button class="admin-tab active" id="tabOrders" onclick="showAdminTab('orders')">ORDERS</button>
-  <button class="admin-tab" id="tabProducts" onclick="showAdminTab('products')">PRODUCTS</button>
- </div>
- <section id="adminOrdersSection">
-  <h3 class="form-title">CUSTOMER ORDERS</h3>
-  <div class="admin-tabs">
-   <button class="admin-tab active" onclick="filterOrders('all',this)">ALL</button>
-   <button class="admin-tab" onclick="filterOrders('Pending',this)">PENDING</button>
-   <button class="admin-tab" onclick="filterOrders('Confirmed',this)">CONFIRMED</button>
-   <button class="admin-tab" onclick="filterOrders('Cancelled',this)">CANCELLED</button>
-  </div>
-  <div id="adminOrderList"><div class="status">Loading orders...</div></div>
- </section>
- <section id="adminProductsSection" class="hidden">
-  <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
-  <form id="productForm">
-   <input type="hidden" id="editProductId">
-   <label class="form-label">PRODUCT NAME</label><input class="form-input" id="productName" required maxlength="100" placeholder="Product name">
-   <label class="form-label">CATEGORY</label><select class="form-input" id="productCategory" required>
-    <option value="girls-shoes">Girls Shoes</option><option value="boys-shoes">Boys Shoes</option><option value="boys-clothes">Boys Clothes</option><option value="girls-clothes">Girls Clothes</option><option value="boys-watches">Boys Watches</option><option value="girls-watches">Girls Watches</option><option value="mobile-accessories">Mobile Accessories</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option>
-   </select>
-   <label class="form-label">SELLING PRICE (PKR)</label><input class="form-input" id="productPrice" type="number" min="1" step="1" required placeholder="Example: 1599">
-   <label class="form-label">SALE DISCOUNT (%)</label><input class="form-input" id="productSale" type="number" min="0" max="90" value="11">
-   <div class="upload-help"><b>PRODUCT PHOTOS</b><br>زیادہ سے زیادہ 4 تصاویر، فی تصویر 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہوں گی۔</div>
-   <label class="form-label">UPLOAD UP TO 4 PRODUCT IMAGES</label><input class="form-input" id="productImageFiles" type="file" accept="image/*" multiple>
-   <div id="imageFileStatus" class="status">No new images selected.</div><div class="upload-preview" id="imagePreview"></div>
-   <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک MP4 یا WebM ویڈیو، زیادہ سے زیادہ 25 MB۔ نئی ویڈیو نہ دینے پر پرانی ویڈیو برقرار رہے گی۔</div>
-   <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
-   <div id="videoFileStatus" class="status">No new video selected.</div>
-   <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
-   <label class="form-label">SIZES / OPTIONS</label><input class="form-input" id="productSizes" placeholder="Shoes: 36, 37, 38, 39 / Clothes: S, M, L, XL">
-   <div class="status">جوتوں کے لیے 36, 37, 38، کپڑوں کے لیے S, M, L, XL درج کریں۔ ہر سائز comma سے الگ کریں۔</div>
-   <label class="form-label">STOCK / AVAILABILITY</label><input class="form-input" id="productStock" maxlength="80" placeholder="In Stock">
-   <label class="form-label">PRODUCT DESCRIPTION</label><textarea class="form-input" id="productDescription" maxlength="1500" placeholder="Product details, material, features..."></textarea>
-   <label class="form-label">MORE DETAILS</label><textarea class="form-input" id="productDetails" maxlength="1500" placeholder="Material, colour, warranty, dimensions, etc."></textarea>
-   <div class="form-actions"><button class="gold-btn" type="submit" id="saveProductButton">SAVE PRODUCT</button><button class="outline-btn" type="button" onclick="resetProductForm()">CLEAR FORM</button></div>
-   <div class="status" id="uploadStatus"></div>
-  </form>
-  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
-  <h3 class="form-title">YOUR PRODUCTS</h3><div id="adminProductList"></div>
- </section>
+ <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
+ <form id="productForm">
+  <input type="hidden" id="editProductId">
+  <label class="form-label">PRODUCT NAME</label><input class="form-input" id="productName" required maxlength="100" placeholder="Product name">
+  <label class="form-label">CATEGORY</label><select class="form-input" id="productCategory" required>
+   <option value="girls-shoes">Girls Shoes</option><option value="boys-shoes">Boys Shoes</option><option value="boys-clothes">Boys Clothes</option><option value="girls-clothes">Girls Clothes</option><option value="boys-watches">Boys Watches</option><option value="girls-watches">Girls Watches</option><option value="mobile-accessories">Mobile Accessories</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option>
+  </select>
+  <label class="form-label">SELLING PRICE (PKR)</label><input class="form-input" id="productPrice" type="number" min="1" step="1" required placeholder="Example: 1599">
+  <label class="form-label">SALE DISCOUNT (%)</label><input class="form-input" id="productSale" type="number" min="0" max="90" value="11">
+  <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہو جائیں گی۔</div>
+  <label class="form-label">UPLOAD UP TO 4 PRODUCT IMAGES</label><input class="form-input" id="productImageFiles" type="file" accept="image/*" multiple>
+  <div id="imageFileStatus" class="status">No new images selected.</div>
+  <div class="upload-preview" id="imagePreview"></div>
+  <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔ نئی ویڈیو منتخب نہ کرنے پر موجودہ ویڈیو برقرار رہے گی۔</div>
+  <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
+  <div id="videoFileStatus" class="status">No new video selected.</div>
+  <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
+  <label class="form-label">SIZES / OPTIONS</label><input class="form-input" id="productSizes" placeholder="40, 41, 42, 43 or S, M, L, XL">
+  <label class="form-label">STOCK / AVAILABILITY</label><input class="form-input" id="productStock" maxlength="80" placeholder="In Stock">
+  <label class="form-label">PRODUCT DESCRIPTION</label><textarea class="form-input" id="productDescription" maxlength="1500" placeholder="Product details, material, features..."></textarea>
+  <label class="form-label">MORE DETAILS</label><textarea class="form-input" id="productDetails" maxlength="1500" placeholder="Material, colour, warranty, dimensions, etc."></textarea>
+  <div class="form-actions"><button class="gold-btn" type="submit" id="saveProductButton">SAVE PRODUCT</button><button class="outline-btn" type="button" onclick="resetProductForm()">CLEAR FORM</button></div>
+  <div class="status" id="uploadStatus"></div>
+ </form>
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="form-title">YOUR PRODUCTS</h3><div id="adminProductList"></div>
 </div></div>
 
 <div class="cart-panel" id="cartPanel">
@@ -332,7 +336,7 @@ const firebaseConfig={
  messagingSenderId:"454693779531",
  appId:"1:454693779531:web:dda167b86f2c29d7d0f5ce"
 };
-const ADMIN_UID="afsyQXy20zgExzj6W8umX2AtZls2";
+const ADMIN_UID="afsyQXy20zgExz6jW8umX2AtZls2";
 const WHATSAPP_NUMBER="923432752543";
 const COLLECTION_NAME="products";
 const DEFAULT_SALE=11;
@@ -340,8 +344,7 @@ const MAX_IMAGES=4,MAX_IMAGE_SIZE=5*1024*1024,MAX_VIDEO_SIZE=25*1024*1024;
 
 let auth=null,db=null,storage=null,currentUser=null,isAdmin=false;
 let products=[],cart=[],currentProduct=null,selectedCategory="all";
-let selectedSize="",orderItems=[],unsubscribeProducts=null,unsubscribeOrders=null;
-let allOrders=[],orderFilter="all",reviewRequestToken=0;
+let selectedSize="",orderItems=[],unsubscribeProducts=null,reviewRequestToken=0;
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
@@ -369,8 +372,7 @@ try{
  startProductsListener();
  auth.onAuthStateChanged(user=>{
   currentUser=user;isAdmin=!!user&&user.uid===ADMIN_UID;updateAdminButtons();
-  if(isAdmin){startOrdersListener();renderAdminProducts()}
-  else{stopOrdersListener();if(user)auth.signOut().catch(()=>{})}
+  if(user&&!isAdmin){auth.signOut().catch(()=>{});showToast("یہ اکاؤنٹ مجاز Admin نہیں ہے۔")}
  });
 }catch(error){console.error(error);$("productGrid").innerHTML='<div class="empty">Firebase initialization failed. Check your connection and configuration.</div>'}
 
@@ -381,18 +383,6 @@ function startProductsListener(){
   products=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));renderProducts();renderAdminProducts();
  },error=>{$("productGrid").innerHTML='<div class="empty">Products could not load. Check Firestore Rules.</div>';showToast(getErrorMessage(error))});
 }
-function startOrdersListener(){
- if(!db||!requireAdmin())return;
- stopOrdersListener();
- $("adminOrderList").innerHTML='<div class="status">Loading orders...</div>';
- unsubscribeOrders=db.collection("orders").orderBy("createdAt","desc").onSnapshot(snapshot=>{
-  allOrders=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));renderAdminOrders();
- },error=>{
-  console.error("Orders listener:",error);
-  $("adminOrderList").innerHTML='<div class="status">Orders load نہیں ہوئے: '+escapeHTML(getErrorMessage(error))+'</div>';
- });
-}
-function stopOrdersListener(){if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null}allOrders=[]}
 function selectCategory(category,element){
  selectedCategory=category;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
  if(element)element.classList.add("active");$("activeLabel").textContent=categoryName(category);renderProducts();
@@ -418,7 +408,7 @@ function renderProducts(){
  grid.innerHTML=list.map(p=>{
   const images=productImages(p),name=cleanProductName(p.name);
   const imageHTML=images.length?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(name)}" loading="lazy">`:'<span style="font-size:55px;color:#ec6c5a">🐍</span>';
-  const mediaNote=images.length+" photo(s)"+(p.videoUrl?" • Video available":"");
+  const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":"");
   return `<article class="product-card"><div class="product-image"><span class="sale-badge">${salePercent(p)}% OFF</span>${imageHTML}</div>
    <div class="product-info"><div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div>
    <h3>${escapeHTML(name)}</h3><div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
@@ -491,23 +481,22 @@ function closeOrder(){$("orderModal").classList.remove("show")}
 $("orderForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!orderItems.length){showToast("No order items found.");return}
  const name=$("customerName").value.trim(),phone=$("customerPhone").value.trim();
- const email=$("customerEmail").value.trim(),city=$("customerCity").value.trim();
- const address=$("customerAddress").value.trim(),notes=$("customerNotes").value.trim();
+ const city=$("customerCity").value.trim(),address=$("customerAddress").value.trim(),notes=$("customerNotes").value.trim();
  if(!name||!phone||!city||!address){$("orderStatus").textContent="Please complete all required delivery details.";return}
  if(!/^[0-9+() -]{7,20}$/.test(phone)){$("orderStatus").textContent="Please enter a valid phone number.";return}
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
- const order={customerName:name,phone,email,city,address,notes,items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||""})),total,paymentMethod:"Cash on Delivery",status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ const order={customerName:name,phone,city,address,notes,items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||""})),total,paymentMethod:"Cash on Delivery",status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()};
  const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
  try{
   if(!db)throw new Error("Firebase is not connected");
   const doc=await db.collection("orders").add(order);
-  $("orderStatus").textContent="Your website order was submitted successfully! Order ID: "+doc.id+". Your order is awaiting confirmation.";
+  $("orderStatus").textContent="Your website order was submitted successfully! Order ID: "+doc.id;
   showToast("Website order received!");
   cart=[];updateCart();
-  setTimeout(()=>{closeOrder();$("orderForm").reset();orderItems=[]},4000);
+  setTimeout(()=>{closeOrder();$("orderForm").reset();orderItems=[]},3000);
  }catch(error){
   console.error("COD save error:",error);
-  $("orderStatus").textContent="Order save failed: "+getErrorMessage(error)+" Please try again. Your order has NOT been sent to WhatsApp.";
+  $("orderStatus").textContent="Order save failed: "+getErrorMessage(error)+" Please try again later or use the separate WhatsApp order button. Your order has NOT been sent to WhatsApp.";
  }finally{button.disabled=false;button.textContent="PLACE COD ORDER"}
 });
 
@@ -551,98 +540,9 @@ $("loginForm").addEventListener("submit",async event=>{
  finally{button.disabled=false;button.textContent="LOGIN"}
 });
 $("adminLogoutButton").addEventListener("click",async()=>{if(!auth)return;try{await auth.signOut();closeAdmin();showToast("Admin logged out.")}catch(error){showToast(getErrorMessage(error))}});
-function openAdmin(){if(!requireAdmin()){showToast("Administrator login required.");return}$("adminModal").classList.add("show");showAdminTab("orders");renderAdminProducts();renderAdminOrders()}
+function openAdmin(){if(!requireAdmin()){showToast("Administrator login required.");return}$("adminModal").classList.add("show");renderAdminProducts()}
 function closeAdmin(){$("adminModal").classList.remove("show")}
 $("adminPanelButton").addEventListener("click",openAdmin);
-
-function showAdminTab(tab){
- if(!requireAdmin())return;
- $("adminOrdersSection").classList.toggle("hidden",tab!=="orders");
- $("adminProductsSection").classList.toggle("hidden",tab!=="products");
- $("tabOrders").classList.toggle("active",tab==="orders");
- $("tabProducts").classList.toggle("active",tab==="products");
-}
-function filterOrders(filter,button){
- orderFilter=filter;
- document.querySelectorAll("#adminOrdersSection .admin-tabs .admin-tab").forEach(x=>x.classList.remove("active"));
- if(button)button.classList.add("active");
- renderAdminOrders();
-}
-function orderDate(value){
- try{if(value&&value.toDate)return value.toDate().toLocaleString("en-PK");if(value instanceof Date)return value.toLocaleString("en-PK");return "Date pending"}catch(e){return "Date unavailable"}
-}
-function customerWhatsApp(phone){
- let n=String(phone||"").replace(/\D/g,"");
- if(n.startsWith("0"))n="92"+n.slice(1);
- if(n.length===10&&n.startsWith("3"))n="92"+n;
- return n;
-}
-function orderMessage(order){
- const lines=(order.items||[]).map(i=>`${i.name||"Product"} × ${i.quantity||1}${i.size?" | Size: "+i.size:""} — ${money((Number(i.price)||0)*(Number(i.quantity)||1))}`);
- return `Assalam-o-Alaikum ${order.customerName||"Customer"}!\n\nYour COBRA STORE order has been CONFIRMED.\nOrder ID: ${order.id}\n\n${lines.join("\n")}\n\nTotal: ${money(order.total)}\nPayment: Cash on Delivery\n\nThank you for shopping with COBRA STORE.`;
-}
-function renderAdminOrders(){
- const box=$("adminOrderList");if(!box)return;
- if(!requireAdmin()){box.innerHTML='<div class="status">Admin login required.</div>';return}
- const list=allOrders.filter(o=>orderFilter==="all"||String(o.status||"Pending")===orderFilter);
- if(!list.length){box.innerHTML='<div class="empty">اس حصے میں ابھی کوئی آرڈر موجود نہیں۔</div>';return}
- box.innerHTML=list.map(o=>{
-  const status=o.status||"Pending";
-  const items=(o.items||[]).map(i=>`${escapeHTML(i.name||"Product")} × ${Number(i.quantity)||1}${i.size?" — Size: "+escapeHTML(i.size):""} (${money((Number(i.price)||0)*(Number(i.quantity)||1))})`).join("<br>");
-  const safeId=escapeHTML(o.id);
-  return `<article class="order-card">
-   <div class="order-card-head"><h4>ORDER #${safeId.slice(0,9)}</h4><span class="order-status">${escapeHTML(status.toUpperCase())}</span></div>
-   <div class="order-meta"><b>Customer:</b> ${escapeHTML(o.customerName||"")}<br>
-   <b>Phone:</b> ${escapeHTML(o.phone||"")}<br>
-   <b>Email:</b> ${escapeHTML(o.email||"Not provided")}<br>
-   <b>City:</b> ${escapeHTML(o.city||"")}<br>
-   <b>Address:</b> ${escapeHTML(o.address||"")}<br>
-   <b>Products:</b><br>${items||"No item details"}<br>
-   <b>Notes:</b> ${escapeHTML(o.notes||"None")}<br>
-   <b>Total:</b> <strong>${money(o.total)}</strong><br>
-   <b>Payment:</b> ${escapeHTML(o.paymentMethod||"Cash on Delivery")}<br>
-   <b>Received:</b> ${escapeHTML(orderDate(o.createdAt))}</div>
-   <div class="order-actions">
-    ${status!=="Confirmed"?`<button class="gold-btn" onclick="confirmCustomerOrder('${safeId}')">CONFIRM ORDER</button>`:""}
-    ${status!=="Cancelled"?`<button class="outline-btn" onclick="cancelCustomerOrder('${safeId}')">CANCEL ORDER</button>`:""}
-    <button class="outline-btn" onclick="openCustomerWhatsApp('${safeId}')">MESSAGE CUSTOMER</button>
-   </div>
-  </article>`;
- }).join("");
-}
-async function confirmCustomerOrder(id){
- if(!requireAdmin())return;
- const order=allOrders.find(o=>o.id===id);if(!order)return;
- if(order.status==="Confirmed"){showToast("یہ آرڈر پہلے ہی Confirm ہے۔");return}
- const phone=customerWhatsApp(order.phone);
- if(!phone){showToast("گاہک کا درست فون نمبر موجود نہیں۔");return}
- // Open the WhatsApp tab directly from the admin click to avoid popup blocking.
- const tab=window.open("about:blank","_blank");
- try{
-  await db.collection("orders").doc(id).update({status:"Confirmed",confirmedAt:firebase.firestore.FieldValue.serverTimestamp(),confirmedBy:currentUser.uid});
-  const url="https://wa.me/"+phone+"?text="+encodeURIComponent(orderMessage({...order,id}));
-  if(tab)tab.location.href=url;else window.location.href=url;
-  showToast("Order confirmed. WhatsApp message is ready to send.");
- }catch(error){
-  if(tab)tab.close();
-  console.error(error);showToast("Order confirmation failed: "+getErrorMessage(error));
- }
-}
-async function cancelCustomerOrder(id){
- if(!requireAdmin())return;
- if(!confirm("کیا آپ واقعی اس آرڈر کو Cancel کرنا چاہتے ہیں؟"))return;
- try{
-  await db.collection("orders").doc(id).update({status:"Cancelled",cancelledAt:firebase.firestore.FieldValue.serverTimestamp(),cancelledBy:currentUser.uid});
-  showToast("Order cancelled.");
- }catch(error){showToast("Cancel failed: "+getErrorMessage(error))}
-}
-function openCustomerWhatsApp(id){
- if(!requireAdmin())return;
- const order=allOrders.find(o=>o.id===id);if(!order)return;
- const phone=customerWhatsApp(order.phone);if(!phone){showToast("Customer phone number is missing.");return}
- const msg=order.status==="Confirmed"?orderMessage({...order,id}):`Assalam-o-Alaikum ${order.customerName||""}! We are contacting you about your COBRA STORE order #${id}. Please reply to confirm your details.`;
- window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank","noopener");
-}
 
 function renderAdminProducts(){
  const list=$("adminProductList");if(!list)return;
@@ -658,7 +558,6 @@ function resetProductForm(){
 }
 function editProduct(id){
  if(!requireAdmin())return;const p=products.find(x=>x.id===id);if(!p)return;
- showAdminTab("products");
  $("editProductId").value=p.id;$("productName").value=cleanProductName(p.name);
  $("productCategory").value=p.category||"fashion";$("productPrice").value=p.price||"";
  $("productSale").value=salePercent(p);$("productLabel").value=p.label||"";
@@ -685,8 +584,7 @@ $("productVideoFile").addEventListener("change",()=>{
 });
 function storagePath(productId,type,index,filename){
  const ext=(filename.split(".").pop()||"file").toLowerCase().replace(/[^a-z0-9]/g,"");
- const folder=type==="video"?"video":"images";
- return "product-media/"+productId+"/"+folder+"/"+Date.now()+"-"+index+"."+ext;
+ return "product-media/"+productId+"/"+type+"/"+Date.now()+"-"+index+"."+ext;
 }
 async function uploadFile(file,path){
  const ref=storage.ref().child(path);
@@ -713,7 +611,7 @@ $("productForm").addEventListener("submit",async event=>{
  try{
   if(editId){productRef=db.collection(COLLECTION_NAME).doc(editId);await productRef.update({name,category,price,label:label||categoryName(category),sizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()})}
   else{productRef=db.collection(COLLECTION_NAME).doc();await productRef.set({name,category,price,label:label||categoryName(category),sizes,stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()})}
-  const old=products.find(p=>p.id===productRef.id)||{};
+  const old=(products.find(p=>p.id===productRef.id))||{};
   let image=old.image||"",extraImages=Array.isArray(old.extraImages)?old.extraImages:[],videoUrl=old.videoUrl||"";
   let mediaPaths=Array.isArray(old.mediaPaths)?old.mediaPaths:[];
   if(imageFiles.length){
@@ -727,10 +625,10 @@ $("productForm").addEventListener("submit",async event=>{
   }
   if(videoFile){
    $("uploadStatus").textContent="Uploading product video...";
-   const oldVideoPaths=mediaPaths.filter(p=>p.includes("/video/"));
-   const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"video",0,videoFile.name));
+   const oldVideoPaths=mediaPaths.filter(p=>p.includes("/videos/"));
+   const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"videos",0,videoFile.name));
    videoUrl=uploadedVideo.url;
-   mediaPaths=[...mediaPaths.filter(p=>!p.includes("/video/")),uploadedVideo.path];
+   mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
    await deleteStorageFiles(oldVideoPaths);
   }
   await productRef.update({image,extraImages,videoUrl,mediaPaths,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
