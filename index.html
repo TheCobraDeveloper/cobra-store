@@ -6,21 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080808">
 <title>COBRA STORE | VIP Premium Shopping</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.2.0/mdb.min.css" rel="stylesheet">
 
 <style>
 :root{
  --gold:#d6ad55;--gold2:#ffe5a0;--black:#080808;
  --panel:#141414;--muted:#aaa;--white:#fff;
- --line:rgba(214,173,85,.38);--glow:0 0 22px rgba(214,173,85,.18);
+ --line:rgba(214,173,85,.38);
+ --glow:0 0 22px rgba(214,173,85,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:100px}
 body{
- background:linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.88)),
+ background:linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.9)),
  url("IMG-20261109-WA0834(1).jpg") center/cover fixed;
  background-color:var(--black);color:#fff;
  font-family:Montserrat,Arial,sans-serif;overflow-x:hidden
@@ -30,8 +29,11 @@ button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 .hidden{display:none!important}
 .gold{color:var(--gold2)}
-.gold-text{background:linear-gradient(90deg,#b88936,#fff0b7,#c18e36);background-clip:text;color:transparent}
-.container{max-width:1250px;margin:auto;padding-left:17px;padding-right:17px}
+.gold-text{
+ background:linear-gradient(90deg,#b88936,#fff0b7,#c18e36);
+ background-clip:text;color:transparent
+}
+.container{max-width:1250px;margin:auto;padding:0 17px}
 .gold-btn{
  border:1px solid #f4d68c;border-radius:30px;
  background:linear-gradient(120deg,#8c6423,#f4d68c,#a77a2e);
@@ -48,19 +50,44 @@ a{color:inherit;text-decoration:none}
 .promo-bar{
  background:linear-gradient(90deg,#6f4c17,#d6ad55,#6f4c17);
  color:#080808;text-align:center;padding:9px 10px;
- font-size:10px;font-weight:900;letter-spacing:1.2px;
- overflow:hidden
+ font-size:10px;font-weight:900;letter-spacing:1.2px;overflow:hidden
 }
 .promo-track{animation:promo 24s linear infinite;white-space:nowrap}
 @keyframes promo{0%{transform:translateX(40%)}100%{transform:translateX(-40%)}}
-#intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+#intro{
+ position:fixed;inset:0;z-index:9999;background:#000;
+ display:flex;align-items:center;justify-content:center;overflow:hidden
+}
 #intro video{position:absolute;width:100%;height:100%;object-fit:cover}
-.intro-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),transparent 45%,rgba(0,0,0,.55))}
-.intro-brand{position:absolute;top:22px;left:18px;z-index:3;font-family:Orbitron;color:#ffe2a0;font-size:clamp(17px,4vw,27px);font-weight:800;letter-spacing:2px}
-.intro-brand small{display:block;font-size:8px;letter-spacing:4px;text-align:center;margin-top:4px;color:#fff}
-.skip-intro{position:absolute;right:18px;top:22px;z-index:6;border:1px solid #e5bd69;color:#ffe5a0;background:#080808;padding:10px 16px;border-radius:30px;font-size:11px;font-weight:800}
-.intro-credits{position:absolute;bottom:55px;left:8px;right:8px;z-index:5;text-align:center;color:#ffe5a0;font-size:8px;line-height:1.9}
-.intro-bottom{position:absolute;bottom:0;left:0;right:0;min-height:45px;z-index:5;display:flex;align-items:center;justify-content:center;padding:12px 8px;color:#ffe5a0;background:#000;border-top:1px solid #b88c3d;font-family:Orbitron;font-size:10px;font-weight:800;letter-spacing:1.5px}
+.intro-shade{
+ position:absolute;inset:0;
+ background:linear-gradient(180deg,rgba(0,0,0,.1),transparent 45%,rgba(0,0,0,.55))
+}
+.intro-brand{
+ position:absolute;top:22px;left:18px;z-index:3;
+ font-family:Orbitron;color:#ffe2a0;
+ font-size:clamp(17px,4vw,27px);font-weight:800;letter-spacing:2px
+}
+.intro-brand small{
+ display:block;font-size:8px;letter-spacing:4px;
+ text-align:center;margin-top:4px;color:#fff
+}
+.skip-intro{
+ position:absolute;right:18px;top:22px;z-index:6;
+ border:1px solid #e5bd69;color:#ffe5a0;background:#080808;
+ padding:10px 16px;border-radius:30px;font-size:11px;font-weight:800
+}
+.intro-credits{
+ position:absolute;bottom:55px;left:8px;right:8px;z-index:5;
+ text-align:center;color:#ffe5a0;font-size:8px;line-height:1.9
+}
+.intro-bottom{
+ position:absolute;bottom:0;left:0;right:0;min-height:45px;z-index:5;
+ display:flex;align-items:center;justify-content:center;padding:12px 8px;
+ color:#ffe5a0;background:#000;border-top:1px solid #b88c3d;
+ font-family:Orbitron;font-size:10px;font-weight:800;letter-spacing:1.5px
+}
 #intro.hide{animation:introOut .9s forwards}
 @keyframes introOut{to{opacity:0;visibility:hidden;transform:scale(1.04)}}
 
@@ -68,8 +95,14 @@ header{
  position:sticky;top:0;z-index:90;background:rgba(7,7,7,.94);
  border-bottom:1px solid var(--line);backdrop-filter:blur(18px)
 }
-.header-inner{max-width:1250px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.logo{width:62px;height:62px;margin:auto;border-radius:50%;border:2px solid #e5bd69;overflow:hidden;box-shadow:0 0 17px #8c642355}
+.header-inner{
+ max-width:1250px;margin:auto;padding:12px 18px;
+ display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap
+}
+.logo{
+ width:62px;height:62px;margin:auto;border-radius:50%;
+ border:2px solid #e5bd69;overflow:hidden;box-shadow:0 0 17px #8c642355
+}
 .logo img{width:100%;height:100%;object-fit:contain}
 .logo-sub{text-align:center;font-size:8px;letter-spacing:3px;color:#bbb;margin-top:5px}
 .nav{display:flex;gap:17px;flex-wrap:wrap}
@@ -91,10 +124,22 @@ header{
 }
 .hero-content{position:relative;z-index:1}
 .hero-kicker{color:var(--gold);font-size:10px;letter-spacing:5px;font-weight:900;margin-bottom:14px}
-.hero h1{font-family:Cinzel,serif;font-size:clamp(38px,8vw,78px);line-height:1.15;color:#ffe3a0;text-shadow:0 0 25px #b58a4055}
+.hero h1{
+ font-family:Cinzel,serif;font-size:clamp(38px,8vw,78px);
+ line-height:1.15;color:#ffe3a0;text-shadow:0 0 25px #b58a4055
+}
 .hero p{color:#bbb;font-size:13px;line-height:1.9;max-width:580px;margin:18px auto 25px}
 .hero-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.benefits{max-width:1150px;margin:0 auto 35px;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hero-sale{
+ display:inline-block;margin-top:20px;padding:8px 17px;
+ border:1px solid var(--gold);color:var(--gold2);
+ font-size:10px;letter-spacing:2px;font-weight:900;
+ box-shadow:0 0 18px #d6ad5522
+}
+.benefits{
+ max-width:1150px;margin:0 auto 35px;padding:0 16px;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:12px
+}
 .benefit{
  border-top:1px solid #d6ad55;border-bottom:1px solid #6f542a;
  background:linear-gradient(120deg,#21190dce,#080808dd);
@@ -106,11 +151,17 @@ header{
 .section{max-width:1250px;margin:auto;padding:42px 18px}
 .section-heading{text-align:center;margin-bottom:28px}
 .section-heading .eyebrow{color:var(--gold);font-size:9px;letter-spacing:4px;font-weight:900}
-.section-heading h2{font-family:Cinzel,serif;color:var(--gold2);font-size:clamp(24px,5vw,36px);margin-top:9px;text-shadow:0 0 15px #d6ad5533}
+.section-heading h2{
+ font-family:Cinzel,serif;color:var(--gold2);
+ font-size:clamp(24px,5vw,36px);margin-top:9px;
+ text-shadow:0 0 15px #d6ad5533
+}
 .section-heading p{color:#999;font-size:11px;margin-top:8px}
 
-/* Clean category logos without surrounding boxes */
-.category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:25px 16px}
+/* Category logos: no boxes */
+.category-grid{
+ display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:25px 16px
+}
 .category-card{
  min-width:0;cursor:pointer;text-align:center;background:transparent;
  border:0;padding:5px 4px;transition:.25s;position:relative
@@ -121,15 +172,29 @@ header{
  display:block;margin:auto;background:transparent;border:0;border-radius:0;
  filter:drop-shadow(0 0 8px rgba(214,173,85,.3));transition:.3s
 }
-.category-card:hover img,.category-card.active img{filter:drop-shadow(0 0 17px #e5bd69)}
-.category-card h3{color:#ffe3a0;font-size:11px;margin-top:10px;font-weight:900;letter-spacing:.5px}
+.category-card:hover img,.category-card.active img{
+ filter:drop-shadow(0 0 17px #e5bd69)
+}
+.category-card h3{
+ color:#ffe3a0;font-size:11px;margin-top:10px;
+ font-weight:900;letter-spacing:.5px
+}
 .category-card small{display:block;color:#aaa;font-size:8px;margin-top:5px}
 .category-card.active h3{color:#fff}
 .category-card.all-card img{filter:drop-shadow(0 0 14px #d6ad55)}
 
-.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:25px 0 18px}
-.search-box{flex:1;min-width:190px;display:flex;background:#141414;border:1px solid #806332;border-radius:30px;overflow:hidden}
-.search-box input{width:100%;background:transparent;border:0;outline:0;padding:13px 17px;color:#fff;font-size:12px}
+.tools{
+ display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+ justify-content:space-between;margin:25px 0 18px
+}
+.search-box{
+ flex:1;min-width:190px;display:flex;background:#141414;
+ border:1px solid #806332;border-radius:30px;overflow:hidden
+}
+.search-box input{
+ width:100%;background:transparent;border:0;outline:0;
+ padding:13px 17px;color:#fff;font-size:12px
+}
 .search-box input::placeholder{color:#888}
 .tools select,.form-input{
  background:#101010;color:#f4d68c;border:1px solid #806332;
@@ -144,10 +209,17 @@ header{
  overflow:hidden;transition:.3s;position:relative;box-shadow:0 10px 28px #0008
 }
 .product-card:hover{transform:translateY(-6px);box-shadow:0 0 24px #d6ad5530}
-.product-image{height:235px;background:radial-gradient(circle,#302515,#090909);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.product-image{
+ height:235px;background:radial-gradient(circle,#302515,#090909);
+ display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative
+}
 .product-image img{width:100%;height:100%;object-fit:contain;transition:.4s}
 .product-card:hover .product-image img{transform:scale(1.06)}
-.sale-badge{position:absolute;top:12px;left:12px;background:linear-gradient(120deg,#ffe5a0,#b88936);color:#090909;padding:7px 10px;font-size:10px;font-weight:900;z-index:2}
+.sale-badge{
+ position:absolute;top:12px;left:12px;
+ background:linear-gradient(120deg,#ffe5a0,#b88936);
+ color:#090909;padding:7px 10px;font-size:10px;font-weight:900;z-index:2
+}
 .product-info{padding:16px}
 .product-tag{color:#caa45d;font-size:8px;letter-spacing:1.3px;font-weight:900}
 .product-info h3{font-size:13px;margin:9px 0;color:#fff;line-height:1.5}
@@ -156,18 +228,32 @@ header{
 .product-note{font-size:9px;color:#999;margin:8px 0 13px}
 .product-buttons{display:flex;gap:7px}
 .product-buttons button{flex:1;padding:10px 5px;font-size:9px}
-.empty{grid-column:1/-1;text-align:center;color:#ddd;padding:45px 10px;border-top:1px solid #b58a40;border-bottom:1px solid #b58a40;line-height:1.9;background:#0009}
-
+.empty{
+ grid-column:1/-1;text-align:center;color:#ddd;padding:45px 10px;
+ border-top:1px solid #b58a40;border-bottom:1px solid #b58a40;
+ line-height:1.9;background:#0009
+}
 .promo-banner{
- margin:15px auto 25px;padding:18px 15px;text-align:center;
+ margin:15px auto 25px;padding:22px 15px;text-align:center;
  border-top:1px solid #c59a4a;border-bottom:1px solid #c59a4a;
  background:linear-gradient(90deg,#110d07,#392810,#110d07);
- box-shadow:var(--glow)
+ box-shadow:var(--glow);position:relative;overflow:hidden
 }
-.promo-banner strong{display:block;color:#ffe5a0;font-family:Cinzel;font-size:clamp(17px,4vw,25px)}
+.promo-banner:before,.promo-banner:after{
+ content:"✦";position:absolute;top:50%;transform:translateY(-50%);
+ color:#d6ad55;font-size:24px;opacity:.7
+}
+.promo-banner:before{left:8%}.promo-banner:after{right:8%}
+.promo-banner strong{
+ display:block;color:#ffe5a0;font-family:Cinzel;
+ font-size:clamp(19px,4vw,29px);letter-spacing:2px
+}
 .promo-banner span{display:block;color:#d6ad55;font-size:10px;margin-top:7px}
 
-.modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.91);display:none;align-items:center;justify-content:center;padding:14px;overflow-y:auto}
+.modal{
+ position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.91);
+ display:none;align-items:center;justify-content:center;padding:14px;overflow-y:auto
+}
 .modal.show{display:flex}
 .modal-box{
  width:min(650px,100%);max-height:94vh;overflow-y:auto;
@@ -182,7 +268,10 @@ header{
 .modal-box p{font-size:11px;color:#bbb;line-height:1.9;margin:10px 0}
 .modal-price{font-size:23px;color:var(--gold2);font-weight:900;margin:13px 0}
 .modal-gallery{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px}
-.modal-gallery img{width:85px;height:85px;object-fit:contain;background:#090909;border-bottom:1px solid #a47b35;cursor:pointer;flex-shrink:0}
+.modal-gallery img{
+ width:85px;height:85px;object-fit:contain;background:#090909;
+ border-bottom:1px solid #a47b35;cursor:pointer;flex-shrink:0
+}
 .detail-line{padding:10px 0;border-bottom:1px solid #3b301e;font-size:11px;color:#ddd}
 .detail-line b{color:var(--gold2)}
 .size-list{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
@@ -201,12 +290,20 @@ textarea.form-input{min-height:85px;resize:vertical}
 .review-card small{font-size:9px;color:#999}
 .stars{color:#f3c75e;letter-spacing:2px}
 
-.admin-panel{width:min(720px,100%);max-height:94vh;overflow-y:auto;background:#101010;border:1px solid #b58a40;padding:22px}
+.admin-panel{
+ width:min(720px,100%);max-height:94vh;overflow-y:auto;
+ background:#101010;border:1px solid #b58a40;padding:22px
+}
 .admin-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
 .admin-top h2{font-family:Cinzel;color:var(--gold2);font-size:22px}
-.admin-product{border-bottom:1px solid #49391e;padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.admin-product strong{font-size:11px}.admin-product small{display:block;color:#aaa;margin-top:5px}
-.admin-product-actions{display:flex;gap:6px}.admin-product-actions button{font-size:9px;padding:8px 10px}
+.admin-product{
+ border-bottom:1px solid #49391e;padding:13px 3px;
+ display:flex;align-items:center;justify-content:space-between;gap:10px
+}
+.admin-product strong{font-size:11px}
+.admin-product small{display:block;color:#aaa;margin-top:5px}
+.admin-product-actions{display:flex;gap:6px}
+.admin-product-actions button{font-size:9px;padding:8px 10px}
 
 .cart-panel{
  position:fixed;top:0;right:-430px;width:min(400px,94vw);height:100%;
@@ -217,41 +314,64 @@ textarea.form-input{min-height:85px;resize:vertical}
 .cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .cart-head h2{font-family:Cinzel;color:var(--gold2);font-size:20px}
 .cart-item{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #302719}
-.cart-item strong{font-size:11px}.cart-item small{display:block;color:#aaa;margin-top:5px}
+.cart-item strong{font-size:11px}
+.cart-item small{display:block;color:#aaa;margin-top:5px}
 .cart-item button{background:none;border:0;color:#ff7777;font-size:10px}
 .cart-total{display:flex;justify-content:space-between;padding:18px 0;color:var(--gold2);font-weight:900}
 .cart-empty{color:#aaa;text-align:center;padding:30px 0;font-size:12px}
 
-footer{border-top:1px solid #4a391e;margin-top:45px;padding:35px 18px 17px;text-align:center;background:#080808ed}
+footer{
+ border-top:1px solid #4a391e;margin-top:45px;padding:35px 18px 17px;
+ text-align:center;background:#080808ed
+}
 .footer-logo{width:85px;height:85px;margin:0 auto;border:2px solid #d6ad55;border-radius:50%;overflow:hidden}
 .footer-logo img{width:100%;height:100%;object-fit:contain}
 footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:500px}
 .footer-contact{color:#e7c77f;font-size:11px;margin:12px}
 .credits{border-top:1px solid #282116;margin:20px auto 0;padding-top:13px;color:#a58a57;font-size:8px;line-height:2}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#d6ad55;color:#080808;padding:12px 20px;font-size:11px;font-weight:900;z-index:800;opacity:0;pointer-events:none;transition:.3s}
+.toast{
+ position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+ background:#d6ad55;color:#080808;padding:12px 20px;
+ font-size:11px;font-weight:900;z-index:800;opacity:0;
+ pointer-events:none;transition:.3s
+}
 .toast.show{opacity:1;bottom:35px}
-.music-button{position:fixed;bottom:17px;right:14px;z-index:120;background:#17120a;border:1px solid #d6ad55;color:#ffe5a0;border-radius:50%;width:43px;height:43px;font-size:17px;box-shadow:var(--glow)}
+.music-button{
+ position:fixed;bottom:17px;right:14px;z-index:120;
+ background:#17120a;border:1px solid #d6ad55;color:#ffe5a0;
+ border-radius:50%;width:43px;height:43px;font-size:17px;box-shadow:var(--glow)
+}
 @media(max-width:850px){
  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .product-image{height:190px}
 }
 @media(max-width:520px){
- .header-inner{justify-content:center}.nav{justify-content:center;width:100%;gap:12px}
+ .header-inner{justify-content:center}
+ .nav{justify-content:center;width:100%;gap:12px}
  .header-actions{justify-content:center;width:100%}
  .hero{min-height:340px;padding-top:52px}
- .benefits{gap:6px}.benefit{padding:13px 5px}.benefit strong{font-size:9px}.benefit span{font-size:7px}
+ .benefits{gap:6px}
+ .benefit{padding:13px 5px}
+ .benefit strong{font-size:9px}
+ .benefit span{font-size:7px}
  .category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}
  .category-card img{max-width:135px}
- .product-grid{gap:11px}.product-image{height:145px}
- .product-info{padding:11px}.product-info h3{font-size:11px}
- .product-buttons{flex-direction:column}.product-buttons button{font-size:8px}
- .intro-brand{top:16px;left:10px}.skip-intro{top:16px;right:10px;padding:9px 12px}
+ .product-grid{gap:11px}
+ .product-image{height:145px}
+ .product-info{padding:11px}
+ .product-info h3{font-size:11px}
+ .product-buttons{flex-direction:column}
+ .product-buttons button{font-size:8px}
+ .intro-brand{top:16px;left:10px}
+ .skip-intro{top:16px;right:10px;padding:9px 12px}
  .intro-credits{font-size:7px;bottom:53px}
  .logo{width:55px;height:55px}
  .section{padding-top:32px;padding-bottom:32px}
  .tools select{width:100%}
  .admin-product{align-items:flex-start;flex-direction:column}
+ .promo-banner:before{left:3%}
+ .promo-banner:after{right:3%}
 }
 </style>
 </head>
@@ -271,9 +391,11 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 
 <audio id="backgroundMusic" src="cobra-music.mp3" loop preload="none"></audio>
 
-<div class="promo-bar"><div class="promo-track">
- ✦ COBRA STORE 11% SPECIAL SALE ✦ CASH ON DELIVERY AVAILABLE ✦ PREMIUM COLLECTION ✦ ORDER NOW ✦
-</div></div>
+<div class="promo-bar">
+ <div class="promo-track">
+  ✦ COBRA STORE 11.11 MEGA SALE ✦ CASH ON DELIVERY AVAILABLE ✦ PREMIUM COLLECTION ✦ ORDER NOW ✦
+ </div>
+</div>
 
 <header>
  <div class="header-inner">
@@ -282,8 +404,10 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <div class="logo-sub">STYLE • QUALITY • TRUST</div>
   </div>
   <nav class="nav">
-   <a href="#home">HOME</a><a href="#categories">CATEGORIES</a>
-   <a href="#products">PRODUCTS</a><a href="#contact">CONTACT</a>
+   <a href="#home">HOME</a>
+   <a href="#categories">CATEGORIES</a>
+   <a href="#products">PRODUCTS</a>
+   <a href="#contact">CONTACT</a>
   </nav>
   <div class="header-actions">
    <button class="outline-btn" id="cartOpen">CART (<span id="cartCount">0</span>)</button>
@@ -303,6 +427,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <button class="gold-btn" onclick="goToCategories()">EXPLORE COLLECTION</button>
    <button class="outline-btn" onclick="showAllProducts()">VIEW ALL PRODUCTS</button>
   </div>
+  <div class="hero-sale">✦ 11.11 MEGA SALE IS LIVE ✦</div>
  </div>
 </section>
 
@@ -313,8 +438,8 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 </div>
 
 <div class="promo-banner">
- <strong>11% SPECIAL SHOPPING SALE</strong>
- <span>Explore the COBRA STORE collection and enjoy special prices</span>
+ <strong>11.11 MEGA SALE</strong>
+ <span>Explore the COBRA STORE collection and enjoy special discounted prices</span>
 </div>
 
 <section class="section" id="categories">
@@ -326,34 +451,44 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 
  <div class="category-grid" id="categoryGrid">
   <div class="category-card" data-category="girls-shoes" onclick="selectCategory('girls-shoes',this)">
-   <img src="IMG-20261109-WA0584.jpg" alt="Girls Shoes" loading="lazy"><h3>GIRLS SHOES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0584.jpg" alt="Girls Shoes" loading="lazy">
+   <h3>GIRLS SHOES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="boys-shoes" onclick="selectCategory('boys-shoes',this)">
-   <img src="IMG-20261109-WA0585.jpg" alt="Boys Shoes" loading="lazy"><h3>BOYS SHOES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0585.jpg" alt="Boys Shoes" loading="lazy">
+   <h3>BOYS SHOES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="boys-clothes" onclick="selectCategory('boys-clothes',this)">
-   <img src="IMG-20261109-WA0589(1).jpg" alt="Boys Clothes" loading="lazy"><h3>BOYS CLOTHES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0589(1).jpg" alt="Boys Clothes" loading="lazy">
+   <h3>BOYS CLOTHES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="girls-clothes" onclick="selectCategory('girls-clothes',this)">
-   <img src="IMG-20261109-WA0595.jpg" alt="Girls Clothes" loading="lazy"><h3>GIRLS CLOTHES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0595.jpg" alt="Girls Clothes" loading="lazy">
+   <h3>GIRLS CLOTHES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="boys-watches" onclick="selectCategory('boys-watches',this)">
-   <img src="IMG-20261109-WA0593.jpg" alt="Boys Watches" loading="lazy"><h3>BOYS WATCHES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0593.jpg" alt="Boys Watches" loading="lazy">
+   <h3>BOYS WATCHES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="girls-watches" onclick="selectCategory('girls-watches',this)">
-   <img src="IMG-20261109-WA0594.jpg" alt="Girls Watches" loading="lazy"><h3>GIRLS WATCHES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0594.jpg" alt="Girls Watches" loading="lazy">
+   <h3>GIRLS WATCHES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="mobile-accessories" onclick="selectCategory('mobile-accessories',this)">
-   <img src="IMG-20261109-WA0596.jpg" alt="Mobile Accessories" loading="lazy"><h3>MOBILE ACCESSORIES</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0596.jpg" alt="Mobile Accessories" loading="lazy">
+   <h3>MOBILE ACCESSORIES</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="electronics" onclick="selectCategory('electronics',this)">
-   <img src="IMG-20261109-WA0599.jpg" alt="Electronics" loading="lazy"><h3>ELECTRONICS</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0599.jpg" alt="Electronics" loading="lazy">
+   <h3>ELECTRONICS</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card" data-category="fashion" onclick="selectCategory('fashion',this)">
-   <img src="IMG-20261109-WA0601.jpg" alt="Fashion" loading="lazy"><h3>FASHION</h3><small>Explore collection ✦</small>
+   <img src="IMG-20261109-WA0601.jpg" alt="Fashion" loading="lazy">
+   <h3>FASHION</h3><small>Explore collection ✦</small>
   </div>
   <div class="category-card all-card active" data-category="all" onclick="showAllProducts(this)">
-   <img src="IMG-20261109-WA0640.jpg" alt="All Products" loading="lazy"><h3>ALL PRODUCTS</h3><small>View every category ✦</small>
+   <img src="IMG-20261109-WA0640.jpg" alt="All Products" loading="lazy">
+   <h3>ALL PRODUCTS</h3><small>View every category ✦</small>
   </div>
  </div>
 </section>
@@ -374,7 +509,9 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
   </select>
  </div>
  <div class="active-label" id="activeLabel">ALL PRODUCTS</div>
- <div class="product-grid" id="productGrid"><div class="empty">Connecting to COBRA STORE...</div></div>
+ <div class="product-grid" id="productGrid">
+  <div class="empty">Connecting to COBRA STORE...</div>
+ </div>
 </section>
 
 <footer id="contact">
@@ -414,8 +551,11 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <input class="form-input" id="reviewName" required maxlength="60" placeholder="Your name">
    <label class="form-label">RATING</label>
    <select class="form-input" id="reviewRating">
-    <option value="5">★★★★★ - Excellent</option><option value="4">★★★★ - Very Good</option>
-    <option value="3">★★★ - Good</option><option value="2">★★ - Fair</option><option value="1">★ - Poor</option>
+    <option value="5">★★★★★ - Excellent</option>
+    <option value="4">★★★★ - Very Good</option>
+    <option value="3">★★★ - Good</option>
+    <option value="2">★★ - Fair</option>
+    <option value="1">★ - Poor</option>
    </select>
    <label class="form-label">YOUR REVIEW</label>
    <textarea class="form-input" id="reviewText" required maxlength="600" placeholder="Share your experience..."></textarea>
@@ -475,7 +615,10 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <!-- ADMIN PANEL -->
 <div class="modal" id="adminModal">
  <div class="admin-panel">
-  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
+  <div class="admin-top">
+   <h2>COBRA ADMIN PANEL</h2>
+   <button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button>
+  </div>
   <div class="status" id="adminStatus">Administrator access enabled.</div>
   <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
   <form id="productForm">
@@ -484,10 +627,14 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
    <input class="form-input" id="productName" required maxlength="100" placeholder="Product name">
    <label class="form-label">CATEGORY</label>
    <select class="form-input" id="productCategory" required>
-    <option value="girls-shoes">Girls Shoes</option><option value="boys-shoes">Boys Shoes</option>
-    <option value="boys-clothes">Boys Clothes</option><option value="girls-clothes">Girls Clothes</option>
-    <option value="boys-watches">Boys Watches</option><option value="girls-watches">Girls Watches</option>
-    <option value="mobile-accessories">Mobile Accessories</option><option value="electronics">Electronics</option>
+    <option value="girls-shoes">Girls Shoes</option>
+    <option value="boys-shoes">Boys Shoes</option>
+    <option value="boys-clothes">Boys Clothes</option>
+    <option value="girls-clothes">Girls Clothes</option>
+    <option value="boys-watches">Boys Watches</option>
+    <option value="girls-watches">Girls Watches</option>
+    <option value="mobile-accessories">Mobile Accessories</option>
+    <option value="electronics">Electronics</option>
     <option value="fashion">Fashion</option>
    </select>
    <label class="form-label">SELLING PRICE (PKR)</label>
@@ -521,7 +668,10 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 
 <!-- CART -->
 <div class="cart-panel" id="cartPanel">
- <div class="cart-head"><h2>YOUR CART</h2><button class="outline-btn" id="cartClose">CLOSE ✕</button></div>
+ <div class="cart-head">
+  <h2>YOUR CART</h2>
+  <button class="outline-btn" id="cartClose">CLOSE ✕</button>
+ </div>
  <div id="cartItems"></div>
  <div class="cart-total"><span>TOTAL</span><span id="cartTotal">Rs. 0</span></div>
  <button class="gold-btn" style="width:100%" onclick="openCartCOD()">CHECKOUT • COD</button>
@@ -536,7 +686,7 @@ footer p{color:#999;font-size:10px;line-height:1.9;margin:10px auto;max-width:50
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* KEEPING YOUR ORIGINAL FIREBASE PROJECT */
+/* ORIGINAL FIREBASE PROJECT — PRESERVED */
 const firebaseConfig={
  apiKey:"AIzaSyC-SpH1_1FJLhz8AP_zbDTYFw-ID4_bnPY",
  authDomain:"cobra-store-a24c8.firebaseapp.com",
@@ -575,7 +725,9 @@ function whatsappURL(message){
  return "https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message);
 }
 function showToast(message){
- const t=$("toast");t.textContent=message;t.classList.add("show");
+ const t=$("toast");
+ t.textContent=message;
+ t.classList.add("show");
  clearTimeout(showToast.timer);
  showToast.timer=setTimeout(()=>t.classList.remove("show"),3000);
 }
@@ -610,7 +762,8 @@ function productImages(product){
 /* FIREBASE */
 try{
  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
- auth=firebase.auth();db=firebase.firestore();
+ auth=firebase.auth();
+ db=firebase.firestore();
  startProductsListener();
 
  auth.onAuthStateChanged(user=>{
@@ -635,7 +788,8 @@ function startProductsListener(){
  if(unsubscribeProducts)unsubscribeProducts();
  unsubscribeProducts=db.collection(COLLECTION_NAME).onSnapshot(snapshot=>{
   products=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
-  renderProducts();renderAdminProducts();
+  renderProducts();
+  renderAdminProducts();
  },error=>{
   console.error("Products read error:",error);
   $("productGrid").innerHTML='<div class="empty">Unable to load products. Check Firestore Rules and connection.</div>';
@@ -662,13 +816,16 @@ function showAllProducts(element){
  $("products").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function renderProducts(){
- const grid=$("productGrid");if(!grid)return;
+ const grid=$("productGrid");
+ if(!grid)return;
  const query=$("searchInput").value.toLowerCase().trim();
+
  let list=products.filter(p=>{
   const categoryMatch=selectedCategory==="all"||p.category===selectedCategory;
   const searchable=[p.name,p.label,p.description,p.details].join(" ").toLowerCase();
   return categoryMatch&&searchable.includes(query);
  });
+
  const sort=$("sortSelect").value;
  if(sort==="low")list.sort((a,b)=>finalPrice(a)-finalPrice(b));
  if(sort==="high")list.sort((a,b)=>finalPrice(b)-finalPrice(a));
@@ -684,10 +841,12 @@ function renderProducts(){
   const imageHTML=images.length
    ?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(p.name)}" loading="lazy" onerror="this.style.display='none'">`
    :'<span style="font-size:55px;color:#d6ad55">🐍</span>';
+
   const discount=salePercent(p);
   return `<article class="product-card">
    <div class="product-image">
-    <span class="sale-badge">${discount}% OFF</span>${imageHTML}
+    <span class="sale-badge">${discount}% OFF</span>
+    ${imageHTML}
    </div>
    <div class="product-info">
     <div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div>
@@ -705,34 +864,47 @@ function renderProducts(){
 $("searchInput").addEventListener("input",renderProducts);
 $("sortSelect").addEventListener("change",renderProducts);
 
-/* PRODUCT DETAIL PAGE / MODAL */
+/* PRODUCT DETAILS */
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);
  if(!currentProduct)return;
+
  selectedSize="";
  const p=currentProduct,images=productImages(p);
+
  $("modalIcon").innerHTML=images.length
   ?`<img id="mainProductPhoto" src="${escapeHTML(images[0])}" alt="${escapeHTML(p.name)}">`
   :'🐍';
+
  $("modalGallery").innerHTML=images.map(url=>
   `<img src="${escapeHTML(url)}" alt="Product photo" onclick="changeMainPhoto('${escapeHTML(url)}')">`
  ).join("");
+
  $("modalCategory").textContent=categoryName(p.category);
  $("modalName").textContent=p.name||"";
  $("modalDescription").textContent=p.description||"Product details are available from our support team.";
  $("modalPrice").innerHTML=money(finalPrice(p))+
   ` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
+
  $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
- const sizes=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==="string"?p.sizes.split(",").map(s=>s.trim()).filter(Boolean):[]);
+
+ const sizes=Array.isArray(p.sizes)?p.sizes:
+  (typeof p.sizes==="string"?p.sizes.split(",").map(s=>s.trim()).filter(Boolean):[]);
+
  $("modalSizes").innerHTML="<b>Available options:</b> "+escapeHTML(sizes.join(", ")||"Contact us to confirm");
  $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
+
  $("sizeOptions").innerHTML=sizes.length?sizes.map(size=>
   `<button type="button" class="size-chip" onclick="chooseSize(this,'${escapeHTML(size)}')">${escapeHTML(size)}</button>`
  ).join(""):'<span class="status">No size options specified for this product.</span>';
 
  $("modalAdd").onclick=()=>{addToCart(p.id,selectedSize);closeModal()};
  $("modalWhatsApp").onclick=()=>orderSingle(p,selectedSize);
- $("modalCOD").onclick=()=>{orderItems=[{...p,qty:1,selectedSize}];openOrderModal()};
+ $("modalCOD").onclick=()=>{
+  orderItems=[{...p,qty:1,selectedSize}];
+  openOrderModal();
+ };
+
  loadReviews(p.id);
  $("productModal").classList.add("show");
 }
@@ -752,18 +924,23 @@ function closeModalOutside(event){
 function orderSingle(product,size){
  const message="Assalam-o-Alaikum! I want to order from COBRA STORE:\n"+
  "Product: "+product.name+"\nCategory: "+categoryName(product.category)+
- "\nSize/Option: "+(size||"Not specified")+"\nPrice: "+money(finalPrice(product))+
+ "\nSize/Option: "+(size||"Not specified")+
+ "\nPrice: "+money(finalPrice(product))+
  "\nPlease share availability and delivery details.";
  window.open(whatsappURL(message),"_blank");
 }
 
 /* CART */
 function addToCart(id,size=""){
- const product=products.find(p=>p.id===id);if(!product)return;
+ const product=products.find(p=>p.id===id);
+ if(!product)return;
+
  const found=cart.find(item=>item.id===id&&item.selectedSize===size);
  if(found)found.qty++;
  else cart.push({...product,qty:1,selectedSize:size});
- updateCart();showToast("Product added to your cart!");
+
+ updateCart();
+ showToast("Product added to your cart!");
 }
 function removeFromCart(id,size){
  cart=cart.filter(item=>!(item.id===id&&item.selectedSize===size));
@@ -772,11 +949,15 @@ function removeFromCart(id,size){
 function updateCart(){
  const count=cart.reduce((sum,item)=>sum+item.qty,0);
  const total=cart.reduce((sum,item)=>sum+finalPrice(item)*item.qty,0);
- $("cartCount").textContent=count;$("cartTotal").textContent=money(total);
+
+ $("cartCount").textContent=count;
+ $("cartTotal").textContent=money(total);
+
  if(!cart.length){
   $("cartItems").innerHTML='<div class="cart-empty">Your cart is empty.</div>';
   return;
  }
+
  $("cartItems").innerHTML=cart.map(item=>
   `<div class="cart-item">
    <div><strong>${escapeHTML(item.name)}</strong>
@@ -787,19 +968,25 @@ function updateCart(){
 }
 function checkoutWhatsApp(){
  if(!cart.length){showToast("Your cart is empty!");return}
- let total=0,message="Assalam-o-Alaikum! I want to place an order from COBRA STORE:\n\n";
+
+ let total=0;
+ let message="Assalam-o-Alaikum! I want to place an order from COBRA STORE:\n\n";
+
  cart.forEach(item=>{
-  const subtotal=finalPrice(item)*item.qty;total+=subtotal;
+  const subtotal=finalPrice(item)*item.qty;
+  total+=subtotal;
   message+=item.name+" × "+item.qty+
-   (item.selectedSize?" | Size: "+item.selectedSize:"")+" = "+money(subtotal)+"\n";
+   (item.selectedSize?" | Size: "+item.selectedSize:"")+
+   " = "+money(subtotal)+"\n";
  });
+
  message+="\nTOTAL: "+money(total)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
  window.open(whatsappURL(message),"_blank");
 }
 $("cartOpen").addEventListener("click",()=>$("cartPanel").classList.add("open"));
 $("cartClose").addEventListener("click",()=>$("cartPanel").classList.remove("open"));
 
-/* CASH ON DELIVERY ORDER */
+/* CASH ON DELIVERY */
 function openCartCOD(){
  if(!cart.length){showToast("Your cart is empty.");return}
  orderItems=cart.map(item=>({...item}));
@@ -810,6 +997,7 @@ function openOrderModal(){
  $("orderSummary").textContent=orderItems.map(item=>
   item.name+" × "+item.qty+(item.selectedSize?" ("+item.selectedSize+")":"")
  ).join(" | ")+" — TOTAL: "+money(total);
+
  $("orderStatus").textContent="";
  $("cartPanel").classList.remove("open");
  $("orderModal").classList.add("show");
@@ -818,17 +1006,22 @@ function closeOrder(){$("orderModal").classList.remove("show")}
 
 $("orderForm").addEventListener("submit",async event=>{
  event.preventDefault();
+
  if(!orderItems.length){showToast("No order items found.");return}
+
  const name=$("customerName").value.trim();
  const phone=$("customerPhone").value.trim();
  const city=$("customerCity").value.trim();
  const address=$("customerAddress").value.trim();
  const notes=$("customerNotes").value.trim();
+
  if(!name||!phone||!city||!address){
   $("orderStatus").textContent="Please complete all required delivery details.";
   return;
  }
+
  const total=orderItems.reduce((sum,item)=>sum+finalPrice(item)*item.qty,0);
+
  const order={
   customerName:name,phone,city,address,notes,
   items:orderItems.map(item=>({
@@ -836,32 +1029,52 @@ $("orderForm").addEventListener("submit",async event=>{
    price:finalPrice(item),quantity:item.qty,size:item.selectedSize||""
   })),
   total,paymentMethod:"Cash on Delivery",
-  status:"Pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  status:"Pending",
+  createdAt:firebase.firestore.FieldValue.serverTimestamp()
  };
+
  const button=$("placeOrderButton");
- button.disabled=true;button.textContent="PLACING ORDER...";
+ button.disabled=true;
+ button.textContent="PLACING ORDER...";
  $("orderStatus").textContent="Submitting your order...";
+
  try{
   if(!db)throw new Error("Firebase is not connected");
+
   await db.collection("orders").add(order);
+
   $("orderStatus").textContent="Your COD order has been submitted successfully!";
   showToast("COD order received!");
-  cart=[];updateCart();
-  setTimeout(()=>{closeOrder();$("orderForm").reset();orderItems=[]},1800);
+  cart=[];
+  updateCart();
+
+  setTimeout(()=>{
+   closeOrder();
+   $("orderForm").reset();
+   orderItems=[];
+  },1800);
+
  }catch(error){
   console.error("COD order save error:",error);
+
   let message="Assalam-o-Alaikum! I want to place a CASH ON DELIVERY order:\n";
-  message+="Name: "+name+"\nPhone: "+phone+"\nCity: "+city+"\nAddress: "+address+"\nNotes: "+notes+"\n\n";
+  message+="Name: "+name+"\nPhone: "+phone+"\nCity: "+city+
+   "\nAddress: "+address+"\nNotes: "+notes+"\n\n";
+
   orderItems.forEach(item=>{
    message+=item.name+" × "+item.qty+
     (item.selectedSize?" | Size: "+item.selectedSize:"")+
     " = "+money(finalPrice(item)*item.qty)+"\n";
   });
+
   message+="\nTOTAL: "+money(total)+"\nPayment: Cash on Delivery";
+
   $("orderStatus").textContent="Online order saving is unavailable. Opening WhatsApp as an alternative.";
   window.open(whatsappURL(message),"_blank");
+
  }finally{
-  button.disabled=false;button.textContent="PLACE COD ORDER";
+  button.disabled=false;
+  button.textContent="PLACE COD ORDER";
  }
 });
 
@@ -869,15 +1082,20 @@ $("orderForm").addEventListener("submit",async event=>{
 async function loadReviews(productId){
  const box=$("reviewList");
  box.innerHTML='<div class="status">Loading customer reviews...</div>';
+
  try{
   const snap=await db.collection(COLLECTION_NAME).doc(productId)
    .collection("reviews").orderBy("createdAt","desc").limit(30).get();
+
   if(snap.empty){
    box.innerHTML='<div class="status">No customer reviews yet. Be the first to review this product.</div>';
    return;
   }
+
   box.innerHTML=snap.docs.map(doc=>{
-   const r=doc.data(),rating=Math.max(1,Math.min(5,Number(r.rating)||5));
+   const r=doc.data();
+   const rating=Math.max(1,Math.min(5,Number(r.rating)||5));
+
    return `<div class="review-card">
     <strong>${escapeHTML(r.name||"Customer")}</strong>
     <div class="stars">${"★".repeat(rating)}${"☆".repeat(5-rating)}</div>
@@ -885,66 +1103,92 @@ async function loadReviews(productId){
     <small>Customer-submitted review</small>
    </div>`;
   }).join("");
+
  }catch(error){
   console.error("Review load:",error);
   box.innerHTML='<div class="status">Reviews could not be loaded. Check Firestore permissions.</div>';
  }
 }
+
 $("reviewForm").addEventListener("submit",async event=>{
  event.preventDefault();
+
  if(!currentProduct||!db)return;
+
  const name=$("reviewName").value.trim();
  const review=$("reviewText").value.trim();
  const rating=Number($("reviewRating").value);
+
  if(!name||!review)return;
+
  $("reviewStatus").textContent="Submitting review...";
+
  try{
   await db.collection(COLLECTION_NAME).doc(currentProduct.id)
    .collection("reviews").add({
     name,text:review,rating,
     createdAt:firebase.firestore.FieldValue.serverTimestamp()
    });
+
   $("reviewStatus").textContent="Thank you! Your review has been submitted.";
   $("reviewForm").reset();
   loadReviews(currentProduct.id);
+
  }catch(error){
   console.error("Review submit:",error);
   $("reviewStatus").textContent="Review could not be submitted. Check Firestore Rules.";
  }
 });
 
-/* ADMIN LOGIN AND ACCESS — ORIGINAL UID CHECK PRESERVED */
+/* ADMIN LOGIN — ORIGINAL ADMIN UID PRESERVED */
 function updateAdminButtons(){
  $("adminLoginButton").classList.toggle("hidden",isAdmin);
  $("adminPanelButton").classList.toggle("hidden",!isAdmin);
  $("adminLogoutButton").classList.toggle("hidden",!isAdmin);
 }
 $("adminLoginButton").addEventListener("click",()=>{
- $("loginStatus").textContent="";$("loginModal").classList.add("show");
+ $("loginStatus").textContent="";
+ $("loginModal").classList.add("show");
 });
 function closeLogin(){$("loginModal").classList.remove("show")}
+
 $("loginForm").addEventListener("submit",async event=>{
  event.preventDefault();
- if(!auth){$("loginStatus").textContent="Firebase is not initialized.";return}
+
+ if(!auth){
+  $("loginStatus").textContent="Firebase is not initialized.";
+  return;
+ }
+
  const email=$("loginEmail").value.trim();
  const password=$("loginPassword").value;
  const button=$("loginSubmit");
- button.disabled=true;button.textContent="PLEASE WAIT...";
+
+ button.disabled=true;
+ button.textContent="PLEASE WAIT...";
  $("loginStatus").textContent="Signing in...";
+
  try{
   const result=await auth.signInWithEmailAndPassword(email,password);
+
   if(result.user.uid!==ADMIN_UID){
    await auth.signOut();
    $("loginStatus").textContent="Access denied. This is not the authorized admin account.";
    return;
   }
+
   $("loginStatus").textContent="Admin login successful!";
   $("loginPassword").value="";
+
   setTimeout(()=>{
-   closeLogin();openAdmin();showToast("Welcome, COBRA STORE Admin!");
+   closeLogin();
+   openAdmin();
+   showToast("Welcome, COBRA STORE Admin!");
   },500);
+
  }catch(error){
   console.error(error);
+
   const messages={
    "auth/invalid-credential":"Email or password is incorrect.",
    "auth/user-not-found":"No user found with this email.",
@@ -952,32 +1196,49 @@ $("loginForm").addEventListener("submit",async event=>{
    "auth/too-many-requests":"Too many attempts. Please wait.",
    "auth/network-request-failed":"Network connection failed."
   };
+
   $("loginStatus").textContent=messages[error.code]||error.message||"Login failed.";
+
  }finally{
-  button.disabled=false;button.textContent="LOGIN";
+  button.disabled=false;
+  button.textContent="LOGIN";
  }
 });
+
 $("adminLogoutButton").addEventListener("click",async()=>{
  if(!auth)return;
- try{await auth.signOut();closeAdmin();showToast("Admin logged out.");}
- catch(error){showToast("Logout failed.");}
+ try{
+  await auth.signOut();
+  closeAdmin();
+  showToast("Admin logged out.");
+ }catch(error){
+  showToast("Logout failed.");
+ }
 });
+
 function openAdmin(){
  if(!isAdmin){showToast("Administrator login required.");return}
- $("adminModal").classList.add("show");renderAdminProducts();
+ $("adminModal").classList.add("show");
+ renderAdminProducts();
 }
 function closeAdmin(){$("adminModal").classList.remove("show")}
 $("adminPanelButton").addEventListener("click",openAdmin);
 
 /* ADMIN PRODUCT MANAGEMENT */
 function renderAdminProducts(){
- const list=$("adminProductList");if(!list)return;
+ const list=$("adminProductList");
+ if(!list)return;
+
  if(!isAdmin){
-  list.innerHTML='<div class="status">Please sign in as administrator.</div>';return;
+  list.innerHTML='<div class="status">Please sign in as administrator.</div>';
+  return;
  }
+
  if(!products.length){
-  list.innerHTML='<div class="status">No products added yet.</div>';return;
+  list.innerHTML='<div class="status">No products added yet.</div>';
+  return;
  }
+
  list.innerHTML=products.map(p=>
   `<div class="admin-product">
    <div><strong>${escapeHTML(p.name)}</strong>
@@ -989,6 +1250,7 @@ function renderAdminProducts(){
   </div>`
  ).join("");
 }
+
 function resetProductForm(){
  $("productForm").reset();
  $("editProductId").value="";
@@ -996,9 +1258,13 @@ function resetProductForm(){
  $("productFormTitle").textContent="ADD NEW PRODUCT";
  $("saveProductButton").textContent="SAVE PRODUCT";
 }
+
 function editProduct(id){
  if(!isAdmin)return;
- const p=products.find(item=>item.id===id);if(!p)return;
+
+ const p=products.find(item=>item.id===id);
+ if(!p)return;
+
  $("editProductId").value=p.id;
  $("productName").value=p.name||"";
  $("productCategory").value=p.category||"fashion";
@@ -1011,15 +1277,20 @@ function editProduct(id){
  $("productStock").value=p.stock||"";
  $("productDescription").value=p.description||"";
  $("productDetails").value=p.details||"";
+
  $("productFormTitle").textContent="EDIT PRODUCT";
  $("saveProductButton").textContent="UPDATE PRODUCT";
  $("productFormTitle").scrollIntoView({behavior:"smooth",block:"center"});
 }
+
 $("productForm").addEventListener("submit",async event=>{
  event.preventDefault();
+
  if(!isAdmin||!currentUser||currentUser.uid!==ADMIN_UID){
-  showToast("Admin access required.");return;
+  showToast("Admin access required.");
+  return;
  }
+
  const name=$("productName").value.trim();
  const category=$("productCategory").value;
  const price=Number($("productPrice").value);
@@ -1036,14 +1307,20 @@ $("productForm").addEventListener("submit",async event=>{
  const editId=$("editProductId").value;
 
  if(!name||!Number.isFinite(price)||price<=0){
-  showToast("Enter a valid product name and price.");return;
+  showToast("Enter a valid product name and price.");
+  return;
  }
  if(!Number.isFinite(sale)||sale<0||sale>90){
-  showToast("Sale must be between 0 and 90 percent.");return;
+  showToast("Sale must be between 0 and 90 percent.");
+  return;
  }
- if(imageInput&&!image){showToast("Enter a valid main image URL.");return}
+ if(imageInput&&!image){
+  showToast("Enter a valid main image URL.");
+  return;
+ }
  if(validExtra.some((url,index)=>!url&&extraImages[index])){
-  showToast("One of the additional image URLs is invalid.");return;
+  showToast("One of the additional image URLs is invalid.");
+  return;
  }
 
  const productData={
@@ -1052,8 +1329,11 @@ $("productForm").addEventListener("submit",async event=>{
   description,details,salePercent:sale,
   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
  };
+
  const button=$("saveProductButton");
- button.disabled=true;button.textContent="SAVING...";
+ button.disabled=true;
+ button.textContent="SAVING...";
+
  try{
   if(editId){
    await db.collection(COLLECTION_NAME).doc(editId).update(productData);
@@ -1063,7 +1343,9 @@ $("productForm").addEventListener("submit",async event=>{
    await db.collection(COLLECTION_NAME).add(productData);
    showToast("New product added successfully!");
   }
+
   resetProductForm();
+
  }catch(error){
   console.error("Save product:",error);
   showToast("Could not save product. Check Firestore Rules.");
@@ -1072,15 +1354,22 @@ $("productForm").addEventListener("submit",async event=>{
   button.textContent=$("editProductId").value?"UPDATE PRODUCT":"SAVE PRODUCT";
  }
 });
+
 async function deleteProduct(id){
  if(!isAdmin||!currentUser||currentUser.uid!==ADMIN_UID){
-  showToast("Admin access required.");return;
+  showToast("Admin access required.");
+  return;
  }
- const product=products.find(p=>p.id===id);if(!product)return;
+
+ const product=products.find(p=>p.id===id);
+ if(!product)return;
+
  if(!confirm("Are you sure you want to delete: "+product.name+"?"))return;
+
  try{
   await db.collection(COLLECTION_NAME).doc(id).delete();
-  cart=cart.filter(item=>item.id!==id);updateCart();
+  cart=cart.filter(item=>item.id!==id);
+  updateCart();
   showToast("Product deleted.");
  }catch(error){
   console.error("Delete product:",error);
@@ -1089,27 +1378,42 @@ async function deleteProduct(id){
 }
 
 /* INTRO AND BACKGROUND MUSIC */
-const intro=$("intro"),introVideo=$("introVideo");
+const intro=$("intro");
+const introVideo=$("introVideo");
 let introFinished=false;
+
 function finishIntro(){
  if(introFinished)return;
- introFinished=true;intro.classList.add("hide");
+ introFinished=true;
+ intro.classList.add("hide");
+
  setTimeout(()=>{
-  intro.style.display="none";introVideo.pause();
+  intro.style.display="none";
+  introVideo.pause();
  },950);
 }
+
 $("skipIntro").addEventListener("click",finishIntro);
 introVideo.addEventListener("ended",finishIntro);
 introVideo.addEventListener("error",finishIntro);
+
 const videoPlay=introVideo.play();
 if(videoPlay&&typeof videoPlay.catch==="function")videoPlay.catch(()=>{});
 
 const music=$("backgroundMusic");
+
 $("musicToggle").addEventListener("click",async()=>{
  try{
-  if(music.paused){await music.play();$("musicToggle").textContent="♫";}
-  else{music.pause();$("musicToggle").textContent="♪";}
- }catch(error){showToast("Music could not be played.");}
+  if(music.paused){
+   await music.play();
+   $("musicToggle").textContent="♫";
+  }else{
+   music.pause();
+   $("musicToggle").textContent="♪";
+  }
+ }catch(error){
+  showToast("Music could not be played.");
+ }
 });
 
 /* INITIAL STATE */
