@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,8 +107,14 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .detail-line{padding:10px 0;border-bottom:1px solid var(--line);font-size:11px;color:#555;overflow-wrap:anywhere}
 .detail-line b{color:var(--dark)}
 .size-list{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.size-chip{border:1px solid #ddd;background:white;padding:8px 12px;font-size:10px}
+.size-chip{border:1px solid #ddd;background:white;padding:8px 12px;font-size:10px;border-radius:3px}
 .size-chip.selected{background:var(--coral);color:white;border-color:var(--coral)}
+.size-chip.sold-out{background:#f1eeee!important;color:#a49a97!important;border-color:#ded5d2!important;text-decoration:line-through;cursor:not-allowed;opacity:.8;position:relative}
+.size-chip.sold-out:after{content:"✕";font-size:9px;margin-left:5px;color:#c34235}
+.size-admin-list{display:flex;gap:9px;flex-wrap:wrap;margin:9px 0 15px}
+.size-admin-item{display:flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid var(--line);background:#fffaf8;font-size:10px;border-radius:3px}
+.size-admin-item input{accent-color:#ec6c5a}
+.size-admin-item.sold{border-color:#e6a49b;background:#fff1ef;color:#b53d31}
 .form-title{font-size:22px;margin:5px 0 16px}
 .form-label{display:block;color:#6c625d;font-size:10px;font-weight:900;margin:12px 0 6px}
 .form-input:focus{border-color:var(--coral)}
@@ -122,7 +127,7 @@ textarea.form-input{min-height:85px;resize:vertical}
 .review-card p{margin:5px 0;color:#666}
 .review-card small{font-size:9px;color:#999}
 .stars{color:var(--coral);letter-spacing:2px}
-.admin-panel{width:min(760px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:22px}
+.admin-panel{width:min(850px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);padding:22px}
 .admin-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
 .admin-top h2{font-family:"Syne";font-size:22px}
 .admin-product{border-bottom:1px solid var(--line);padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -130,6 +135,18 @@ textarea.form-input{min-height:85px;resize:vertical}
 .admin-product small{display:block;color:#999;margin-top:5px}
 .admin-product-actions{display:flex;gap:6px}
 .admin-product-actions button{font-size:9px;padding:8px 10px}
+.admin-section-title{font-family:"Syne";font-size:18px;margin:22px 0 12px}
+.order-card{border:1px solid var(--line);padding:14px;margin:10px 0;background:#fffdfc;border-radius:3px}
+.order-card.pending{border-left:4px solid #e9a34b}
+.order-card.confirmed{border-left:4px solid #398b5b}
+.order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.order-head strong{font-size:12px}
+.order-status{font-size:9px;font-weight:900;padding:6px 9px;border-radius:3px;background:#fff0dc;color:#a56516}
+.order-status.confirmed{background:#e6f5eb;color:#287345}
+.order-info{font-size:10px;color:#655d59;line-height:1.9;margin-top:9px;overflow-wrap:anywhere}
+.order-items{font-size:10px;background:#f8f2ef;padding:9px;margin-top:9px;line-height:1.9}
+.order-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.order-actions button{font-size:9px;padding:9px 12px}
 .cart-panel{position:fixed;top:0;right:-430px;width:min(400px,94vw);height:100%;background:white;z-index:400;border-left:1px solid var(--line);padding:20px;transition:.35s;overflow-y:auto}
 .cart-panel.open{right:0}
 .cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
@@ -245,6 +262,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="modal-price" id="modalPrice"></div><div class="detail-line" id="modalStock"></div>
  <div class="detail-line" id="modalSizes"></div><div class="detail-line" id="modalExtraDetails"></div>
  <div class="form-label">SELECT SIZE / OPTION</div><div class="size-list" id="sizeOptions"></div>
+ <div class="status" id="sizeStatus"></div>
  <div class="form-actions"><button class="gold-btn" id="modalAdd">ADD TO CART</button><button class="outline-btn" id="modalWhatsApp">WHATSAPP ORDER</button></div>
  <button class="gold-btn" style="width:100%;margin-top:10px" id="modalCOD">BUY NOW • CASH ON DELIVERY</button>
  <hr style="border:0;border-top:1px solid #eee5e1;margin:22px 0">
@@ -286,6 +304,12 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
  <div class="status" id="adminStatus">Administrator access enabled.</div>
+
+ <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
+ <div class="status">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
+ <div id="adminOrdersList"><div class="status">Orders loading...</div></div>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
  <form id="productForm">
   <input type="hidden" id="editProductId">
@@ -304,6 +328,8 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <div id="videoFileStatus" class="status">No new video selected.</div>
   <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
   <label class="form-label">SIZES / OPTIONS</label><input class="form-input" id="productSizes" placeholder="40, 41, 42, 43 or S, M, L, XL">
+  <div class="upload-help">ہر سائز کے سامنے موجود چیک باکس سے اسے Sold Out یا Available کریں۔ Sold Out سائز ویب سائٹ پر کراس کے ساتھ نظر آئے گا اور خریدا نہیں جا سکے گا۔</div>
+  <div id="sizeAvailabilityEditor" class="size-admin-list"></div>
   <label class="form-label">STOCK / AVAILABILITY</label><input class="form-input" id="productStock" maxlength="80" placeholder="In Stock">
   <label class="form-label">PRODUCT DESCRIPTION</label><textarea class="form-input" id="productDescription" maxlength="1500" placeholder="Product details, material, features..."></textarea>
   <label class="form-label">MORE DETAILS</label><textarea class="form-input" id="productDetails" maxlength="1500" placeholder="Material, colour, warranty, dimensions, etc."></textarea>
@@ -344,7 +370,8 @@ const MAX_IMAGES=4,MAX_IMAGE_SIZE=5*1024*1024,MAX_VIDEO_SIZE=25*1024*1024;
 
 let auth=null,db=null,storage=null,currentUser=null,isAdmin=false;
 let products=[],cart=[],currentProduct=null,selectedCategory="all";
-let selectedSize="",orderItems=[],unsubscribeProducts=null,reviewRequestToken=0;
+let selectedSize="",orderItems=[],unsubscribeProducts=null,unsubscribeOrders=null,reviewRequestToken=0;
+let adminUnavailableSizes=[];
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
@@ -360,6 +387,8 @@ function finalPrice(p){return Math.max(0,Math.round((Number(p.price)||0)*(1-sale
 function categoryName(c){const names={"girls-shoes":"GIRLS SHOES","boys-shoes":"BOYS SHOES","boys-clothes":"BOYS CLOTHES","girls-clothes":"GIRLS CLOTHES","boys-watches":"BOYS WATCHES","girls-watches":"GIRLS WATCHES","mobile-accessories":"MOBILE ACCESSORIES","electronics":"ELECTRONICS","fashion":"FASHION","all":"ALL PRODUCTS"};return names[c]||"ALL PRODUCTS"}
 function productImages(p){const all=[p.image,...(Array.isArray(p.extraImages)?p.extraImages:[])];return [...new Set(all.map(safeImageURL).filter(Boolean))].slice(0,4)}
 function getProductSizes(p){const raw=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==="string"?p.sizes.split(","):[]);return [...new Set(raw.map(s=>String(s).trim()).filter(Boolean))]}
+function getUnavailableSizes(p){return Array.isArray(p.unavailableSizes)?p.unavailableSizes.map(String):[]}
+function isSizeUnavailable(p,size){return getUnavailableSizes(p).includes(String(size))}
 function getErrorMessage(error){
  const code=error&&error.code?error.code:"";
  const messages={"permission-denied":"Firebase Rules نے اس عمل کی اجازت نہیں دی۔","unavailable":"Firebase عارضی طور پر دستیاب نہیں۔","network-request-failed":"انٹرنیٹ کنکشن کا مسئلہ ہے۔","unauthenticated":"براہ کرم دوبارہ Admin Login کریں۔","storage/unauthorized":"Storage Rules نے اپلوڈ کی اجازت نہیں دی۔","storage/canceled":"اپلوڈ منسوخ ہوگیا۔","storage/retry-limit-exceeded":"اپلوڈ بار بار ناکام ہوا۔"};
@@ -381,6 +410,7 @@ function startProductsListener(){
  if(unsubscribeProducts)unsubscribeProducts();
  unsubscribeProducts=db.collection(COLLECTION_NAME).onSnapshot(snapshot=>{
   products=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));renderProducts();renderAdminProducts();
+  if(currentProduct){const updated=products.find(p=>p.id===currentProduct.id);if(updated){currentProduct=updated;if($("productModal").classList.contains("show"))refreshSizeAvailability()}}
  },error=>{$("productGrid").innerHTML='<div class="empty">Products could not load. Check Firestore Rules.</div>';showToast(getErrorMessage(error))});
 }
 function selectCategory(category,element){
@@ -419,6 +449,26 @@ function renderProducts(){
 $("searchInput").addEventListener("input",renderProducts);
 $("sortSelect").addEventListener("change",renderProducts);
 
+function renderSizeOptions(){
+ const p=currentProduct;if(!p)return;
+ const sizes=getProductSizes(p),unavailable=getUnavailableSizes(p);
+ $("sizeOptions").innerHTML=sizes.length?sizes.map((s,i)=>{
+  const sold=unavailable.includes(s);
+  return `<button type="button" class="size-chip ${sold?"sold-out":""} ${selectedSize===s&&!sold?"selected":""}" data-size-index="${i}" ${sold?"disabled aria-disabled='true'":""}>${escapeHTML(s)}</button>`;
+ }).join(""):'<span class="status">No size options specified for this product.</span>';
+ $("sizeOptions").querySelectorAll(".size-chip:not(.sold-out)").forEach(button=>{
+  button.addEventListener("click",()=>chooseSize(button,sizes[Number(button.dataset.sizeIndex)]));
+ });
+ const available=sizes.filter(s=>!unavailable.includes(s));
+ $("sizeStatus").textContent=sizes.length?(available.length?available.length+" size(s) available. Crossed-out sizes are sold out.":"تمام سائز Sold Out ہیں۔ فی الحال آرڈر دستیاب نہیں۔"):"";
+ const disabled=sizes.length>0&&available.length===0;
+ ["modalAdd","modalWhatsApp","modalCOD"].forEach(id=>$(id).disabled=disabled);
+}
+function refreshSizeAvailability(){
+ const p=currentProduct;if(!p)return;
+ if(selectedSize&&isSizeUnavailable(p,selectedSize))selectedSize="";
+ renderSizeOptions();
+}
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);if(!currentProduct)return;
  selectedSize="";const p=currentProduct,images=productImages(p),sizes=getProductSizes(p);
@@ -430,25 +480,37 @@ function openProduct(id){
  $("modalDescription").textContent=p.description||"Product details are available from our support team.";
  $("modalPrice").innerHTML=money(finalPrice(p))+` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
  $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
- $("modalSizes").innerHTML="<b>Available options:</b> "+escapeHTML(sizes.join(", ")||"No options specified");
+ $("modalSizes").innerHTML="<b>Product options:</b> "+escapeHTML(sizes.join(", ")||"No options specified");
  $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
- $("sizeOptions").innerHTML=sizes.length?sizes.map(s=>`<button type="button" class="size-chip" onclick="chooseSize(this,'${escapeHTML(s)}')">${escapeHTML(s)}</button>`).join(""):'<span class="status">No size options specified for this product.</span>';
- $("modalAdd").onclick=()=>{if(sizes.length&&!selectedSize){showToast("پہلے Size / Option منتخب کریں۔");return}addToCart(p.id,selectedSize);closeModal()};
- $("modalWhatsApp").onclick=()=>{if(sizes.length&&!selectedSize){showToast("پہلے Size / Option منتخب کریں۔");return}orderSingle(p,selectedSize)};
- $("modalCOD").onclick=()=>{if(sizes.length&&!selectedSize){showToast("پہلے Size / Option منتخب کریں۔");return}orderItems=[{...p,qty:1,selectedSize}];openOrderModal()};
+ renderSizeOptions();
+ $("modalAdd").onclick=()=>{if(!validateSelectedSize(p))return;addToCart(p.id,selectedSize);closeModal()};
+ $("modalWhatsApp").onclick=()=>{if(!validateSelectedSize(p))return;orderSingle(p,selectedSize)};
+ $("modalCOD").onclick=()=>{if(!validateSelectedSize(p))return;orderItems=[{...p,qty:1,selectedSize}];openOrderModal()};
  $("reviewStatus").textContent="";loadReviews(p.id);$("productModal").classList.add("show");
 }
+function validateSelectedSize(p){
+ const sizes=getProductSizes(p);
+ if(sizes.length&&!selectedSize){showToast("پہلے Available Size منتخب کریں۔");return false}
+ if(selectedSize&&isSizeUnavailable(p,selectedSize)){selectedSize="";renderSizeOptions();showToast("یہ سائز Sold Out ہو چکا ہے۔");return false}
+ return true;
+}
 function changeMainPhoto(url){const photo=$("mainProductPhoto");if(photo)photo.src=url}
-function chooseSize(button,size){selectedSize=size;document.querySelectorAll(".size-chip").forEach(el=>el.classList.remove("selected"));button.classList.add("selected")}
+function chooseSize(button,size){
+ if(!currentProduct||isSizeUnavailable(currentProduct,size)){showToast("یہ سائز دستیاب نہیں ہے۔");return}
+ selectedSize=size;document.querySelectorAll(".size-chip").forEach(el=>el.classList.remove("selected"));button.classList.add("selected");
+ $("sizeStatus").textContent="Selected size: "+size;
+}
 function closeModal(){$("productModal").classList.remove("show");$("modalVideo").pause()}
 function closeModalOutside(event){if(event.target===$("productModal"))closeModal()}
 function orderSingle(p,size){
+ if(size&&isSizeUnavailable(p,size)){showToast("یہ سائز Sold Out ہے۔");return}
  const message="Assalam-o-Alaikum! I want to order from COBRA STORE:\nProduct: "+cleanProductName(p.name)+"\nCategory: "+categoryName(p.category)+"\nSize/Option: "+(size||"Not specified")+"\nPrice: "+money(finalPrice(p))+"\nPlease share availability and delivery details.";
  window.open(whatsappURL(message),"_blank","noopener");
 }
-function quickAdd(id){const p=products.find(x=>x.id===id);if(!p)return;if(getProductSizes(p).length){openProduct(id);showToast("آرڈر سے پہلے Size / Option منتخب کریں۔");return}addToCart(id,"")}
+function quickAdd(id){const p=products.find(x=>x.id===id);if(!p)return;if(getProductSizes(p).length){openProduct(id);showToast("آرڈر سے پہلے Available Size منتخب کریں۔");return}addToCart(id,"")}
 function addToCart(id,size=""){
  const p=products.find(x=>x.id===id);if(!p)return;
+ if(size&&isSizeUnavailable(p,size)){showToast("یہ سائز Sold Out ہے۔");return}
  const found=cart.find(x=>x.id===id&&x.selectedSize===size);
  if(found)found.qty++;else cart.push({...p,qty:1,selectedSize:size});
  updateCart();showToast("Product added to your cart!");
@@ -460,8 +522,19 @@ function updateCart(){
  if(!cart.length){$("cartItems").innerHTML='<div class="cart-empty">Your cart is empty.</div>';return}
  $("cartItems").innerHTML=cart.map(item=>`<div class="cart-item"><div><strong>${escapeHTML(cleanProductName(item.name))}</strong><small>${item.qty} × ${money(finalPrice(item))} ${item.selectedSize?"• Option: "+escapeHTML(item.selectedSize):""}</small></div><button onclick="removeFromCart('${escapeHTML(item.id)}','${escapeHTML(item.selectedSize||"")}')">REMOVE</button></div>`).join("");
 }
+function validateOrderItems(items){
+ for(const item of items){
+  const latest=products.find(p=>p.id===item.id)||item;
+  const sizes=getProductSizes(latest);
+  if(sizes.length&&!item.selectedSize){showToast("ہر پروڈکٹ کے لیے سائز منتخب کریں: "+cleanProductName(item.name));return false}
+  if(item.selectedSize&&isSizeUnavailable(latest,item.selectedSize)){showToast(cleanProductName(item.name)+" کا سائز "+item.selectedSize+" Sold Out ہو چکا ہے۔");return false}
+  if(sizes.length&&!sizes.includes(String(item.selectedSize))){showToast("منتخب سائز اب دستیاب نہیں۔");return false}
+ }
+ return true;
+}
 function checkoutWhatsApp(){
  if(!cart.length){showToast("Your cart is empty!");return}
+ if(!validateOrderItems(cart))return;
  let total=0,message="Assalam-o-Alaikum! I want to place an order from COBRA STORE:\n\n";
  cart.forEach(item=>{const sub=finalPrice(item)*item.qty;total+=sub;message+=cleanProductName(item.name)+" × "+item.qty+(item.selectedSize?" | Option: "+item.selectedSize:"")+" = "+money(sub)+"\n"});
  message+="\nTOTAL: "+money(total)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
@@ -470,9 +543,10 @@ function checkoutWhatsApp(){
 $("cartOpen").addEventListener("click",()=>$("cartPanel").classList.add("open"));
 $("cartClose").addEventListener("click",()=>$("cartPanel").classList.remove("open"));
 
-function openCartCOD(){if(!cart.length){showToast("Your cart is empty.");return}orderItems=cart.map(x=>({...x}));openOrderModal()}
+function openCartCOD(){if(!cart.length){showToast("Your cart is empty.");return}orderItems=cart.map(x=>({...x}));if(!validateOrderItems(orderItems))return;openOrderModal()}
 function openOrderModal(){
  if(!orderItems.length){showToast("No order items found.");return}
+ if(!validateOrderItems(orderItems))return;
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
  $("orderSummary").textContent=orderItems.map(x=>cleanProductName(x.name)+" × "+x.qty+(x.selectedSize?" ("+x.selectedSize+")":"")).join(" | ")+" — TOTAL: "+money(total);
  $("orderStatus").textContent="";$("cartPanel").classList.remove("open");$("orderModal").classList.add("show");
@@ -480,6 +554,7 @@ function openOrderModal(){
 function closeOrder(){$("orderModal").classList.remove("show")}
 $("orderForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!orderItems.length){showToast("No order items found.");return}
+ if(!validateOrderItems(orderItems))return;
  const name=$("customerName").value.trim(),phone=$("customerPhone").value.trim();
  const city=$("customerCity").value.trim(),address=$("customerAddress").value.trim(),notes=$("customerNotes").value.trim();
  if(!name||!phone||!city||!address){$("orderStatus").textContent="Please complete all required delivery details.";return}
@@ -540,9 +615,102 @@ $("loginForm").addEventListener("submit",async event=>{
  finally{button.disabled=false;button.textContent="LOGIN"}
 });
 $("adminLogoutButton").addEventListener("click",async()=>{if(!auth)return;try{await auth.signOut();closeAdmin();showToast("Admin logged out.")}catch(error){showToast(getErrorMessage(error))}});
-function openAdmin(){if(!requireAdmin()){showToast("Administrator login required.");return}$("adminModal").classList.add("show");renderAdminProducts()}
-function closeAdmin(){$("adminModal").classList.remove("show")}
+function openAdmin(){
+ if(!requireAdmin()){showToast("Administrator login required.");return}
+ $("adminModal").classList.add("show");renderAdminProducts();startOrdersListener();
+}
+function closeAdmin(){
+ $("adminModal").classList.remove("show");
+ if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null}
+}
 $("adminPanelButton").addEventListener("click",openAdmin);
+
+function formatOrderDate(value){
+ try{
+  if(value&&typeof value.toDate==="function")return value.toDate().toLocaleString("en-PK");
+  if(value instanceof Date)return value.toLocaleString("en-PK");
+  if(value&&value.seconds)return new Date(value.seconds*1000).toLocaleString("en-PK");
+  return "Date not available";
+ }catch(e){return "Date not available"}
+}
+function startOrdersListener(){
+ if(!requireAdmin()||!db)return;
+ if(unsubscribeOrders)unsubscribeOrders();
+ $("adminOrdersList").innerHTML='<div class="status">Loading orders...</div>';
+ unsubscribeOrders=db.collection("orders").onSnapshot(snapshot=>{
+  const orders=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+  orders.sort((a,b)=>{
+   const at=a.createdAt&&a.createdAt.seconds?a.createdAt.seconds:0;
+   const bt=b.createdAt&&b.createdAt.seconds?b.createdAt.seconds:0;
+   return bt-at;
+  });
+  renderAdminOrders(orders);
+ },error=>{
+  console.error("Orders loading error:",error);
+  $("adminOrdersList").innerHTML='<div class="status">آرڈرز لوڈ نہیں ہو سکے: '+escapeHTML(getErrorMessage(error))+'</div>';
+ });
+}
+function renderAdminOrders(orders){
+ const box=$("adminOrdersList");if(!box)return;
+ if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
+ if(!orders.length){box.innerHTML='<div class="status">ابھی کوئی ویب سائٹ آرڈر موصول نہیں ہوا۔</div>';return}
+ const pending=orders.filter(o=>String(o.status||"Pending").toLowerCase()!=="confirmed");
+ const confirmed=orders.filter(o=>String(o.status||"").toLowerCase()==="confirmed");
+ function orderCard(o,isConfirmed){
+  const items=Array.isArray(o.items)?o.items:[];
+  const itemHTML=items.map(item=>
+   `<div>${escapeHTML(item.name||"Product")} × ${Number(item.quantity)||1}${item.size?" | Size: "+escapeHTML(item.size):""} — ${money(item.price)}</div>`
+  ).join("");
+  return `<div class="order-card ${isConfirmed?"confirmed":"pending"}">
+   <div class="order-head"><strong>ORDER #${escapeHTML(o.id.slice(-8).toUpperCase())}</strong>
+   <span class="order-status ${isConfirmed?"confirmed":""}">${isConfirmed?"CONFIRMED":"PENDING"}</span></div>
+   <div class="order-info">
+    <b>Customer:</b> ${escapeHTML(o.customerName||"Not provided")}<br>
+    <b>Phone:</b> ${escapeHTML(o.phone||"")}<br>
+    <b>City:</b> ${escapeHTML(o.city||"")}<br>
+    <b>Address:</b> ${escapeHTML(o.address||"")}<br>
+    <b>Notes:</b> ${escapeHTML(o.notes||"No notes")}<br>
+    <b>Payment:</b> ${escapeHTML(o.paymentMethod||"Cash on Delivery")}<br>
+    <b>Date:</b> ${escapeHTML(formatOrderDate(o.createdAt))}
+   </div>
+   <div class="order-items"><b>ORDER ITEMS</b>${itemHTML}<b>Total: ${money(o.total)}</b></div>
+   <div class="order-actions">
+    ${isConfirmed?'<span class="status">یہ آرڈر کنفرم ہو چکا ہے۔</span>':`<button class="gold-btn" onclick="confirmOrder('${escapeHTML(o.id)}')">✓ CONFIRM ORDER</button>`}
+    <button class="outline-btn" onclick="contactOrderCustomer('${escapeHTML(o.id)}')">WHATSAPP CUSTOMER</button>
+   </div>
+  </div>`;
+ }
+ box.innerHTML=
+  `<h4 class="admin-section-title">PENDING ORDERS (${pending.length})</h4>`+
+  (pending.length?pending.map(o=>orderCard(o,false)).join(""):'<div class="status">کوئی Pending آرڈر نہیں۔</div>')+
+  `<h4 class="admin-section-title">CONFIRMED ORDERS (${confirmed.length})</h4>`+
+  (confirmed.length?confirmed.map(o=>orderCard(o,true)).join(""):'<div class="status">ابھی کوئی Confirmed آرڈر نہیں۔</div>');
+}
+async function confirmOrder(orderId){
+ if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ if(!confirm("کیا آپ اس آرڈر کو Confirm کرنا چاہتے ہیں؟"))return;
+ try{
+  await db.collection("orders").doc(orderId).update({status:"Confirmed"});
+  showToast("Order successfully confirmed!");
+ }catch(error){
+  console.error(error);showToast("Order confirmation failed: "+getErrorMessage(error));
+ }
+}
+async function contactOrderCustomer(orderId){
+ if(!requireAdmin()||!db)return;
+ try{
+  const snap=await db.collection("orders").doc(orderId).get();
+  if(!snap.exists){showToast("Order not found.");return}
+  const o=snap.data(),items=Array.isArray(o.items)?o.items:[];
+  let msg="Assalam-o-Alaikum "+(o.customerName||"Customer")+", your COBRA STORE order update:\n";
+  msg+="Order: "+orderId+"\nStatus: "+(o.status||"Pending")+"\n";
+  items.forEach(x=>msg+=(x.name||"Product")+" × "+(x.quantity||1)+(x.size?" | Size: "+x.size:"")+"\n");
+  msg+="Total: "+money(o.total)+"\nThank you for shopping with COBRA STORE.";
+  const phone=String(o.phone||"").replace(/[^\d]/g,"").replace(/^0/,"92");
+  if(!phone){showToast("Customer phone number is missing.");return}
+  window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank","noopener");
+ }catch(error){showToast("Customer details could not load: "+getErrorMessage(error))}
+}
 
 function renderAdminProducts(){
  const list=$("adminProductList");if(!list)return;
@@ -550,11 +718,32 @@ function renderAdminProducts(){
  if(!products.length){list.innerHTML='<div class="status">No products added yet.</div>';return}
  list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
 }
+function renderSizeAvailabilityEditor(){
+ const box=$("sizeAvailabilityEditor");if(!box)return;
+ const sizes=[...new Set($("productSizes").value.split(",").map(s=>s.trim()).filter(Boolean))];
+ adminUnavailableSizes=adminUnavailableSizes.filter(s=>sizes.includes(s));
+ if(!sizes.length){box.innerHTML='<div class="status">پہلے اوپر Sizes / Options درج کریں۔</div>';return}
+ box.innerHTML=sizes.map((s,i)=>{
+  const sold=adminUnavailableSizes.includes(s);
+  return `<label class="size-admin-item ${sold?"sold":""}"><span>${escapeHTML(s)}</span><input type="checkbox" data-size-index="${i}" ${sold?"checked":""}> <b>Sold Out</b></label>`;
+ }).join("");
+ box.querySelectorAll("input[type=checkbox]").forEach(input=>{
+  input.addEventListener("change",()=>{
+   const size=sizes[Number(input.dataset.sizeIndex)];
+   if(input.checked){if(!adminUnavailableSizes.includes(size))adminUnavailableSizes.push(size)}
+   else{adminUnavailableSizes=adminUnavailableSizes.filter(x=>x!==size)}
+   renderSizeAvailabilityEditor();
+  });
+ });
+}
+$("productSizes").addEventListener("input",renderSizeAvailabilityEditor);
+
 function resetProductForm(){
  $("productForm").reset();$("editProductId").value="";$("productSale").value=DEFAULT_SALE;
+ adminUnavailableSizes=[];
  $("productFormTitle").textContent="ADD NEW PRODUCT";$("saveProductButton").textContent="SAVE PRODUCT";
  $("imageFileStatus").textContent="No new images selected.";$("videoFileStatus").textContent="No new video selected.";
- $("imagePreview").innerHTML="";$("uploadStatus").textContent="";
+ $("imagePreview").innerHTML="";$("uploadStatus").textContent="";renderSizeAvailabilityEditor();
 }
 function editProduct(id){
  if(!requireAdmin())return;const p=products.find(x=>x.id===id);if(!p)return;
@@ -562,6 +751,8 @@ function editProduct(id){
  $("productCategory").value=p.category||"fashion";$("productPrice").value=p.price||"";
  $("productSale").value=salePercent(p);$("productLabel").value=p.label||"";
  $("productSizes").value=Array.isArray(p.sizes)?p.sizes.join(", "):(p.sizes||"");
+ adminUnavailableSizes=getUnavailableSizes(p).filter(s=>getProductSizes(p).includes(s));
+ renderSizeAvailabilityEditor();
  $("productStock").value=p.stock||"";$("productDescription").value=p.description||"";$("productDetails").value=p.details||"";
  $("productImageFiles").value="";$("productVideoFile").value="";
  $("imageFileStatus").textContent="Existing photos: "+productImages(p).length+". Select new images only if you want to replace them.";
@@ -599,7 +790,8 @@ $("productForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!requireAdmin()){showToast("Admin access required.");return}
  const name=cleanProductName($("productName").value),category=$("productCategory").value;
  const price=Number($("productPrice").value),sale=Number($("productSale").value);
- const label=$("productLabel").value.trim(),sizes=$("productSizes").value.split(",").map(x=>x.trim()).filter(Boolean);
+ const label=$("productLabel").value.trim(),sizes=[...new Set($("productSizes").value.split(",").map(x=>x.trim()).filter(Boolean))];
+ const unavailableSizes=adminUnavailableSizes.filter(s=>sizes.includes(s));
  const stock=$("productStock").value.trim(),description=$("productDescription").value.trim(),details=$("productDetails").value.trim();
  const imageFiles=[...$("productImageFiles").files],videoFile=$("productVideoFile").files[0]||null,editId=$("editProductId").value;
  if(!name||name.length>100||!Number.isFinite(price)||price<=0){showToast("Enter a valid product name and price.");return}
@@ -609,8 +801,13 @@ $("productForm").addEventListener("submit",async event=>{
  const button=$("saveProductButton");button.disabled=true;button.textContent="SAVING...";$("uploadStatus").textContent="Saving product details...";
  let productRef=null;
  try{
-  if(editId){productRef=db.collection(COLLECTION_NAME).doc(editId);await productRef.update({name,category,price,label:label||categoryName(category),sizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()})}
-  else{productRef=db.collection(COLLECTION_NAME).doc();await productRef.set({name,category,price,label:label||categoryName(category),sizes,stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()})}
+  if(editId){
+   productRef=db.collection(COLLECTION_NAME).doc(editId);
+   await productRef.update({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  }else{
+   productRef=db.collection(COLLECTION_NAME).doc();
+   await productRef.set({name,category,price,label:label||categoryName(category),sizes,unavailableSizes,stock,description,details,salePercent:sale,image:"",extraImages:[],videoUrl:"",mediaPaths:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  }
   const old=(products.find(p=>p.id===productRef.id))||{};
   let image=old.image||"",extraImages=Array.isArray(old.extraImages)?old.extraImages:[],videoUrl=old.videoUrl||"";
   let mediaPaths=Array.isArray(old.mediaPaths)?old.mediaPaths:[];
@@ -659,7 +856,7 @@ $("musicToggle").addEventListener("click",async()=>{
  try{if(music.paused){await music.play();$("musicToggle").textContent="♫"}else{music.pause();$("musicToggle").textContent="♪"}}
  catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
 });
-updateCart();updateAdminButtons();renderProducts();
+updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
 </script>
 </body>
 </html>
