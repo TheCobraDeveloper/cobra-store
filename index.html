@@ -140,7 +140,7 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .size-manager-head small{display:block;color:var(--muted);font-size:9px;margin-top:5px}
 .size-manager-options{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .size-manager-option{display:flex;align-items:center;gap:6px;border:1px solid #d9e5dc;background:#f1faf3;color:#286b3d;padding:9px 11px;font-size:10px;border-radius:3px}
-.size-manager-option input{accent-color:#398b5b}
+.size-manager-option input{accent-color:#398b5b}\n.size-manager-option .sold-toggle{margin-left:3px;accent-color:#d95746}\n.size-manager-option .size-main-label{font-weight:900}\n.size-manager-option:not(.active-size){background:#fafafa;border-color:#e5dfdc;color:#999}\n.size-manager-option.active-size{background:#f1faf3;border-color:#9bc9a7;color:#286b3d}\n.size-manager-option.sold{background:#fff0ee;border-color:#e6aaa2;color:#b53d31}
 .size-manager-option.sold{background:#fff0ee;border-color:#e6aaa2;color:#b53d31;text-decoration:line-through}
 .size-manager-add{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
 .size-manager-add input{min-width:0}
@@ -496,6 +496,18 @@ function finalPrice(p){return Math.max(0,Math.round((Number(p.price)||0)*(1-sale
 function categoryName(c){const names={"girls-shoes":"GIRLS SHOES","boys-shoes":"BOYS SHOES","boys-clothes":"BOYS CLOTHES","girls-clothes":"GIRLS CLOTHES","boys-watches":"BOYS WATCHES","girls-watches":"GIRLS WATCHES","mobile-accessories":"MOBILE ACCESSORIES","electronics":"ELECTRONICS","fashion":"FASHION","all":"ALL PRODUCTS"};return names[c]||"ALL PRODUCTS"}
 function productImages(p){const all=[p.image,...(Array.isArray(p.extraImages)?p.extraImages:[])];return [...new Set(all.map(safeImageURL).filter(Boolean))].slice(0,4)}
 function getProductSizes(p){const raw=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==="string"?p.sizes.split(","):[]);return [...new Set(raw.map(s=>String(s).trim()).filter(Boolean))]}
+function sizeFamilyForCategory(category){
+ const c=String(category||"").toLowerCase();
+ if(c==="girls-shoes"||c==="boys-shoes")return "shoes";
+ if(c==="boys-clothes"||c==="girls-clothes")return "clothes";
+ return "other";
+}
+function managerSizeChoices(product){
+ const family=sizeFamilyForCategory(product.category);
+ const preset=family==="shoes"?SIZE_PRESETS.shoes:family==="clothes"?SIZE_PRESETS.clothes:[];
+ const existing=getProductSizes(product);
+ return [...new Set([...preset,...existing.filter(s=>!preset.includes(s))])];
+}
 function getUnavailableSizes(p){return Array.isArray(p.unavailableSizes)?p.unavailableSizes.map(String):[]}
 function isSizeUnavailable(p,size){return getUnavailableSizes(p).includes(String(size))}
 function getProductColors(p){return Array.isArray(p.availableColors)?[...new Set(p.availableColors.map(String))]:[]}
@@ -655,6 +667,26 @@ $("campaignImageFile").addEventListener("change",()=>{
  img.src=URL.createObjectURL(file);
  $("campaignImagePreview").appendChild(img);
 });
+function uploadCampaignImageWithProgress(file,path){
+ return new Promise((resolve,reject)=>{
+  const ref=storage.ref().child(path);
+  const task=ref.put(file,{contentType:file.type||"image/jpeg"});
+  let settled=false;
+  const finish=(fn,value)=>{if(settled)return;settled=true;clearTimeout(timer);fn(value)};
+  const timer=setTimeout(()=>{
+   try{task.cancel()}catch(e){}
+   finish(reject,new Error("Campaign image upload timed out. Please check internet and retry."));
+  },90000);
+  task.on("state_changed",snapshot=>{
+   const percent=snapshot.totalBytes?Math.round(snapshot.bytesTransferred/snapshot.totalBytes*100):0;
+   $("campaignStatus").textContent="Uploading campaign image... "+percent+"%";
+   $("campaignImageStatus").textContent="Uploading... "+percent+"%";
+  },error=>finish(reject,error),async()=>{
+   try{const url=await ref.getDownloadURL();finish(resolve,{url,path})}
+   catch(error){finish(reject,error)}
+  });
+ });
+}
 $("campaignForm").addEventListener("submit",async event=>{
  event.preventDefault();
  if(!requireAdmin()||!db||!storage){showToast("Admin access required.");return}
@@ -671,42 +703,47 @@ $("campaignForm").addEventListener("submit",async event=>{
  if(imageFile&&(!imageFile.type.startsWith("image/")||imageFile.size>MAX_CAMPAIGN_IMAGE_SIZE)){
   $("campaignStatus").textContent="Campaign image must be an image file of 5 MB or less.";return;
  }
- const button=$("saveCampaignButton");
+ const button=$("saveCampaignButton"),oldButtonText=button.textContent;
  button.disabled=true;button.textContent="SAVING...";
- $("campaignStatus").textContent="Saving campaign details...";
- let docRef=null;
+ let newImagePath="";
+ let saved=false;
  try{
-  docRef=id?db.collection("campaigns").doc(id):db.collection("campaigns").doc();
-  const old=campaigns.find(c=>c.id===id)||{};
+  const docRef=id?db.collection("campaigns").doc(id):db.collection("campaigns").doc();
+  if(!id)$("campaignId").value=docRef.id;
+  const old=campaigns.find(c=>c.id===docRef.id)||{};
   let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
   if(imageFile){
    $("campaignStatus").textContent="Uploading campaign image...";
-   const ext=(imageFile.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");
-   const newPath="campaign-media/"+docRef.id+"/"+Date.now()+"."+ext;
-   const ref=storage.ref().child(newPath);
-   await ref.put(imageFile,{contentType:imageFile.type});
-   imageUrl=await ref.getDownloadURL();
-   const oldPath=imagePath;
-   imagePath=newPath;
-   if(oldPath&&oldPath!==newPath){
-    await storage.ref().child(oldPath).delete().catch(err=>console.warn("Old campaign image cleanup:",err));
-   }
+   const ext=(imageFile.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
+   newImagePath="campaign-media/"+docRef.id+"/"+Date.now()+"."+ext;
+   const uploaded=await uploadCampaignImageWithProgress(imageFile,newImagePath);
+   imageUrl=uploaded.url;imagePath=uploaded.path;
   }
   const data={
    name,description,startDate,endDate,active,imageUrl,imagePath,
    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
   };
+  $("campaignStatus").textContent="Saving campaign details...";
   if(id)await docRef.update(data);
   else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  saved=true;
+  // Only remove the old file after Firestore confirms the new campaign data is saved.
+  if(imageFile&&old.imagePath&&old.imagePath!==imagePath){
+   await storage.ref().child(old.imagePath).delete().catch(error=>console.warn("Old campaign image cleanup failed:",error));
+  }
   $("campaignStatus").textContent="Campaign saved successfully.";
   showToast(id?"Campaign updated successfully!":"Campaign created successfully!");
   resetCampaignForm();
  }catch(error){
-  console.error("Campaign save error:",error);
+  console.error("Campaign save/upload error:",error);
+  if(newImagePath&&!saved){
+   await storage.ref().child(newImagePath).delete().catch(cleanupError=>console.warn("Temporary campaign image cleanup failed:",cleanupError));
+  }
   $("campaignStatus").textContent="Campaign save failed: "+getErrorMessage(error);
+  showToast("Campaign save failed: "+getErrorMessage(error));
  }finally{
   button.disabled=false;
-  button.textContent=$("campaignId").value?"UPDATE CAMPAIGN":"SAVE CAMPAIGN";
+  button.textContent=$("campaignId").value?"UPDATE CAMPAIGN":(id?"UPDATE CAMPAIGN":"SAVE CAMPAIGN");
  }
 });
 async function toggleCampaign(id){
@@ -770,12 +807,24 @@ function renderProducts(){
 $("searchInput").addEventListener("input",renderProducts);
 $("sortSelect").addEventListener("change",renderProducts);
 
+function chooseSize(button,size){
+ const p=currentProduct;
+ if(!p)return;
+ if(isSizeUnavailable(p,size)){
+  showToast("یہ سائز Sold Out ہے۔ براہِ کرم دوسرا سائز منتخب کریں۔");
+  return;
+ }
+ selectedSize=String(size);
+ renderSizeOptions();
+ $("sizeStatus").textContent="Selected size: "+selectedSize;
+}
+
 function renderSizeOptions(){
  const p=currentProduct;if(!p)return;
  const sizes=getProductSizes(p),unavailable=getUnavailableSizes(p);
  $("sizeOptions").innerHTML=sizes.length?sizes.map((s,i)=>{
   const sold=unavailable.includes(s);
-  return `<button type="button" class="size-chip ${sold?"sold-out":""} ${selectedSize===s&&!sold?"selected":""}" data-size-index="${i}" ${sold?"disabled aria-disabled='true'":""}>${escapeHTML(s)}</button>`;
+  return `<button type="button" class="size-chip ${sold?"sold-out":""} ${selectedSize===s&&!sold?"selected":""}" data-size-index="${i}" aria-pressed="${selectedSize===s&&!sold?"true":"false"}" ${sold?"disabled aria-disabled='true'":""}>${escapeHTML(s)}</button>`;
  }).join(""):'<span class="status">No size options specified for this product.</span>';
  $("sizeOptions").querySelectorAll(".size-chip:not(.sold-out)").forEach(button=>{
   button.addEventListener("click",()=>chooseSize(button,sizes[Number(button.dataset.sizeIndex)]));
@@ -823,7 +872,7 @@ function openProduct(id){
  $("modalDescription").textContent=p.description||"Product details are available from our support team.";
  $("modalPrice").innerHTML=money(finalPrice(p))+` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
  $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
- $("modalSizes").innerHTML="<b>Product options:</b> "+escapeHTML(sizes.join(", ")||"No options specified");
+ $("modalSizes").innerHTML="";$("modalSizes").classList.add("hidden");
  $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
  renderSizeOptions();renderCustomerColors();
  $("modalAdd").onclick=()=>{if(!validateSelections(p))return;addToCart(p.id,selectedSize,selectedColor);closeModal()};
@@ -1085,7 +1134,7 @@ function renderAdminProducts(){
  list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
 }
 
-/* CENTRAL SIZE + COLOR MANAGER WITH SAVE BUTTON */
+/* CENTRAL SIZE + COLOR MANAGER — AVAILABLE SIZES AND COLOR STOCK */
 function getManagerDraft(product){
  const saved=sizeManagerDrafts[product.id];
  if(saved)return saved;
@@ -1093,9 +1142,7 @@ function getManagerDraft(product){
 }
 function managerDraftFor(product){
  if(!sizeManagerDrafts[product.id])sizeManagerDrafts[product.id]={
-  sizes:getProductSizes(product),
-  unavailableSizes:getUnavailableSizes(product),
-  availableColors:getProductColors(product)
+  sizes:getProductSizes(product),unavailableSizes:getUnavailableSizes(product),availableColors:getProductColors(product)
  };
  return sizeManagerDrafts[product.id];
 }
@@ -1106,23 +1153,30 @@ function renderAdminSizeManager(){
  if(!products.length){box.innerHTML='<div class="status">ابھی کوئی پروڈکٹ موجود نہیں۔ نئی پروڈکٹس یہاں خودکار طور پر ظاہر ہوں گی۔</div>';return}
  box.innerHTML=products.map(p=>{
   const draft=getManagerDraft(p),sizes=draft.sizes,unavailable=draft.unavailableSizes,colors=draft.availableColors,images=productImages(p);
+  const family=sizeFamilyForCategory(p.category),choices=managerSizeChoices(p);
+  const familyLabel=family==="shoes"?"SHOE SIZES 36–45":family==="clothes"?"CLOTHING SIZES XS–XXXL":"CUSTOM / EXISTING SIZES";
   const image=images.length?`<img src="${escapeHTML(images[0])}" alt="Product">`:`<div style="width:65px;height:65px;background:var(--light);display:grid;place-items:center;font-size:25px">🐍</div>`;
-  const sizeHTML=sizes.length?sizes.map(size=>{
-   const sold=unavailable.includes(size);
-   return `<label class="size-manager-option ${sold?"sold":""}"><input type="checkbox" data-manager-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" ${sold?"checked":""}><b>${escapeHTML(size)}</b><span>${sold?"Sold Out":"Available"}</span></label>`;
-  }).join(""):'<div class="size-manager-empty">اس پروڈکٹ میں ابھی کوئی سائز شامل نہیں۔ نیچے سے نئے سائز شامل کریں۔</div>';
+  const sizeHTML=choices.length?choices.map(size=>{
+   const active=sizes.includes(size),sold=unavailable.includes(size);
+   return `<div class="size-manager-option ${active?"active-size":""} ${sold&&active?"sold":""}">
+    <input type="checkbox" data-manager-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" ${active?"checked":""}>
+    <b class="size-main-label">${escapeHTML(size)}</b>
+    ${active?`<span>${sold?"Sold Out":"Available"}</span><input class="sold-toggle" type="checkbox" data-manager-sold-size data-product-id="${escapeHTML(p.id)}" data-size="${escapeHTML(size)}" aria-label="Mark ${escapeHTML(size)} sold out" title="Mark Sold Out" ${sold?"checked":""}>`:""}
+   </div>`;
+  }).join(""):'<div class="size-manager-empty">اس پروڈکٹ کے لیے کوئی preset size نہیں۔ نیچے custom sizes شامل کریں۔</div>';
   const colorHTML=COLOR_PALETTE.map(c=>{
    const active=colors.includes(c.name);
    return `<label class="color-admin-option ${active?"active":""}"><input type="checkbox" data-manager-color data-product-id="${escapeHTML(p.id)}" data-color="${c.name}" ${active?"checked":""}><span class="color-dot" style="background:${c.hex}"></span>${c.name}</label>`;
   }).join("");
   return `<div class="size-manager-product" data-size-product="${escapeHTML(p.id)}">
    <div class="size-manager-head">${image}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${sizes.length} Size(s) • ${colors.length} Color(s)</small></div></div>
-   <b style="font-size:11px">SIZE AVAILABILITY</b><div class="size-manager-options">${sizeHTML}</div>
-   <div class="size-manager-add"><input class="form-input" type="text" data-size-input placeholder="نئے سائز لکھیں، مثال: 40, 41, 42 یا S, M, L"><button type="button" class="outline-btn" data-size-add>ADD SIZES</button></div>
+   <b style="font-size:11px">${familyLabel} — CHECK AVAILABLE SIZES</b>
+   <div class="size-manager-options">${sizeHTML}</div>
+   <div class="size-manager-add"><input class="form-input" type="text" data-size-input placeholder="Custom sizes separated by comma (optional)"><button type="button" class="outline-btn" data-size-add>ADD SIZES</button></div>
    <hr style="border:0;border-top:1px solid #eee5e1;margin:15px 0"><b style="font-size:11px">AVAILABLE COLORS</b>
    <div class="color-list">${colorHTML}</div>
    <div class="manager-save-row"><button type="button" class="gold-btn" data-manager-save data-product-id="${escapeHTML(p.id)}">SAVE CHANGES</button></div>
-   <div class="status" data-manager-status="${escapeHTML(p.id)}">Changes are not saved until you press SAVE CHANGES.</div>
+   <div class="status" data-manager-status="${escapeHTML(p.id)}">Select available sizes/colors, then press SAVE CHANGES.</div>
   </div>`;
  }).join("");
 }
@@ -1131,17 +1185,26 @@ function updateManagerDraftStatus(productId,message){
  if(status)status.textContent=message||"Unsaved changes — press SAVE CHANGES to store them.";
 }
 $("adminSizeManager").addEventListener("change",event=>{
- const sizeBox=event.target.closest("[data-manager-size]"),colorBox=event.target.closest("[data-manager-color]");
- if(!sizeBox&&!colorBox)return;
- const productId=(sizeBox||colorBox).dataset.productId,product=products.find(p=>p.id===productId);
+ const sizeBox=event.target.closest("[data-manager-size]");
+ const soldBox=event.target.closest("[data-manager-sold-size]");
+ const colorBox=event.target.closest("[data-manager-color]");
+ if(!sizeBox&&!soldBox&&!colorBox)return;
+ const control=sizeBox||soldBox||colorBox,productId=control.dataset.productId,product=products.find(p=>p.id===productId);
  if(!product)return;
  const draft=managerDraftFor(product);
  if(sizeBox){
   const size=sizeBox.dataset.size;
-  if(sizeBox.checked){if(!draft.unavailableSizes.includes(size))draft.unavailableSizes.push(size)}
+  if(sizeBox.checked){if(!draft.sizes.includes(size))draft.sizes.push(size)}
+  else{
+   draft.sizes=draft.sizes.filter(x=>x!==size);
+   draft.unavailableSizes=draft.unavailableSizes.filter(x=>x!==size);
+  }
+  renderAdminSizeManager();
+ }else if(soldBox){
+  const size=soldBox.dataset.size;
+  if(soldBox.checked){if(!draft.unavailableSizes.includes(size))draft.unavailableSizes.push(size)}
   else draft.unavailableSizes=draft.unavailableSizes.filter(x=>x!==size);
-  const label=sizeBox.closest("label");label.classList.toggle("sold",sizeBox.checked);
-  const span=label.querySelector("span");if(span)span.textContent=sizeBox.checked?"Sold Out":"Available";
+  renderAdminSizeManager();
  }else{
   const color=colorBox.dataset.color;
   if(colorBox.checked){if(!draft.availableColors.includes(color))draft.availableColors.push(color)}
@@ -1153,12 +1216,13 @@ $("adminSizeManager").addEventListener("change",event=>{
 $("adminSizeManager").addEventListener("click",async event=>{
  const addButton=event.target.closest("[data-size-add]");
  if(addButton){
-  const productBox=addButton.closest("[data-size-product]"),productId=productBox.dataset.sizeProduct,product=products.find(p=>p.id===productId),input=productBox.querySelector("[data-size-input]"),entered=input.value.trim();
+  const productBox=addButton.closest("[data-size-product]"),productId=productBox.dataset.sizeProduct;
+  const product=products.find(p=>p.id===productId),input=productBox.querySelector("[data-size-input]"),entered=input.value.trim();
   if(!entered){showToast("پہلے نئے سائز لکھیں۔");return}
   const additions=entered.split(",").map(s=>s.trim()).filter(Boolean),draft=managerDraftFor(product);
   additions.forEach(size=>{if(!draft.sizes.some(old=>old.toLowerCase()===size.toLowerCase()))draft.sizes.push(size)});
-  input.value="";renderAdminSizeManager();updateManagerDraftStatus(productId,"New sizes added to draft. Press SAVE CHANGES to save.");
-  showToast("سائز ڈرافٹ میں شامل ہوگئے۔ SAVE CHANGES دبائیں۔");return;
+  renderAdminSizeManager();updateManagerDraftStatus(productId,"Custom sizes added to draft. Press SAVE CHANGES to save.");
+  showToast("سائز شامل ہوگئے۔ SAVE CHANGES دبائیں۔");return;
  }
  const saveButton=event.target.closest("[data-manager-save]");
  if(saveButton)await saveManagerDraft(saveButton.dataset.productId,saveButton);
@@ -1172,13 +1236,21 @@ async function saveManagerDraft(productId,button){
   const sizes=[...new Set(draft.sizes.map(s=>String(s).trim()).filter(Boolean))];
   const unavailableSizes=draft.unavailableSizes.filter(s=>sizes.includes(s));
   const availableColors=COLOR_PALETTE.map(c=>c.name).filter(name=>draft.availableColors.includes(name));
-  await db.collection(COLLECTION_NAME).doc(productId).update({sizes,unavailableSizes,availableColors,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  delete sizeManagerDrafts[productId];showToast("سائز اور رنگ کامیابی سے محفوظ ہوگئے۔");
-  const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);if(status)status.textContent="Changes saved successfully.";
- }catch(error){console.error("Size/color save error:",error);showToast("تبدیلیاں محفوظ نہیں ہو سکیں: "+getErrorMessage(error))}
- finally{button.disabled=false;button.textContent=oldText}
+  await db.collection(COLLECTION_NAME).doc(productId).update({
+   sizes,unavailableSizes,availableColors,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  delete sizeManagerDrafts[productId];
+  showToast("سائز اور رنگ کامیابی سے محفوظ ہوگئے۔");
+  const status=document.querySelector(`[data-manager-status="${CSS.escape(productId)}"]`);
+  if(status)status.textContent="Changes saved successfully.";
+ }catch(error){
+  console.error("Size/color save error:",error);
+  showToast("تبدیلیاں محفوظ نہیں ہو سکیں: "+getErrorMessage(error));
+  updateManagerDraftStatus(productId,"Save failed: "+getErrorMessage(error));
+ }finally{
+  button.disabled=false;button.textContent=oldText;
+ }
 }
-
 /* SIZE PRESETS */
 function addSelectedSizePreset(){
  const preset=$("sizePreset").value;
