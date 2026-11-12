@@ -1,1 +1,31 @@
 
+name: Import Modish Theme
+
+on:
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout COBRA STORE
+        uses: actions/checkout@v4
+
+      - name: Download Modish Theme
+        run: |
+          git clone --depth 1 https://github.com/templatesJungle/modish-free-ecommerce-website-template.git modish-temp
+          mkdir -p assets/modish
+          cp -r modish-temp/css assets/modish/
+          cp -r modish-temp/images assets/modish/
+          cp -r modish-temp/js assets/modish/
+          cp modish-temp/styles.css assets/modish/
+          cp modish-temp/readme.txt assets/modish/
+
+      - name: Commit Theme Files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/modish
+          git commit -m "Import Modish theme assets"
+          git push
