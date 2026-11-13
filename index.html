@@ -119,6 +119,7 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .modal-gallery{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px}
 .modal-gallery img{width:85px;height:85px;object-fit:contain;background:var(--light);border:1px solid var(--line);cursor:pointer;flex-shrink:0}
 .modal-video{width:100%;max-height:340px;background:#111;margin:8px 0;display:block}
+iframe.modal-video{aspect-ratio:16/9;max-height:none;height:auto;border:0}
 .modal-box h3{font-size:20px;margin:12px 0}
 .modal-box p{font-size:11px;color:#777;line-height:1.9;margin:10px 0}
 .modal-price{font-size:23px;font-weight:900;margin:13px 0}
@@ -212,6 +213,19 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .upload-help{background:#fff8f5;border:1px solid #f0d8d1;padding:12px;margin:12px 0;font-size:10px;line-height:1.8;color:#775b54}
 .upload-preview{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .upload-preview img{width:65px;height:65px;object-fit:cover;border:1px solid var(--line)}
+.qr-box{margin:22px auto 0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.qr-title{color:var(--coral);font-size:10px;letter-spacing:2px;font-weight:900}
+.qr-link{display:block;width:170px;height:170px;border:1px solid var(--line);padding:6px;background:#fff}
+.qr-svg{width:100%;height:100%;display:block}
+.qr-caption{color:#888;font-size:10px;line-height:1.7;max-width:260px}
+.offer-pop{position:fixed;left:14px;bottom:70px;z-index:700;width:min(340px,calc(100vw - 28px));background:#fff;border:1px solid var(--line);border-left:4px solid var(--coral);box-shadow:0 14px 40px #0003;padding:14px 34px 14px 14px;display:flex;gap:12px;align-items:center;transform:translateY(30px);opacity:0;pointer-events:none;transition:.45s}
+.offer-pop.show{transform:none;opacity:1;pointer-events:auto}
+.offer-pop-icon{width:52px;height:52px;object-fit:contain;background:var(--light);border-radius:8px;flex-shrink:0;display:grid;place-items:center;font-size:26px}
+.offer-pop-type{color:var(--coral);font-size:8px;letter-spacing:2px;font-weight:900}
+.offer-pop h4{font-family:"Syne",sans-serif;font-size:14px;margin:4px 0}
+.offer-pop p{font-size:11px;color:#6e6662;line-height:1.6}
+.offer-pop .offer-close{position:absolute;top:4px;right:8px;background:none;border:0;font-size:22px;color:#777}
+.offer-pop .offer-go{margin-top:8px;font-size:9px;padding:8px 12px}
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:210px}.hero:before{right:-10%;opacity:.3}}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
@@ -301,6 +315,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <p>Your destination for shoes, watches, fashion, electronics and selected lifestyle products.</p>
  <div class="footer-contact">WhatsApp Orders: +92 343 2752543</div>
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
+ <div class="qr-box"><div class="qr-title">SCAN &amp; CHAT ON WHATSAPP</div><a class="qr-link" href="https://wa.me/message/VY2S76PZYFTSC1" target="_blank" rel="noopener" title="Open WhatsApp chat"><svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 37 37" shape-rendering="crispEdges" role="img" aria-label="WhatsApp QR code"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#171514" d="M0 0h7v1h-7zM10 0h1v1h-1zM12 0h2v1h-2zM15 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h5v1h-5zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM14 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h3v1h-3zM14 7h1v1h-1zM20 7h1v1h-1zM0 8h5v1h-5zM6 8h4v1h-4zM11 8h1v1h-1zM15 8h1v1h-1zM17 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM12 9h5v1h-5zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h6v1h-6zM20 10h1v1h-1zM23 10h2v1h-2zM0 11h2v1h-2zM3 11h1v1h-1zM12 11h2v1h-2zM18 11h3v1h-3zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM1 12h2v1h-2zM4 12h4v1h-4zM9 12h2v1h-2zM12 12h1v1h-1zM14 12h3v1h-3zM21 12h1v1h-1zM25 12h2v1h-2zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM15 13h2v1h-2zM19 13h6v1h-6zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h1v1h-1zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM0 15h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h2v1h-2zM14 15h3v1h-3zM22 15h2v1h-2zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h5v1h-5zM11 16h1v1h-1zM15 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h1v1h-1zM9 17h1v1h-1zM12 17h5v1h-5zM19 17h4v1h-4zM24 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h3v1h-3zM17 18h1v1h-1zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM9 19h2v1h-2zM12 19h2v1h-2zM16 19h1v1h-1zM19 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h2v1h-2zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h2v1h-2zM15 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h3v1h-3zM14 23h2v1h-2zM18 23h3v1h-3zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM11 24h1v1h-1zM16 24h1v1h-1zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM12 25h5v1h-5zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM13 26h3v1h-3zM18 26h1v1h-1zM21 26h7v1h-7zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM18 27h3v1h-3zM23 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM23 28h4v1h-4z"/></svg></a><div class="qr-caption">Scan this QR code with your phone camera to start a WhatsApp chat with us.</div></div>
  <div class="credits">OWNED &amp; MANAGED BY AQIB JAVED<br>DEVELOPED BY THE COBRA DEVELOPERS</div>
 </footer>
 
@@ -308,6 +323,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <button class="close" onclick="closeModal()">×</button>
  <div class="modal-icon" id="modalIcon"></div><div class="modal-gallery" id="modalGallery"></div>
  <video id="modalVideo" class="modal-video hidden" controls playsinline></video>
+ <iframe id="modalVideoFrame" class="modal-video hidden" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
  <div class="product-tag" id="modalCategory"></div><h3 id="modalName"></h3><p id="modalDescription"></p>
  <div class="modal-price" id="modalPrice"></div><div class="detail-line" id="modalStock"></div>
  <div class="detail-line" id="modalSizes"></div><div class="detail-line" id="modalExtraDetails"></div>
@@ -396,6 +412,42 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div id="adminCampaignList"><div class="status">Campaigns loading...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">OFFERS / DEALS / SALE MANAGEMENT</h3>
+ <div class="status">یہاں آفر، ڈیل یا سیل کا پیغام بنائیں۔ انٹرو کے بعد ویب سائٹ پر یہ پیغامات خودکار طور پر بار بار دکھائے جائیں گے۔ آئیکن اپلوڈ بھی کر سکتے ہیں اور لنک بھی لگا سکتے ہیں۔ اگر کوئی آفر فعال نہ ہو تو ڈیفالٹ سیل/ڈیل پیغامات دکھائے جائیں گے۔</div>
+ <form id="offerForm">
+  <input type="hidden" id="offerId">
+  <label class="form-label">TYPE</label>
+  <select class="form-input" id="offerType"><option value="OFFER">OFFER</option><option value="DEAL">DEAL</option><option value="SALE">SALE</option></select>
+  <label class="form-label">TITLE</label>
+  <input class="form-input" id="offerTitle" required maxlength="80" placeholder="Example: Flash Sale 30% OFF">
+  <label class="form-label">MESSAGE</label>
+  <textarea class="form-input" id="offerMessage" maxlength="300" placeholder="Short offer message shown to customers..."></textarea>
+  <label class="form-label">PRODUCT (OPTIONAL — بٹن اسی پروڈکٹ کو کھولے گا)</label>
+  <select class="form-input" id="offerProduct"><option value="">— No specific product —</option></select>
+  <label class="form-label">START DATE (OPTIONAL)</label>
+  <input class="form-input" id="offerStartDate" type="date">
+  <label class="form-label">END DATE (OPTIONAL)</label>
+  <input class="form-input" id="offerEndDate" type="date">
+  <label class="form-label">OFFER ICON — UPLOAD (OPTIONAL)</label>
+  <input class="form-input" id="offerIconFile" type="file" accept="image/*">
+  <label class="form-label">یا OFFER ICON کا لنک (OPTIONAL)</label>
+  <input class="form-input" id="offerIconUrl" type="url" placeholder="https://example.com/icon.png">
+  <div class="status" id="offerIconStatus">No icon selected.</div>
+  <div class="upload-preview" id="offerIconPreview"></div>
+  <label class="size-admin-item" style="display:inline-flex;margin-top:12px">
+   <input type="checkbox" id="offerActive" checked>
+   <b>OFFER ACTIVE</b>
+  </label>
+  <div class="form-actions">
+   <button class="gold-btn" type="submit" id="saveOfferButton">SAVE OFFER</button>
+   <button class="outline-btn" type="button" onclick="resetOfferForm()">CLEAR FORM</button>
+  </div>
+  <div class="status" id="offerStatus"></div>
+ </form>
+ <h4 class="admin-section-title">SAVED OFFERS</h4>
+ <div id="adminOfferList"><div class="status">Offers loading...</div></div>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">SIZE & COLOR STOCK MANAGEMENT</h3>
  <div class="status">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ Available / Sold Out یا رنگ منتخب کرنے کے بعد تبدیلی صرف SAVE CHANGES دبانے پر Firebase میں محفوظ ہوگی۔</div>
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
@@ -417,6 +469,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <div id="imageFileStatus" class="status">No new images selected.</div><div class="upload-preview" id="imagePreview"></div>
   <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔ نئی ویڈیو منتخب نہ کرنے پر موجودہ ویڈیو برقرار رہے گی۔</div>
   <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
+  <label class="form-label">یا PRODUCT VIDEO کا لنک (MP4/WebM یا YouTube)</label><input class="form-input" id="productVideoUrl" type="url" placeholder="https://www.youtube.com/watch?v=... یا https://.../video.mp4">
   <div id="videoFileStatus" class="status">No new video selected.</div>
   <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
   <label class="form-label">SIZES / OPTIONS</label>
@@ -444,6 +497,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <button class="gold-btn" style="width:100%" onclick="openCartCOD()">CHECKOUT • COD</button>
  <button class="outline-btn" style="width:100%;margin-top:9px" onclick="checkoutWhatsApp()">ORDER ON WHATSAPP</button>
 </div>
+<div class="offer-pop" id="offerPopup" role="status" aria-live="polite"></div>
 <button class="music-button" id="musicToggle" title="Music on/off">♫</button><div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -489,11 +543,28 @@ let selectedSize="",selectedColor="",orderItems=[],unsubscribeProducts=null,unsu
 let adminUnavailableSizes=[];
 let sizeManagerDrafts={};
 let campaigns=[],unsubscribeCampaigns=null;
+let offers=[],unsubscribeOffers=null,offerTimer=null,offerHideTimer=null,offerIndex=0,offersStarted=false;
+const DEFAULT_OFFERS=[
+ {type:"SALE",title:"11.11 MEGA SALE",message:"Special discounted prices on the COBRA STORE collection. Order now!"},
+ {type:"DEAL",title:"Cash on Delivery",message:"Pay when your order arrives at your doorstep."},
+ {type:"OFFER",title:"WhatsApp Support",message:"Have a question about a product? Message us on WhatsApp anytime."}
+];
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
 function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function safeImageURL(value){try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:""}catch(e){return ""}}
+function youtubeEmbedURL(value){
+ try{
+  const u=new URL(value),host=u.hostname.replace(/^www\.|^m\./,"");let id="";
+  if(host==="youtu.be")id=u.pathname.slice(1).split("/")[0];
+  else if(host==="youtube.com"||host==="youtube-nocookie.com"){
+   if(u.pathname==="/watch")id=u.searchParams.get("v")||"";
+   else{const m=u.pathname.match(/^\/(shorts|embed|live)\/([\w-]{11})/);if(m)id=m[2]}
+  }
+  return /^[\w-]{11}$/.test(id)?"https://www.youtube.com/embed/"+id:"";
+ }catch(e){return ""}
+}
 function whatsappURL(message){return "https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message)}
 function showToast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),3200)}
 function contactWhatsApp(){window.open(whatsappURL("Assalam-o-Alaikum! I want to contact COBRA STORE."),"_blank","noopener")}
@@ -532,6 +603,7 @@ try{
  auth=firebase.auth();db=firebase.firestore();storage=firebase.storage();
  startProductsListener();
  startCampaignsListener();
+ startOffersListener();
  auth.onAuthStateChanged(user=>{
   currentUser=user;isAdmin=!!user&&user.uid===ADMIN_UID;updateAdminButtons();
   if(user&&!isAdmin){auth.signOut().catch(()=>{});showToast("یہ اکاؤنٹ مجاز Admin نہیں ہے۔")}
@@ -546,6 +618,7 @@ function startProductsListener(){
   renderProducts();
   renderAdminProducts();
   renderAdminSizeManager();
+  populateOfferProductSelect();
   if(currentProduct){
    const updated=products.find(p=>p.id===currentProduct.id);
    if(updated){
@@ -800,6 +873,176 @@ async function deleteCampaign(id){
  }catch(error){showToast("Campaign delete failed: "+getErrorMessage(error))}
 }
 
+/* OFFERS / DEALS / SALE — popup messages + admin management */
+function offerIsCurrentlyActive(o){
+ if(!o||o.active!==true)return false;
+ const s=campaignDateValue(o.startDate),e=campaignDateValue(o.endDate);
+ const t=new Date(),today=new Date(t.getFullYear(),t.getMonth(),t.getDate());
+ if(s&&today<new Date(s+"T00:00:00"))return false;
+ if(e&&today>new Date(e+"T23:59:59"))return false;
+ return true;
+}
+function currentOfferList(){const live=offers.filter(offerIsCurrentlyActive);return live.length?live:DEFAULT_OFFERS}
+function offerTypeOf(o){const t=String(o.type||"OFFER").toUpperCase();return ["OFFER","DEAL","SALE"].includes(t)?t:"OFFER"}
+function offerIconHTML(o){
+ const u=safeImageURL(o.iconUrl);
+ if(u)return `<img class="offer-pop-icon" src="${escapeHTML(u)}" alt="">`;
+ const t=offerTypeOf(o);
+ return `<div class="offer-pop-icon">${t==="SALE"?"🔥":t==="DEAL"?"🎁":"✦"}</div>`;
+}
+function scheduleNextOffer(ms){clearTimeout(offerTimer);offerTimer=setTimeout(showNextOffer,ms)}
+function hideOfferPopup(){const pop=$("offerPopup");if(pop)pop.classList.remove("show");clearTimeout(offerHideTimer)}
+function offerGo(productId){
+ hideOfferPopup();
+ if(productId&&products.some(p=>p.id===productId))openProduct(productId);
+ else showAllProducts();
+}
+function showNextOffer(){
+ const pop=$("offerPopup");if(!pop)return;
+ if(document.querySelector(".modal.show")||$("cartPanel").classList.contains("open")){scheduleNextOffer(8000);return}
+ const list=currentOfferList();if(!list.length)return;
+ const o=list[offerIndex%list.length];offerIndex++;
+ const product=o.productId?products.find(p=>p.id===o.productId):null;
+ pop.innerHTML=`<button class="offer-close" type="button" aria-label="Close" onclick="hideOfferPopup()">×</button>${offerIconHTML(o)}<div><div class="offer-pop-type">✦ ${offerTypeOf(o)}</div><h4>${escapeHTML(o.title||"")}</h4><p>${escapeHTML(o.message||"")}</p><button class="gold-btn offer-go" type="button" onclick="offerGo('${escapeHTML(product?product.id:"")}')">${product?"VIEW PRODUCT":"SHOP NOW"}</button></div>`;
+ pop.classList.add("show");
+ clearTimeout(offerHideTimer);offerHideTimer=setTimeout(hideOfferPopup,9000);
+ scheduleNextOffer(40000);
+}
+function startOfferPopups(){if(offersStarted)return;offersStarted=true;scheduleNextOffer(1200)}
+function startOffersListener(){
+ if(!db)return;
+ if(unsubscribeOffers)unsubscribeOffers();
+ unsubscribeOffers=db.collection("offers").onSnapshot(snapshot=>{
+  offers=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+  renderAdminOffers();
+ },error=>{
+  console.warn("Offers listener:",error);
+  offers=[];
+  if(requireAdmin()&&$("adminOfferList"))$("adminOfferList").innerHTML='<div class="status">Offers could not load: '+escapeHTML(getErrorMessage(error))+'</div>';
+ });
+}
+function populateOfferProductSelect(){
+ const sel=$("offerProduct");if(!sel)return;
+ const keep=sel.value;
+ sel.innerHTML='<option value="">— No specific product —</option>'+products.map(p=>`<option value="${escapeHTML(p.id)}">${escapeHTML(cleanProductName(p.name))}</option>`).join("");
+ sel.value=keep;
+}
+function renderAdminOffers(){
+ const box=$("adminOfferList");if(!box)return;
+ if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
+ if(!offers.length){box.innerHTML='<div class="status">ابھی کوئی آفر محفوظ نہیں۔ اوپر فارم سے نئی آفر بنائیں۔</div>';return}
+ box.innerHTML=offers.map(o=>{
+  const icon=safeImageURL(o.iconUrl),live=offerIsCurrentlyActive(o);
+  const dates=(campaignDateValue(o.startDate)||"—")+" → "+(campaignDateValue(o.endDate)||"—");
+  return `<div class="campaign-admin-card">
+   <div class="campaign-admin-head">
+    ${icon?`<img src="${escapeHTML(icon)}" alt="Offer icon">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">✦</div>'}
+    <div><strong>${escapeHTML(offerTypeOf(o))} — ${escapeHTML(o.title||"Untitled offer")}</strong>
+     <small>${escapeHTML(dates)}<br>${o.active===true?"Enabled":"Disabled"} • ${live?"Currently showing on website":"Not currently showing"}</small>
+    </div>
+   </div>
+   ${o.message?`<div class="status">${escapeHTML(o.message)}</div>`:""}
+   <div class="campaign-admin-actions">
+    <button class="outline-btn" type="button" onclick="editOffer('${escapeHTML(o.id)}')">EDIT</button>
+    <button class="outline-btn" type="button" onclick="toggleOffer('${escapeHTML(o.id)}')">${o.active===true?"DEACTIVATE":"ACTIVATE"}</button>
+    <button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteOffer('${escapeHTML(o.id)}')">DELETE</button>
+   </div>
+  </div>`;
+ }).join("");
+}
+function resetOfferForm(){
+ $("offerForm").reset();$("offerId").value="";$("offerActive").checked=true;
+ $("offerIconFile").value="";$("offerIconUrl").value="";
+ $("offerIconStatus").textContent="No icon selected.";$("offerIconPreview").innerHTML="";
+ $("offerStatus").textContent="";$("saveOfferButton").textContent="SAVE OFFER";
+}
+function editOffer(id){
+ if(!requireAdmin())return;
+ const o=offers.find(x=>x.id===id);if(!o)return;
+ $("offerId").value=o.id;$("offerType").value=offerTypeOf(o);
+ $("offerTitle").value=o.title||"";$("offerMessage").value=o.message||"";
+ populateOfferProductSelect();$("offerProduct").value=o.productId||"";
+ $("offerStartDate").value=campaignDateValue(o.startDate);$("offerEndDate").value=campaignDateValue(o.endDate);
+ $("offerActive").checked=o.active===true;
+ $("offerIconFile").value="";$("offerIconUrl").value=(o.iconUrl&&!o.iconPath)?o.iconUrl:"";
+ $("offerIconStatus").textContent=o.iconUrl?"Existing icon will remain unless you select a replacement.":"No existing icon.";
+ $("offerIconPreview").innerHTML=safeImageURL(o.iconUrl)?`<img src="${escapeHTML(o.iconUrl)}" alt="Current icon">`:"";
+ $("offerStatus").textContent="Editing offer. Save changes when finished.";
+ $("saveOfferButton").textContent="UPDATE OFFER";
+ $("offerForm").scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("offerIconFile").addEventListener("change",()=>{
+ const file=$("offerIconFile").files[0];$("offerIconPreview").innerHTML="";
+ if(!file){$("offerIconStatus").textContent="No icon selected.";return}
+ if(!file.type.startsWith("image/")||file.size>MAX_CAMPAIGN_IMAGE_SIZE){$("offerIconStatus").textContent="صرف image فائل منتخب کریں، زیادہ سے زیادہ 5 MB۔";$("offerIconFile").value="";return}
+ $("offerIconStatus").textContent="Selected: "+file.name;
+ const img=document.createElement("img");img.src=URL.createObjectURL(file);$("offerIconPreview").appendChild(img);
+});
+$("offerIconUrl").addEventListener("input",()=>{
+ if($("offerIconFile").files[0])return;
+ const url=safeImageURL($("offerIconUrl").value.trim());
+ $("offerIconPreview").innerHTML=url?`<img src="${escapeHTML(url)}" alt="Linked icon">`:"";
+ $("offerIconStatus").textContent=url?"Icon link will be used for this offer.":"No icon selected.";
+});
+$("offerForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ if(!requireAdmin()||!db||!storage){showToast("Admin access required.");return}
+ const id=$("offerId").value,title=$("offerTitle").value.trim(),message=$("offerMessage").value.trim();
+ const type=$("offerType").value,productId=$("offerProduct").value;
+ const startDate=$("offerStartDate").value,endDate=$("offerEndDate").value,active=$("offerActive").checked;
+ const iconFile=$("offerIconFile").files[0]||null,typedLink=$("offerIconUrl").value.trim(),linkUrl=safeImageURL(typedLink);
+ if(!title){$("offerStatus").textContent="Offer title is required.";return}
+ if(startDate&&endDate&&endDate<startDate){$("offerStatus").textContent="End date cannot be earlier than start date.";return}
+ if(iconFile&&(!iconFile.type.startsWith("image/")||iconFile.size>MAX_CAMPAIGN_IMAGE_SIZE)){$("offerStatus").textContent="Icon must be an image of 5 MB or less.";return}
+ if(typedLink&&!linkUrl){$("offerStatus").textContent="آئیکن کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔";return}
+ const button=$("saveOfferButton");button.disabled=true;button.textContent="SAVING...";
+ let newPath="",saved=false;
+ try{
+  const docRef=id?db.collection("offers").doc(id):db.collection("offers").doc();
+  const old=offers.find(o=>o.id===docRef.id)||{};
+  let iconUrl=old.iconUrl||"",iconPath=old.iconPath||"";
+  if(iconFile){
+   $("offerStatus").textContent="Uploading icon...";
+   const ext=(iconFile.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"")||"png";
+   newPath="offer-media/"+docRef.id+"/"+Date.now()+"."+ext;
+   const up=await uploadFile(iconFile,newPath);iconUrl=up.url;iconPath=up.path;
+  }else if(linkUrl&&linkUrl!==old.iconUrl){iconUrl=linkUrl;iconPath=""}
+  else if(!typedLink&&old.iconUrl&&!old.iconPath){iconUrl=""}
+  const data={title,message,type,productId,startDate,endDate,active,iconUrl,iconPath,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  $("offerStatus").textContent="Saving offer...";
+  if(id)await docRef.update(data);
+  else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  saved=true;
+  if(old.iconPath&&old.iconPath!==iconPath)await storage.ref().child(old.iconPath).delete().catch(e=>console.warn("Old offer icon cleanup:",e));
+  showToast(id?"Offer updated successfully!":"Offer created successfully!");
+  resetOfferForm();
+ }catch(error){
+  console.error("Offer save error:",error);
+  if(newPath&&!saved)await storage.ref().child(newPath).delete().catch(()=>{});
+  $("offerStatus").textContent="Offer save failed: "+getErrorMessage(error);
+  showToast("Offer save failed: "+getErrorMessage(error));
+ }finally{button.disabled=false;button.textContent=$("offerId").value?"UPDATE OFFER":"SAVE OFFER"}
+});
+async function toggleOffer(id){
+ if(!requireAdmin()||!db)return;
+ const o=offers.find(x=>x.id===id);if(!o)return;
+ try{
+  await db.collection("offers").doc(id).update({active:o.active!==true,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  showToast(o.active===true?"Offer deactivated.":"Offer activated.");
+ }catch(error){showToast("Offer update failed: "+getErrorMessage(error))}
+}
+async function deleteOffer(id){
+ if(!requireAdmin()||!db)return;
+ const o=offers.find(x=>x.id===id);if(!o)return;
+ if(!confirm("کیا آپ اس آفر کو مستقل طور پر حذف کرنا چاہتے ہیں؟"))return;
+ try{
+  await db.collection("offers").doc(id).delete();
+  if(o.iconPath&&storage)await storage.ref().child(o.iconPath).delete().catch(e=>console.warn("Offer icon cleanup:",e));
+  if($("offerId").value===id)resetOfferForm();
+  showToast("Offer deleted successfully.");
+ }catch(error){showToast("Offer delete failed: "+getErrorMessage(error))}
+}
+
 function selectCategory(category,element){
  selectedCategory=category;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
  if(element)element.classList.add("active");$("activeLabel").textContent=categoryName(category);renderProducts();
@@ -909,7 +1152,10 @@ function openProduct(id){
  refreshModalCampaignLogo();
  $("modalGallery").innerHTML=images.map(url=>`<img src="${escapeHTML(url)}" alt="Product photo" onclick="changeMainPhoto('${escapeHTML(url)}')">`).join("");
  const video=$("modalVideo");
- if(p.videoUrl&&safeImageURL(p.videoUrl)){video.src=p.videoUrl;video.classList.remove("hidden")}else{video.pause();video.removeAttribute("src");video.classList.add("hidden")}
+ const frame=$("modalVideoFrame"),yt=youtubeEmbedURL(p.videoUrl);
+ frame.classList.add("hidden");frame.removeAttribute("src");
+ if(yt){video.pause();video.removeAttribute("src");video.classList.add("hidden");frame.src=yt;frame.classList.remove("hidden")}
+ else if(p.videoUrl&&safeImageURL(p.videoUrl)){video.src=p.videoUrl;video.classList.remove("hidden")}else{video.pause();video.removeAttribute("src");video.classList.add("hidden")}
  $("modalCategory").textContent=categoryName(p.category);$("modalName").textContent=cleanProductName(p.name);
  $("modalDescription").textContent=p.description||"Product details are available from our support team.";
  $("modalPrice").innerHTML=money(finalPrice(p))+` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
@@ -932,7 +1178,7 @@ function validateSelections(p){
  return true;
 }
 function changeMainPhoto(url){const photo=$("mainProductPhoto");if(photo)photo.src=url}
-function closeModal(){$("productModal").classList.remove("show");$("modalVideo").pause()}
+function closeModal(){$("productModal").classList.remove("show");$("modalVideo").pause();const f=$("modalVideoFrame");if(f){f.removeAttribute("src");f.classList.add("hidden")}}
 function closeModalOutside(event){if(event.target===$("productModal"))closeModal()}
 function orderSingle(p,size,color){
  if(size&&isSizeUnavailable(p,size)){showToast("یہ سائز Sold Out ہے۔");return}
@@ -1073,6 +1319,7 @@ function openAdmin(){
  renderAdminProducts();
  renderAdminSizeManager();
  renderAdminCampaigns();
+ renderAdminOffers();
  startOrdersListener();
 }
 function closeAdmin(){
@@ -1357,6 +1604,7 @@ function editProduct(id){
  adminUnavailableSizes=getUnavailableSizes(p).filter(s=>getProductSizes(p).includes(s));renderSizeAvailabilityEditor();
  $("productStock").value=p.stock||"";$("productDescription").value=p.description||"";$("productDetails").value=p.details||"";
  $("productImageFiles").value="";$("productImageLinks").value="";$("productVideoFile").value="";
+ $("productVideoUrl").value=(p.videoUrl&&!(Array.isArray(p.mediaPaths)&&p.mediaPaths.some(x=>x.includes("/videos/"))))?p.videoUrl:"";
  $("imageFileStatus").textContent="Existing photos: "+productImages(p).length+". Select new images or paste new links only if you want to replace them.";
  $("videoFileStatus").textContent=p.videoUrl?"An existing video is saved. Select a new one to replace it.":"No existing video.";
  $("imagePreview").innerHTML=productImages(p).map(url=>`<img src="${escapeHTML(url)}" alt="Current product image">`).join("");
@@ -1404,6 +1652,8 @@ $("productForm").addEventListener("submit",async event=>{
  if(rawLinks.length!==imageLinks.length){showToast("کوئی تصویر کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔");return}
  if(imageFiles.length+imageLinks.length>MAX_IMAGES){showToast("اپلوڈ اور لنک ملا کر زیادہ سے زیادہ 4 تصاویر۔");return}
  if(videoFile&&(!["video/mp4","video/webm"].includes(videoFile.type)||videoFile.size>MAX_VIDEO_SIZE)){showToast("Video must be MP4/WebM and maximum 25 MB.");return}
+ const typedVideoLink=$("productVideoUrl").value.trim(),videoLink=safeImageURL(typedVideoLink);
+ if(typedVideoLink&&!videoLink){showToast("ویڈیو کا لنک درست نہیں۔ لنک https:// سے شروع ہونا چاہیے۔");return}
  const button=$("saveProductButton");button.disabled=true;button.textContent="SAVING...";$("uploadStatus").textContent="Saving product details...";
  let productRef=null;
  try{
@@ -1433,6 +1683,10 @@ $("productForm").addEventListener("submit",async event=>{
    const uploadedVideo=await uploadFile(videoFile,storagePath(productRef.id,"videos",0,videoFile.name));
    videoUrl=uploadedVideo.url;mediaPaths=[...mediaPaths.filter(p=>!p.includes("/videos/")),uploadedVideo.path];
    await deleteStorageFiles(oldVideoPaths);
+  }else if(videoLink&&videoLink!==old.videoUrl){
+   const oldVideoPaths=mediaPaths.filter(p=>p.includes("/videos/"));
+   videoUrl=videoLink;mediaPaths=mediaPaths.filter(p=>!p.includes("/videos/"));
+   await deleteStorageFiles(oldVideoPaths);
   }
   await productRef.update({image,extraImages,videoUrl,mediaPaths,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
   $("uploadStatus").textContent="Product and media saved successfully!";
@@ -1454,7 +1708,7 @@ async function deleteProduct(id){
 }
 
 const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
-function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause()},950)}
+function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause();startOfferPopups()},950)}
 $("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
