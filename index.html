@@ -226,6 +226,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .offer-pop p{font-size:11px;color:#6e6662;line-height:1.6}
 .offer-pop .offer-close{position:absolute;top:4px;right:8px;background:none;border:0;font-size:22px;color:#777}
 .offer-pop .offer-go{margin-top:8px;font-size:9px;padding:8px 12px}
+#cobraCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:210px}.hero:before{right:-10%;opacity:.3}}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
@@ -243,6 +244,52 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .size-manager-add{grid-template-columns:1fr}.size-manager-add button{width:100%}
 .campaign-public{padding:0 12px}.campaign-public-inner{grid-template-columns:1fr}.campaign-public-image{max-height:210px;min-height:150px;grid-row:1}
 }
+
+/* Premium payment options */
+.payment-option:has(input:checked){border-color:var(--coral)!important;background:#fff4f1!important;box-shadow:0 0 0 1px var(--coral)}
+.payment-option:hover{border-color:#d4a99a}
+
+/* Cartoon character offer popup - VIP style */
+.offer-pop{
+  left:auto;right:18px;bottom:80px;
+  width:min(360px,calc(100vw - 30px));
+  border:none;
+  border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.22);
+  padding:0;
+  overflow:hidden;
+  background:linear-gradient(145deg,#fff 0%,#faf6f3 100%);
+  transform:translateY(40px) scale(0.92);
+  opacity:0;
+  pointer-events:none;
+  transition:transform .55s cubic-bezier(.22,1.2,.36,1),opacity .4s;
+}
+.offer-pop.show{transform:none;opacity:1;pointer-events:auto}
+.offer-pop-inner{display:flex;gap:0;align-items:stretch}
+.offer-character{
+  width:92px;min-width:92px;
+  background:linear-gradient(180deg,#2a211e 0%,#171514 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:14px 8px;color:#fff;text-align:center;
+}
+.offer-character .char-emoji{font-size:38px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 3px 6px #0005)}
+.offer-character .char-name{font-size:8px;letter-spacing:1px;font-weight:800;opacity:.85;line-height:1.3}
+.offer-content{padding:16px 38px 16px 16px;flex:1}
+.offer-pop-type{color:var(--coral);font-size:8px;letter-spacing:2.5px;font-weight:900}
+.offer-pop h4{font-family:"Syne",sans-serif;font-size:15px;margin:5px 0 6px;line-height:1.3}
+.offer-pop p{font-size:11px;color:#6e6662;line-height:1.55;margin:0}
+.offer-pop .offer-close{position:absolute;top:6px;right:10px;background:none;border:0;font-size:22px;color:#999;z-index:2}
+.offer-pop .offer-go{margin-top:11px;font-size:9px;padding:9px 14px;border-radius:4px}
+
+/* Slight premium polish */
+.hero{background:linear-gradient(135deg,#f8ebe7 0%,#f1e4e1 50%,#efe0db 100%)}
+.promo-banner{background:linear-gradient(90deg,#171514,#2a211e,#171514)}
+.gold-btn{box-shadow:0 4px 14px #ec6c5a44}
+.gold-btn:hover{box-shadow:0 6px 20px #ec6c5a55}
+.product-card{border-radius:6px}
+.category-card{border-radius:6px}
+.section-heading h2{letter-spacing:-1px}
+
 </style>
 </head>
 <body>
@@ -315,7 +362,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <p>Your destination for shoes, watches, fashion, electronics and selected lifestyle products.</p>
  <div class="footer-contact">WhatsApp Orders: +92 343 2752543</div>
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
- <div class="qr-box"><div class="qr-title">SCAN &amp; CHAT ON WHATSAPP</div><a class="qr-link" href="https://wa.me/message/VY2S76PZYFTSC1" target="_blank" rel="noopener" title="Open WhatsApp chat"><svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 37 37" shape-rendering="crispEdges" role="img" aria-label="WhatsApp QR code"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#171514" d="M0 0h7v1h-7zM10 0h1v1h-1zM12 0h2v1h-2zM15 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h5v1h-5zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM14 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h3v1h-3zM14 7h1v1h-1zM20 7h1v1h-1zM0 8h5v1h-5zM6 8h4v1h-4zM11 8h1v1h-1zM15 8h1v1h-1zM17 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM12 9h5v1h-5zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h6v1h-6zM20 10h1v1h-1zM23 10h2v1h-2zM0 11h2v1h-2zM3 11h1v1h-1zM12 11h2v1h-2zM18 11h3v1h-3zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM1 12h2v1h-2zM4 12h4v1h-4zM9 12h2v1h-2zM12 12h1v1h-1zM14 12h3v1h-3zM21 12h1v1h-1zM25 12h2v1h-2zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM15 13h2v1h-2zM19 13h6v1h-6zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h1v1h-1zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM0 15h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h2v1h-2zM14 15h3v1h-3zM22 15h2v1h-2zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h5v1h-5zM11 16h1v1h-1zM15 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h1v1h-1zM9 17h1v1h-1zM12 17h5v1h-5zM19 17h4v1h-4zM24 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h3v1h-3zM17 18h1v1h-1zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM9 19h2v1h-2zM12 19h2v1h-2zM16 19h1v1h-1zM19 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h2v1h-2zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h2v1h-2zM15 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h3v1h-3zM14 23h2v1h-2zM18 23h3v1h-3zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM11 24h1v1h-1zM16 24h1v1h-1zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM12 25h5v1h-5zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM13 26h3v1h-3zM18 26h1v1h-1zM21 26h7v1h-7zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM18 27h3v1h-3zM23 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM23 28h4v1h-4z"/></svg></a><div class="qr-caption">Scan this QR code with your phone camera to start a WhatsApp chat with us.</div></div>
+ <div class="qr-box"><div class="qr-title">SCAN &amp; CHAT ON WHATSAPP</div><div class="qr-link" title="Scan with your phone camera"><svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 37 37" shape-rendering="crispEdges" role="img" aria-label="WhatsApp QR code"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#171514" d="M0 0h7v1h-7zM10 0h1v1h-1zM12 0h2v1h-2zM15 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h5v1h-5zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM14 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h3v1h-3zM14 7h1v1h-1zM20 7h1v1h-1zM0 8h5v1h-5zM6 8h4v1h-4zM11 8h1v1h-1zM15 8h1v1h-1zM17 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM12 9h5v1h-5zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h6v1h-6zM20 10h1v1h-1zM23 10h2v1h-2zM0 11h2v1h-2zM3 11h1v1h-1zM12 11h2v1h-2zM18 11h3v1h-3zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM1 12h2v1h-2zM4 12h4v1h-4zM9 12h2v1h-2zM12 12h1v1h-1zM14 12h3v1h-3zM21 12h1v1h-1zM25 12h2v1h-2zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM15 13h2v1h-2zM19 13h6v1h-6zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h1v1h-1zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM0 15h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h2v1h-2zM14 15h3v1h-3zM22 15h2v1h-2zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h5v1h-5zM11 16h1v1h-1zM15 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h1v1h-1zM9 17h1v1h-1zM12 17h5v1h-5zM19 17h4v1h-4zM24 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h3v1h-3zM17 18h1v1h-1zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM9 19h2v1h-2zM12 19h2v1h-2zM16 19h1v1h-1zM19 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h2v1h-2zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h2v1h-2zM15 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h3v1h-3zM14 23h2v1h-2zM18 23h3v1h-3zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM11 24h1v1h-1zM16 24h1v1h-1zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM12 25h5v1h-5zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM13 26h3v1h-3zM18 26h1v1h-1zM21 26h7v1h-7zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM18 27h3v1h-3zM23 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM23 28h4v1h-4z"/></svg></div><div class="qr-caption">Scan this QR code with your phone camera to start a WhatsApp chat with us.</div></div>
  <div class="credits">OWNED &amp; MANAGED BY AQIB JAVED<br>DEVELOPED BY THE COBRA DEVELOPERS</div>
 </footer>
 
@@ -345,8 +392,8 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 </div></div>
 
 <div class="modal" id="orderModal"><div class="modal-box">
- <button class="close" onclick="closeOrder()">×</button><div class="form-title">CASH ON DELIVERY</div>
- <p>Enter your delivery details. Your order will be submitted directly to COBRA STORE.</p>
+ <button class="close" onclick="closeOrder()">×</button><div class="form-title">PLACE YOUR ORDER</div>
+ <p>Enter your delivery details. Choose your preferred payment method.</p>
  <div id="orderSummary" class="detail-line"></div>
  <form id="orderForm">
   <label class="form-label">FULL NAME</label><input class="form-input" id="customerName" required maxlength="80" placeholder="Your full name">
@@ -355,7 +402,22 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <label class="form-label">CITY</label><input class="form-input" id="customerCity" required maxlength="60" placeholder="Your city">
   <label class="form-label">COMPLETE DELIVERY ADDRESS</label><textarea class="form-input" id="customerAddress" required maxlength="500" placeholder="House number, street, area, landmark..."></textarea>
   <label class="form-label">ORDER NOTES (OPTIONAL)</label><textarea class="form-input" id="customerNotes" maxlength="300" placeholder="Any special instructions"></textarea>
-  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE COD ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
+  <label class="form-label">PAYMENT METHOD</label>
+  <div class="payment-options" id="paymentOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 14px">
+   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
+    <input type="radio" name="paymentMethod" value="Cash on Delivery" checked style="accent-color:#ec6c5a"> 💵 Cash on Delivery
+   </label>
+   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
+    <input type="radio" name="paymentMethod" value="EasyPaisa" style="accent-color:#ec6c5a"> 📱 EasyPaisa
+   </label>
+   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
+    <input type="radio" name="paymentMethod" value="Bank Transfer" style="accent-color:#ec6c5a"> 🏦 Bank Transfer
+   </label>
+   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
+    <input type="radio" name="paymentMethod" value="Visa / Card" style="accent-color:#ec6c5a"> 💳 Visa / Card
+   </label>
+  </div>
+  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
   <div class="status" id="orderStatus"></div>
  </form>
 </div></div>
@@ -497,6 +559,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <button class="gold-btn" style="width:100%" onclick="openCartCOD()">CHECKOUT • COD</button>
  <button class="outline-btn" style="width:100%;margin-top:9px" onclick="checkoutWhatsApp()">ORDER ON WHATSAPP</button>
 </div>
+<canvas id="cobraCanvas" aria-hidden="true"></canvas>
 <div class="offer-pop" id="offerPopup" role="status" aria-live="polite"></div>
 <button class="music-button" id="musicToggle" title="Music on/off">♫</button><div class="toast" id="toast"></div>
 
@@ -543,6 +606,7 @@ let selectedSize="",selectedColor="",orderItems=[],unsubscribeProducts=null,unsu
 let adminUnavailableSizes=[];
 let sizeManagerDrafts={};
 let campaigns=[],unsubscribeCampaigns=null;
+let cobraStarted=false;
 let offers=[],unsubscribeOffers=null,offerTimer=null,offerHideTimer=null,offerIndex=0,offersStarted=false;
 const DEFAULT_OFFERS=[
  {type:"SALE",title:"11.11 MEGA SALE",message:"Special discounted prices on the COBRA STORE collection. Order now!"},
@@ -884,6 +948,21 @@ function offerIsCurrentlyActive(o){
 }
 function currentOfferList(){const live=offers.filter(offerIsCurrentlyActive);return live.length?live:DEFAULT_OFFERS}
 function offerTypeOf(o){const t=String(o.type||"OFFER").toUpperCase();return ["OFFER","DEAL","SALE"].includes(t)?t:"OFFER"}
+/* Cartoon characters that deliver offer cards from corners */
+const OFFER_CHARACTERS=[
+ {emoji:"🐱🐭",name:"TOM & JERRY",side:"left"},
+ {emoji:"💪🚲",name:"MOTU PATLU",side:"right"},
+ {emoji:"⚓🥬",name:"POPEYE",side:"left"},
+ {emoji:"🦆",name:"DAFFY DUCK",side:"right"},
+ {emoji:"🐭",name:"MICKEY MOUSE",side:"left"},
+ {emoji:"🐰",name:"BUGS BUNNY",side:"right"},
+ {emoji:"🐶",name:"SCOOBY-DOO",side:"left"},
+ {emoji:"🐻🍯",name:"WINNIE",side:"right"},
+ {emoji:"🐯",name:"TIGGER",side:"left"},
+ {emoji:"🐧",name:"PENGUIN",side:"right"}
+];
+let charIndex=0;
+
 function offerIconHTML(o){
  const u=safeImageURL(o.iconUrl);
  if(u)return `<img class="offer-pop-icon" src="${escapeHTML(u)}" alt="">`;
@@ -899,16 +978,45 @@ function offerGo(productId){
 }
 function showNextOffer(){
  const pop=$("offerPopup");if(!pop)return;
- if(document.querySelector(".modal.show")||$("cartPanel").classList.contains("open")){scheduleNextOffer(8000);return}
+ if(document.querySelector(".modal.show")||$("cartPanel").classList.contains("open")){scheduleNextOffer(9000);return}
  const list=currentOfferList();if(!list.length)return;
  const o=list[offerIndex%list.length];offerIndex++;
  const product=o.productId?products.find(p=>p.id===o.productId):null;
- pop.innerHTML=`<button class="offer-close" type="button" aria-label="Close" onclick="hideOfferPopup()">×</button>${offerIconHTML(o)}<div><div class="offer-pop-type">✦ ${offerTypeOf(o)}</div><h4>${escapeHTML(o.title||"")}</h4><p>${escapeHTML(o.message||"")}</p><button class="gold-btn offer-go" type="button" onclick="offerGo('${escapeHTML(product?product.id:"")}')">${product?"VIEW PRODUCT":"SHOP NOW"}</button></div>`;
+ const ch=OFFER_CHARACTERS[charIndex%OFFER_CHARACTERS.length];charIndex++;
+
+ // Position from left or right corner
+ if(ch.side==="left"){
+  pop.style.left="14px";pop.style.right="auto";
+ }else{
+  pop.style.right="14px";pop.style.left="auto";
+ }
+
+ const typeLabel=offerTypeOf(o);
+ const iconPart=safeImageURL(o.iconUrl)
+  ?`<img src="${escapeHTML(o.iconUrl)}" alt="" style="width:36px;height:36px;object-fit:contain;border-radius:6px;margin-bottom:4px">`
+  :`<div style="font-size:22px;margin-bottom:2px">${typeLabel==="SALE"?"🔥":typeLabel==="DEAL"?"🎁":"✦"}</div>`;
+
+ pop.innerHTML=`
+  <button class="offer-close" type="button" aria-label="Close" onclick="hideOfferPopup()">×</button>
+  <div class="offer-pop-inner">
+   <div class="offer-character">
+    <div class="char-emoji">${ch.emoji}</div>
+    <div class="char-name">${ch.name}<br>BROUGHT THE DEAL</div>
+   </div>
+   <div class="offer-content">
+    ${iconPart}
+    <div class="offer-pop-type">✦ ${typeLabel}</div>
+    <h4>${escapeHTML(o.title||"")}</h4>
+    <p>${escapeHTML(o.message||"")}</p>
+    <button class="gold-btn offer-go" type="button" onclick="offerGo('${escapeHTML(product?product.id:"")}')">${product?"VIEW PRODUCT":"SHOP NOW"}</button>
+   </div>
+  </div>`;
  pop.classList.add("show");
- clearTimeout(offerHideTimer);offerHideTimer=setTimeout(hideOfferPopup,9000);
- scheduleNextOffer(40000);
+ clearTimeout(offerHideTimer);
+ offerHideTimer=setTimeout(hideOfferPopup,11000);
+ scheduleNextOffer(38000+Math.random()*12000);
 }
-function startOfferPopups(){if(offersStarted)return;offersStarted=true;scheduleNextOffer(1200)}
+function startOfferPopups(){if(offersStarted)return;offersStarted=true;scheduleNextOffer(2200)}
 function startOffersListener(){
  if(!db)return;
  if(unsubscribeOffers)unsubscribeOffers();
@@ -1256,7 +1364,7 @@ $("orderForm").addEventListener("submit",async event=>{
   email:email,
   phone,city,address,notes,
   items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),
-  total,paymentMethod:"Cash on Delivery",status:"Pending",
+  total,paymentMethod:(document.querySelector('input[name="paymentMethod"]:checked')||{}).value||"Cash on Delivery",status:"Pending",
   createdAt:firebase.firestore.FieldValue.serverTimestamp()
  };
  const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
@@ -1270,7 +1378,7 @@ $("orderForm").addEventListener("submit",async event=>{
  }catch(error){
   console.error("COD save error:",error);
   $("orderStatus").textContent="Order save failed: "+getErrorMessage(error)+" Please try again later or use the separate WhatsApp order button. Your order has NOT been sent to WhatsApp.";
- }finally{button.disabled=false;button.textContent="PLACE COD ORDER"}
+ }finally{button.disabled=false;button.textContent="PLACE ORDER"}
 });
 
 async function loadReviews(productId){
@@ -1707,8 +1815,463 @@ async function deleteProduct(id){
  }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
 }
 
+
+/* ===== LIVING BLACK COBRA v3 — Ultra Realistic ===== */
+function startCobra(){
+ if(cobraStarted)return;cobraStarted=true;
+ if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const cv=$("cobraCanvas");if(!cv)return;
+ const ctx=cv.getContext("2d");if(!ctx)return;
+ let W=0,H=0,S=1;
+
+ function resize(){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  W=window.innerWidth;H=window.innerHeight;
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+ }
+ resize();window.addEventListener("resize",resize);
+
+ const N=96; // more segments = smoother body
+ const spine=[];
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t)};
+ const lerp=(a,b,t)=>a+(b-a)*t;
+
+ S=clamp(W/1200,0.6,1.12);
+ let hx=-130,hy=H*0.62,ang=0.12;
+ for(let i=0;i<N;i++)spine.push({x:hx-i*5.6*S,y:hy});
+
+ // Prefer edges, corners, header, footer — avoid product zone
+ // Only the 4 corners of the screen
+ const CORNERS = [
+  {x:0.07, y:0.10}, // top-left
+  {x:0.93, y:0.10}, // top-right
+  {x:0.07, y:0.88}, // bottom-left
+  {x:0.93, y:0.88}  // bottom-right
+ ];
+ let cornerIndex = 0;
+ const target={x:W*0.07, y:H*0.88};
+ function pickTarget(){
+  // Move only between the 4 corners (small random offset so it doesn't look robotic)
+  cornerIndex = (cornerIndex + 1 + Math.floor(Math.random()*2)) % 4;
+  const c = CORNERS[cornerIndex];
+  target.x = W * (c.x + (Math.random()-0.5)*0.04);
+  target.y = H * (c.y + (Math.random()-0.5)*0.04);
+ }
+ pickTarget();
+
+ let speed=0,time=0,last=performance.now(),frame=0,modalOpen=false;
+ let state="crawl",stateT=0,riseR=0,dirSign=1;
+ let nextRise=8+Math.random()*9;
+ let hoodDur=4.2;
+ let restTimer=0;
+ let obstacles=[];
+
+ const kB=Math.round(N*0.24);
+
+ function refreshObstacles(){
+  obstacles=Array.from(document.querySelectorAll(
+   ".product-image,.category-card img,.logo,.footer-logo,.qr-link,.campaign-public-image,.product-card,.category-card,#products,.product-grid,#categories,.category-grid"
+  ));
+  // Also treat the entire products section as a big obstacle
+  const prodSec=document.getElementById("products");
+  if(prodSec) obstacles.push(prodSec);
+  const catSec=document.getElementById("categories");
+  if(catSec) obstacles.push(catSec);
+ }
+
+ // Body width — natural cobra proportions
+ function baseWidth(t){
+  // t: 0=head tip, 1=tail tip
+  const head=16*Math.exp(-Math.pow(t/0.038,1.8));
+  const neck=10+12*smooth(0.03,0.16,t);
+  const taper=1-0.91*Math.pow(t,1.28);
+  return S*(head+neck*taper);
+ }
+
+ // Wide dramatic hood
+ function hoodExtra(t){
+  // t: 0 at hood base, 1 near head
+  const shape=Math.pow(Math.sin(Math.PI*clamp((t-0.05)/0.82,0,1)),0.72);
+  return 56*S*shape;
+ }
+
+ function buildPath(P,Wd){
+  const L=[],R=[];
+  for(let i=0;i<N;i++){
+   const a=P[Math.max(0,i-1)],b=P[Math.min(N-1,i+1)];
+   let tx=b.x-a.x,ty=b.y-a.y;
+   const l=Math.hypot(tx,ty)||1;
+   tx/=l;ty/=l;
+   const nx=-ty,ny=tx,hw=Wd[i]/2;
+   L.push({x:P[i].x+nx*hw,y:P[i].y+ny*hw});
+   R.push({x:P[i].x-nx*hw,y:P[i].y-ny*hw});
+  }
+  const path=new Path2D();
+  path.moveTo(L[0].x,L[0].y);
+  for(let i=1;i<N-1;i++){
+   path.quadraticCurveTo(L[i].x,L[i].y,(L[i].x+L[i+1].x)/2,(L[i].y+L[i+1].y)/2);
+  }
+  path.lineTo(L[N-1].x,L[N-1].y);
+  path.lineTo(R[N-1].x,R[N-1].y);
+  for(let i=N-2;i>0;i--){
+   path.quadraticCurveTo(R[i].x,R[i].y,(R[i].x+R[i-1].x)/2,(R[i].y+R[i-1].y)/2);
+  }
+  path.lineTo(R[0].x,R[0].y);
+  path.closePath();
+  return {path,L,R};
+ }
+
+ // Avoid product zones more aggressively
+ function isNearObstacle(x,y){
+  for(const el of obstacles){
+   const r=el.getBoundingClientRect();
+   if(r.width<10||r.height<10)continue;
+   const pad=28;
+   if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad)return true;
+  }
+  return false;
+ }
+
+ function update(dt){
+  S=clamp(W/1200,0.6,1.12);
+  const segLen=5.4*S;
+  stateT+=dt;
+
+  // State machine
+  if(state==="crawl"){
+   nextRise-=dt;
+   restTimer-=dt;
+   if(nextRise<=0&&speed>18&&restTimer<=0){
+    // Only rise if not too close to products
+    if(!isNearObstacle(hx,hy)){
+     state="rise";
+     stateT=0;
+     dirSign=Math.cos(ang)>=0?1:-1;
+    }else{
+     nextRise=3+Math.random()*4;
+    }
+   }
+  }else if(state==="rise"){
+   riseR=Math.min(1,stateT/1.5);
+   if(stateT>=1.5){
+    state="hood";
+    stateT=0;
+    riseR=1;
+    hoodDur=3.8+Math.random()*2.8;
+   }
+  }else if(state==="hood"){
+   riseR=1;
+   if(stateT>=hoodDur){
+    state="lower";
+    stateT=0;
+   }
+  }else{ // lower
+   riseR=1-Math.min(1,stateT/1.25);
+   if(stateT>=1.25){
+    state="crawl";
+    stateT=0;
+    riseR=0;
+    nextRise=14+Math.random()*18; // longer gaps between rises
+    restTimer=2.5+Math.random()*3;
+    pickTarget();
+   }
+  }
+
+  // Speed: slower and more deliberate
+  const goal=state==="crawl"?(restTimer>0?22*S:58*S):0;
+  speed+=(goal-speed)*Math.min(1,dt*2.2);
+
+  // Steering
+  let dx=target.x-hx,dy=target.y-hy;
+  if(Math.hypot(dx,dy)<55*S||isNearObstacle(target.x,target.y)){
+   pickTarget();
+   dx=target.x-hx;dy=target.y-hy;
+  }
+
+  // Soft repulsion from obstacles
+  let repX=0,repY=0;
+  for(const el of obstacles){
+   const r=el.getBoundingClientRect();
+   if(r.width<10)continue;
+   const cx=r.left+r.width/2,cy=r.top+r.height/2;
+   const ddx=hx-cx,ddy=hy-cy;
+   const dist=Math.hypot(ddx,ddy)||1;
+   const danger=Math.max(r.width,r.height)*0.55+40;
+   if(dist<danger){
+    const force=(danger-dist)/danger;
+    repX+=(ddx/dist)*force*1.8;
+    repY+=(ddy/dist)*force*1.8;
+   }
+  }
+
+  const want=Math.atan2(dy+repY*40,dx+repX*40);
+  const diff=Math.atan2(Math.sin(want-ang),Math.cos(want-ang));
+  const maxTurn=1.35*dt;
+  const wave=Math.sin(time*1.85)*1.1*dt*(speed/(58*S));
+  ang+=clamp(diff,-maxTurn,maxTurn)+wave;
+
+  hx+=Math.cos(ang)*speed*dt;
+  hy+=Math.sin(ang)*speed*dt;
+
+  // Keep mostly on screen
+  hx=clamp(hx,-50,W+50);
+  hy=clamp(hy,25,H-15);
+
+  // Follow spine
+  spine[0].x=hx;spine[0].y=hy;
+  for(let i=1;i<N;i++){
+   const p=spine[i-1],q=spine[i];
+   let vx=q.x-p.x,vy=q.y-p.y;
+   const l=Math.hypot(vx,vy)||1;
+   q.x=p.x+(vx/l)*segLen;
+   q.y=p.y+(vy/l)*segLen;
+  }
+ }
+
+ function drawHead(P0,P1,e){
+  let a=Math.atan2(P0.y-P1.y,P0.x-P1.x);
+  if(e>0.05){
+   const ideal=dirSign>0?0:Math.PI;
+   const df=Math.atan2(Math.sin(ideal-a),Math.cos(ideal-a));
+   a+=df*e*0.92;
+  }
+
+  ctx.save();
+  ctx.translate(P0.x,P0.y);
+  ctx.rotate(a);
+
+  // Head base shape (slightly flattened triangle)
+  ctx.fillStyle="#050506";
+  ctx.beginPath();
+  ctx.moveTo(15.5*S,0);
+  ctx.bezierCurveTo(11*S,-9.2*S, 1*S,-9.5*S, -4*S,-7.5*S);
+  ctx.bezierCurveTo(-11*S,-4.2*S, -12*S,0, -11*S,0);
+  ctx.bezierCurveTo(-12*S,0, -11*S,4.2*S, -4*S,7.5*S);
+  ctx.bezierCurveTo(1*S,9.5*S, 11*S,9.2*S, 15.5*S,0);
+  ctx.closePath();
+  ctx.fill();
+
+  // Soft top highlight
+  const hg=ctx.createRadialGradient(2*S,-1.5*S,0,2*S,-1.5*S,11*S);
+  hg.addColorStop(0,"rgba(255,255,255,0.09)");
+  hg.addColorStop(1,"rgba(255,255,255,0)");
+  ctx.fillStyle=hg;
+  ctx.beginPath();
+  ctx.ellipse(2*S,-1.8*S,9*S,4.2*S,0,0,Math.PI*2);
+  ctx.fill();
+
+  // Eyes
+  for(const sy of [-1,1]){
+   // Golden iris
+   ctx.fillStyle="#d4a017";
+   ctx.beginPath();
+   ctx.ellipse(6.2*S,sy*4.9*S,2.55*S,2.25*S,0,0,Math.PI*2);
+   ctx.fill();
+   // Dark outer ring
+   ctx.strokeStyle="rgba(0,0,0,0.45)";
+   ctx.lineWidth=0.7*S;
+   ctx.stroke();
+   // Vertical pupil
+   ctx.fillStyle="#050505";
+   ctx.beginPath();
+   ctx.ellipse(6.4*S,sy*4.9*S,0.75*S,1.85*S,0,0,Math.PI*2);
+   ctx.fill();
+   // Catch light
+   ctx.fillStyle="rgba(255,255,255,0.65)";
+   ctx.beginPath();
+   ctx.arc(5.3*S,sy*4.25*S,0.6*S,0,Math.PI*2);
+   ctx.fill();
+  }
+
+  // Nostrils
+  ctx.fillStyle="#1c1c1e";
+  ctx.beginPath();ctx.arc(12.8*S,-1.45*S,0.75*S,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(12.8*S,1.45*S,0.75*S,0,Math.PI*2);ctx.fill();
+
+  // Forked tongue
+  const flickBase=(state==="hood"||state==="rise")?Math.sin(time*11.8):Math.sin(time*6.8+Math.floor(time/2.4)*3.1);
+  const open=(state==="hood")?Math.max(0,flickBase*1.15):Math.max(0,flickBase-0.62)*2.9;
+  if(open>0.05){
+   const len=(12+17*open)*S;
+   ctx.strokeStyle="#b91c1c";
+   ctx.lineWidth=1.5*S;
+   ctx.lineCap="round";
+   ctx.lineJoin="round";
+   ctx.beginPath();
+   ctx.moveTo(14.5*S,0);
+   ctx.lineTo(14.5*S+len*0.58,0);
+   ctx.moveTo(14.5*S+len*0.58,0);
+   ctx.lineTo(14.5*S+len,-4.1*S);
+   ctx.moveTo(14.5*S+len*0.58,0);
+   ctx.lineTo(14.5*S+len,4.1*S);
+   ctx.stroke();
+  }
+
+  ctx.restore();
+ }
+
+ function draw(){
+  const e=riseR*riseR*(3-2*riseR);
+  const P=[],Wd=[],flatW=[];
+  const B=spine[kB];
+  const riseH=138*S;
+
+  const C={x:B.x-dirSign*36*S, y:B.y-riseH*0.5};
+  const T={
+   x:B.x+dirSign*20*S + Math.sin(time*1.4)*8*S*e,
+   y:B.y-riseH
+  };
+
+  for(let i=0;i<N;i++){
+   const t0=i/(N-1);
+   const bw=baseWidth(t0);
+   flatW.push(bw);
+   let px=spine[i].x,py=spine[i].y,extra=0;
+
+   if(e>0.001&&i<kB){
+    const t=1-i/kB;
+    const u=1-t;
+    const bx=u*u*B.x + 2*u*t*C.x + t*t*T.x;
+    const by=u*u*B.y + 2*u*t*C.y + t*t*T.y;
+    px+=(bx-px)*e;
+    py+=(by-py)*e;
+    extra=hoodExtra(t)*e;
+   }
+   P.push({x:px,y:py});
+   Wd.push(bw+extra);
+  }
+
+  const body=buildPath(P,Wd);
+
+  // Soft contact shadow on ground
+  if(e<0.97){
+   const flat=buildPath(spine,flatW);
+   ctx.save();
+   ctx.translate(5*S,9*S);
+   ctx.globalAlpha=0.22;
+   ctx.fillStyle="#000";
+   ctx.fill(flat.path);
+   ctx.restore();
+  }
+
+  // Body fill — deep black with subtle cool sheen
+  const g=ctx.createLinearGradient(P[0].x,P[0].y,P[Math.floor(N*0.55)].x,P[Math.floor(N*0.55)].y);
+  g.addColorStop(0,"#0b0b0d");
+  g.addColorStop(0.35,"#08080a");
+  g.addColorStop(1,"#050507");
+  ctx.fillStyle=g;
+  ctx.fill(body.path);
+
+  // Very subtle rim light
+  ctx.strokeStyle="rgba(160,170,190,0.07)";
+  ctx.lineWidth=1.15;
+  ctx.stroke(body.path);
+
+  // Dorsal highlight ridge
+  ctx.strokeStyle="rgba(255,255,255,0.11)";
+  ctx.lineWidth=1.55*S;
+  ctx.lineCap="round";
+  ctx.beginPath();
+  for(let i=4;i<N-6;i++){
+   const l=body.L[i],r=body.R[i];
+   const x=l.x*0.66+r.x*0.34;
+   const y=l.y*0.66+r.y*0.34;
+   if(i===4)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // Scale rows
+  ctx.strokeStyle="rgba(255,255,255,0.038)";
+  ctx.lineWidth=0.85;
+  ctx.beginPath();
+  for(let i=6;i<N-5;i+=2){
+   const l=body.L[i],r=body.R[i];
+   ctx.moveTo(l.x*0.9+r.x*0.1,l.y*0.9+r.y*0.1);
+   ctx.lineTo(l.x*0.1+r.x*0.9,l.y*0.1+r.y*0.9);
+  }
+  ctx.stroke();
+
+  // Classic spectacle marking (only when hood is open)
+  if(e>0.42){
+   const ih=Math.round(0.30*kB);
+   const c=P[ih];
+   const al=smooth(0.42,0.82,e);
+
+   ctx.save();
+   ctx.globalAlpha=0.88*al;
+   ctx.strokeStyle="#e6dfc4";
+   ctx.lineWidth=1.85*S;
+   ctx.lineCap="round";
+   ctx.lineJoin="round";
+
+   // Left circle
+   ctx.beginPath();
+   ctx.arc(c.x-8.2*S,c.y-1.8*S,5.6*S,0,Math.PI*2);
+   ctx.stroke();
+   // Right circle
+   ctx.beginPath();
+   ctx.arc(c.x+8.2*S,c.y-1.8*S,5.6*S,0,Math.PI*2);
+   ctx.stroke();
+   // Lower connecting curve
+   ctx.beginPath();
+   ctx.moveTo(c.x-8.2*S,c.y+3.6*S);
+   ctx.quadraticCurveTo(c.x,c.y+14.5*S,c.x+8.2*S,c.y+3.6*S);
+   ctx.stroke();
+   // Center vertical
+   ctx.beginPath();
+   ctx.moveTo(c.x,c.y+4.2*S);
+   ctx.lineTo(c.x,c.y+9.5*S);
+   ctx.stroke();
+
+   ctx.restore();
+  }
+
+  drawHead(P[0],P[2],e);
+ }
+
+ function frameLoop(now){
+  window.requestAnimationFrame(frameLoop);
+  const dt=Math.min(0.045,(now-last)/1000);
+  last=now;
+  if(document.hidden)return;
+  time+=dt;
+  frame++;
+
+  if(frame%16===0)modalOpen=!!document.querySelector(".modal.show");
+  if(frame%70===0)refreshObstacles();
+
+  ctx.clearRect(0,0,W,H);
+  if(modalOpen)return;
+
+  update(dt);
+
+  // Strong clipping so cobra never draws over products / logos / QR
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0,0,W,H);
+  let clipped=false;
+  for(const el of obstacles){
+   const r=el.getBoundingClientRect();
+   if(r.width>8&&r.height>8&&r.bottom>0&&r.top<H&&r.right>0&&r.left<W){
+    // slightly larger exclusion zone
+    ctx.rect(r.left-6,r.top-6,r.width+12,r.height+12);
+    clipped=true;
+   }
+  }
+  if(clipped)ctx.clip("evenodd");
+  draw();
+  ctx.restore();
+ }
+
+ refreshObstacles();
+ window.requestAnimationFrame(frameLoop);
+}
+
+
 const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
-function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause();startOfferPopups()},950)}
+function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause();startOfferPopups();startCobra()},950)}
 $("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
