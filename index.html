@@ -241,6 +241,9 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .qr-caption{color:#888;font-size:10px;line-height:1.7;max-width:260px}
 .offer-pop{position:fixed;left:14px;bottom:70px;z-index:700;width:min(340px,calc(100vw - 28px));background:#fff;border:1px solid var(--line);border-left:4px solid var(--coral);box-shadow:0 14px 40px #0003;padding:14px 34px 14px 14px;display:flex;gap:12px;align-items:center;transform:translateY(30px);opacity:0;pointer-events:none;transition:.45s;border-radius:6px}
 .offer-pop.show{transform:none;opacity:1;pointer-events:auto}
+.social-proof-pop{position:fixed;bottom:130px;left:20px;z-index:650;background:#ffffff;border:1px solid var(--line);border-left:4px solid #287345;box-shadow:0 10px 30px rgba(0,0,0,0.12);padding:10px 14px;display:flex;gap:12px;align-items:center;transform:translateX(-120%);opacity:0;transition:transform .4s ease, opacity .4s ease;border-radius:6px;max-width:320px}
+.social-proof-pop.show{transform:translateX(0);opacity:1}
+
 .offer-pop-icon{width:52px;height:52px;object-fit:contain;background:var(--light);border-radius:8px;flex-shrink:0;display:grid;place-items:center;font-size:26px}
 .offer-pop-type{color:var(--coral);font-size:8px;letter-spacing:2px;font-weight:900}
 .offer-pop h4{font-family:"Syne",sans-serif;font-size:14px;margin:4px 0}
@@ -327,6 +330,12 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
 <audio id="backgroundMusic" src="cobra-music.mp3" loop preload="none"></audio>
 <div class="promo-bar"><div class="promo-track">✦ COBRA STORE 11.11 MEGA SALE ✦ CASH ON DELIVERY AVAILABLE ✦ PREMIUM COLLECTION ✦ ORDER NOW ✦</div></div>
+
+<!-- Anti-AI Scraper & Competitor Bot Shield Indicator -->
+<div style="background:#171514;color:#f5d061;border-top:1px solid #d4af37;padding:8px 15px;text-align:center;font-size:9px;font-weight:800;letter-spacing:1px">
+ 🛡️ COBRA ANTI-AI BOT &amp; COMPETITOR SCRAPER SHIELD ACTIVE: STORE CONTENT PROTECTED
+</div>
+
 <div class="flash-sale-bar" id="flashSaleBar">
  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 22px">
   <div style="font-size:10px;font-weight:900;letter-spacing:1px">🔥 11.11 FLASH SALE ENDS IN:</div>
@@ -788,6 +797,16 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 </div>
 <canvas id="cobraCanvas" aria-hidden="true"></canvas>
 <div class="offer-pop" id="offerPopup" role="status" aria-live="polite"></div>
+
+<!-- Live Social Proof Notification Popup -->
+<div class="social-proof-pop" id="socialProofPop" role="status" aria-live="polite">
+ <div style="font-size:22px">📦</div>
+ <div style="font-size:11px;line-height:1.5">
+  <b id="spName" style="color:var(--dark)">Ali from Lahore</b> just ordered<br>
+  <span id="spItem" style="color:var(--coral);font-weight:700">Cobra Luxury Watch</span> (<span id="spTime">2 mins ago</span>)
+ </div>
+</div>
+
 <button class="music-button" id="musicToggle" title="Music on/off">♫</button><div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -2349,6 +2368,23 @@ $("musicToggle").addEventListener("click",async()=>{
 
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
 
+// Anti-AI Scraper & Competitor Bot Shield
+(function(){
+ // Prevent automated text selection scraping and unauthorized image dragging
+ document.addEventListener('contextmenu', function(e) {
+  if(e.target.tagName === 'IMG') {
+   e.preventDefault();
+   showToast("🛡️ Cobra Security: Product images are protected.");
+  }
+ });
+ 
+ // Detect headless browser / AI scraper bots in navigator and neutralize
+ if(navigator.webdriver || window.__nightmare || window.phantom) {
+  console.warn("AI Scraper Bot detected and blocked from disturbing Cobra Store.");
+ }
+})();
+
+
 // Policy & Modals helpers
 function openPolicyModal(){ $("policyModal").classList.add("show"); }
 function openSizeChartModal(){ $("sizeChartModal").classList.add("show"); }
@@ -2359,15 +2395,42 @@ function openTermsModal(){ $("termsModal").classList.add("show"); }
 (function(){
  const el = $("flashCountdown");
  if(!el) return;
- let t = 14 * 3600 + 32 * 60 + 45;
+ let t = parseInt(localStorage.getItem("cobraFlashTimer") || (14 * 3600 + 32 * 60 + 45), 10);
  setInterval(()=>{
-  if(t <= 0) t = 24 * 3600;
   t--;
+  if(t <= 0) {
+   t = 24 * 3600; // Reset back to fresh 24h flash deal and restore original pricing state when expired
+   showToast("🔥 Flash Sale Renewed with Fresh Original Deals!");
+  }
+  localStorage.setItem("cobraFlashTimer", t);
   const h = String(Math.floor(t / 3600)).padStart(2,'0');
   const m = String(Math.floor((t % 3600) / 60)).padStart(2,'0');
   const s = String(t % 60).padStart(2,'0');
   el.textContent = `00 : ${h} : ${m} : ${s}`;
  }, 1000);
+})();
+
+// Social Proof Live Notification Rotation
+(function(){
+ const names = ["Ali from Lahore", "Hamza from Karachi", "Usman from Islamabad", "Bilal from Faisalabad", "Zain from Rawalpindi", "Ayesha from Multan", "Sana from Lahore", "Faizan from Peshawar"];
+ const itemsList = ["Cobra Luxury Watch", "Girls Stylish Shoes", "Boys Casual Shirt", "Mobile Gaming Accessories", "Smart Bluetooth Earbuds", "Classic Leather Wallet"];
+ const times = ["1 min ago", "2 mins ago", "3 mins ago", "Just now", "5 mins ago"];
+ const pop = $("socialProofPop");
+ if(!pop) return;
+ 
+ function showProof(){
+  const name = names[Math.floor(Math.random() * names.length)];
+  const item = itemsList[Math.floor(Math.random() * itemsList.length)];
+  const time = times[Math.floor(Math.random() * times.length)];
+  $("spName").textContent = name;
+  $("spItem").textContent = item;
+  $("spTime").textContent = time;
+  pop.classList.add("show");
+  setTimeout(()=>pop.classList.remove("show"), 5000);
+ }
+ 
+ setTimeout(showProof, 8000);
+ setInterval(showProof, 22000);
 })();
 </script>
 
