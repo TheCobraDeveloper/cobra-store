@@ -81,7 +81,7 @@ header{position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid 
 .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
 .category-card{min-width:0;cursor:pointer;text-align:center;background:white;border:1px solid var(--line);padding:13px 10px 17px;transition:.25s}
 .category-card:hover,.category-card.active{transform:translateY(-5px);border-color:var(--coral);box-shadow:var(--shadow)}
-.category-card img{width:100%;max-width:155px;aspect-ratio:1;object-fit:contain;display:block;margin:auto;background:var(--light)}
+.category-card img{width:100%;max-width:155px;aspect-ratio:1;object-fit:cover;display:block;margin:auto;background:var(--light);border-radius:6px}
 .category-card h3{font-size:11px;margin-top:13px;font-weight:900}
 .category-card small{display:block;color:var(--coral);font-size:9px;margin-top:7px}
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:25px 0 20px}
@@ -227,6 +227,30 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .offer-pop .offer-close{position:absolute;top:4px;right:8px;background:none;border:0;font-size:22px;color:#777}
 .offer-pop .offer-go{margin-top:8px;font-size:9px;padding:8px 12px}
 #cobraCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none}
+.dev-box{margin:28px auto 0;max-width:520px;border-top:1px solid var(--line);padding-top:22px}
+.dev-title{font-family:"Syne",sans-serif;font-weight:800;font-size:15px;letter-spacing:2px}
+.dev-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0}
+.dev-list li{font-size:10px;border:1px solid var(--line);padding:6px 10px;border-radius:20px;color:#6c625d}
+.dev-wa{display:inline-block;margin-top:6px}
+.social-row{display:flex;gap:18px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.social-item{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;color:#888;max-width:120px;line-height:1.5}
+.social-btn{width:46px;height:46px;border-radius:50%;background:var(--dark);border:0;display:grid;place-items:center;transition:.25s}
+.social-btn svg{width:22px;height:22px;fill:#fff}
+.social-btn:hover{background:var(--coral);transform:translateY(-3px)}
+.cat-ph{aspect-ratio:1;display:grid;place-items:center;font-size:42px;background:var(--light)}
+.track-form{border:1px dashed #d8cbc6;padding:10px;margin-top:10px;display:grid;gap:8px;background:#fff}
+.track-form b{font-size:10px}
+.tl{list-style:none;margin:14px 0;padding:0}
+.tl li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:11px;color:#999}
+.tl .dot{width:18px;height:18px;border-radius:50%;border:2px solid #ddd;display:grid;place-items:center;font-size:10px;flex-shrink:0;background:#fff}
+.tl li.done{color:#287345}.tl li.done .dot{background:#398b5b;border-color:#398b5b;color:#fff}
+.tl li.now{color:var(--dark);font-weight:800}.tl li.now .dot{border-color:var(--coral);background:var(--coral);color:#fff}
+.tl li.cancel{color:#b53d31}
+.review-photo{width:84px;height:84px;object-fit:cover;border:1px solid var(--line);margin-top:8px;cursor:zoom-in;display:block}
+.review-photo.big{width:100%;height:auto;max-height:340px;object-fit:contain;cursor:zoom-out}
+.q-card{border-bottom:1px solid var(--line);padding:11px 0;font-size:11px}
+.q-answer{background:#f1faf3;border-left:3px solid #398b5b;padding:8px 10px;margin-top:7px;color:#286b3d}
+.recent-chip{display:inline-block;border:1px solid #d8cbc6;padding:5px 10px;margin:3px;font-size:10px;cursor:pointer;border-radius:20px}
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:210px}.hero:before{right:-10%;opacity:.3}}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
@@ -245,50 +269,22 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .campaign-public{padding:0 12px}.campaign-public-inner{grid-template-columns:1fr}.campaign-public-image{max-height:210px;min-height:150px;grid-row:1}
 }
 
-/* Premium payment options */
-.payment-option:has(input:checked){border-color:var(--coral)!important;background:#fff4f1!important;box-shadow:0 0 0 1px var(--coral)}
-.payment-option:hover{border-color:#d4a99a}
-
-/* Cartoon character offer popup - VIP style */
-.offer-pop{
-  left:auto;right:18px;bottom:80px;
-  width:min(360px,calc(100vw - 30px));
-  border:none;
-  border-radius:16px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.22);
-  padding:0;
-  overflow:hidden;
-  background:linear-gradient(145deg,#fff 0%,#faf6f3 100%);
-  transform:translateY(40px) scale(0.92);
-  opacity:0;
-  pointer-events:none;
-  transition:transform .55s cubic-bezier(.22,1.2,.36,1),opacity .4s;
+.promo-video-section{max-width:1280px;margin:28px auto 10px;padding:0 22px}
+.promo-video-inner{position:relative;border-radius:8px;overflow:hidden;background:#171514;border:1px solid var(--line);aspect-ratio:16/9;max-height:480px}
+.promo-video-inner video{width:100%;height:100%;object-fit:cover;display:block}
+.promo-video-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#171514ee 0%,#17151466 55%,transparent 100%);display:flex;flex-direction:column;justify-content:center;padding:28px 32px;color:#fff;pointer-events:none}
+.promo-video-overlay *{pointer-events:auto}
+.promo-video-overlay .eyebrow{color:var(--coral);font-size:10px;letter-spacing:3px;font-weight:900;margin-bottom:10px}
+.promo-video-overlay h2{font-family:"Syne",sans-serif;font-size:clamp(22px,4vw,38px);line-height:1.15;margin:0 0 10px;max-width:420px}
+.promo-video-overlay p{color:#ddd;font-size:13px;line-height:1.7;max-width:380px;margin:0 0 18px}
+.promo-video-overlay .gold-btn{display:inline-block;width:fit-content}
+.wa-group-btn{display:inline-flex;align-items:center;gap:8px;margin-top:10px}
+.wa-group-btn svg{width:20px;height:20px;fill:#fff}
+@media(max-width:700px){
+ .promo-video-inner{aspect-ratio:9/12;max-height:520px}
+ .promo-video-overlay{background:linear-gradient(0deg,#171514f2 0%,#17151488 50%,transparent 100%);justify-content:flex-end;padding:20px 16px 24px}
+ .promo-video-overlay h2{font-size:22px}
 }
-.offer-pop.show{transform:none;opacity:1;pointer-events:auto}
-.offer-pop-inner{display:flex;gap:0;align-items:stretch}
-.offer-character{
-  width:92px;min-width:92px;
-  background:linear-gradient(180deg,#2a211e 0%,#171514 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:14px 8px;color:#fff;text-align:center;
-}
-.offer-character .char-emoji{font-size:38px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 3px 6px #0005)}
-.offer-character .char-name{font-size:8px;letter-spacing:1px;font-weight:800;opacity:.85;line-height:1.3}
-.offer-content{padding:16px 38px 16px 16px;flex:1}
-.offer-pop-type{color:var(--coral);font-size:8px;letter-spacing:2.5px;font-weight:900}
-.offer-pop h4{font-family:"Syne",sans-serif;font-size:15px;margin:5px 0 6px;line-height:1.3}
-.offer-pop p{font-size:11px;color:#6e6662;line-height:1.55;margin:0}
-.offer-pop .offer-close{position:absolute;top:6px;right:10px;background:none;border:0;font-size:22px;color:#999;z-index:2}
-.offer-pop .offer-go{margin-top:11px;font-size:9px;padding:9px 14px;border-radius:4px}
-
-/* Slight premium polish */
-.hero{background:linear-gradient(135deg,#f8ebe7 0%,#f1e4e1 50%,#efe0db 100%)}
-.promo-banner{background:linear-gradient(90deg,#171514,#2a211e,#171514)}
-.gold-btn{box-shadow:0 4px 14px #ec6c5a44}
-.gold-btn:hover{box-shadow:0 6px 20px #ec6c5a55}
-.product-card{border-radius:6px}
-.category-card{border-radius:6px}
-.section-heading h2{letter-spacing:-1px}
 
 </style>
 </head>
@@ -311,6 +307,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <nav class="nav"><a href="#home">HOME</a><a href="#categories">CATEGORIES</a><a href="#products">PRODUCTS</a><a href="#contact">CONTACT</a></nav>
  <div class="header-actions">
   <button class="outline-btn" id="cartOpen">CART (<span id="cartCount">0</span>)</button>
+  <button class="outline-btn" id="trackOpenButton">TRACK ORDER</button>
   <button class="outline-btn" id="adminLoginButton">ADMIN LOGIN</button>
   <button class="outline-btn hidden" id="adminPanelButton">ADMIN PANEL</button>
   <button class="outline-btn hidden" id="adminLogoutButton">LOGOUT</button>
@@ -330,6 +327,22 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="benefit"><strong>✦ WHATSAPP SUPPORT</strong><span>We are here to help you</span></div>
 </div>
 <div class="promo-banner"><strong>11.11 MEGA SALE</strong><span>Explore the COBRA STORE collection and enjoy special discounted prices</span></div>
+
+<!-- Promotional Video — does not disturb products -->
+<section class="promo-video-section" id="promoVideo">
+ <div class="promo-video-inner">
+  <video id="storePromoVideo" playsinline controls preload="metadata" poster="">
+   <source src="THE KING OF THE JUNGLE IS HERE Not just a Cobra THE GREAT CO.mp4" type="video/mp4">
+  </video>
+  <div class="promo-video-overlay">
+   <div class="eyebrow">✦ OFFICIAL PROMO</div>
+   <h2>THE KING OF THE JUNGLE IS HERE</h2>
+   <p>Not just a Cobra — THE GREAT COBRA. Join our exclusive WhatsApp group for latest drops, deals &amp; updates.</p>
+   <a class="gold-btn" href="https://chat.whatsapp.com/HMg9CQrKrpSJGq1SM3594v?s=cl&p=a&iam=2" target="_blank" rel="noopener">JOIN NOW ✦</a>
+  </div>
+ </div>
+</section>
+
 
 <!-- Public campaign banner: active campaign only -->
 <section id="activeCampaignBanner" class="campaign-public hidden"></section>
@@ -362,7 +375,23 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <p>Your destination for shoes, watches, fashion, electronics and selected lifestyle products.</p>
  <div class="footer-contact">WhatsApp Orders: +92 343 2752543</div>
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
+ <a class="gold-btn wa-group-btn" href="https://chat.whatsapp.com/HMg9CQrKrpSJGq1SM3594v?s=cl&p=a&iam=2" target="_blank" rel="noopener" style="margin-left:10px;margin-top:10px">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  JOIN WHATSAPP GROUP
+ </a>
  <div class="qr-box"><div class="qr-title">SCAN &amp; CHAT ON WHATSAPP</div><div class="qr-link" title="Scan with your phone camera"><svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 37 37" shape-rendering="crispEdges" role="img" aria-label="WhatsApp QR code"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#171514" d="M0 0h7v1h-7zM10 0h1v1h-1zM12 0h2v1h-2zM15 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h5v1h-5zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM14 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h3v1h-3zM14 7h1v1h-1zM20 7h1v1h-1zM0 8h5v1h-5zM6 8h4v1h-4zM11 8h1v1h-1zM15 8h1v1h-1zM17 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM12 9h5v1h-5zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h6v1h-6zM20 10h1v1h-1zM23 10h2v1h-2zM0 11h2v1h-2zM3 11h1v1h-1zM12 11h2v1h-2zM18 11h3v1h-3zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM1 12h2v1h-2zM4 12h4v1h-4zM9 12h2v1h-2zM12 12h1v1h-1zM14 12h3v1h-3zM21 12h1v1h-1zM25 12h2v1h-2zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM15 13h2v1h-2zM19 13h6v1h-6zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h1v1h-1zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM0 15h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h2v1h-2zM14 15h3v1h-3zM22 15h2v1h-2zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h5v1h-5zM11 16h1v1h-1zM15 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h1v1h-1zM9 17h1v1h-1zM12 17h5v1h-5zM19 17h4v1h-4zM24 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h3v1h-3zM17 18h1v1h-1zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM9 19h2v1h-2zM12 19h2v1h-2zM16 19h1v1h-1zM19 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h2v1h-2zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h2v1h-2zM15 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h3v1h-3zM14 23h2v1h-2zM18 23h3v1h-3zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM11 24h1v1h-1zM16 24h1v1h-1zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM12 25h5v1h-5zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM13 26h3v1h-3zM18 26h1v1h-1zM21 26h7v1h-7zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM18 27h3v1h-3zM23 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM23 28h4v1h-4z"/></svg></div><div class="qr-caption">Scan this QR code with your phone camera to start a WhatsApp chat with us.</div></div>
+ <div class="dev-box">
+  <div class="dev-title">THE COBRA DEVELOPERS</div>
+  <p>We are a website &amp; app development team. We built this store and we can build yours too — from a simple landing page to a full online shop with admin panel.</p>
+  <ul class="dev-list"><li>Website Creation</li><li>Landing Pages</li><li>Online Stores + Admin Panel</li><li>Order Tracking Systems</li><li>Mobile / Web Apps</li><li>Firebase Setup</li><li>WhatsApp Ordering &amp; QR</li></ul>
+  <a class="gold-btn dev-wa" href="https://wa.me/message/VY2S76PZYFTSC1" target="_blank" rel="noopener">CHAT WITH US ON WHATSAPP</a>
+  <div class="social-row">
+   <div class="social-item"><a class="social-btn" href="https://www.tiktok.com/@the_cobra_developers" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>TikTok<br>@the_cobra_developers</div>
+   <div class="social-item"><button class="social-btn" type="button" id="instaBtn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.25-3.25a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg></button>Instagram<br>coming soon</div>
+   <div class="social-item"><a class="social-btn" href="https://www.facebook.com/share/1KCoVJ4VPz/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>Facebook<br>Like our page</div>
+   <div class="social-item"><a class="social-btn" href="https://chat.whatsapp.com/HMg9CQrKrpSJGq1SM3594v?s=cl&p=a&iam=2" target="_blank" rel="noopener" aria-label="WhatsApp Group" style="background:#25D366"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>WhatsApp Group<br>Join now</div>
+  </div>
+ </div>
  <div class="credits">OWNED &amp; MANAGED BY AQIB JAVED<br>DEVELOPED BY THE COBRA DEVELOPERS</div>
 </footer>
 
@@ -387,13 +416,29 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <label class="form-label">YOUR NAME</label><input class="form-input" id="reviewName" required maxlength="60" placeholder="Your name">
   <label class="form-label">RATING</label><select class="form-input" id="reviewRating"><option value="5">★★★★★ - Excellent</option><option value="4">★★★★ - Very Good</option><option value="3">★★★ - Good</option><option value="2">★★ - Fair</option><option value="1">★ - Poor</option></select>
   <label class="form-label">YOUR REVIEW</label><textarea class="form-input" id="reviewText" required maxlength="600" placeholder="Share your experience..."></textarea>
+  <label class="form-label">PHOTO OF THE PRODUCT YOU RECEIVED (OPTIONAL)</label><input class="form-input" id="reviewPhoto" type="file" accept="image/*">
   <button class="gold-btn" style="width:100%;margin-top:12px" type="submit">SUBMIT REVIEW</button><div class="status" id="reviewStatus"></div>
+ </form>
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:22px 0">
+ <h3>Questions &amp; Answers</h3><div id="qList"><div class="status">Loading questions...</div></div>
+ <form id="qForm">
+  <label class="form-label">YOUR NAME</label><input class="form-input" id="qName" required maxlength="60" placeholder="Your name">
+  <label class="form-label">ASK A QUESTION ABOUT THIS PRODUCT</label><textarea class="form-input" id="qText" required maxlength="500" placeholder="Write your question..."></textarea>
+  <button class="gold-btn" style="width:100%;margin-top:12px" type="submit">POST QUESTION</button><div class="status" id="qStatus"></div>
+ </form>
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:22px 0">
+ <h3>Need more details? Message the admin</h3>
+ <form id="inqForm">
+  <label class="form-label">YOUR NAME</label><input class="form-input" id="inqName" required maxlength="60" placeholder="Your name">
+  <label class="form-label">WHATSAPP / PHONE (OPTIONAL — so admin can reply)</label><input class="form-input" id="inqPhone" type="tel" maxlength="20" placeholder="03XXXXXXXXX">
+  <label class="form-label">YOUR MESSAGE (PRIVATE TO ADMIN)</label><textarea class="form-input" id="inqText" required maxlength="600" placeholder="Ask for more details about this product..."></textarea>
+  <button class="outline-btn" style="width:100%;margin-top:12px" type="submit">SEND MESSAGE TO ADMIN</button><div class="status" id="inqStatus"></div>
  </form>
 </div></div>
 
 <div class="modal" id="orderModal"><div class="modal-box">
- <button class="close" onclick="closeOrder()">×</button><div class="form-title">PLACE YOUR ORDER</div>
- <p>Enter your delivery details. Choose your preferred payment method.</p>
+ <button class="close" onclick="closeOrder()">×</button><div class="form-title">CASH ON DELIVERY</div>
+ <p>Enter your delivery details. Your order will be submitted directly to COBRA STORE.</p>
  <div id="orderSummary" class="detail-line"></div>
  <form id="orderForm">
   <label class="form-label">FULL NAME</label><input class="form-input" id="customerName" required maxlength="80" placeholder="Your full name">
@@ -402,24 +447,21 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <label class="form-label">CITY</label><input class="form-input" id="customerCity" required maxlength="60" placeholder="Your city">
   <label class="form-label">COMPLETE DELIVERY ADDRESS</label><textarea class="form-input" id="customerAddress" required maxlength="500" placeholder="House number, street, area, landmark..."></textarea>
   <label class="form-label">ORDER NOTES (OPTIONAL)</label><textarea class="form-input" id="customerNotes" maxlength="300" placeholder="Any special instructions"></textarea>
-  <label class="form-label">PAYMENT METHOD</label>
-  <div class="payment-options" id="paymentOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 14px">
-   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
-    <input type="radio" name="paymentMethod" value="Cash on Delivery" checked style="accent-color:#ec6c5a"> 💵 Cash on Delivery
-   </label>
-   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
-    <input type="radio" name="paymentMethod" value="EasyPaisa" style="accent-color:#ec6c5a"> 📱 EasyPaisa
-   </label>
-   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
-    <input type="radio" name="paymentMethod" value="Bank Transfer" style="accent-color:#ec6c5a"> 🏦 Bank Transfer
-   </label>
-   <label class="payment-option" style="display:flex;align-items:center;gap:8px;border:1px solid #e6dcd7;padding:12px;border-radius:6px;cursor:pointer;background:#fff;font-size:11px;font-weight:700">
-    <input type="radio" name="paymentMethod" value="Visa / Card" style="accent-color:#ec6c5a"> 💳 Visa / Card
-   </label>
-  </div>
-  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
+  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE COD ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
   <div class="status" id="orderStatus"></div>
  </form>
+</div></div>
+
+<div class="modal" id="trackModal"><div class="modal-box">
+ <button class="close" onclick="closeTrack()">×</button><div class="form-title">TRACK YOUR ORDER</div>
+ <p>Enter the Order No you received after placing your order and the phone number you used.</p>
+ <div id="recentOrders"></div>
+ <form id="trackForm">
+  <label class="form-label">ORDER NO</label><input class="form-input" id="trackNo" required maxlength="20" placeholder="Example: AB12CD34">
+  <label class="form-label">PHONE NUMBER</label><input class="form-input" id="trackPhone" required type="tel" maxlength="20" placeholder="03XXXXXXXXX">
+  <button class="gold-btn" style="width:100%;margin-top:12px" type="submit">TRACK ORDER</button>
+ </form>
+ <div id="trackResult"></div>
 </div></div>
 
 <div class="modal" id="loginModal"><div class="modal-box">
@@ -510,6 +552,36 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div id="adminOfferList"><div class="status">Offers loading...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">CATEGORY MANAGEMENT</h3>
+ <div class="status">یہاں نئی کیٹیگری بنائیں۔ وہ ویب سائٹ کی کیٹیگری لسٹ اور پروڈکٹ فارم میں خودکار شامل ہو جائے گی۔ تصویر اپلوڈ بھی ہو سکتی ہے اور لنک بھی۔</div>
+ <form id="categoryForm">
+  <input type="hidden" id="categoryId">
+  <label class="form-label">CATEGORY NAME</label><input class="form-input" id="categoryName" required maxlength="40" placeholder="Example: Bags">
+  <label class="form-label">CATEGORY IMAGE — UPLOAD (OPTIONAL)</label><input class="form-input" id="categoryImageFile" type="file" accept="image/*">
+  <label class="form-label">یا CATEGORY IMAGE کا لنک (OPTIONAL)</label><input class="form-input" id="categoryImageUrl" type="url" placeholder="https://example.com/category.jpg">
+  <div class="form-actions"><button class="gold-btn" type="submit" id="saveCategoryButton">SAVE CATEGORY</button><button class="outline-btn" type="button" onclick="resetCategoryForm()">CLEAR FORM</button></div>
+  <div class="status" id="categoryStatus"></div>
+ </form>
+ <h4 class="admin-section-title">YOUR NEW CATEGORIES</h4>
+ <div id="adminCategoryList"><div class="status">Categories loading...</div></div>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">DELIVERY CHARGES (CASH ON DELIVERY)</h3>
+ <div class="status">یہاں ڈیلیوری چارجز اور نوٹ لکھیں۔ یہ کارٹ اور Cash on Delivery فارم میں گاہک کو دکھائے جائیں گے اور آرڈر کے ٹوٹل میں شامل ہوں گے۔ چارجز 0 ہوں تو ڈیلیوری فری ہوگی۔</div>
+ <form id="deliveryForm">
+  <label class="form-label">DELIVERY CHARGE (PKR)</label><input class="form-input" id="deliveryCharge" type="number" min="0" step="1" placeholder="Example: 200">
+  <label class="form-label">FREE DELIVERY ABOVE (PKR) — OPTIONAL</label><input class="form-input" id="deliveryFreeAbove" type="number" min="0" step="1" placeholder="Example: 5000">
+  <label class="form-label">DELIVERY NOTE (SHOWN TO CUSTOMERS)</label><textarea class="form-input" id="deliveryNote" maxlength="300" placeholder="Example: Delivery in 3–5 working days all over Pakistan."></textarea>
+  <div class="form-actions"><button class="gold-btn" type="submit">SAVE DELIVERY SETTINGS</button></div>
+  <div class="status" id="deliveryStatus"></div>
+ </form>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">CUSTOMER MESSAGES</h3>
+ <div class="status">پروڈکٹ کی تفصیل کے لیے گاہکوں کے پرائیویٹ پیغامات یہاں آئیں گے۔ عوامی سوالات کا جواب متعلقہ پروڈکٹ کھول کر "Questions &amp; Answers" میں دیں (Admin login کے ساتھ)۔</div>
+ <div id="adminInquiryList"><div class="status">Messages loading...</div></div>
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">SIZE & COLOR STOCK MANAGEMENT</h3>
  <div class="status">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ Available / Sold Out یا رنگ منتخب کرنے کے بعد تبدیلی صرف SAVE CHANGES دبانے پر Firebase میں محفوظ ہوگی۔</div>
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
@@ -555,7 +627,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
 <div class="cart-panel" id="cartPanel">
  <div class="cart-head"><h2>YOUR CART</h2><button class="outline-btn" id="cartClose">CLOSE ✕</button></div>
- <div id="cartItems"></div><div class="cart-total"><span>TOTAL</span><span id="cartTotal">Rs. 0</span></div>
+ <div id="cartItems"></div><div class="cart-total"><span>TOTAL</span><span id="cartTotal">Rs. 0</span></div><div class="status" id="cartDeliveryNote"></div>
  <button class="gold-btn" style="width:100%" onclick="openCartCOD()">CHECKOUT • COD</button>
  <button class="outline-btn" style="width:100%;margin-top:9px" onclick="checkoutWhatsApp()">ORDER ON WHATSAPP</button>
 </div>
@@ -636,7 +708,7 @@ function goToCategories(){$("categories").scrollIntoView({behavior:"smooth"})}
 function cleanProductName(value){return String(value||"").replace(/skip to main content/ig,"").replace(/\s+/g," ").trim()||"Product name unavailable"}
 function salePercent(p){const n=Number(p.salePercent);return Number.isFinite(n)&&n>=0&&n<=90?n:DEFAULT_SALE}
 function finalPrice(p){return Math.max(0,Math.round((Number(p.price)||0)*(1-salePercent(p)/100)))}
-function categoryName(c){const names={"girls-shoes":"GIRLS SHOES","boys-shoes":"BOYS SHOES","boys-clothes":"BOYS CLOTHES","girls-clothes":"GIRLS CLOTHES","boys-watches":"BOYS WATCHES","girls-watches":"GIRLS WATCHES","mobile-accessories":"MOBILE ACCESSORIES","electronics":"ELECTRONICS","fashion":"FASHION","all":"ALL PRODUCTS"};return names[c]||"ALL PRODUCTS"}
+function categoryName(c){if(window.customCategoryName){const cn=window.customCategoryName(c);if(cn)return cn}const names={"girls-shoes":"GIRLS SHOES","boys-shoes":"BOYS SHOES","boys-clothes":"BOYS CLOTHES","girls-clothes":"GIRLS CLOTHES","boys-watches":"BOYS WATCHES","girls-watches":"GIRLS WATCHES","mobile-accessories":"MOBILE ACCESSORIES","electronics":"ELECTRONICS","fashion":"FASHION","all":"ALL PRODUCTS"};return names[c]||"ALL PRODUCTS"}
 function productImages(p){const all=[p.image,...(Array.isArray(p.extraImages)?p.extraImages:[])];return [...new Set(all.map(safeImageURL).filter(Boolean))].slice(0,4)}
 function getProductSizes(p){const raw=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==="string"?p.sizes.split(","):[]);return [...new Set(raw.map(s=>String(s).trim()).filter(Boolean))]}
 function sizeFamilyForCategory(category){
@@ -670,7 +742,6 @@ try{
  startOffersListener();
  auth.onAuthStateChanged(user=>{
   currentUser=user;isAdmin=!!user&&user.uid===ADMIN_UID;updateAdminButtons();
-  if(user&&!isAdmin){auth.signOut().catch(()=>{});showToast("یہ اکاؤنٹ مجاز Admin نہیں ہے۔")}
  });
 }catch(error){console.error(error);$("productGrid").innerHTML='<div class="empty">Firebase initialization failed. Check your connection and configuration.</div>'}
 
@@ -948,21 +1019,6 @@ function offerIsCurrentlyActive(o){
 }
 function currentOfferList(){const live=offers.filter(offerIsCurrentlyActive);return live.length?live:DEFAULT_OFFERS}
 function offerTypeOf(o){const t=String(o.type||"OFFER").toUpperCase();return ["OFFER","DEAL","SALE"].includes(t)?t:"OFFER"}
-/* Cartoon characters that deliver offer cards from corners */
-const OFFER_CHARACTERS=[
- {emoji:"🐱🐭",name:"TOM & JERRY",side:"left"},
- {emoji:"💪🚲",name:"MOTU PATLU",side:"right"},
- {emoji:"⚓🥬",name:"POPEYE",side:"left"},
- {emoji:"🦆",name:"DAFFY DUCK",side:"right"},
- {emoji:"🐭",name:"MICKEY MOUSE",side:"left"},
- {emoji:"🐰",name:"BUGS BUNNY",side:"right"},
- {emoji:"🐶",name:"SCOOBY-DOO",side:"left"},
- {emoji:"🐻🍯",name:"WINNIE",side:"right"},
- {emoji:"🐯",name:"TIGGER",side:"left"},
- {emoji:"🐧",name:"PENGUIN",side:"right"}
-];
-let charIndex=0;
-
 function offerIconHTML(o){
  const u=safeImageURL(o.iconUrl);
  if(u)return `<img class="offer-pop-icon" src="${escapeHTML(u)}" alt="">`;
@@ -978,45 +1034,16 @@ function offerGo(productId){
 }
 function showNextOffer(){
  const pop=$("offerPopup");if(!pop)return;
- if(document.querySelector(".modal.show")||$("cartPanel").classList.contains("open")){scheduleNextOffer(9000);return}
+ if(document.querySelector(".modal.show")||$("cartPanel").classList.contains("open")){scheduleNextOffer(8000);return}
  const list=currentOfferList();if(!list.length)return;
  const o=list[offerIndex%list.length];offerIndex++;
  const product=o.productId?products.find(p=>p.id===o.productId):null;
- const ch=OFFER_CHARACTERS[charIndex%OFFER_CHARACTERS.length];charIndex++;
-
- // Position from left or right corner
- if(ch.side==="left"){
-  pop.style.left="14px";pop.style.right="auto";
- }else{
-  pop.style.right="14px";pop.style.left="auto";
- }
-
- const typeLabel=offerTypeOf(o);
- const iconPart=safeImageURL(o.iconUrl)
-  ?`<img src="${escapeHTML(o.iconUrl)}" alt="" style="width:36px;height:36px;object-fit:contain;border-radius:6px;margin-bottom:4px">`
-  :`<div style="font-size:22px;margin-bottom:2px">${typeLabel==="SALE"?"🔥":typeLabel==="DEAL"?"🎁":"✦"}</div>`;
-
- pop.innerHTML=`
-  <button class="offer-close" type="button" aria-label="Close" onclick="hideOfferPopup()">×</button>
-  <div class="offer-pop-inner">
-   <div class="offer-character">
-    <div class="char-emoji">${ch.emoji}</div>
-    <div class="char-name">${ch.name}<br>BROUGHT THE DEAL</div>
-   </div>
-   <div class="offer-content">
-    ${iconPart}
-    <div class="offer-pop-type">✦ ${typeLabel}</div>
-    <h4>${escapeHTML(o.title||"")}</h4>
-    <p>${escapeHTML(o.message||"")}</p>
-    <button class="gold-btn offer-go" type="button" onclick="offerGo('${escapeHTML(product?product.id:"")}')">${product?"VIEW PRODUCT":"SHOP NOW"}</button>
-   </div>
-  </div>`;
+ pop.innerHTML=`<button class="offer-close" type="button" aria-label="Close" onclick="hideOfferPopup()">×</button>${offerIconHTML(o)}<div><div class="offer-pop-type">✦ ${offerTypeOf(o)}</div><h4>${escapeHTML(o.title||"")}</h4><p>${escapeHTML(o.message||"")}</p><button class="gold-btn offer-go" type="button" onclick="offerGo('${escapeHTML(product?product.id:"")}')">${product?"VIEW PRODUCT":"SHOP NOW"}</button></div>`;
  pop.classList.add("show");
- clearTimeout(offerHideTimer);
- offerHideTimer=setTimeout(hideOfferPopup,11000);
- scheduleNextOffer(38000+Math.random()*12000);
+ clearTimeout(offerHideTimer);offerHideTimer=setTimeout(hideOfferPopup,9000);
+ scheduleNextOffer(40000);
 }
-function startOfferPopups(){if(offersStarted)return;offersStarted=true;scheduleNextOffer(2200)}
+function startOfferPopups(){if(offersStarted)return;offersStarted=true;scheduleNextOffer(1200)}
 function startOffersListener(){
  if(!db)return;
  if(unsubscribeOffers)unsubscribeOffers();
@@ -1274,7 +1301,7 @@ function openProduct(id){
  $("modalAdd").onclick=()=>{if(!validateSelections(p))return;addToCart(p.id,selectedSize,selectedColor);closeModal()};
  $("modalWhatsApp").onclick=()=>{if(!validateSelections(p))return;orderSingle(p,selectedSize,selectedColor)};
  $("modalCOD").onclick=()=>{if(!validateSelections(p))return;orderItems=[{...p,qty:1,selectedSize,selectedColor}];openOrderModal()};
- $("reviewStatus").textContent="";loadReviews(p.id);$("productModal").classList.add("show");
+ $("reviewStatus").textContent="";loadReviews(p.id);if(window.onProductOpened)window.onProductOpened(p);$("productModal").classList.add("show");
 }
 function validateSelections(p){
  const sizes=getProductSizes(p),colors=getProductColors(p);
@@ -1333,7 +1360,7 @@ function checkoutWhatsApp(){
   const sub=finalPrice(item)*item.qty;total+=sub;
   message+=cleanProductName(item.name)+" × "+item.qty+"\nSelected Size: "+(item.selectedSize||"Not specified")+"\nSelected Color: "+(item.selectedColor||"Not specified")+"\nSubtotal: "+money(sub)+"\n\n";
  });
- message+="TOTAL: "+money(total)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
+ const dlv=window.deliveryFor?window.deliveryFor(total):0;message+="Delivery: "+(dlv?money(dlv):"FREE")+"\nTOTAL: "+money(total+dlv)+"\nPayment: Cash on Delivery\nPlease confirm my order.";
  window.open(whatsappURL(message),"_blank","noopener");
 }
 $("cartOpen").addEventListener("click",()=>$("cartPanel").classList.add("open"));
@@ -1344,7 +1371,7 @@ function openOrderModal(){
  if(!orderItems.length){showToast("No order items found.");return}
  if(!validateOrderItems(orderItems))return;
  const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
- $("orderSummary").innerHTML=orderItems.map(x=>`<div style="padding:7px 0;border-bottom:1px solid #eee5e1"><b>${escapeHTML(cleanProductName(x.name))} × ${x.qty}</b><br>Selected Size: ${escapeHTML(x.selectedSize||"Not specified")}<br>Selected Color: ${escapeHTML(x.selectedColor||"Not specified")}<br>Price: ${money(finalPrice(x)*x.qty)}</div>`).join("")+`<div style="padding:10px 0"><b>TOTAL: ${money(total)}</b></div>`;
+ $("orderSummary").innerHTML=orderItems.map(x=>`<div style="padding:7px 0;border-bottom:1px solid #eee5e1"><b>${escapeHTML(cleanProductName(x.name))} × ${x.qty}</b><br>Selected Size: ${escapeHTML(x.selectedSize||"Not specified")}<br>Selected Color: ${escapeHTML(x.selectedColor||"Not specified")}<br>Price: ${money(finalPrice(x)*x.qty)}</div>`).join("")+`<div style="padding:10px 0">${window.deliveryHTML?window.deliveryHTML(total):""}<b>TOTAL: ${money(total+(window.deliveryFor?window.deliveryFor(total):0))}</b></div>`;
  $("orderStatus").textContent="";$("cartPanel").classList.remove("open");$("orderModal").classList.add("show");
 }
 function closeOrder(){$("orderModal").classList.remove("show")}
@@ -1358,27 +1385,27 @@ $("orderForm").addEventListener("submit",async event=>{
  if(!name||!email||!phone||!city||!address){$("orderStatus").textContent="Please complete all required details, including your email address.";return}
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$("orderStatus").textContent="Please enter a valid email address.";return}
  if(!/^[0-9+() -]{7,20}$/.test(phone)){$("orderStatus").textContent="Please enter a valid phone number.";return}
- const total=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
+ const subtotal=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0),deliveryCharge=window.deliveryFor?window.deliveryFor(subtotal):0,total=subtotal+deliveryCharge;
  const order={
   customerName:name,
   email:email,
   phone,city,address,notes,
   items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),
-  total,paymentMethod:(document.querySelector('input[name="paymentMethod"]:checked')||{}).value||"Cash on Delivery",status:"Pending",
+  subtotal,deliveryCharge,total,paymentMethod:"Cash on Delivery",status:"Pending",
   createdAt:firebase.firestore.FieldValue.serverTimestamp()
  };
  const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
  try{
   if(!db)throw new Error("Firebase is not connected");
   const doc=await db.collection("orders").add(order);
-  $("orderStatus").textContent="Your website order was submitted successfully! Order ID: "+doc.id;
+  if(window.afterOrderPlaced)await window.afterOrderPlaced(doc.id,order);else $("orderStatus").textContent="Your website order was submitted successfully! Order ID: "+doc.id;
   showToast("Website order received!");
   cart=[];updateCart();
-  setTimeout(()=>{closeOrder();$("orderForm").reset();orderItems=[]},3000);
+  setTimeout(()=>{closeOrder();$("orderForm").reset();orderItems=[]},30000);
  }catch(error){
   console.error("COD save error:",error);
   $("orderStatus").textContent="Order save failed: "+getErrorMessage(error)+" Please try again later or use the separate WhatsApp order button. Your order has NOT been sent to WhatsApp.";
- }finally{button.disabled=false;button.textContent="PLACE ORDER"}
+ }finally{button.disabled=false;button.textContent="PLACE COD ORDER"}
 });
 
 async function loadReviews(productId){
@@ -1388,7 +1415,7 @@ async function loadReviews(productId){
   const snap=await db.collection(COLLECTION_NAME).doc(productId).collection("reviews").orderBy("createdAt","desc").limit(30).get();
   if(token!==reviewRequestToken)return;
   if(snap.empty){box.innerHTML='<div class="status">No customer reviews yet. Be the first to review this product.</div>';return}
-  box.innerHTML=snap.docs.map(doc=>{const r=doc.data(),rating=Math.max(1,Math.min(5,Number(r.rating)||5));return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong><div class="stars">${"★".repeat(rating)}${"☆".repeat(5-rating)}</div><p>${escapeHTML(r.text||"")}</p><small>Customer-submitted review</small></div>`}).join("");
+  box.innerHTML=snap.docs.map(doc=>{const r=doc.data(),rating=Math.max(1,Math.min(5,Number(r.rating)||5));return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong><div class="stars">${"★".repeat(rating)}${"☆".repeat(5-rating)}</div><p>${escapeHTML(r.text||"")}</p>${window.reviewPhotoHTML?window.reviewPhotoHTML(r):""}<small>Customer-submitted review</small></div>`}).join("");
  }catch(error){console.error(error);if(token===reviewRequestToken)box.innerHTML='<div class="status">Reviews could not be loaded. '+escapeHTML(getErrorMessage(error))+'</div>'}
 }
 $("reviewForm").addEventListener("submit",async event=>{
@@ -1397,7 +1424,8 @@ $("reviewForm").addEventListener("submit",async event=>{
  if(!name||!textValue||name.length>60||textValue.length>600||rating<1||rating>5){$("reviewStatus").textContent="Please check your review details.";return}
  const button=$("reviewForm").querySelector('button[type="submit"]');button.disabled=true;button.textContent="SUBMITTING...";
  try{
-  await db.collection(COLLECTION_NAME).doc(productId).collection("reviews").add({name,text:textValue,rating,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  const photo=window.getReviewPhoto?await window.getReviewPhoto():"";
+  await db.collection(COLLECTION_NAME).doc(productId).collection("reviews").add({name,text:textValue,rating,...(photo?{photo}:{}),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   $("reviewStatus").textContent="Thank you! Your review has been submitted.";$("reviewForm").reset();await loadReviews(productId);
  }catch(error){$("reviewStatus").textContent="Review could not be submitted. "+getErrorMessage(error)}
  finally{button.disabled=false;button.textContent="SUBMIT REVIEW"}
@@ -1428,11 +1456,13 @@ function openAdmin(){
  renderAdminSizeManager();
  renderAdminCampaigns();
  renderAdminOffers();
+ if(window.startAdminExtras)window.startAdminExtras();
  startOrdersListener();
 }
 function closeAdmin(){
  $("adminModal").classList.remove("show");
  if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null}
+ if(window.stopAdminExtras)window.stopAdminExtras();
 }
 $("adminPanelButton").addEventListener("click",openAdmin);
 
@@ -1456,6 +1486,7 @@ function startOrdersListener(){
    return bt-at;
   });
   renderAdminOrders(orders);
+  if(window.decorateAdminOrders)window.decorateAdminOrders(orders);
  },error=>{
   console.error("Orders loading error:",error);
   $("adminOrdersList").innerHTML='<div class="status">آرڈرز لوڈ نہیں ہو سکے: '+escapeHTML(getErrorMessage(error))+'</div>';
@@ -1465,8 +1496,8 @@ function renderAdminOrders(orders){
  const box=$("adminOrdersList");if(!box)return;
  if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
  if(!orders.length){box.innerHTML='<div class="status">ابھی کوئی ویب سائٹ آرڈر موصول نہیں ہوا۔</div>';return}
- const pending=orders.filter(o=>String(o.status||"Pending").toLowerCase()!=="confirmed");
- const confirmed=orders.filter(o=>String(o.status||"").toLowerCase()==="confirmed");
+ const pending=orders.filter(o=>["","pending"].includes(String(o.status||"").toLowerCase()));
+ const confirmed=orders.filter(o=>!["","pending"].includes(String(o.status||"").toLowerCase()));
  function orderCard(o,isConfirmed){
   const items=Array.isArray(o.items)?o.items:[];
   const itemHTML=items.map(item=>
@@ -1503,6 +1534,7 @@ async function confirmOrder(orderId){
  if(!confirm("کیا آپ اس آرڈر کو Confirm کرنا چاہتے ہیں؟"))return;
  try{
   await db.collection("orders").doc(orderId).update({status:"Confirmed"});
+  if(window.syncTracking)window.syncTracking(orderId,"Confirmed");
   showToast("Order successfully confirmed!");
  }catch(error){
   console.error(error);showToast("Order confirmation failed: "+getErrorMessage(error));
@@ -1816,14 +1848,13 @@ async function deleteProduct(id){
 }
 
 
-/* ===== LIVING BLACK COBRA v3 — Ultra Realistic ===== */
+/* ===== LIVING BLACK COBRA — crawls over the whole store, never blocks clicks, hides behind product photos ===== */
 function startCobra(){
  if(cobraStarted)return;cobraStarted=true;
  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  const cv=$("cobraCanvas");if(!cv)return;
  const ctx=cv.getContext("2d");if(!ctx)return;
  let W=0,H=0,S=1;
-
  function resize(){
   const dpr=Math.min(2,window.devicePixelRatio||1);
   W=window.innerWidth;H=window.innerHeight;
@@ -1831,444 +1862,172 @@ function startCobra(){
   ctx.setTransform(dpr,0,0,dpr,0,0);
  }
  resize();window.addEventListener("resize",resize);
-
- const N=96; // more segments = smoother body
- const spine=[];
+ const N=64,spine=[];
  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
  const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t)};
- const lerp=(a,b,t)=>a+(b-a)*t;
-
- S=clamp(W/1200,0.6,1.12);
- let hx=-130,hy=H*0.62,ang=0.12;
- for(let i=0;i<N;i++)spine.push({x:hx-i*5.6*S,y:hy});
-
- // Prefer edges, corners, header, footer — avoid product zone
- // Only the 4 corners of the screen
- const CORNERS = [
-  {x:0.07, y:0.10}, // top-left
-  {x:0.93, y:0.10}, // top-right
-  {x:0.07, y:0.88}, // bottom-left
-  {x:0.93, y:0.88}  // bottom-right
- ];
- let cornerIndex = 0;
- const target={x:W*0.07, y:H*0.88};
- function pickTarget(){
-  // Move only between the 4 corners (small random offset so it doesn't look robotic)
-  cornerIndex = (cornerIndex + 1 + Math.floor(Math.random()*2)) % 4;
-  const c = CORNERS[cornerIndex];
-  target.x = W * (c.x + (Math.random()-0.5)*0.04);
-  target.y = H * (c.y + (Math.random()-0.5)*0.04);
- }
+ S=clamp(W/1100,0.62,1.1);
+ let hx=-90,hy=H*0.55,ang=0.25;
+ for(let i=0;i<N;i++)spine.push({x:hx-i*7*S,y:hy});
+ const target={x:W*0.6,y:H*0.5};
+ function pickTarget(){target.x=W*(0.08+Math.random()*0.84);target.y=H*(0.12+Math.random()*0.78)}
  pickTarget();
-
  let speed=0,time=0,last=performance.now(),frame=0,modalOpen=false;
- let state="crawl",stateT=0,riseR=0,dirSign=1;
- let nextRise=8+Math.random()*9;
- let hoodDur=4.2;
- let restTimer=0;
- let obstacles=[];
+ let state="crawl",stateT=0,riseR=0,dirSign=1,nextRise=7+Math.random()*7,hoodDur=3.2;
+ let obstacles=document.querySelectorAll(".product-image,.category-card img,.logo,.footer-logo,.qr-link,.campaign-public-image");
+ const kB=Math.round(N*0.28);
 
- const kB=Math.round(N*0.24);
-
- function refreshObstacles(){
-  obstacles=Array.from(document.querySelectorAll(
-   ".product-image,.category-card img,.logo,.footer-logo,.qr-link,.campaign-public-image,.product-card,.category-card,#products,.product-grid,#categories,.category-grid"
-  ));
-  // Also treat the entire products section as a big obstacle
-  const prodSec=document.getElementById("products");
-  if(prodSec) obstacles.push(prodSec);
-  const catSec=document.getElementById("categories");
-  if(catSec) obstacles.push(catSec);
- }
-
- // Body width — natural cobra proportions
  function baseWidth(t){
-  // t: 0=head tip, 1=tail tip
-  const head=16*Math.exp(-Math.pow(t/0.038,1.8));
-  const neck=10+12*smooth(0.03,0.16,t);
-  const taper=1-0.91*Math.pow(t,1.28);
-  return S*(head+neck*taper);
+  const w=6+8*smooth(0.05,0.2,t)+4*Math.exp(-Math.pow(t/0.025,2));
+  return S*w*(1-0.93*Math.pow(t,1.5));
  }
-
- // Wide dramatic hood
- function hoodExtra(t){
-  // t: 0 at hood base, 1 near head
-  const shape=Math.pow(Math.sin(Math.PI*clamp((t-0.05)/0.82,0,1)),0.72);
-  return 56*S*shape;
- }
+ function hoodExtra(t){return 34*S*Math.pow(Math.sin(Math.PI*clamp((t-0.35)/0.6,0,1)),0.9)}
 
  function buildPath(P,Wd){
   const L=[],R=[];
   for(let i=0;i<N;i++){
    const a=P[Math.max(0,i-1)],b=P[Math.min(N-1,i+1)];
-   let tx=b.x-a.x,ty=b.y-a.y;
-   const l=Math.hypot(tx,ty)||1;
-   tx/=l;ty/=l;
+   let tx=b.x-a.x,ty=b.y-a.y;const l=Math.hypot(tx,ty)||1;tx/=l;ty/=l;
    const nx=-ty,ny=tx,hw=Wd[i]/2;
-   L.push({x:P[i].x+nx*hw,y:P[i].y+ny*hw});
-   R.push({x:P[i].x-nx*hw,y:P[i].y-ny*hw});
+   L.push({x:P[i].x+nx*hw,y:P[i].y+ny*hw});R.push({x:P[i].x-nx*hw,y:P[i].y-ny*hw});
   }
   const path=new Path2D();
   path.moveTo(L[0].x,L[0].y);
-  for(let i=1;i<N-1;i++){
-   path.quadraticCurveTo(L[i].x,L[i].y,(L[i].x+L[i+1].x)/2,(L[i].y+L[i+1].y)/2);
-  }
-  path.lineTo(L[N-1].x,L[N-1].y);
-  path.lineTo(R[N-1].x,R[N-1].y);
-  for(let i=N-2;i>0;i--){
-   path.quadraticCurveTo(R[i].x,R[i].y,(R[i].x+R[i-1].x)/2,(R[i].y+R[i-1].y)/2);
-  }
-  path.lineTo(R[0].x,R[0].y);
-  path.closePath();
+  for(let i=1;i<N-1;i++)path.quadraticCurveTo(L[i].x,L[i].y,(L[i].x+L[i+1].x)/2,(L[i].y+L[i+1].y)/2);
+  path.lineTo(L[N-1].x,L[N-1].y);path.lineTo(R[N-1].x,R[N-1].y);
+  for(let i=N-2;i>0;i--)path.quadraticCurveTo(R[i].x,R[i].y,(R[i].x+R[i-1].x)/2,(R[i].y+R[i-1].y)/2);
+  path.lineTo(R[0].x,R[0].y);path.closePath();
   return {path,L,R};
  }
-
- // Avoid product zones more aggressively
- function isNearObstacle(x,y){
-  for(const el of obstacles){
-   const r=el.getBoundingClientRect();
-   if(r.width<10||r.height<10)continue;
-   const pad=28;
-   if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad)return true;
-  }
-  return false;
- }
-
  function update(dt){
-  S=clamp(W/1200,0.6,1.12);
-  const segLen=5.4*S;
+  S=clamp(W/1100,0.62,1.1);
+  const d=7*S;
   stateT+=dt;
-
-  // State machine
   if(state==="crawl"){
    nextRise-=dt;
-   restTimer-=dt;
-   if(nextRise<=0&&speed>18&&restTimer<=0){
-    // Only rise if not too close to products
-    if(!isNearObstacle(hx,hy)){
-     state="rise";
-     stateT=0;
-     dirSign=Math.cos(ang)>=0?1:-1;
-    }else{
-     nextRise=3+Math.random()*4;
-    }
-   }
+   if(nextRise<=0&&speed>20){state="rise";stateT=0;dirSign=Math.cos(ang)>=0?1:-1}
   }else if(state==="rise"){
-   riseR=Math.min(1,stateT/1.5);
-   if(stateT>=1.5){
-    state="hood";
-    stateT=0;
-    riseR=1;
-    hoodDur=3.8+Math.random()*2.8;
-   }
+   riseR=Math.min(1,stateT/1.2);
+   if(stateT>=1.2){state="hood";stateT=0;riseR=1;hoodDur=2.8+Math.random()*2}
   }else if(state==="hood"){
    riseR=1;
-   if(stateT>=hoodDur){
-    state="lower";
-    stateT=0;
-   }
-  }else{ // lower
-   riseR=1-Math.min(1,stateT/1.25);
-   if(stateT>=1.25){
-    state="crawl";
-    stateT=0;
-    riseR=0;
-    nextRise=14+Math.random()*18; // longer gaps between rises
-    restTimer=2.5+Math.random()*3;
-    pickTarget();
-   }
+   if(stateT>=hoodDur){state="lower";stateT=0}
+  }else{
+   riseR=1-Math.min(1,stateT/1.0);
+   if(stateT>=1.0){state="crawl";stateT=0;riseR=0;nextRise=14+Math.random()*16;pickTarget()}
   }
-
-  // Speed: slower and more deliberate
-  const goal=state==="crawl"?(restTimer>0?22*S:58*S):0;
-  speed+=(goal-speed)*Math.min(1,dt*2.2);
-
-  // Steering
-  let dx=target.x-hx,dy=target.y-hy;
-  if(Math.hypot(dx,dy)<55*S||isNearObstacle(target.x,target.y)){
-   pickTarget();
-   dx=target.x-hx;dy=target.y-hy;
-  }
-
-  // Soft repulsion from obstacles
-  let repX=0,repY=0;
-  for(const el of obstacles){
-   const r=el.getBoundingClientRect();
-   if(r.width<10)continue;
-   const cx=r.left+r.width/2,cy=r.top+r.height/2;
-   const ddx=hx-cx,ddy=hy-cy;
-   const dist=Math.hypot(ddx,ddy)||1;
-   const danger=Math.max(r.width,r.height)*0.55+40;
-   if(dist<danger){
-    const force=(danger-dist)/danger;
-    repX+=(ddx/dist)*force*1.8;
-    repY+=(ddy/dist)*force*1.8;
-   }
-  }
-
-  const want=Math.atan2(dy+repY*40,dx+repX*40);
-  const diff=Math.atan2(Math.sin(want-ang),Math.cos(want-ang));
-  const maxTurn=1.35*dt;
-  const wave=Math.sin(time*1.85)*1.1*dt*(speed/(58*S));
-  ang+=clamp(diff,-maxTurn,maxTurn)+wave;
-
-  hx+=Math.cos(ang)*speed*dt;
-  hy+=Math.sin(ang)*speed*dt;
-
-  // Keep mostly on screen
-  hx=clamp(hx,-50,W+50);
-  hy=clamp(hy,25,H-15);
-
-  // Follow spine
+  const goal=state==="crawl"?80*S:0;
+  speed+=(goal-speed)*Math.min(1,dt*3);
+  const dx=target.x-hx,dy=target.y-hy;
+  if(Math.hypot(dx,dy)<70*S)pickTarget();
+  const want=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(want-ang),Math.cos(want-ang));
+  const maxTurn=1.9*dt;
+  ang+=clamp(diff,-maxTurn,maxTurn)+Math.sin(time*2.4)*1.3*dt*(speed/(80*S));
+  hx+=Math.cos(ang)*speed*dt;hy+=Math.sin(ang)*speed*dt;
   spine[0].x=hx;spine[0].y=hy;
   for(let i=1;i<N;i++){
-   const p=spine[i-1],q=spine[i];
-   let vx=q.x-p.x,vy=q.y-p.y;
-   const l=Math.hypot(vx,vy)||1;
-   q.x=p.x+(vx/l)*segLen;
-   q.y=p.y+(vy/l)*segLen;
+   const p=spine[i-1],q=spine[i];let vx=q.x-p.x,vy=q.y-p.y;const l=Math.hypot(vx,vy)||1;
+   q.x=p.x+vx/l*d;q.y=p.y+vy/l*d;
   }
  }
-
  function drawHead(P0,P1,e){
   let a=Math.atan2(P0.y-P1.y,P0.x-P1.x);
-  if(e>0.05){
-   const ideal=dirSign>0?0:Math.PI;
-   const df=Math.atan2(Math.sin(ideal-a),Math.cos(ideal-a));
-   a+=df*e*0.92;
+  if(e>0){
+   const h=dirSign>0?0:Math.PI,df=Math.atan2(Math.sin(h-a),Math.cos(h-a));
+   a+=df*e*0.85;
   }
-
-  ctx.save();
-  ctx.translate(P0.x,P0.y);
-  ctx.rotate(a);
-
-  // Head base shape (slightly flattened triangle)
-  ctx.fillStyle="#050506";
-  ctx.beginPath();
-  ctx.moveTo(15.5*S,0);
-  ctx.bezierCurveTo(11*S,-9.2*S, 1*S,-9.5*S, -4*S,-7.5*S);
-  ctx.bezierCurveTo(-11*S,-4.2*S, -12*S,0, -11*S,0);
-  ctx.bezierCurveTo(-12*S,0, -11*S,4.2*S, -4*S,7.5*S);
-  ctx.bezierCurveTo(1*S,9.5*S, 11*S,9.2*S, 15.5*S,0);
-  ctx.closePath();
-  ctx.fill();
-
-  // Soft top highlight
-  const hg=ctx.createRadialGradient(2*S,-1.5*S,0,2*S,-1.5*S,11*S);
-  hg.addColorStop(0,"rgba(255,255,255,0.09)");
-  hg.addColorStop(1,"rgba(255,255,255,0)");
-  ctx.fillStyle=hg;
-  ctx.beginPath();
-  ctx.ellipse(2*S,-1.8*S,9*S,4.2*S,0,0,Math.PI*2);
-  ctx.fill();
-
-  // Eyes
+  ctx.save();ctx.translate(P0.x,P0.y);ctx.rotate(a);
+  ctx.fillStyle="#0a0a0b";
+  ctx.beginPath();ctx.ellipse(3*S,0,10.5*S,7.4*S,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle="rgba(255,255,255,0.08)";
+  ctx.beginPath();ctx.ellipse(3.5*S,-1.8*S,6*S,2.2*S,0,0,Math.PI*2);ctx.fill();
   for(const sy of [-1,1]){
-   // Golden iris
-   ctx.fillStyle="#d4a017";
-   ctx.beginPath();
-   ctx.ellipse(6.2*S,sy*4.9*S,2.55*S,2.25*S,0,0,Math.PI*2);
-   ctx.fill();
-   // Dark outer ring
-   ctx.strokeStyle="rgba(0,0,0,0.45)";
-   ctx.lineWidth=0.7*S;
-   ctx.stroke();
-   // Vertical pupil
-   ctx.fillStyle="#050505";
-   ctx.beginPath();
-   ctx.ellipse(6.4*S,sy*4.9*S,0.75*S,1.85*S,0,0,Math.PI*2);
-   ctx.fill();
-   // Catch light
-   ctx.fillStyle="rgba(255,255,255,0.65)";
-   ctx.beginPath();
-   ctx.arc(5.3*S,sy*4.25*S,0.6*S,0,Math.PI*2);
-   ctx.fill();
+   ctx.fillStyle="#e2b22c";ctx.beginPath();ctx.arc(6*S,sy*4.3*S,1.9*S,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle="#050505";ctx.beginPath();ctx.ellipse(6.2*S,sy*4.3*S,0.7*S,1.5*S,0,0,Math.PI*2);ctx.fill();
   }
-
-  // Nostrils
-  ctx.fillStyle="#1c1c1e";
-  ctx.beginPath();ctx.arc(12.8*S,-1.45*S,0.75*S,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(12.8*S,1.45*S,0.75*S,0,Math.PI*2);ctx.fill();
-
-  // Forked tongue
-  const flickBase=(state==="hood"||state==="rise")?Math.sin(time*11.8):Math.sin(time*6.8+Math.floor(time/2.4)*3.1);
-  const open=(state==="hood")?Math.max(0,flickBase*1.15):Math.max(0,flickBase-0.62)*2.9;
+  const flick=(state==="hood"||state==="rise")?Math.sin(time*11):Math.sin(time*7+Math.floor(time/2.3)*3);
+  const open=(state==="hood")?Math.max(0,flick):Math.max(0,flick-0.7)*3.3;
   if(open>0.05){
-   const len=(12+17*open)*S;
-   ctx.strokeStyle="#b91c1c";
-   ctx.lineWidth=1.5*S;
-   ctx.lineCap="round";
-   ctx.lineJoin="round";
-   ctx.beginPath();
-   ctx.moveTo(14.5*S,0);
-   ctx.lineTo(14.5*S+len*0.58,0);
-   ctx.moveTo(14.5*S+len*0.58,0);
-   ctx.lineTo(14.5*S+len,-4.1*S);
-   ctx.moveTo(14.5*S+len*0.58,0);
-   ctx.lineTo(14.5*S+len,4.1*S);
-   ctx.stroke();
+   const len=(10+13*open)*S;
+   ctx.strokeStyle="#c1121f";ctx.lineWidth=1.3*S;ctx.lineCap="round";
+   ctx.beginPath();ctx.moveTo(13*S,0);ctx.lineTo(13*S+len*0.7,0);
+   ctx.moveTo(13*S+len*0.7,0);ctx.lineTo(13*S+len,-3.2*S);
+   ctx.moveTo(13*S+len*0.7,0);ctx.lineTo(13*S+len,3.2*S);ctx.stroke();
   }
-
   ctx.restore();
  }
-
  function draw(){
   const e=riseR*riseR*(3-2*riseR);
   const P=[],Wd=[],flatW=[];
-  const B=spine[kB];
-  const riseH=138*S;
-
-  const C={x:B.x-dirSign*36*S, y:B.y-riseH*0.5};
-  const T={
-   x:B.x+dirSign*20*S + Math.sin(time*1.4)*8*S*e,
-   y:B.y-riseH
-  };
-
+  const B=spine[kB],Hh=115*S;
+  const C={x:B.x-dirSign*26*S,y:B.y-Hh*0.55},T={x:B.x+dirSign*14*S+Math.sin(time*1.7)*5*S*e,y:B.y-Hh};
   for(let i=0;i<N;i++){
-   const t0=i/(N-1);
-   const bw=baseWidth(t0);
-   flatW.push(bw);
+   const t0=i/(N-1),bw=baseWidth(t0);flatW.push(bw);
    let px=spine[i].x,py=spine[i].y,extra=0;
-
    if(e>0.001&&i<kB){
-    const t=1-i/kB;
-    const u=1-t;
-    const bx=u*u*B.x + 2*u*t*C.x + t*t*T.x;
-    const by=u*u*B.y + 2*u*t*C.y + t*t*T.y;
-    px+=(bx-px)*e;
-    py+=(by-py)*e;
-    extra=hoodExtra(t)*e;
+    const t=1-i/kB,u=1-t;
+    const bx=u*u*B.x+2*u*t*C.x+t*t*T.x,by=u*u*B.y+2*u*t*C.y+t*t*T.y;
+    px+=(bx-px)*e;py+=(by-py)*e;extra=hoodExtra(t)*e;
    }
-   P.push({x:px,y:py});
-   Wd.push(bw+extra);
+   P.push({x:px,y:py});Wd.push(bw+extra);
   }
-
   const body=buildPath(P,Wd);
-
-  // Soft contact shadow on ground
-  if(e<0.97){
+  // ground shadow of the lying body
+  if(e<0.999||true){
    const flat=buildPath(spine,flatW);
-   ctx.save();
-   ctx.translate(5*S,9*S);
-   ctx.globalAlpha=0.22;
-   ctx.fillStyle="#000";
-   ctx.fill(flat.path);
-   ctx.restore();
+   ctx.save();ctx.translate(5*S,8*S);ctx.fillStyle="rgba(0,0,0,0.17)";ctx.fill(flat.path);ctx.restore();
   }
-
-  // Body fill — deep black with subtle cool sheen
-  const g=ctx.createLinearGradient(P[0].x,P[0].y,P[Math.floor(N*0.55)].x,P[Math.floor(N*0.55)].y);
-  g.addColorStop(0,"#0b0b0d");
-  g.addColorStop(0.35,"#08080a");
-  g.addColorStop(1,"#050507");
-  ctx.fillStyle=g;
-  ctx.fill(body.path);
-
-  // Very subtle rim light
-  ctx.strokeStyle="rgba(160,170,190,0.07)";
-  ctx.lineWidth=1.15;
-  ctx.stroke(body.path);
-
-  // Dorsal highlight ridge
-  ctx.strokeStyle="rgba(255,255,255,0.11)";
-  ctx.lineWidth=1.55*S;
-  ctx.lineCap="round";
+  ctx.fillStyle="#09090a";ctx.fill(body.path);
+  ctx.strokeStyle="rgba(255,255,255,0.07)";ctx.lineWidth=1;ctx.stroke(body.path);
+  // glossy ridge along the back
+  ctx.strokeStyle="rgba(255,255,255,0.11)";ctx.lineWidth=1.5*S;ctx.lineCap="round";
   ctx.beginPath();
-  for(let i=4;i<N-6;i++){
-   const l=body.L[i],r=body.R[i];
-   const x=l.x*0.66+r.x*0.34;
-   const y=l.y*0.66+r.y*0.34;
-   if(i===4)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  for(let i=3;i<N-4;i++){
+   const l=body.L[i],r=body.R[i],x=l.x*0.72+r.x*0.28,y=l.y*0.72+r.y*0.28;
+   if(i===3)ctx.moveTo(x,y);else ctx.lineTo(x,y);
   }
   ctx.stroke();
-
-  // Scale rows
-  ctx.strokeStyle="rgba(255,255,255,0.038)";
-  ctx.lineWidth=0.85;
+  // scale lines
+  ctx.strokeStyle="rgba(255,255,255,0.055)";ctx.lineWidth=1;
   ctx.beginPath();
-  for(let i=6;i<N-5;i+=2){
+  for(let i=4;i<N-3;i+=2){
    const l=body.L[i],r=body.R[i];
-   ctx.moveTo(l.x*0.9+r.x*0.1,l.y*0.9+r.y*0.1);
-   ctx.lineTo(l.x*0.1+r.x*0.9,l.y*0.1+r.y*0.9);
+   ctx.moveTo(l.x*0.85+r.x*0.15,l.y*0.85+r.y*0.15);ctx.lineTo(l.x*0.15+r.x*0.85,l.y*0.15+r.y*0.85);
   }
   ctx.stroke();
-
-  // Classic spectacle marking (only when hood is open)
-  if(e>0.42){
-   const ih=Math.round(0.30*kB);
-   const c=P[ih];
-   const al=smooth(0.42,0.82,e);
-
-   ctx.save();
-   ctx.globalAlpha=0.88*al;
-   ctx.strokeStyle="#e6dfc4";
-   ctx.lineWidth=1.85*S;
-   ctx.lineCap="round";
-   ctx.lineJoin="round";
-
-   // Left circle
-   ctx.beginPath();
-   ctx.arc(c.x-8.2*S,c.y-1.8*S,5.6*S,0,Math.PI*2);
-   ctx.stroke();
-   // Right circle
-   ctx.beginPath();
-   ctx.arc(c.x+8.2*S,c.y-1.8*S,5.6*S,0,Math.PI*2);
-   ctx.stroke();
-   // Lower connecting curve
-   ctx.beginPath();
-   ctx.moveTo(c.x-8.2*S,c.y+3.6*S);
-   ctx.quadraticCurveTo(c.x,c.y+14.5*S,c.x+8.2*S,c.y+3.6*S);
-   ctx.stroke();
-   // Center vertical
-   ctx.beginPath();
-   ctx.moveTo(c.x,c.y+4.2*S);
-   ctx.lineTo(c.x,c.y+9.5*S);
-   ctx.stroke();
-
-   ctx.restore();
+  // hood spectacle marking
+  if(e>0.55){
+   const ih=Math.round(0.35*kB),c=P[ih],al=(e-0.55)/0.45;
+   ctx.strokeStyle="rgba(236,230,205,"+(0.8*al)+")";ctx.lineWidth=1.5*S;
+   ctx.beginPath();ctx.arc(c.x-6*S,c.y-1*S,4.5*S,0,Math.PI*2);ctx.stroke();
+   ctx.beginPath();ctx.arc(c.x+6*S,c.y-1*S,4.5*S,0,Math.PI*2);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(c.x-6*S,c.y+3.5*S);ctx.quadraticCurveTo(c.x,c.y+11*S,c.x+6*S,c.y+3.5*S);ctx.stroke();
   }
-
   drawHead(P[0],P[2],e);
  }
-
  function frameLoop(now){
   window.requestAnimationFrame(frameLoop);
-  const dt=Math.min(0.045,(now-last)/1000);
-  last=now;
+  const dt=Math.min(0.05,(now-last)/1000);last=now;
   if(document.hidden)return;
-  time+=dt;
-  frame++;
-
-  if(frame%16===0)modalOpen=!!document.querySelector(".modal.show");
-  if(frame%70===0)refreshObstacles();
-
+  time+=dt;frame++;
+  if(frame%20===0)modalOpen=!!document.querySelector(".modal.show");
+  if(frame%90===0)obstacles=document.querySelectorAll(".product-image,.category-card img,.logo,.footer-logo,.qr-link,.campaign-public-image");
   ctx.clearRect(0,0,W,H);
   if(modalOpen)return;
-
   update(dt);
-
-  // Strong clipping so cobra never draws over products / logos / QR
   ctx.save();
-  ctx.beginPath();
-  ctx.rect(0,0,W,H);
+  // keep product photos, logos and the QR code uncovered
+  ctx.beginPath();ctx.rect(0,0,W,H);
   let clipped=false;
-  for(const el of obstacles){
+  obstacles.forEach(el=>{
    const r=el.getBoundingClientRect();
-   if(r.width>8&&r.height>8&&r.bottom>0&&r.top<H&&r.right>0&&r.left<W){
-    // slightly larger exclusion zone
-    ctx.rect(r.left-6,r.top-6,r.width+12,r.height+12);
-    clipped=true;
-   }
-  }
+   if(r.width>0&&r.height>0&&r.bottom>0&&r.top<H&&r.right>0&&r.left<W){ctx.rect(r.left,r.top,r.width,r.height);clipped=true}
+  });
   if(clipped)ctx.clip("evenodd");
   draw();
   ctx.restore();
  }
-
- refreshObstacles();
  window.requestAnimationFrame(frameLoop);
 }
-
 
 const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
 function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause();startOfferPopups();startCobra()},950)}
@@ -2280,6 +2039,243 @@ $("musicToggle").addEventListener("click",async()=>{
  catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
 });
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
+</script>
+<script>
+/* ===== STORE EXTRAS: categories, delivery charges, order tracking, review photos, Q&A, messages ===== */
+const INSTAGRAM_URL="";
+let customCategories=[],unsubInquiries=null,deliverySettings={charge:0,freeAbove:0,note:""};
+const TRACK_STEPS=["Pending","Confirmed","Packed","Shipped","Out for Delivery","Delivered"];
+function trackKey(orderId){return String(orderId).slice(-8).toUpperCase()}
+function fmtTime(ms){try{return new Date(ms).toLocaleString("en-PK")}catch(e){return ""}}
+function digitsTail(v){return String(v||"").replace(/\D/g,"").slice(-4)}
+function waPhone(v){return String(v||"").replace(/[^\d]/g,"").replace(/^0/,"92")}
+
+/* ---------- Categories (admin can create more) ---------- */
+window.customCategoryName=function(id){const c=customCategories.find(x=>x.id===id);return c?String(c.name||"").toUpperCase():""};
+function renderCustomCategories(){
+ const grid=$("categoryGrid"),all=grid.querySelector(".all-card");
+ grid.querySelectorAll(".custom-cat").forEach(e=>e.remove());
+ customCategories.forEach(c=>{
+  const d=document.createElement("div"),img=safeImageURL(c.imageUrl);
+  d.className="category-card custom-cat"+(selectedCategory===c.id?" active":"");d.dataset.category=c.id;
+  d.innerHTML=(img?`<img src="${escapeHTML(img)}" alt="${escapeHTML(c.name)}">`:'<div class="cat-ph">🐍</div>')+`<h3>${escapeHTML(String(c.name||"").toUpperCase())}</h3><small>Explore collection →</small>`;
+  d.addEventListener("click",()=>selectCategory(c.id,d));grid.insertBefore(d,all);
+ });
+}
+function populateCategorySelect(){
+ const sel=$("productCategory"),keep=sel.value;
+ sel.querySelectorAll("option[data-custom]").forEach(o=>o.remove());
+ customCategories.forEach(c=>{const o=document.createElement("option");o.value=c.id;o.dataset.custom="1";o.textContent=c.name;sel.appendChild(o)});
+ sel.value=keep;
+}
+function renderAdminCategories(){
+ const box=$("adminCategoryList");if(!box)return;
+ if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
+ if(!customCategories.length){box.innerHTML='<div class="status">ابھی کوئی نئی کیٹیگری نہیں۔ اوپر فارم سے بنائیں۔</div>';return}
+ box.innerHTML=customCategories.map(c=>{const img=safeImageURL(c.imageUrl);return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(c.name||"")}</strong><small>${products.filter(p=>p.category===c.id).length} product(s)</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(c.id)}')">EDIT</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(c.id)}')">DELETE</button></div></div>`}).join("");
+}
+function resetCategoryForm(){$("categoryForm").reset();$("categoryId").value="";$("categoryStatus").textContent="";$("saveCategoryButton").textContent="SAVE CATEGORY"}
+function editCategory(id){
+ const c=customCategories.find(x=>x.id===id);if(!c||!requireAdmin())return;
+ $("categoryId").value=c.id;$("categoryName").value=c.name||"";$("categoryImageFile").value="";
+ $("categoryImageUrl").value=(c.imageUrl&&!c.imagePath)?c.imageUrl:"";
+ $("categoryStatus").textContent="Editing category. Image stays unless you pick a new one.";$("saveCategoryButton").textContent="UPDATE CATEGORY";
+ $("categoryForm").scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("categoryForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!requireAdmin()||!db||!storage){showToast("Admin access required.");return}
+ const editId=$("categoryId").value,name=$("categoryName").value.trim(),file=$("categoryImageFile").files[0]||null,typed=$("categoryImageUrl").value.trim(),link=safeImageURL(typed);
+ if(!name){$("categoryStatus").textContent="Category name is required.";return}
+ if(file&&(!file.type.startsWith("image/")||file.size>MAX_IMAGE_SIZE)){$("categoryStatus").textContent="Image must be 5 MB or less.";return}
+ if(typed&&!link){$("categoryStatus").textContent="لنک درست نہیں۔ https:// سے شروع ہونا چاہیے۔";return}
+ const btn=$("saveCategoryButton");btn.disabled=true;btn.textContent="SAVING...";
+ try{
+  const id=editId||(String(name).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"category")+"-"+Math.random().toString(36).slice(2,6);
+  const old=customCategories.find(c=>c.id===id)||{};let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
+  if(file){const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";const up=await uploadFile(file,"category-media/"+id+"/"+Date.now()+"."+ext);imageUrl=up.url;imagePath=up.path}
+  else if(link&&link!==old.imageUrl){imageUrl=link;imagePath=""}
+  await db.collection("categories").doc(id).set({name,imageUrl,imagePath,createdAtMs:old.createdAtMs||Date.now()},{merge:true});
+  if(old.imagePath&&old.imagePath!==imagePath)await storage.ref().child(old.imagePath).delete().catch(()=>{});
+  showToast("Category saved!");resetCategoryForm();
+ }catch(err){$("categoryStatus").textContent="Save failed: "+getErrorMessage(err)}
+ finally{btn.disabled=false;btn.textContent=$("categoryId").value?"UPDATE CATEGORY":"SAVE CATEGORY"}
+});
+async function deleteCategory(id){
+ const c=customCategories.find(x=>x.id===id);if(!c||!requireAdmin())return;
+ const used=products.filter(p=>p.category===id).length;
+ if(!confirm((used?used+" پروڈکٹس اس کیٹیگری میں ہیں۔ ":"")+"کیا اس کیٹیگری کو حذف کریں؟"))return;
+ try{await db.collection("categories").doc(id).delete();if(c.imagePath)await storage.ref().child(c.imagePath).delete().catch(()=>{});showToast("Category deleted.")}
+ catch(err){showToast("Delete failed: "+getErrorMessage(err))}
+}
+
+/* ---------- Delivery charges (Cash on Delivery) ---------- */
+window.deliveryFor=function(sub){const s=deliverySettings;if(!s.charge)return 0;if(s.freeAbove>0&&sub>=s.freeAbove)return 0;return s.charge};
+window.deliveryHTML=function(sub){
+ const d=deliveryFor(sub),s=deliverySettings;
+ return `<div style="padding:6px 0">Subtotal: ${money(sub)}<br>Delivery charges: <b>${d?money(d):"FREE"}</b>${s.note?`<br><small>${escapeHTML(s.note)}</small>`:""}</div>`;
+};
+function deliveryNoteText(){
+ const s=deliverySettings;let t="";
+ if(s.charge)t+="Delivery charges: "+money(s.charge)+(s.freeAbove?" (FREE above "+money(s.freeAbove)+")":"")+". ";
+ return (t+(s.note||"")).trim();
+}
+function applyDeliverySettings(){
+ const n=$("cartDeliveryNote");if(n)n.textContent=deliveryNoteText();
+ const f=$("deliveryForm");if(f&&!f.contains(document.activeElement)){
+  $("deliveryCharge").value=deliverySettings.charge||"";$("deliveryFreeAbove").value=deliverySettings.freeAbove||"";$("deliveryNote").value=deliverySettings.note||"";
+ }
+}
+$("deliveryForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ const charge=Math.max(0,Number($("deliveryCharge").value)||0),freeAbove=Math.max(0,Number($("deliveryFreeAbove").value)||0),note=$("deliveryNote").value.trim();
+ try{await db.collection("settings").doc("delivery").set({charge,freeAbove,note,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});$("deliveryStatus").textContent="Delivery settings saved.";showToast("Delivery settings saved!")}
+ catch(err){$("deliveryStatus").textContent="Save failed: "+getErrorMessage(err)}
+});
+
+/* ---------- Order tracking (customer) ---------- */
+function rememberOrder(key,phone){try{const a=JSON.parse(localStorage.getItem("cobraOrders")||"[]").filter(x=>x.key!==key);a.unshift({key,phone});localStorage.setItem("cobraOrders",JSON.stringify(a.slice(0,8)))}catch(e){}}
+function recentOrders(){try{return JSON.parse(localStorage.getItem("cobraOrders")||"[]")}catch(e){return[]}}
+window.afterOrderPlaced=async function(orderId,order){
+ const key=trackKey(orderId);
+ try{await db.collection("tracking").doc(key).set({orderNo:key,status:"Pending",history:[{status:"Pending",note:"Order placed",at:Date.now()}],items:order.items.map(i=>i.name+" × "+i.quantity+(i.size?" • "+i.size:"")+(i.color?" • "+i.color:"")),total:order.total,city:order.city,phoneTail:digitsTail(order.phone),createdAtMs:Date.now()})}
+ catch(e){console.warn("Tracking record not saved:",e)}
+ rememberOrder(key,order.phone);
+ $("orderStatus").innerHTML=`<b>✅ آپ کا آرڈر موصول ہو گیا!</b><br>ORDER NO: <b style="font-size:17px;letter-spacing:2px">${escapeHTML(key)}</b><br>اس نمبر اور اپنے فون نمبر سے آپ اپنا آرڈر ٹریک کر سکتے ہیں۔<br><button type="button" class="gold-btn" style="margin-top:8px;width:100%" onclick="openTrackModal('${escapeHTML(key)}')">TRACK THIS ORDER</button>`;
+};
+function openTrackModal(key){
+ const r=recentOrders();$("trackNo").value=key||"";
+ const hit=r.find(x=>x.key===key);$("trackPhone").value=hit?hit.phone:"";
+ $("recentOrders").innerHTML=r.length?'<div class="status">Your recent orders on this device:</div>'+r.map(x=>`<span class="recent-chip" onclick="document.getElementById('trackNo').value='${escapeHTML(x.key)}';document.getElementById('trackPhone').value='${escapeHTML(x.phone||"")}'">${escapeHTML(x.key)}</span>`).join(""):"";
+ $("trackResult").innerHTML="";$("trackModal").classList.add("show");
+}
+function closeTrack(){$("trackModal").classList.remove("show")}
+$("trackOpenButton").addEventListener("click",()=>openTrackModal(""));
+$("trackForm").addEventListener("submit",async e=>{
+ e.preventDefault();const key=$("trackNo").value.trim().toUpperCase().replace(/^#/,""),tail=digitsTail($("trackPhone").value),box=$("trackResult");
+ if(!key||tail.length<4){box.innerHTML='<div class="status">Order No اور فون نمبر درج کریں۔</div>';return}
+ box.innerHTML='<div class="status">Searching...</div>';
+ try{
+  const snap=await db.collection("tracking").doc(key).get();
+  if(!snap.exists){box.innerHTML='<div class="status">یہ Order No نہیں ملا۔ نمبر دوبارہ چیک کریں۔</div>';return}
+  const d=snap.data();
+  if(d.phoneTail&&d.phoneTail!==tail){box.innerHTML='<div class="status">فون نمبر آرڈر سے میچ نہیں کرتا۔</div>';return}
+  rememberOrder(key,$("trackPhone").value.trim());renderTrack(d);
+ }catch(err){box.innerHTML='<div class="status">Tracking load نہیں ہوئی: '+escapeHTML(getErrorMessage(err))+'</div>'}
+});
+function renderTrack(d){
+ const hist=Array.isArray(d.history)?d.history:[],cancelled=d.status==="Cancelled",idx=TRACK_STEPS.indexOf(d.status);
+ const when=s=>{const h=[...hist].reverse().find(x=>x.status===s);return h?fmtTime(h.at):""};
+ const steps=cancelled?`<li class="cancel"><span class="dot">✕</span><span>Cancelled<br><small>${escapeHTML(when("Cancelled"))}</small></span></li>`:TRACK_STEPS.map((s,i)=>`<li class="${i<idx||d.status==="Delivered"?"done":i===idx?"now":""}"><span class="dot">${i<idx||d.status==="Delivered"?"✓":i===idx?"●":""}</span><span>${escapeHTML(s)}<br><small>${escapeHTML(when(s))}</small></span></li>`).join("");
+ $("trackResult").innerHTML=`<div class="detail-line"><b>ORDER NO:</b> ${escapeHTML(d.orderNo||"")} • <b>CURRENT STATUS:</b> ${escapeHTML(String(d.status||"").toUpperCase())}</div><ul class="tl">${steps}</ul>
+ ${d.courier||d.trackingNumber?`<div class="detail-line"><b>Courier:</b> ${escapeHTML(d.courier||"—")} • <b>Tracking No:</b> ${escapeHTML(d.trackingNumber||"—")}</div>`:""}
+ ${d.note?`<div class="detail-line"><b>Message from store:</b> ${escapeHTML(d.note)}</div>`:""}
+ <div class="detail-line"><b>Items:</b><br>${(Array.isArray(d.items)?d.items:[]).map(escapeHTML).join("<br>")}</div>
+ <div class="detail-line"><b>Total:</b> ${money(d.total)} • <b>City:</b> ${escapeHTML(d.city||"")}</div>`;
+}
+
+/* ---------- Order tracking (admin) ---------- */
+window.__orders=[];
+window.decorateAdminOrders=function(orders){
+ window.__orders=orders;
+ document.querySelectorAll("#adminOrdersList .order-card").forEach(card=>{
+  const b=card.querySelector('button[onclick^="contactOrderCustomer"]');if(!b||card.querySelector(".track-form"))return;
+  const id=(b.getAttribute("onclick").match(/'([^']+)'/)||[])[1],o=orders.find(x=>x.id===id);if(!o)return;
+  const st=o.status||"Pending",lab=card.querySelector(".order-status");if(lab)lab.textContent=String(st).toUpperCase();
+  const f=document.createElement("div");f.className="track-form";
+  f.innerHTML=`<b>TRACKING UPDATE — ORDER NO ${escapeHTML(trackKey(id))}</b><select class="form-input" data-f="status">${[...TRACK_STEPS,"Cancelled"].map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select><input class="form-input" data-f="courier" placeholder="Courier name (optional)" value="${escapeHTML(o.courier||"")}"><input class="form-input" data-f="number" placeholder="Courier tracking number (optional)" value="${escapeHTML(o.trackingNumber||"")}"><input class="form-input" data-f="note" placeholder="Message for customer (optional)" value="${escapeHTML(o.trackingNote||"")}"><button class="gold-btn" type="button" onclick="updateOrderTracking('${escapeHTML(id)}',this)">UPDATE TRACKING</button>`;
+  card.querySelector(".order-actions").before(f);
+ });
+};
+async function writeTracking(id,status,courier,number,note){
+ const o=(window.__orders||[]).find(x=>x.id===id)||{},key=trackKey(id);
+ const items=(Array.isArray(o.items)?o.items:[]).map(i=>(i.name||"Product")+" × "+(i.quantity||1)+(i.size?" • "+i.size:"")+(i.color?" • "+i.color:""));
+ await db.collection("tracking").doc(key).set({orderNo:key,status,courier:courier||"",trackingNumber:number||"",note:note||"",items,total:o.total||0,city:o.city||"",phoneTail:digitsTail(o.phone),createdAtMs:(o.createdAt&&o.createdAt.seconds?o.createdAt.seconds*1000:Date.now()),history:firebase.firestore.FieldValue.arrayUnion({status,note:note||"",at:Date.now()})},{merge:true});
+}
+window.syncTracking=function(id,status){return writeTracking(id,status,"","","").catch(e=>console.warn("Tracking sync:",e))};
+async function updateOrderTracking(id,btn){
+ if(!requireAdmin()||!db)return;
+ const f=btn.closest(".track-form"),v=k=>f.querySelector(`[data-f="${k}"]`).value.trim();
+ const status=v("status"),courier=v("courier"),number=v("number"),note=v("note");
+ btn.disabled=true;
+ try{
+  await db.collection("orders").doc(id).update({status,courier,trackingNumber:number,trackingNote:note,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  await writeTracking(id,status,courier,number,note);
+  showToast("Tracking updated: "+status);
+ }catch(err){showToast("Tracking update failed: "+getErrorMessage(err))}
+ finally{btn.disabled=false}
+}
+
+/* ---------- Review photo (compressed, stored with the review) ---------- */
+window.getReviewPhoto=function(){return new Promise(res=>{
+ const f=$("reviewPhoto").files[0];if(!f||!f.type.startsWith("image/")){res("");return}
+ const img=new Image(),url=URL.createObjectURL(f);
+ img.onload=()=>{const sc=Math.min(1,800/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);let q=.7,d=c.toDataURL("image/jpeg",q);while(d.length>240000&&q>.3){q-=.1;d=c.toDataURL("image/jpeg",q)}URL.revokeObjectURL(url);res(d.length>300000?"":d)};
+ img.onerror=()=>res("");img.src=url;
+})};
+window.reviewPhotoHTML=function(r){return /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(r.photo||"")?`<img class="review-photo" src="${r.photo}" alt="Customer photo" onclick="this.classList.toggle('big')">`:""};
+
+/* ---------- Product questions (public) + private message to admin ---------- */
+let qToken=0;
+window.onProductOpened=function(p){loadQuestions(p.id);$("qStatus").textContent="";$("inqStatus").textContent=""};
+async function loadQuestions(pid){
+ const box=$("qList"),tk=++qToken;box.innerHTML='<div class="status">Loading questions...</div>';
+ try{
+  const snap=await db.collection(COLLECTION_NAME).doc(pid).collection("questions").orderBy("createdAt","desc").limit(30).get();
+  if(tk!==qToken)return;
+  if(snap.empty){box.innerHTML='<div class="status">No questions yet. Ask the first one!</div>';return}
+  const adm=requireAdmin();
+  box.innerHTML=snap.docs.map(doc=>{const q=doc.data(),id=escapeHTML(doc.id);return `<div class="q-card"><b>${escapeHTML(q.name||"Customer")}:</b> ${escapeHTML(q.text||"")}${q.answer?`<div class="q-answer"><b>ADMIN REPLY:</b> ${escapeHTML(q.answer)}</div>`:""}${adm?`<textarea class="form-input" style="min-height:55px;margin-top:8px" placeholder="Write admin reply...">${escapeHTML(q.answer||"")}</textarea><div class="form-actions"><button class="gold-btn" type="button" onclick="answerQuestion('${escapeHTML(pid)}','${id}',this)">${q.answer?"UPDATE REPLY":"SEND REPLY"}</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteQuestion('${escapeHTML(pid)}','${id}')">DELETE</button></div>`:""}</div>`}).join("");
+ }catch(err){if(tk===qToken)box.innerHTML='<div class="status">Questions could not be loaded. '+escapeHTML(getErrorMessage(err))+'</div>'}
+}
+async function answerQuestion(pid,qid,btn){
+ if(!requireAdmin())return;const text=btn.closest(".q-card").querySelector("textarea").value.trim();
+ if(!text){showToast("Reply لکھیں۔");return}
+ try{await db.collection(COLLECTION_NAME).doc(pid).collection("questions").doc(qid).update({answer:text,answeredAt:firebase.firestore.FieldValue.serverTimestamp()});showToast("Reply posted!");loadQuestions(pid)}
+ catch(err){showToast("Reply failed: "+getErrorMessage(err))}
+}
+async function deleteQuestion(pid,qid){
+ if(!requireAdmin()||!confirm("کیا یہ سوال حذف کریں؟"))return;
+ try{await db.collection(COLLECTION_NAME).doc(pid).collection("questions").doc(qid).delete();loadQuestions(pid)}catch(err){showToast("Delete failed: "+getErrorMessage(err))}
+}
+$("qForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!currentProduct||!db)return;
+ const name=$("qName").value.trim(),text=$("qText").value.trim(),pid=currentProduct.id;
+ if(!name||!text||name.length>60||text.length>500){$("qStatus").textContent="نام اور سوال درست درج کریں۔";return}
+ try{await db.collection(COLLECTION_NAME).doc(pid).collection("questions").add({name,text,createdAt:firebase.firestore.FieldValue.serverTimestamp()});$("qStatus").textContent="آپ کا سوال شائع ہو گیا۔ Admin جلد جواب دے گا۔";$("qText").value="";loadQuestions(pid)}
+ catch(err){$("qStatus").textContent="Question could not be sent. "+getErrorMessage(err)}
+});
+$("inqForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!currentProduct||!db)return;
+ const name=$("inqName").value.trim(),phone=$("inqPhone").value.trim(),message=$("inqText").value.trim();
+ if(!name||!message||message.length>600){$("inqStatus").textContent="نام اور پیغام درج کریں۔";return}
+ try{await db.collection("inquiries").add({productId:currentProduct.id,productName:cleanProductName(currentProduct.name),name,phone,message,status:"New",createdAt:firebase.firestore.FieldValue.serverTimestamp()});$("inqStatus").textContent="آپ کا پیغام Admin کو بھیج دیا گیا۔";$("inqText").value=""}
+ catch(err){$("inqStatus").textContent="Message could not be sent. "+getErrorMessage(err)}
+});
+
+/* ---------- Admin: customer messages ---------- */
+function startInquiriesListener(){
+ if(!requireAdmin()||!db)return;if(unsubInquiries)unsubInquiries();
+ unsubInquiries=db.collection("inquiries").orderBy("createdAt","desc").limit(100).onSnapshot(snap=>{
+  const box=$("adminInquiryList");
+  if(snap.empty){box.innerHTML='<div class="status">ابھی کوئی کسٹمر پیغام نہیں۔</div>';return}
+  box.innerHTML=snap.docs.map(doc=>{const m=doc.data(),id=escapeHTML(doc.id),done=m.status==="Done";return `<div class="order-card ${done?"confirmed":"pending"}"><div class="order-head"><strong>${escapeHTML(m.productName||"Product")}</strong><span class="order-status ${done?"confirmed":""}">${done?"DONE":"NEW"}</span></div><div class="order-info"><b>Name:</b> ${escapeHTML(m.name||"")}<br><b>Phone:</b> ${escapeHTML(m.phone||"—")}<br><b>Message:</b> ${escapeHTML(m.message||"")}<br><b>Date:</b> ${escapeHTML(formatOrderDate(m.createdAt))}</div><div class="order-actions">${m.phone?`<button class="gold-btn" type="button" onclick="replyInquiry('${id}')">WHATSAPP REPLY</button>`:""}${done?"":`<button class="outline-btn" type="button" onclick="doneInquiry('${id}')">MARK DONE</button>`}<button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteInquiry('${id}')">DELETE</button></div></div>`}).join("");
+  box.dataset.ready="1";window.__inq=Object.fromEntries(snap.docs.map(d=>[d.id,d.data()]));
+ },err=>{$("adminInquiryList").innerHTML='<div class="status">Messages load نہیں ہوئے: '+escapeHTML(getErrorMessage(err))+'</div>'});
+}
+function replyInquiry(id){const m=(window.__inq||{})[id];if(!m||!m.phone)return;window.open("https://wa.me/"+waPhone(m.phone)+"?text="+encodeURIComponent("Assalam-o-Alaikum "+m.name+", regarding your question about "+m.productName+": "),"_blank","noopener")}
+async function doneInquiry(id){try{await db.collection("inquiries").doc(id).update({status:"Done"})}catch(e){showToast(getErrorMessage(e))}}
+async function deleteInquiry(id){if(!requireAdmin()||!confirm("کیا یہ پیغام حذف کریں؟"))return;try{await db.collection("inquiries").doc(id).delete()}catch(e){showToast(getErrorMessage(e))}}
+window.startAdminExtras=function(){startInquiriesListener();renderAdminCategories();applyDeliverySettings()};
+window.stopAdminExtras=function(){if(unsubInquiries){unsubInquiries();unsubInquiries=null}};
+
+/* ---------- Instagram placeholder ---------- */
+$("instaBtn").addEventListener("click",()=>{if(INSTAGRAM_URL)window.open(INSTAGRAM_URL,"_blank","noopener");else showToast("Instagram page جلد آ رہا ہے۔")});
+
+/* ---------- start listeners ---------- */
+if(db){
+ db.collection("categories").onSnapshot(snap=>{customCategories=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAtMs||0)-(b.createdAtMs||0));renderCustomCategories();populateCategorySelect();renderAdminCategories();renderProducts()},e=>console.warn("Categories:",e));
+ db.collection("settings").doc("delivery").onSnapshot(doc=>{const d=doc.exists?doc.data():{};deliverySettings={charge:Number(d.charge)||0,freeAbove:Number(d.freeAbove)||0,note:d.note||""};applyDeliverySettings()},e=>console.warn("Settings:",e));
+}
 </script>
 </body>
 </html>
