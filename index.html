@@ -6,13 +6,14 @@
 <meta name="theme-color" content="#faf7f5">
 <title>COBRA STORE | Premium Shopping</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--coral:#ec6c5a;--dark:#171514;--muted:#85807d;--bg:#faf7f5;--line:#eee5e1;--light:#f8efed;--shadow:0 12px 35px #301f1912}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:110px}
 body{background:var(--bg);color:var(--dark);font-family:"DM Sans",Arial,sans-serif;overflow-x:hidden}
 button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.urdu-text{font-family:"Noto Nastaliq Urdu",serif;direction:rtl;text-align:right;line-height:2.2}
 .hidden{display:none!important}.container{max-width:1280px;margin:auto;padding:0 22px}
 h1,h2,h3,.brand-name,.form-title{font-family:"Syne",sans-serif}
 .gold{color:var(--coral)}
@@ -150,7 +151,6 @@ iframe.modal-video{aspect-ratio:16/9;max-height:none;height:auto;border:0}
 .size-manager-option:not(.active-size){background:#fafafa;border-color:#e5dfdc;color:#999}
 .size-manager-option.active-size{background:#f1faf3;border-color:#9bc9a7;color:#286b3d}
 .size-manager-option.sold{background:#fff0ee;border-color:#e6aaa2;color:#b53d31}
-.size-manager-option.sold{background:#fff0ee;border-color:#e6aaa2;color:#b53d31;text-decoration:line-through}
 .size-manager-add{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
 .size-manager-add input{min-width:0}
 .size-manager-empty{color:#999;font-size:10px;padding:10px 0}
@@ -336,7 +336,6 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 </div>
 <div class="promo-banner"><strong>11.11 MEGA SALE</strong><span>Explore the COBRA STORE collection and enjoy special discounted prices</span></div>
 
-<!-- Public campaign banner: active campaign only -->
 <section id="activeCampaignBanner" class="campaign-public hidden"></section>
 
 <section class="section" id="categories">
@@ -362,7 +361,6 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="active-label" id="activeLabel">ALL PRODUCTS</div><div class="product-grid" id="productGrid"><div class="empty">Connecting to COBRA STORE...</div></div>
 </section>
 
-<!-- Promotional video + WhatsApp group — placed after the products, at the end of the page -->
 <section class="promo-video-section" id="promoVideo">
  <div class="promo-video-inner">
   <video id="storePromoVideo" playsinline controls preload="metadata">
@@ -383,7 +381,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="footer-contact">WhatsApp Orders: +92 343 2752543</div>
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
  <a class="gold-btn wa-group-btn" href="https://chat.whatsapp.com/HMg9CQrKrpSJGq1SM3594v?s=cl&amp;p=a&amp;iam=2" target="_blank" rel="noopener" style="margin-left:10px;margin-top:10px">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></i>
   JOIN WHATSAPP GROUP
  </a>
  <div class="qr-box"><div class="qr-title">SCAN &amp; CHAT ON WHATSAPP</div><div class="qr-link" title="Scan with your phone camera"><svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 37 37" shape-rendering="crispEdges" role="img" aria-label="WhatsApp QR code"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#171514" d="M0 0h7v1h-7zM10 0h1v1h-1zM12 0h2v1h-2zM15 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h5v1h-5zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM14 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h3v1h-3zM14 7h1v1h-1zM20 7h1v1h-1zM0 8h5v1h-5zM6 8h4v1h-4zM11 8h1v1h-1zM15 8h1v1h-1zM17 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM12 9h5v1h-5zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h6v1h-6zM20 10h1v1h-1zM23 10h2v1h-2zM0 11h2v1h-2zM3 11h1v1h-1zM12 11h2v1h-2zM18 11h3v1h-3zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM1 12h2v1h-2zM4 12h4v1h-4zM9 12h2v1h-2zM12 12h1v1h-1zM14 12h3v1h-3zM21 12h1v1h-1zM25 12h2v1h-2zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM15 13h2v1h-2zM19 13h6v1h-6zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h1v1h-1zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM0 15h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h2v1h-2zM14 15h3v1h-3zM22 15h2v1h-2zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h5v1h-5zM11 16h1v1h-1zM15 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h1v1h-1zM9 17h1v1h-1zM12 17h5v1h-5zM19 17h4v1h-4zM24 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h3v1h-3zM17 18h1v1h-1zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM9 19h2v1h-2zM12 19h2v1h-2zM16 19h1v1h-1zM19 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h2v1h-2zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h2v1h-2zM17 20h2v1h-2zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h2v1h-2zM15 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h3v1h-3zM14 23h2v1h-2zM18 23h3v1h-3zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM11 24h1v1h-1zM16 24h1v1h-1zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM12 25h5v1h-5zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM13 26h3v1h-3zM18 26h1v1h-1zM21 26h7v1h-7zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM18 27h3v1h-3zM23 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM23 28h4v1h-4z"/></svg></div><div class="qr-caption">Scan this QR code with your phone camera to start a WhatsApp chat with us.</div></div>
@@ -488,15 +486,15 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
- <div class="status" id="adminStatus">Administrator access enabled.</div>
+ <div class="status">Administrator access enabled.</div>
 
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
- <div class="status">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
+ <div class="status urdu-text">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
  <div id="adminOrdersList"><div class="status">Orders loading...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">CAMPAIGN / PROMOTION MANAGEMENT</h3>
- <div class="status">یہاں اپنی ویب سائٹ کے لیے مہم یا آفر بنائیں۔ فعال مہم مقررہ تاریخوں کے دوران ویب سائٹ پر خودکار طور پر دکھائی جائے گی۔</div>
+ <div class="status urdu-text">یہاں اپنی ویب سائٹ کے لیے مہم یا آفر بنائیں۔ فعال مہم مقررہ تاریخوں کے دوران ویب سائٹ پر خودکار طور پر دکھائی جائے گی۔</div>
 
  <form id="campaignForm">
   <input type="hidden" id="campaignId">
@@ -529,7 +527,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">OFFERS / DEALS / SALE MANAGEMENT</h3>
- <div class="status">یہاں آفر، ڈیل یا سیل کا پیغام بنائیں۔ انٹرو کے بعد ویب سائٹ پر یہ پیغامات خودکار طور پر بار بار دکھائے جائیں گے۔ آئیکن اپلوڈ بھی کر سکتے ہیں اور لنک بھی لگا سکتے ہیں۔ اگر کوئی آفر فعال نہ ہو تو ڈیفالٹ سیل/ڈیل پیغامات دکھائے جائیں گے۔</div>
+ <div class="status urdu-text">یہاں آفر، ڈیل یا سیل کا پیغام بنائیں۔ انٹرو کے بعد ویب سائٹ پر یہ پیغامات خودکار طور پر بار بار دکھائے جائیں گے۔</div>
  <form id="offerForm">
   <input type="hidden" id="offerId">
   <label class="form-label">TYPE</label>
@@ -538,7 +536,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <input class="form-input" id="offerTitle" required maxlength="80" placeholder="Example: Flash Sale 30% OFF">
   <label class="form-label">MESSAGE</label>
   <textarea class="form-input" id="offerMessage" maxlength="300" placeholder="Short offer message shown to customers..."></textarea>
-  <label class="form-label">PRODUCT (OPTIONAL — بٹن اسی پروڈکٹ کو کھولے گا)</label>
+  <label class="form-label">PRODUCT (OPTIONAL)</label>
   <select class="form-input" id="offerProduct"><option value="">— No specific product —</option></select>
   <label class="form-label">START DATE (OPTIONAL)</label>
   <input class="form-input" id="offerStartDate" type="date">
@@ -565,7 +563,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">CATEGORY MANAGEMENT</h3>
- <div class="status">یہاں نئی کیٹیگری بنائیں۔ وہ ویب سائٹ کی کیٹیگری لسٹ اور پروڈکٹ فارم میں خودکار شامل ہو جائے گی۔ تصویر اپلوڈ بھی ہو سکتی ہے اور لنک بھی۔</div>
+ <div class="status urdu-text">یہاں نئی کیٹیگری بنائیں۔ وہ ویب سائٹ کی کیٹیگری لسٹ اور پروڈکٹ فارم میں خودکار شامل ہو جائے گی۔</div>
  <form id="categoryForm">
   <input type="hidden" id="categoryId">
   <label class="form-label">CATEGORY NAME</label><input class="form-input" id="categoryName" required maxlength="40" placeholder="Example: Bags">
@@ -579,7 +577,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">DELIVERY CHARGES (CASH ON DELIVERY)</h3>
- <div class="status">یہاں ڈیلیوری چارجز اور نوٹ لکھیں۔ یہ کارٹ اور Cash on Delivery فارم میں گاہک کو دکھائے جائیں گے اور آرڈر کے ٹوٹل میں شامل ہوں گے۔ چارجز 0 ہوں تو ڈیلیوری فری ہوگی۔</div>
+ <div class="status urdu-text">یہاں ڈیلیوری چارجز اور نوٹ لکھیں۔ یہ کارٹ اور Cash on Delivery فارم میں گاہک کو دکھائے جائیں گے۔</div>
  <form id="deliveryForm">
   <label class="form-label">DELIVERY CHARGE (PKR)</label><input class="form-input" id="deliveryCharge" type="number" min="0" step="1" placeholder="Example: 200">
   <label class="form-label">FREE DELIVERY ABOVE (PKR) — OPTIONAL</label><input class="form-input" id="deliveryFreeAbove" type="number" min="0" step="1" placeholder="Example: 5000">
@@ -590,12 +588,12 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">CUSTOMER MESSAGES</h3>
- <div class="status">پروڈکٹ کی تفصیل کے لیے گاہکوں کے پرائیویٹ پیغامات یہاں آئیں گے۔ عوامی سوالات کا جواب متعلقہ پروڈکٹ کھول کر "Questions &amp; Answers" میں دیں (Admin login کے ساتھ)۔</div>
+ <div class="status urdu-text">پروڈکٹ کی تفصیل کے لیے گاہکوں کے پرائیویٹ پیغامات یہاں آئیں گے۔</div>
  <div id="adminInquiryList"><div class="status">Messages loading...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">SIZE & COLOR STOCK MANAGEMENT</h3>
- <div class="status">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ Available / Sold Out یا رنگ منتخب کرنے کے بعد تبدیلی صرف SAVE CHANGES دبانے پر Firebase میں محفوظ ہوگی۔</div>
+ <div class="status urdu-text">ہر پروڈکٹ کے سائز اور رنگ منتخب کریں۔ تبدیلی محفوظ کرنے کے لیے SAVE CHANGES دبائیں۔</div>
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
@@ -608,14 +606,14 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   </select>
   <label class="form-label">SELLING PRICE (PKR)</label><input class="form-input" id="productPrice" type="number" min="1" step="1" required placeholder="Example: 1599">
   <label class="form-label">SALE DISCOUNT (%)</label><input class="form-input" id="productSale" type="number" min="0" max="90" value="11">
-  <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔ نئی تصاویر منتخب کرنے پر پرانی تصاویر تبدیل ہو جائیں گی۔ (لنک والا خانہ نیچے موجود ہے)</div>
+  <div class="upload-help"><b>PRODUCT PHOTOS</b><br>ایک پروڈکٹ کے لیے زیادہ سے زیادہ 4 تصاویر منتخب کریں۔ فی تصویر زیادہ سے زیادہ 5 MB۔</div>
   <label class="form-label">UPLOAD UP TO 4 PRODUCT IMAGES</label><input class="form-input" id="productImageFiles" type="file" accept="image/*" multiple>
   <label class="form-label">یا PRODUCT IMAGE کے لنک (ہر لنک نئی لائن میں)</label>
   <textarea class="form-input" id="productImageLinks" placeholder="https://example.com/photo1.jpg&#10;https://example.com/photo2.jpg"></textarea>
   <div id="imageFileStatus" class="status">No new images selected.</div><div class="upload-preview" id="imagePreview"></div>
-  <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔ نئی ویڈیو منتخب نہ کرنے پر موجودہ ویڈیو برقرار رہے گی۔</div>
+  <div class="upload-help"><b>PRODUCT VIDEO</b><br>ایک ویڈیو، زیادہ سے زیادہ 25 MB، MP4 یا WebM۔</div>
   <label class="form-label">UPLOAD ONE PRODUCT VIDEO</label><input class="form-input" id="productVideoFile" type="file" accept="video/mp4,video/webm">
-  <label class="form-label">یا PRODUCT VIDEO کا لنک (MP4/WebM یا YouTube)</label><input class="form-input" id="productVideoUrl" type="url" placeholder="https://www.youtube.com/watch?v=... یا https://.../video.mp4">
+  <label class="form-label">یا PRODUCT VIDEO کا لنک (MP4/WebM یا YouTube)</label><input class="form-input" id="productVideoUrl" type="url" placeholder="https://www.youtube.com/watch?v=...">
   <div id="videoFileStatus" class="status">No new video selected.</div>
   <label class="form-label">SHORT LABEL</label><input class="form-input" id="productLabel" maxlength="50" placeholder="NEW ARRIVAL">
   <label class="form-label">SIZES / OPTIONS</label>
@@ -623,9 +621,9 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
    <select class="form-input" id="sizePreset"><option value="">Choose size preset to add...</option><option value="shoes">Shoes Sizes (36–45)</option><option value="clothes">Clothing Sizes (XS–XXXL)</option><option value="one">One Size</option></select>
    <button class="outline-btn" type="button" id="addSizePreset">ADD SIZES</button>
   </div>
-  <div class="size-preset-help">Preset منتخب کرکے ADD SIZES دبائیں۔ یہ موجودہ سائز کو ختم نہیں کرے گا، صرف نئے سائز شامل کرے گا۔</div>
+  <div class="size-preset-help urdu-text">Preset منتخب کرکے ADD SIZES دبائیں۔ یہ موجودہ سائز کو ختم نہیں کرے گا، صرف نئے سائز شامل کرے گا۔</div>
   <input class="form-input" id="productSizes" placeholder="40, 41, 42, 43 or S, M, L, XL">
-  <div class="upload-help">ہر سائز کے سامنے موجود چیک باکس سے اسے Sold Out یا Available کریں۔</div>
+  <div class="upload-help urdu-text">ہر سائز کے سامنے موجود چیک باکس سے اسے Sold Out یا Available کریں۔</div>
   <div id="sizeAvailabilityEditor" class="size-admin-list"></div>
   <label class="form-label">STOCK / AVAILABILITY</label><input class="form-input" id="productStock" maxlength="80" placeholder="In Stock">
   <label class="form-label">PRODUCT DESCRIPTION</label><textarea class="form-input" id="productDescription" maxlength="1500" placeholder="Product details, material, features..."></textarea>
@@ -779,7 +777,6 @@ function startProductsListener(){
  });
 }
 
-/* CAMPAIGN MANAGEMENT */
 function campaignDateValue(value){
  if(!value)return "";
  if(typeof value==="string")return value.slice(0,10);
@@ -798,7 +795,6 @@ function campaignIsCurrentlyActive(campaign){
  const endDate=new Date(end+"T23:59:59");
  return localToday<=endDate&&localToday>=startDate;
 }
-/* Latest active campaign's image/logo — shown small on every product */
 function activeCampaignLogo(){
  const active=campaigns.filter(c=>campaignIsCurrentlyActive(c)).sort((a,b)=>campaignDateValue(b.startDate).localeCompare(campaignDateValue(a.startDate)))[0];
  return active?safeImageURL(active.imageUrl):"";
@@ -965,7 +961,6 @@ $("campaignForm").addEventListener("submit",async event=>{
    const uploaded=await uploadCampaignImageWithProgress(imageFile,newImagePath);
    imageUrl=uploaded.url;imagePath=uploaded.path;
   }else if(linkUrl&&linkUrl!==old.imageUrl){
-   // Use the pasted image link (no upload needed)
    imageUrl=linkUrl;imagePath="";
   }
   const data={
@@ -976,7 +971,6 @@ $("campaignForm").addEventListener("submit",async event=>{
   if(id)await docRef.update(data);
   else await docRef.set({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   saved=true;
-  // Only remove the old file after Firestore confirms the new campaign data is saved.
   if(old.imagePath&&old.imagePath!==imagePath){
    await storage.ref().child(old.imagePath).delete().catch(error=>console.warn("Old campaign image cleanup failed:",error));
   }
@@ -1020,7 +1014,6 @@ async function deleteCampaign(id){
  }catch(error){showToast("Campaign delete failed: "+getErrorMessage(error))}
 }
 
-/* OFFERS / DEALS / SALE — popup messages + admin management */
 function offerIsCurrentlyActive(o){
  if(!o||o.active!==true)return false;
  const s=campaignDateValue(o.startDate),e=campaignDateValue(o.endDate);
@@ -1281,7 +1274,6 @@ function refreshSizeAvailability(){
  renderSizeOptions();
  renderCustomerColors();
 }
-/* Small campaign logo on the product popup image */
 function refreshModalCampaignLogo(){
  const box=$("modalIcon");if(!box)return;
  const old=box.querySelector(".campaign-logo");if(old)old.remove();
@@ -1387,37 +1379,93 @@ function openOrderModal(){
  $("orderForm").classList.remove("done");$("orderStatus").textContent="";$("cartPanel").classList.remove("open");$("orderModal").classList.add("show");
 }
 function closeOrder(){$("orderModal").classList.remove("show")}
+
 $("orderForm").addEventListener("submit",async event=>{
- event.preventDefault();if(!orderItems.length){showToast("No order items found.");return}
+ event.preventDefault();
+ if(!orderItems.length){showToast("No order items found.");return}
  if(!validateOrderItems(orderItems))return;
  const name=$("customerName").value.trim();
  const email=$("customerEmail").value.trim().toLowerCase();
  const phone=$("customerPhone").value.trim();
- const city=$("customerCity").value.trim(),address=$("customerAddress").value.trim(),notes=$("customerNotes").value.trim();
- if(!name||!email||!phone||!city||!address){$("orderStatus").textContent="Please complete all required details, including your email address.";return}
+ const city=$("customerCity").value.trim();
+ const address=$("customerAddress").value.trim();
+ const notes=$("customerNotes").value.trim();
+
+ if(!name||!email||!phone||!city||!address){$("orderStatus").textContent="Please complete all required fields.";return}
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$("orderStatus").textContent="Please enter a valid email address.";return}
  if(!/^[0-9+() -]{7,20}$/.test(phone)){$("orderStatus").textContent="Please enter a valid phone number.";return}
- const subtotal=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0),deliveryCharge=window.deliveryFor?window.deliveryFor(subtotal):0,total=subtotal+deliveryCharge;
+
+ const subtotal=orderItems.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
+ const deliveryCharge=window.deliveryFor?window.deliveryFor(subtotal):0;
+ const total=subtotal+deliveryCharge;
+
  const order={
   customerName:name,
-  email:email,
-  phone,city,address,notes,
+  email,
+  phone,
+  city,
+  address,
+  notes,
   items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),
-  subtotal,deliveryCharge,total,paymentMethod:"Cash on Delivery",status:"Pending",
+  subtotal,
+  deliveryCharge,
+  total,
+  paymentMethod:"Cash on Delivery",
+  status:"Pending",
   createdAt:firebase.firestore.FieldValue.serverTimestamp()
  };
- const button=$("placeOrderButton");button.disabled=true;button.textContent="PLACING ORDER...";$("orderStatus").textContent="Submitting your website order...";
+
+ const button=$("placeOrderButton");
+ button.disabled=true;
+ button.textContent="PLACING ORDER...";
+ $("orderStatus").textContent="Submitting your website order...";
+
  try{
   if(!db)throw new Error("Firebase is not connected");
-  const doc=await db.collection("orders").add(order);
-  orderItems=[];cart=[];updateCart();$("orderForm").reset();
-  try{if(window.afterOrderPlaced)await window.afterOrderPlaced(doc.id,order);else throw new Error("no confirmation")}
-  catch(confirmError){console.warn(confirmError);$("orderStatus").textContent="Your order has been received. Order ID: "+doc.id}
-  showToast("Website order received!");
+  
+  // 1. Save order to Firestore 'orders' collection
+  const docRef=await db.collection("orders").add(order);
+  const orderId=docRef.id;
+  const trackingKey=String(orderId).slice(-8).toUpperCase();
+
+  // 2. Immediately create tracking record in 'tracking' collection so customer can track right away
+  const trackingData={
+   orderNo:trackingKey,
+   status:"Pending",
+   history:[{status:"Pending",note:"Order placed successfully",at:Date.now()}],
+   items:order.items.map(i=>(i.name||"Product")+" × "+i.quantity+(i.size?" • Size: "+i.size:"")+(i.color?" • Color: "+i.color:"")),
+   total:order.total,
+   city:order.city,
+   phoneTail:String(order.phone).replace(/\D/g,"").slice(-4),
+   createdAtMs:Date.now()
+  };
+  await db.collection("tracking").doc(trackingKey).set(trackingData);
+
+  // Clear cart and state
+  orderItems=[];
+  cart=[];
+  updateCart();
+  $("orderForm").reset();
+
+  // Remember order locally for instant tracking
+  try{
+   const rec=JSON.parse(localStorage.getItem("cobraOrders")||"[]").filter(x=>x.key!==trackingKey);
+   rec.unshift({key:trackingKey,phone});
+   localStorage.setItem("cobraOrders",JSON.stringify(rec.slice(0,8)));
+  }catch(e){}
+
+  // Display success message with Order Number
+  $("orderSummary").innerHTML="";
+  $("orderForm").classList.add("done");
+  $("orderStatus").innerHTML=`<div style="text-align:center;padding:10px 0"><div style="font-size:34px">✅</div><b style="font-size:15px">Your order is confirmed!</b><br><span style="font-size:10px;letter-spacing:2px">YOUR ORDER NUMBER</span><br><b style="font-size:24px;letter-spacing:3px;color:var(--coral)">${escapeHTML(trackingKey)}</b><br><p class="urdu-text" style="font-size:11px;margin-top:8px">آپ کا آرڈر نمبر محفوظ کر لیں۔ آپ اس نمبر سے اپنی ڈلیوری کو ٹریک کر سکتے ہیں۔</p></div><button type="button" class="gold-btn" style="width:100%;margin-top:10px" onclick="closeOrder()">DONE</button>`;
+  showToast("Order placed successfully! Order No: "+trackingKey);
  }catch(error){
   console.error("COD save error:",error);
-  $("orderStatus").textContent="Order save failed: "+getErrorMessage(error)+" Please try again later or use the separate WhatsApp order button. Your order has NOT been sent to WhatsApp.";
- }finally{button.disabled=false;button.textContent="PLACE COD ORDER"}
+  $("orderStatus").textContent="Order save failed: "+getErrorMessage(error);
+ }finally{
+  button.disabled=false;
+  button.textContent="PLACE COD ORDER";
+ }
 });
 
 async function loadReviews(productId){
@@ -1515,8 +1563,9 @@ function renderAdminOrders(orders){
   const itemHTML=items.map(item=>
    `<div>${escapeHTML(item.name||"Product")} × ${Number(item.quantity)||1}<br>Size: ${escapeHTML(item.size||"Not specified")} | Color: ${escapeHTML(item.color||"Not specified")} — ${money(item.price)}</div>`
   ).join("");
+  const orderNumKey=String(o.id).slice(-8).toUpperCase();
   return `<div class="order-card ${isConfirmed?"confirmed":"pending"}">
-   <div class="order-head"><strong>ORDER #${escapeHTML(o.id.slice(-8).toUpperCase())}</strong>
+   <div class="order-head"><strong>ORDER #${escapeHTML(orderNumKey)}</strong>
    <span class="order-status ${isConfirmed?"confirmed":""}">${isConfirmed?"CONFIRMED":"PENDING"}</span></div>
    <div class="order-info">
     <b>Customer:</b> ${escapeHTML(o.customerName||"Not provided")}<br>
@@ -1559,7 +1608,7 @@ async function contactOrderCustomer(orderId){
   if(!snap.exists){showToast("Order not found.");return}
   const o=snap.data(),items=Array.isArray(o.items)?o.items:[];
   let msg="Assalam-o-Alaikum "+(o.customerName||"Customer")+", your COBRA STORE order update:\n";
-  msg+="Order: "+orderId+"\nStatus: "+(o.status||"Pending")+"\n";
+  msg+="Order: "+String(orderId).slice(-8).toUpperCase()+"\nStatus: "+(o.status||"Pending")+"\n";
   items.forEach(x=>msg+=(x.name||"Product")+" × "+(x.quantity||1)+"\nSelected Size: "+(x.size||"Not specified")+"\nSelected Color: "+(x.color||"Not specified")+"\n");
   msg+="Total: "+money(o.total)+"\nThank you for shopping with COBRA STORE.";
   const phone=String(o.phone||"").replace(/[^\d]/g,"").replace(/^0/,"92");
@@ -1575,7 +1624,6 @@ function renderAdminProducts(){
  list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
 }
 
-/* CENTRAL SIZE + COLOR MANAGER — AVAILABLE SIZES AND COLOR STOCK */
 function getManagerDraft(product){
  const saved=sizeManagerDrafts[product.id];
  if(saved)return saved;
@@ -1692,7 +1740,7 @@ async function saveManagerDraft(productId,button){
   button.disabled=false;button.textContent=oldText;
  }
 }
-/* SIZE PRESETS */
+
 function addSelectedSizePreset(){
  const preset=$("sizePreset").value;
  if(!preset||!SIZE_PRESETS[preset]){showToast("پہلے Shoes، Clothes یا One Size منتخب کریں۔");return}
@@ -1723,7 +1771,6 @@ function renderSizeAvailabilityEditor(){
 }
 $("productSizes").addEventListener("input",renderSizeAvailabilityEditor);
 
-/* PRODUCT IMAGE LINKS (paste links instead of / in addition to uploading) */
 function getImageLinksFromInput(){
  return [...new Set($("productImageLinks").value.split(/[\s,]+/).map(x=>x.trim()).filter(Boolean))];
 }
@@ -1823,7 +1870,6 @@ $("productForm").addEventListener("submit",async event=>{
    const oldImagePaths=mediaPaths.filter(p=>p.includes("/images/")),uploaded=[];
    if(imageFiles.length)$("uploadStatus").textContent="Uploading product photos...";
    for(let i=0;i<imageFiles.length;i++)uploaded.push(await uploadFile(imageFiles[i],storagePath(productRef.id,"images",i,imageFiles[i].name)));
-   // Uploaded photos first, then pasted links (maximum 4 total)
    const allImages=[...uploaded.map(x=>x.url),...imageLinks].slice(0,MAX_IMAGES);
    image=allImages[0]||"";extraImages=allImages.slice(1);
    mediaPaths=[...mediaPaths.filter(p=>!p.includes("/images/")),...uploaded.map(x=>x.path)];
@@ -1846,7 +1892,7 @@ $("productForm").addEventListener("submit",async event=>{
   resetProductForm();
  }catch(error){
   console.error("Product save/upload error:",error);
-  $("uploadStatus").textContent="Save/upload error: "+getErrorMessage(error)+" If the product was created, check its entry in the Admin Panel before retrying.";
+  $("uploadStatus").textContent="Save/upload error: "+getErrorMessage(error);
  }finally{button.disabled=false;button.textContent=$("editProductId").value?"UPDATE PRODUCT":"SAVE PRODUCT"}
 });
 async function deleteProduct(id){
@@ -1859,8 +1905,6 @@ async function deleteProduct(id){
  }catch(error){console.error(error);showToast("Delete failed: "+getErrorMessage(error))}
 }
 
-
-/* ===== LIVING BLACK COBRA — crawls over the whole store, never blocks clicks, hides behind product photos ===== */
 function startCobra(){
  if(cobraStarted)return;cobraStarted=true;
  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
@@ -1983,14 +2027,12 @@ function startCobra(){
    P.push({x:px,y:py});Wd.push(bw+extra);
   }
   const body=buildPath(P,Wd);
-  // ground shadow of the lying body
   if(e<0.999||true){
    const flat=buildPath(spine,flatW);
    ctx.save();ctx.translate(5*S,8*S);ctx.fillStyle="rgba(0,0,0,0.17)";ctx.fill(flat.path);ctx.restore();
   }
   ctx.fillStyle="#09090a";ctx.fill(body.path);
   ctx.strokeStyle="rgba(255,255,255,0.07)";ctx.lineWidth=1;ctx.stroke(body.path);
-  // glossy ridge along the back
   ctx.strokeStyle="rgba(255,255,255,0.11)";ctx.lineWidth=1.5*S;ctx.lineCap="round";
   ctx.beginPath();
   for(let i=3;i<N-4;i++){
@@ -1998,7 +2040,6 @@ function startCobra(){
    if(i===3)ctx.moveTo(x,y);else ctx.lineTo(x,y);
   }
   ctx.stroke();
-  // scale lines
   ctx.strokeStyle="rgba(255,255,255,0.055)";ctx.lineWidth=1;
   ctx.beginPath();
   for(let i=4;i<N-3;i+=2){
@@ -2006,7 +2047,6 @@ function startCobra(){
    ctx.moveTo(l.x*0.85+r.x*0.15,l.y*0.85+r.y*0.15);ctx.lineTo(l.x*0.15+r.x*0.85,l.y*0.15+r.y*0.85);
   }
   ctx.stroke();
-  // hood spectacle marking
   if(e>0.55){
    const ih=Math.round(0.35*kB),c=P[ih],al=(e-0.55)/0.45;
    ctx.strokeStyle="rgba(236,230,205,"+(0.8*al)+")";ctx.lineWidth=1.5*S;
@@ -2027,7 +2067,6 @@ function startCobra(){
   if(modalOpen)return;
   update(dt);
   ctx.save();
-  // keep product photos, logos and the QR code uncovered
   ctx.beginPath();ctx.rect(0,0,W,H);
   let clipped=false;
   obstacles.forEach(el=>{
@@ -2053,7 +2092,6 @@ $("musicToggle").addEventListener("click",async()=>{
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
 </script>
 <script>
-/* ===== STORE EXTRAS: categories, delivery charges, order tracking, review photos, Q&A, messages ===== */
 const INSTAGRAM_URL="";
 let customCategories=[],unsubInquiries=null,deliverySettings={charge:0,freeAbove:0,note:""};
 const TRACK_STEPS=["Pending","Confirmed","Packed","Shipped","Out for Delivery","Delivered"];
@@ -2062,7 +2100,6 @@ function fmtTime(ms){try{return new Date(ms).toLocaleString("en-PK")}catch(e){re
 function digitsTail(v){return String(v||"").replace(/\D/g,"").slice(-4)}
 function waPhone(v){return String(v||"").replace(/[^\d]/g,"").replace(/^0/,"92")}
 
-/* ---------- Categories (admin can create more) ---------- */
 window.customCategoryName=function(id){const c=customCategories.find(x=>x.id===id);return c?String(c.name||"").toUpperCase():""};
 function renderCustomCategories(){
  const grid=$("categoryGrid"),all=grid.querySelector(".all-card");
@@ -2083,7 +2120,7 @@ function populateCategorySelect(){
 function renderAdminCategories(){
  const box=$("adminCategoryList");if(!box)return;
  if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
- if(!customCategories.length){box.innerHTML='<div class="status">ابھی کوئی نئی کیٹیگری نہیں۔ اوپر فارم سے بنائیں۔</div>';return}
+ if(!customCategories.length){box.innerHTML='<div class="status urdu-text">ابھی کوئی نئی کیٹیگری نہیں۔ اوپر فارم سے بنائیں۔</div>';return}
  box.innerHTML=customCategories.map(c=>{const img=safeImageURL(c.imageUrl);return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(c.name||"")}</strong><small>${products.filter(p=>p.category===c.id).length} product(s)</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(c.id)}')">EDIT</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(c.id)}')">DELETE</button></div></div>`}).join("");
 }
 function resetCategoryForm(){$("categoryForm").reset();$("categoryId").value="";$("categoryStatus").textContent="";$("saveCategoryButton").textContent="SAVE CATEGORY"}
@@ -2120,7 +2157,6 @@ async function deleteCategory(id){
  catch(err){showToast("Delete failed: "+getErrorMessage(err))}
 }
 
-/* ---------- Delivery charges (Cash on Delivery) ---------- */
 window.deliveryFor=function(sub){const s=deliverySettings;if(!s.charge)return 0;if(s.freeAbove>0&&sub>=s.freeAbove)return 0;return s.charge};
 window.deliveryHTML=function(sub){
  const d=deliveryFor(sub),s=deliverySettings;
@@ -2144,17 +2180,9 @@ $("deliveryForm").addEventListener("submit",async e=>{
  catch(err){$("deliveryStatus").textContent="Save failed: "+getErrorMessage(err)}
 });
 
-/* ---------- Order tracking (customer) ---------- */
 function rememberOrder(key,phone){try{const a=JSON.parse(localStorage.getItem("cobraOrders")||"[]").filter(x=>x.key!==key);a.unshift({key,phone});localStorage.setItem("cobraOrders",JSON.stringify(a.slice(0,8)))}catch(e){}}
 function recentOrders(){try{return JSON.parse(localStorage.getItem("cobraOrders")||"[]")}catch(e){return[]}}
-window.afterOrderPlaced=async function(orderId,order){
- const key=trackKey(orderId);
- try{await db.collection("tracking").doc(key).set({orderNo:key,status:"Pending",history:[{status:"Pending",note:"Order placed",at:Date.now()}],items:order.items.map(i=>i.name+" × "+i.quantity+(i.size?" • "+i.size:"")+(i.color?" • "+i.color:"")),total:order.total,city:order.city,phoneTail:digitsTail(order.phone),createdAtMs:Date.now()})}
- catch(e){console.warn("Tracking record not saved:",e)}
- rememberOrder(key,order.phone);
- $("orderSummary").innerHTML="";$("orderForm").classList.add("done");
- $("orderStatus").innerHTML=`<div style="text-align:center;padding:10px 0"><div style="font-size:34px">✅</div><b style="font-size:15px">Your order is confirmed!</b><br><span style="font-size:10px;letter-spacing:2px">ORDER NO</span><br><b style="font-size:22px;letter-spacing:3px;color:var(--coral)">${escapeHTML(key)}</b><br><span style="font-size:11px">آپ کا آرڈر موصول ہو گیا ہے۔ ہم جلد رابطہ کریں گے۔</span></div><button type="button" class="gold-btn" style="width:100%" onclick="closeOrder()">DONE</button>`;
-};
+
 function openTrackModal(key){
  const r=recentOrders();$("trackNo").value=key||"";
  const hit=r.find(x=>x.key===key);$("trackPhone").value=hit?hit.phone:"";
@@ -2186,7 +2214,6 @@ function renderTrack(d){
  <div class="detail-line"><b>Total:</b> ${money(d.total)} • <b>City:</b> ${escapeHTML(d.city||"")}</div>`;
 }
 
-/* ---------- Order tracking (admin) ---------- */
 window.__orders=[];
 window.decorateAdminOrders=function(orders){
  window.__orders=orders;
@@ -2218,7 +2245,6 @@ async function updateOrderTracking(id,btn){
  finally{btn.disabled=false}
 }
 
-/* ---------- Review photo (compressed, stored with the review) ---------- */
 window.getReviewPhoto=function(){return new Promise(res=>{
  const f=$("reviewPhoto").files[0];if(!f||!f.type.startsWith("image/")){res("");return}
  const img=new Image(),url=URL.createObjectURL(f);
@@ -2227,7 +2253,6 @@ window.getReviewPhoto=function(){return new Promise(res=>{
 })};
 window.reviewPhotoHTML=function(r){return /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(r.photo||"")?`<img class="review-photo" src="${r.photo}" alt="Customer photo" onclick="this.classList.toggle('big')">`:""};
 
-/* ---------- Product questions (public) + private message to admin ---------- */
 let qToken=0;
 function showPmTab(n){
  document.querySelectorAll(".pm-tab").forEach(b=>b.classList.toggle("active",b.dataset.pm===n));
@@ -2270,12 +2295,11 @@ $("inqForm").addEventListener("submit",async e=>{
  catch(err){$("inqStatus").textContent="Message could not be sent. "+getErrorMessage(err)}
 });
 
-/* ---------- Admin: customer messages ---------- */
 function startInquiriesListener(){
  if(!requireAdmin()||!db)return;if(unsubInquiries)unsubInquiries();
  unsubInquiries=db.collection("inquiries").orderBy("createdAt","desc").limit(100).onSnapshot(snap=>{
   const box=$("adminInquiryList");
-  if(snap.empty){box.innerHTML='<div class="status">ابھی کوئی کسٹمر پیغام نہیں۔</div>';return}
+  if(snap.empty){box.innerHTML='<div class="status urdu-text">ابھی کوئی کسٹمر پیغام نہیں۔</div>';return}
   box.innerHTML=snap.docs.map(doc=>{const m=doc.data(),id=escapeHTML(doc.id),done=m.status==="Done";return `<div class="order-card ${done?"confirmed":"pending"}"><div class="order-head"><strong>${escapeHTML(m.productName||"Product")}</strong><span class="order-status ${done?"confirmed":""}">${done?"DONE":"NEW"}</span></div><div class="order-info"><b>Name:</b> ${escapeHTML(m.name||"")}<br><b>Phone:</b> ${escapeHTML(m.phone||"—")}<br><b>Message:</b> ${escapeHTML(m.message||"")}<br><b>Date:</b> ${escapeHTML(formatOrderDate(m.createdAt))}</div><div class="order-actions">${m.phone?`<button class="gold-btn" type="button" onclick="replyInquiry('${id}')">WHATSAPP REPLY</button>`:""}${done?"":`<button class="outline-btn" type="button" onclick="doneInquiry('${id}')">MARK DONE</button>`}<button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteInquiry('${id}')">DELETE</button></div></div>`}).join("");
   box.dataset.ready="1";window.__inq=Object.fromEntries(snap.docs.map(d=>[d.id,d.data()]));
  },err=>{$("adminInquiryList").innerHTML='<div class="status">Messages load نہیں ہوئے: '+escapeHTML(getErrorMessage(err))+'</div>'});
@@ -2286,10 +2310,8 @@ async function deleteInquiry(id){if(!requireAdmin()||!confirm("کیا یہ پی�
 window.startAdminExtras=function(){startInquiriesListener();renderAdminCategories();applyDeliverySettings()};
 window.stopAdminExtras=function(){if(unsubInquiries){unsubInquiries();unsubInquiries=null}};
 
-/* ---------- Instagram placeholder ---------- */
 $("instaBtn").addEventListener("click",()=>{if(INSTAGRAM_URL)window.open(INSTAGRAM_URL,"_blank","noopener");else showToast("Instagram page جلد آ رہا ہے۔")});
 
-/* ---------- start listeners ---------- */
 if(db){
  db.collection("categories").onSnapshot(snap=>{customCategories=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAtMs||0)-(b.createdAtMs||0));renderCustomCategories();populateCategorySelect();renderAdminCategories();renderProducts()},e=>console.warn("Categories:",e));
  db.collection("settings").doc("delivery").onSnapshot(doc=>{const d=doc.exists?doc.data():{};deliverySettings={charge:Number(d.charge)||0,freeAbove:Number(d.freeAbove)||0,note:d.note||""};applyDeliverySettings()},e=>console.warn("Settings:",e));
