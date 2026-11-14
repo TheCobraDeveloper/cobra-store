@@ -294,6 +294,8 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  .promo-video-overlay h2{font-size:22px}
 }
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:260px}.hero:before{right:-10%;opacity:.3}}
+
+.flash-sale-bar{background:linear-gradient(90deg,#171514,#3a322d);color:#fff;border-bottom:1px solid #d4af37}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
 .hero{min-height:410px;padding:55px 22px}.hero h1{font-size:58px;letter-spacing:-3px}.hero p{font-size:12px}
@@ -325,6 +327,13 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
 <audio id="backgroundMusic" src="cobra-music.mp3" loop preload="none"></audio>
 <div class="promo-bar"><div class="promo-track">✦ COBRA STORE 11.11 MEGA SALE ✦ CASH ON DELIVERY AVAILABLE ✦ PREMIUM COLLECTION ✦ ORDER NOW ✦</div></div>
+<div class="flash-sale-bar" id="flashSaleBar">
+ <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 22px">
+  <div style="font-size:10px;font-weight:900;letter-spacing:1px">🔥 11.11 FLASH SALE ENDS IN:</div>
+  <div id="flashCountdown" style="font-family:'Syne';font-size:11px;font-weight:900;letter-spacing:2px;color:#f5d061">00 : 14 : 32 : 45</div>
+  <div><button class="outline-btn" style="padding:5px 10px;font-size:9px;background:#fff;color:var(--dark)" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">SHOP DEALS</button></div>
+ </div>
+</div>
 
 <header><div class="header-inner">
  <div><div class="logo"><img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo"></div><div class="logo-sub">STYLE • QUALITY • TRUST</div></div>
@@ -407,6 +416,12 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
  <div class="footer-logo"><img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo"></div>
  <p>Your destination for shoes, watches, fashion, electronics and selected lifestyle products.</p>
  <div class="footer-contact">WhatsApp Orders: +92 343 2752543</div>
+<div class="footer-links" style="margin:15px 0;display:flex;gap:15px;justify-content:center;flex-wrap:wrap;font-size:10px;font-weight:800">
+ <a href="javascript:void(0)" onclick="openPolicyModal()">Return &amp; Refund Policy</a> • 
+ <a href="javascript:void(0)" onclick="openSizeChartModal()">Size Guide</a> • 
+ <a href="javascript:void(0)" onclick="openFaqModal()">FAQ &amp; Help Center</a> • 
+ <a href="javascript:void(0)" onclick="openTermsModal()">Terms &amp; Conditions</a>
+</div>
  <button class="gold-btn" onclick="contactWhatsApp()">CONTACT ON WHATSAPP</button>
  <a class="gold-btn wa-group-btn" href="https://chat.whatsapp.com/HMg9CQrKrpSJGq1SM3594v?s=cl&amp;p=a&amp;iam=2" target="_blank" rel="noopener" style="margin-left:10px;margin-top:10px">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></i>
@@ -526,6 +541,65 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <button class="gold-btn" style="width:100%;margin-top:12px" type="submit">TRACK ORDER</button>
  </form>
  <div id="trackResult"></div>
+</div></div>
+
+
+<!-- Return & Refund Policy Modal (Daraz Style) -->
+<div class="modal" id="policyModal"><div class="modal-box">
+ <button class="close" onclick="$('policyModal').classList.remove('show')">×</button>
+ <div class="form-title">RETURN &amp; REFUND POLICY (DARAZ STANDARD)</div>
+ <div class="urdu-text" style="font-size:11px;line-height:2.2;margin:10px 0;color:#555">
+  <b>1. 7 دن کی ریٹرن اور ایکسچینج کی گارنٹی (7-Day Easy Return):</b><br>
+  اگر آپ کو ملنے والی پروڈکٹ میں کوئی نقص ہے، سائز غلط ہے یا پروڈکٹ تصویر سے میچ نہیں کرتی، تو آپ ڈلیوری کے 7 دن کے اندر واپسی یا تبدیلی کی درخواست کر سکتے ہیں۔<br><br>
+  <b>2. ریٹرن کی شرائط (Conditions for Return):</b><br>
+  - پروڈکٹ بالکل اصل حالت میں، استعمال نہ کی گئی ہو اور اس کا اورجنل ٹیگ یا پیکنگ موجود ہو۔<br>
+  - الیکٹرانکس اور گھڑیوں کے لیے باکس اور اس کے ساتھ ملنے والے لوازمات ساتھ ہونا لازمی ہیں۔<br><br>
+  <b>3. ریفنڈ کا طریقہ کار (Refund Process):</b><br>
+  پروڈکٹ ہمارے ویئرہاوس موصول ہونے اور چیک ہونے کے بعد، آپ کا ریفنڈ یا تو بینک اکاؤنٹ، ایزی پیسہ/جاز کیش یا اگلی خریداری پر واؤچر کی صورت میں 3 سے 5 ورکنگ دنوں میں جاری کر دیا جاتا ہے۔
+ </div>
+ <button class="gold-btn" style="width:100%;margin-top:10px" onclick="$('policyModal').classList.remove('show')">GOT IT</button>
+</div></div>
+
+<!-- Size Chart Modal -->
+<div class="modal" id="sizeChartModal"><div class="modal-box">
+ <button class="close" onclick="$('sizeChartModal').classList.remove('show')">×</button>
+ <div class="form-title">SIZE GUIDE &amp; MEASUREMENTS</div>
+ <div style="font-size:11px;line-height:1.8;color:#555;margin:10px 0">
+  <p><b>شوز کا سائز چارٹ (Shoes Size Chart - Euro/UK):</b></p>
+  <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:10px">
+   <tr style="background:var(--light)"><th style="border:1px solid var(--line);padding:6px">Euro Size</th><th style="border:1px solid var(--line);padding:6px">UK Size</th><th style="border:1px solid var(--line);padding:6px">Foot Length (cm)</th></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">39</td><td style="border:1px solid var(--line);padding:6px;text-align:center">5.5</td><td style="border:1px solid var(--line);padding:6px;text-align:center">24.5 cm</td></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">40</td><td style="border:1px solid var(--line);padding:6px;text-align:center">6</td><td style="border:1px solid var(--line);padding:6px;text-align:center">25.0 cm</td></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">41</td><td style="border:1px solid var(--line);padding:6px;text-align:center">7</td><td style="border:1px solid var(--line);padding:6px;text-align:center">26.0 cm</td></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">42</td><td style="border:1px solid var(--line);padding:6px;text-align:center">8</td><td style="border:1px solid var(--line);padding:6px;text-align:center">27.0 cm</td></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">43</td><td style="border:1px solid var(--line);padding:6px;text-align:center">9</td><td style="border:1px solid var(--line);padding:6px;text-align:center">27.5 cm</td></tr>
+   <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">44</td><td style="border:1px solid var(--line);padding:6px;text-align:center">10</td><td style="border:1px solid var(--line);padding:6px;text-align:center">28.5 cm</td></tr>
+  </table>
+  <p style="margin-top:15px"><b>کپڑوں کا سائز چارٹ (Clothing Sizes):</b> Small (S), Medium (M), Large (L), Extra Large (XL) معیاری پاکستانی کٹنگ کے مطابق ہیں۔</p>
+ </div>
+ <button class="gold-btn" style="width:100%;margin-top:10px" onclick="$('sizeChartModal').classList.remove('show')">CLOSE</button>
+</div></div>
+
+<!-- FAQ Modal -->
+<div class="modal" id="faqModal"><div class="modal-box">
+ <button class="close" onclick="$('faqModal').classList.remove('show')">×</button>
+ <div class="form-title">FREQUENTLY ASKED QUESTIONS</div>
+ <div style="font-size:11px;line-height:1.9;color:#555;margin:10px 0">
+  <b class="gold">Q1: آرڈر کتنے دنوں میں ڈلیور ہوتا ہے؟</b><br>پہلا جواب: پاکستان بھر میں تمام آرڈرز 3 سے 5 ورکنگ دنوں میں کیش آن ڈلیوری پر پہنچ جاتے ہیں۔<br><br>
+  <b class="gold">Q2: کیا ڈلیوری چارجز ہیں؟</b><br>پہلا جواب: معیاری ڈلیوری چارجز ہوتے ہیں، اور مخصوص رقم سے زیادہ کی خریداری پر فری ڈلیوری دی جاتی ہے۔<br><br>
+  <b class="gold">Q3: کیا پارسل کھول کر چیک کرنے کی اجازت ہے؟</b><br>پہلا جواب: جی ہاں! آپ کوریئر بوائے کے سامنے پارسل کھول کر چیک کر سکتے ہیں۔
+ </div>
+ <button class="gold-btn" style="width:100%;margin-top:10px" onclick="$('faqModal').classList.remove('show')">CLOSE</button>
+</div></div>
+
+<!-- Terms Modal -->
+<div class="modal" id="termsModal"><div class="modal-box">
+ <button class="close" onclick="$('termsModal').classList.remove('show')">×</button>
+ <div class="form-title">TERMS &amp; CONDITIONS</div>
+ <div style="font-size:11px;line-height:1.9;color:#555;margin:10px 0">
+  Welcome to COBRA STORE. By placing an order, you agree to our Cash on Delivery terms, shipping policies and quality standards. Owned and managed by Aqib Javed, developed by The Cobra Developers.
+ </div>
+ <button class="gold-btn" style="width:100%;margin-top:10px" onclick="$('termsModal').classList.remove('show')">AGREE &amp; CLOSE</button>
 </div></div>
 
 <div class="modal" id="loginModal"><div class="modal-box">
@@ -2272,8 +2346,31 @@ $("musicToggle").addEventListener("click",async()=>{
  try{if(music.paused){await music.play();$("musicToggle").textContent="♫"}else{music.pause();$("musicToggle").textContent="♪"}}
  catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
 });
+
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
+
+// Policy & Modals helpers
+function openPolicyModal(){ $("policyModal").classList.add("show"); }
+function openSizeChartModal(){ $("sizeChartModal").classList.add("show"); }
+function openFaqModal(){ $("faqModal").classList.add("show"); }
+function openTermsModal(){ $("termsModal").classList.add("show"); }
+
+// Flash Sale Countdown Timer
+(function(){
+ const el = $("flashCountdown");
+ if(!el) return;
+ let t = 14 * 3600 + 32 * 60 + 45;
+ setInterval(()=>{
+  if(t <= 0) t = 24 * 3600;
+  t--;
+  const h = String(Math.floor(t / 3600)).padStart(2,'0');
+  const m = String(Math.floor((t % 3600) / 60)).padStart(2,'0');
+  const s = String(t % 60).padStart(2,'0');
+  el.textContent = `00 : ${h} : ${m} : ${s}`;
+ }, 1000);
+})();
 </script>
+
 <script>
 const INSTAGRAM_URL="";
 let customCategories=[],unsubInquiries=null,deliverySettings={charge:0,freeAbove:0,note:""};
