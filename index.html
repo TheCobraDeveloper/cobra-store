@@ -2922,10 +2922,10 @@ function finishIntro(){if(introFinished)return;introFinished=true;intro.classLis
 $("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
-let cobraVoiceOn=false,cobraSpeakUtt=null,cobraAmbientCtx=null,cobraAmbientNodes=[];
+let cobraVoiceOn=false,cobraAmbientCtx=null,cobraAmbientNodes=[],cobraSpeakQueue=[],cobraSpeakBusy=false,cobraClickSpeakLast=0;
 function stopCobraVoice(){
  try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}
- cobraSpeakUtt=null;
+ cobraSpeakQueue=[];cobraSpeakBusy=false;
  cobraAmbientNodes.forEach(n=>{try{n.stop()}catch(e){}});
  cobraAmbientNodes=[];
  if(cobraAmbientCtx){try{cobraAmbientCtx.close()}catch(e){} cobraAmbientCtx=null}
@@ -2937,62 +2937,159 @@ function startCobraAmbient(){
   const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
   cobraAmbientCtx=new AC();
   const ctx=cobraAmbientCtx;
-  const master=ctx.createGain();master.gain.value=0.045;master.connect(ctx.destination);
+  const master=ctx.createGain();master.gain.value=0.04;master.connect(ctx.destination);
   [196,246.94,293.66].forEach((freq,i)=>{
-   const o=ctx.createOscillator();
-   const g=ctx.createGain();
-   o.type=i===0?"sine":"triangle";
-   o.frequency.value=freq;
-   g.gain.value=0.2-i*0.04;
-   o.connect(g);g.connect(master);
-   o.start();
-   cobraAmbientNodes.push(o);
+   const o=ctx.createOscillator(),g=ctx.createGain();
+   o.type=i===0?"sine":"triangle";o.frequency.value=freq;g.gain.value=0.18-i*0.04;
+   o.connect(g);g.connect(master);o.start();cobraAmbientNodes.push(o);
   });
  }catch(e){}
 }
-function playCobraStoreIntro(){
- stopCobraVoice();
- if(!window.speechSynthesis){
-  showToast("Browser voice support not available.");
+function pickVoice(preferUrdu){
+ const voices=speechSynthesis.getVoices()||[];
+ if(preferUrdu){
+  return voices.find(x=>/ur|hi|pakistan|india|hindi|urdu/i.test((x.lang||"")+" "+(x.name||"")))||null;
+ }
+ return voices.find(x=>/en(-|_)?(GB|US|IN|PK)?/i.test(x.lang)&&/female|zira|samantha|google|natural/i.test(x.name))
+  ||voices.find(x=>/^en/i.test(x.lang))||null;
+}
+function speakLine(text,preferUrdu,onEnd){
+ if(!window.speechSynthesis||!text){if(onEnd)onEnd();return}
+ const u=new SpeechSynthesisUtterance(String(text).slice(0,450));
+ u.rate=preferUrdu?0.92:0.96;u.pitch=1;u.volume=1;
+ u.lang=preferUrdu?"ur-PK":"en-US";
+ const v=pickVoice(preferUrdu);if(v)u.voice=v;
+ u.onend=()=>{if(onEnd)onEnd()};
+ u.onerror=()=>{if(onEnd)onEnd()};
+ try{speechSynthesis.speak(u)}catch(e){if(onEnd)onEnd()}
+}
+function runSpeakQueue(){
+ if(cobraSpeakBusy||!cobraSpeakQueue.length){
+  if(!cobraSpeakQueue.length){stopCobraVoice();return}
   return;
  }
- startCobraAmbient();
- const ur="السلام علیکم! خوش آمدید۔ یہ ہے کو برا سٹور، آپ کا پریمیم آن لائن شاپنگ اسٹور۔ یہاں دستیاب ہے: لڑکوں اور لڑکیوں کے جوتے، کپڑے، گھڑیاں، موبائل اسیسریز، الیکٹرانکس اور فیشن۔ پاکستان بھر میں کیش آن ڈلیوری۔ آرڈر ٹریک کریں، واٹس ایپ سپورٹ حاصل کریں۔ اور اب تعارف: دی کو برا ڈیولپرز۔ ہم ویب سائٹ، لینڈنگ پیج، مکمل آن لائن سٹور مع ایڈمن پینل، آرڈر ٹریکنگ سسٹم، فائر بیس سیٹ اپ، اور واٹس ایپ آرڈرنگ کیو آر بناتے ہیں۔ اپنا کاروبار ڈیجیٹل بنائیں، دی کو برا ڈیولپرز کے ساتھ۔ شکریہ!";
- const en="Assalam o Alaikum! Welcome. This is COBRA STORE, your premium online shopping store. Available here: boys and girls shoes, clothes, watches, mobile accessories, electronics and fashion. Cash on delivery all over Pakistan. Track your order and get WhatsApp support. And now the introduction: The Cobra Developers. We build websites, landing pages, full online stores with admin panel, order tracking systems, Firebase setup, and WhatsApp ordering with QR. Digitize your business with The Cobra Developers. Thank you!";
- const text=(localStorage.getItem("cobraStoreLang")==="ur")?ur:en;
- const u=new SpeechSynthesisUtterance(text);
- u.rate=0.95;u.pitch=1;u.volume=1;
- const voices=speechSynthesis.getVoices()||[];
- if(localStorage.getItem("cobraStoreLang")==="ur"){
-  const v=voices.find(x=>/urdu|hindi|pakistan|india/i.test(x.lang+" "+x.name));
-  if(v)u.voice=v;
-  u.lang="ur-PK";
- }else{
-  const v=voices.find(x=>/en(-|_)?(GB|US|IN|PK)?/i.test(x.lang)&&/female|zira|samantha|google/i.test(x.name))||voices.find(x=>/^en/i.test(x.lang));
-  if(v)u.voice=v;
-  u.lang="en-US";
- }
- u.onend=()=>{stopCobraVoice();};
- u.onerror=()=>{stopCobraVoice();};
- cobraSpeakUtt=u;
- cobraVoiceOn=true;
+ cobraSpeakBusy=true;cobraVoiceOn=true;
  const mb=$("musicToggle");if(mb)mb.textContent="♪";
- try{speechSynthesis.speak(u);}catch(e){stopCobraVoice();showToast("Voice could not start.");}
+ const item=cobraSpeakQueue.shift();
+ speakLine(item.text,item.urdu,()=>{cobraSpeakBusy=false;runSpeakQueue()});
 }
-$("musicToggle").addEventListener("click",async()=>{
- // Prefer built-in Cobra Store voice intro (no file needed). Optional mp3 if present.
- if(cobraVoiceOn){stopCobraVoice();showToast("Stopped");return;}
- try{
-  if(music && music.src && !music.error){
-   // try silent check — if file missing, fall through to voice
-   music.load();
-  }
- }catch(e){}
+function queueSpeak(text,urdu){
+ if(!text)return;
+ cobraSpeakQueue.push({text,urdu:!!urdu});
+ runSpeakQueue();
+}
+function productVoiceLine(p,urdu){
+ if(!p)return"";
+ const name=typeof cleanProductName==="function"?cleanProductName(p.name):(p.name||"Product");
+ const cat=typeof categoryName==="function"?categoryName(p.category):(p.category||"");
+ const price=typeof finalPrice==="function"?finalPrice(p):(Number(p.price)||0);
+ const priceTxt=typeof money==="function"?money(price):("Rs. "+price);
+ const sizes=(typeof getProductSizes==="function"?getProductSizes(p):(Array.isArray(p.sizes)?p.sizes:[])).join(", ")||"";
+ const colors=(typeof getProductColors==="function"?getProductColors(p):(Array.isArray(p.availableColors)?p.availableColors:[])).join(", ")||"";
+ const stock=p.stock||"In Stock";
+ if(urdu){
+  return "پروڈکٹ: "+name+"۔ کیٹیگری: "+cat+"۔ قیمت: "+priceTxt+"۔ "
+   +(sizes?"سائز: "+sizes+"۔ ":"")
+   +(colors?"رنگ: "+colors+"۔ ":"")
+   +"اسٹاک: "+stock+"۔";
+ }
+ return "Product: "+name+". Category: "+cat+". Price: "+priceTxt+". "
+  +(sizes?"Sizes: "+sizes+". ":"")
+  +(colors?"Colors: "+colors+". ":"")
+  +"Stock: "+stock+".";
+}
+function buildLiveProductScripts(urdu){
+ // Always reads current products array — new products auto-include forever
+ const list=Array.isArray(products)?products.slice():[];
+ if(!list.length){
+  return [urdu?"ابھی کوئی پروڈکٹ لوڈ نہیں ہوئی۔ جلد شامل ہوں گی۔":"No products loaded yet. They will be included automatically when added."];
+ }
+ const lines=[];
+ lines.push(urdu
+  ?("اب اسٹور کی پروڈکٹس کا تفصیلی تعارف۔ کل "+list.length+" پروڈکٹس دستیاب ہیں۔")
+  :("Now the detailed product introduction. Total "+list.length+" products available."));
+ list.forEach((p,i)=>{
+  lines.push((urdu?("نمبر "+(i+1)+"۔ "):("Number "+(i+1)+". "))+productVoiceLine(p,urdu));
+ });
+ lines.push(urdu?"تمام موجودہ پروڈکٹس کا تعارف مکمل۔ نئی پروڈکٹ شامل ہوتے ہی اگلی بار خود شامل ہو جائے گی۔":"Product catalog complete. New products will auto-include next time.");
+ return lines;
+}
+function playCobraStoreIntro(){
+ stopCobraVoice();
+ if(!window.speechSynthesis){showToast("Browser voice support not available.");return}
+ const urdu=(localStorage.getItem("cobraStoreLang")==="ur");
+ startCobraAmbient();
+ const storeIntro=urdu
+  ?"السلام علیکم! خوش آمدید کو برا سٹور میں۔ پریمیم آن لائن شاپنگ: جوتے، کپڑے، گھڑیاں، موبائل اسیسریز، الیکٹرانکس اور فیشن۔ پاکستان بھر کیش آن ڈلیوری، آرڈر ٹریکنگ اور واٹس ایپ سپورٹ۔"
+  :"Assalam o Alaikum! Welcome to COBRA STORE. Premium online shopping: shoes, clothes, watches, mobile accessories, electronics and fashion. Cash on delivery, order tracking and WhatsApp support across Pakistan.";
+ const devIntro=urdu
+  ?"اب دی کو برا ڈیولپرز کا تعارف۔ ہم ویب سائٹ، لینڈنگ پیج، مکمل آن لائن سٹور مع ایڈمن پینل، آرڈر ٹریکنگ، فائر بیس سیٹ اپ، اور واٹس ایپ آرڈرنگ کیو آر بناتے ہیں۔ اپنا کاروبار ڈیجیٹل بنائیں۔"
+  :"Now introducing The Cobra Developers. We build websites, landing pages, full online stores with admin panel, order tracking, Firebase setup, and WhatsApp ordering with QR. Digitize your business with us.";
+ cobraSpeakQueue=[];
+ queueSpeak(storeIntro,urdu);
+ queueSpeak(devIntro,urdu);
+ buildLiveProductScripts(urdu).forEach(line=>queueSpeak(line,urdu));
+ showToast(urdu?"کو برا سٹور + ڈیولپرز + تمام پروڈکٹس کا تعارف چل رہا ہے…":"Playing COBRA STORE + Developers + all products intro…");
+}
+$("musicToggle").addEventListener("click",function(){
+ if(cobraVoiceOn||cobraSpeakQueue.length){stopCobraVoice();showToast("Stopped");return}
  playCobraStoreIntro();
- showToast("COBRA STORE intro playing…");
 });
-// Preload voices
-if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
+if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
+
+/* Auto Urdu voice on click — products, options, buttons, categories */
+function speakClickUrdu(raw){
+ const t=String(raw||"").replace(/\s+/g," ").trim();
+ if(!t||t.length<2||t.length>120)return;
+ const now=Date.now();
+ if(now-cobraClickSpeakLast<700)return;
+ cobraClickSpeakLast=now;
+ // Don't interrupt long catalog intro unless short click label
+ if(cobraVoiceOn&&cobraSpeakQueue.length>2)return;
+ const map={
+  "ADD TO CART":"کارٹ میں شامل کریں","VIEW DETAILS":"تفصیل دیکھیں","WHATSAPP ORDER":"واٹس ایپ آرڈر",
+  "BUY NOW":"ابھی خریدیں","CART":"شاپنگ کارٹ","WISHLIST":"پسندیدہ فہرست","TRACK ORDER":"آرڈر ٹریک کریں",
+  "HOME":"ہوم","CATEGORIES":"کیٹیگریز","PRODUCTS":"پروڈکٹس","CONTACT":"رابطہ","GIRLS SHOES":"لڑکیوں کے جوتے",
+  "BOYS SHOES":"لڑکوں کے جوتے","BOYS CLOTHES":"لڑکوں کے کپڑے","GIRLS CLOTHES":"لڑکیوں کے کپڑے",
+  "BOYS WATCHES":"لڑکوں کی گھڑیاں","GIRLS WATCHES":"لڑکیوں کی گھڑیاں","MOBILE ACCESSORIES":"موبائل اسیسریز",
+  "ELECTRONICS":"الیکٹرانکس","FASHION":"فیشن","ALL PRODUCTS":"تمام پروڈکٹس","CHECKOUT":"چیک آؤٹ",
+  "Cash on Delivery":"کیش آن ڈلیوری","PLACE":"آرڈر جمع کرائیں"
+ };
+ let say=map[t]||null;
+ if(!say){
+  const key=Object.keys(map).find(k=>t.toUpperCase().includes(k));
+  say=key?map[key]:("آپ نے منتخب کیا: "+t);
+ }
+ // Quick speak without killing full intro if idle
+ if(!cobraVoiceOn){
+  speakLine(say,true,null);
+ }else if(cobraSpeakQueue.length===0&&!cobraSpeakBusy){
+  speakLine(say,true,null);
+ }
+}
+document.addEventListener("click",function(e){
+ if(e.target.closest(".cobra-float-dock, #musicToggle, .music-button, input, textarea, select, .close"))return;
+ const card=e.target.closest(".product-card, .related-card, [data-open-id]");
+ if(card){
+  const nameEl=card.querySelector("h3");
+  const name=nameEl?nameEl.textContent.trim():"";
+  if(name){speakClickUrdu(name);return}
+ }
+ const cat=e.target.closest(".category-card");
+ if(cat){
+  const h=cat.querySelector("h3");
+  if(h){speakClickUrdu(h.textContent.trim());return}
+ }
+ const size=e.target.closest(".size-chip");
+ if(size){speakClickUrdu("سائز "+size.textContent.trim());return}
+ const color=e.target.closest(".color-option");
+ if(color){speakClickUrdu("رنگ "+color.textContent.trim());return}
+ const btn=e.target.closest("button, a.gold-btn, .nav a, .pay-method-card");
+ if(btn){
+  const t=(btn.innerText||btn.textContent||"").replace(/\s+/g," ").trim().slice(0,60);
+  if(t)speakClickUrdu(t);
+ }
+},true);
 
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
 
