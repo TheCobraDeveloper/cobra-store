@@ -268,6 +268,8 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 }
 .cobra-mini-btn:hover{transform:scale(1.12);box-shadow:0 3px 10px rgba(0,0,0,.28)}
 .cobra-mini-btn:active{transform:scale(.95)}
+#tawkMiniBtn{background:#25a66a;color:#fff;border-color:rgba(255,255,255,.5);font-size:13px}
+#tawkMiniBtn:hover{background:#168b55;color:#fff}
 #themeCycleBtn{
   background:linear-gradient(145deg,#ec6c5a,#d4af37,#1b7a56,#1e56a0,#18181b);
   background-size:200% 200%;
@@ -284,6 +286,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   .cobra-float-dock{bottom:8px;left:5px;gap:2px}
   .cobra-mini-btn{width:22px;height:22px;font-size:8px}
   #langSwitchBtn.cobra-mini-btn{font-size:7px}
+  #tawkMiniBtn.cobra-mini-btn{font-size:12px}
   .music-button{width:34px;height:34px;font-size:13px;bottom:12px;right:10px}
   .wa-float{bottom:54px;right:10px;width:36px;height:36px;font-size:16px}
 }
@@ -1339,6 +1342,7 @@ body:not(.admin-mode) .modal-gallery img {
 
 <!-- Tiny vertical controls bottom-LEFT: Color cycle + Language -->
 <div class="cobra-float-dock" id="cobraFloatDock" aria-label="Theme and language">
+  <button type="button" class="cobra-mini-btn" id="tawkMiniBtn" title="Live chat" aria-label="Open live chat">☏</button>
   <button type="button" class="cobra-mini-btn" id="themeCycleBtn" title="Change color theme">🎨</button>
   <button type="button" class="cobra-mini-btn" id="langSwitchBtn" title="Urdu / English">اردو</button>
 </div>
@@ -4131,6 +4135,35 @@ async function adminDownloadProductMedia(productId){
   bubble.style.left = leftPos + "px";
   bubble.classList.add("show");
  });
+})();
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+/* Use our compact third button; keep the bulky default launcher hidden. */
+Tawk_API.onBeforeLoad = function(){ Tawk_API.hideWidget(); };
+Tawk_API.onChatMinimized = function(){ Tawk_API.hideWidget(); };
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6af9d84906581d3c47407d67/1k7fv9of2';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+<script>
+(function(){
+  var chatButton=document.getElementById('tawkMiniBtn');
+  if(!chatButton)return;
+  chatButton.addEventListener('click',function(){
+    if(window.Tawk_API && typeof window.Tawk_API.showWidget==='function'){
+      window.Tawk_API.showWidget();
+      if(typeof window.Tawk_API.maximize==='function')window.Tawk_API.maximize();
+    }
+  });
 })();
 </script>
 
