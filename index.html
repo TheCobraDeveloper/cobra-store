@@ -2918,7 +2918,16 @@ function startCobra(){
 }
 
 const intro=$("intro"),introVideo=$("introVideo");let introFinished=false;
-function finishIntro(){if(introFinished)return;introFinished=true;intro.classList.add("hide");setTimeout(()=>{intro.style.display="none";introVideo.pause();startOfferPopups();startCobra()},950)}
+function finishIntro(){
+ if(introFinished)return;introFinished=true;intro.classList.add("hide");
+ setTimeout(()=>{
+  intro.style.display="none";
+  try{introVideo.pause()}catch(e){}
+  startOfferPopups();startCobra();
+  // Soft welcome only (not full catalog) — for visitors
+  setTimeout(function(){ if(typeof playWelcomeVoiceOnly==="function") playWelcomeVoiceOnly(); }, 700);
+ },950);
+}
 $("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
@@ -2962,6 +2971,17 @@ function speakLine(text,preferUrdu,onEnd){
  u.onend=()=>{if(onEnd)onEnd()};
  u.onerror=()=>{if(onEnd)onEnd()};
  try{speechSynthesis.speak(u)}catch(e){if(onEnd)onEnd()}
+}
+function playWelcomeVoiceOnly(){
+ // After intro video: only "Welcome to the Cobra Premium Store" — not full music intro
+ if(typeof isAdmin!=="undefined"&&isAdmin)return;
+ if(!window.speechSynthesis)return;
+ if(cobraVoiceOn||cobraSpeakQueue.length)return;
+ const urdu=(localStorage.getItem("cobraStoreLang")==="ur");
+ const msg=urdu
+  ?"خوش آمدید کو برا پریمیم سٹور میں۔"
+  :"Welcome to the Cobra Premium Store.";
+ speakLine(msg,urdu,null);
 }
 function runSpeakQueue(){
  if(cobraSpeakBusy||!cobraSpeakQueue.length){
@@ -3039,6 +3059,8 @@ if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoicesc
 
 /* Auto Urdu voice on click — products, options, buttons, categories */
 function speakClickUrdu(raw){
+ // Voice feedback only for visitors/customers — never for admin
+ if(typeof isAdmin!=="undefined"&&isAdmin)return;
  const t=String(raw||"").replace(/\s+/g," ").trim();
  if(!t||t.length<2||t.length>120)return;
  const now=Date.now();
@@ -3068,7 +3090,8 @@ function speakClickUrdu(raw){
  }
 }
 document.addEventListener("click",function(e){
- if(e.target.closest(".cobra-float-dock, #musicToggle, .music-button, input, textarea, select, .close"))return;
+ if(typeof isAdmin!=="undefined"&&isAdmin)return;
+ if(e.target.closest(".cobra-float-dock, #musicToggle, .music-button, input, textarea, select, .close, .admin-panel, #adminModal"))return;
  const card=e.target.closest(".product-card, .related-card, [data-open-id]");
  if(card){
   const nameEl=card.querySelector("h3");
