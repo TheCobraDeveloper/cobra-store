@@ -3314,34 +3314,61 @@ function digitsTail(v){return String(v||"").replace(/\D/g,"").slice(-4)}
 function waPhone(v){return String(v||"").replace(/[^\d]/g,"").replace(/^0/,"92")}
 
 window.customCategoryName=function(id){const c=customCategories.find(x=>x.id===id);return c?String(c.name||"").toUpperCase():""};
+function staticCategoryCards(){
+ return [...$("categoryGrid").querySelectorAll(".category-card:not(.custom-cat):not(.all-card)")];
+}
+function renderStaticCategoryImages(){
+ const docs=new Map(customCategories.map(c=>[c.id,c]));
+ staticCategoryCards().forEach(card=>{
+  const c=docs.get(card.dataset.category),img=card.querySelector("img");
+  if(!img)return;
+  if(!img.dataset.defaultSrc)img.dataset.defaultSrc=img.getAttribute("src")||"";
+  const override=safeImageURL(c&&c.imageUrl);
+  img.src=override||img.dataset.defaultSrc;
+ });
+}
 function renderCustomCategories(){
  const grid=$("categoryGrid"),all=grid.querySelector(".all-card");
  grid.querySelectorAll(".custom-cat").forEach(e=>e.remove());
- customCategories.forEach(c=>{
+ const staticIds=new Set(staticCategoryCards().map(card=>card.dataset.category));
+ customCategories.filter(c=>!staticIds.has(c.id)).forEach(c=>{
   const d=document.createElement("div"),img=safeImageURL(c.imageUrl);
   d.className="category-card custom-cat"+(selectedCategory===c.id?" active":"");d.dataset.category=c.id;
   d.innerHTML=(img?`<img src="${escapeHTML(img)}" alt="${escapeHTML(c.name)}">`:'<div class="cat-ph">🐍</div>')+`<h3>${escapeHTML(String(c.name||"").toUpperCase())}</h3><small>Explore collection →</small>`;
   d.addEventListener("click",()=>selectCategory(c.id,d));grid.insertBefore(d,all);
  });
+ renderStaticCategoryImages();
 }
 function populateCategorySelect(){
  const sel=$("productCategory"),keep=sel.value;
  sel.querySelectorAll("option[data-custom]").forEach(o=>o.remove());
- customCategories.forEach(c=>{const o=document.createElement("option");o.value=c.id;o.dataset.custom="1";o.textContent=c.name;sel.appendChild(o)});
+ const staticIds=new Set(staticCategoryCards().map(card=>card.dataset.category));
+ customCategories.filter(c=>!staticIds.has(c.id)).forEach(c=>{const o=document.createElement("option");o.value=c.id;o.dataset.custom="1";o.textContent=c.name;sel.appendChild(o)});
  sel.value=keep;
 }
 function renderAdminCategories(){
  const box=$("adminCategoryList");if(!box)return;
  if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
- if(!customCategories.length){box.innerHTML='<div class="status urdu-text">ابھی کوئی نئی کیٹیگری نہیں۔ اوپر فارم سے بنائیں۔</div>';return}
- box.innerHTML=customCategories.map(c=>{const img=safeImageURL(c.imageUrl);return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(c.name||"")}</strong><small>${products.filter(p=>p.category===c.id).length} product(s)</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(c.id)}')">EDIT</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(c.id)}')">DELETE</button></div></div>`}).join("");
+ const docs=new Map(customCategories.map(c=>[c.id,c]));
+ const staticCards=staticCategoryCards().map(card=>{
+  const id=card.dataset.category,c=docs.get(id)||{},name=card.querySelector("h3")?.textContent?.trim()||id;
+  const img=safeImageURL(c.imageUrl)||card.querySelector("img")?.src||"";
+  return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(name)}</strong><small>${products.filter(p=>p.category===id).length} product(s) · Built-in category</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(id)}')">CHANGE IMAGE</button></div></div>`;
+ }).join("");
+ const custom=customCategories.filter(c=>!staticCategoryCards().some(card=>card.dataset.category===c.id));
+ const customHTML=custom.map(c=>{const img=safeImageURL(c.imageUrl);return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(c.name||"")}</strong><small>${products.filter(p=>p.category===c.id).length} product(s) · Custom category</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(c.id)}')">EDIT</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(c.id)}')">DELETE</button></div></div>`}).join("");
+ box.innerHTML=staticCards+customHTML||'<div class="status urdu-text">کوئی کیٹیگری دستیاب نہیں۔</div>';
 }
 function resetCategoryForm(){$("categoryForm").reset();$("categoryId").value="";$("categoryStatus").textContent="";$("saveCategoryButton").textContent="SAVE CATEGORY"}
 function editCategory(id){
- const c=customCategories.find(x=>x.id===id);if(!c||!requireAdmin())return;
- $("categoryId").value=c.id;$("categoryName").value=c.name||"";$("categoryImageFile").value="";
- $("categoryImageUrl").value=(c.imageUrl&&!c.imagePath)?c.imageUrl:"";
- $("categoryStatus").textContent="Editing category. Image stays unless you pick a new one.";$("saveCategoryButton").textContent="UPDATE CATEGORY";
+ const c=customCategories.find(x=>x.id===id);
+ const card=staticCategoryCards().find(x=>x.dataset.category===id);
+ if((!c&&!card)||!requireAdmin())return;
+ const name=(c&&c.name)||(card&&card.querySelector("h3")?.textContent.trim())||"";
+ $("categoryId").value=id;$("categoryName").value=name;$("categoryImageFile").value="";
+ $("categoryImageUrl").value=(c&&c.imageUrl&&!c.imagePath)?c.imageUrl:"";
+ $("categoryStatus").textContent="Upload a new image or paste an image URL. Leave both empty to keep the current image.";
+ $("saveCategoryButton").textContent=card?"UPDATE CATEGORY IMAGE":"UPDATE CATEGORY";
  $("categoryForm").scrollIntoView({behavior:"smooth",block:"center"});
 }
 $("categoryForm").addEventListener("submit",async e=>{
@@ -3353,12 +3380,13 @@ $("categoryForm").addEventListener("submit",async e=>{
  const btn=$("saveCategoryButton");btn.disabled=true;btn.textContent="SAVING...";
  try{
   const id=editId||(String(name).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"category")+"-"+Math.random().toString(36).slice(2,6);
-  const old=customCategories.find(c=>c.id===id)||{};let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
+  const old=customCategories.find(c=>c.id===id)||{};
+  let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
   if(file){const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";const up=await uploadFile(file,"category-media/"+id+"/"+Date.now()+"."+ext);imageUrl=up.url;imagePath=up.path}
   else if(link&&link!==old.imageUrl){imageUrl=link;imagePath=""}
   await db.collection("categories").doc(id).set({name,imageUrl,imagePath,createdAtMs:old.createdAtMs||Date.now()},{merge:true});
   if(old.imagePath&&old.imagePath!==imagePath)await storage.ref().child(old.imagePath).delete().catch(()=>{});
-  showToast("Category saved!");resetCategoryForm();
+  showToast("Category image saved!");resetCategoryForm();
  }catch(err){$("categoryStatus").textContent="Save failed: "+getErrorMessage(err)}
  finally{btn.disabled=false;btn.textContent=$("categoryId").value?"UPDATE CATEGORY":"SAVE CATEGORY"}
 });
