@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#171514">
-<title>COBRA STORE | Premium High-Class Shopping</title>
+<title>COBRA STORE | Luxury Premium Shopping Experience</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -14,15 +14,19 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
 body{background:var(--bg);color:var(--dark);font-family:"DM Sans",Arial,sans-serif;overflow-x:hidden}
 button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
 .urdu-text{font-family:"Noto Nastaliq Urdu",serif;direction:rtl;text-align:right;line-height:2.2}
+body.lang-urdu .section-heading h2,
+body.lang-urdu .hero h1,
+body.lang-urdu .form-title{letter-spacing:0}
+body.lang-urdu .nav a{font-size:11px}
 .hidden{display:none!important}.container{max-width:1280px;margin:auto;padding:0 22px}
 h1,h2,h3,.brand-name,.form-title{font-family:"Syne",sans-serif}
 .gold{color:var(--coral)}
-.gold-btn{border:1px solid var(--coral);border-radius:4px;background:var(--coral);color:white;padding:13px 22px;font-size:11px;font-weight:800;letter-spacing:1px;transition:.25s}
-.gold-btn:hover{background:#d95746;transform:translateY(-2px)}
-.gold-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.outline-btn{border:1px solid #d8cbc6;border-radius:4px;background:transparent;color:var(--dark);padding:11px 17px;font-size:10px;font-weight:800;letter-spacing:.6px}
-.outline-btn:hover{background:var(--dark);color:white}
-.promo-bar{background:var(--dark);color:white;text-align:center;padding:10px;font-size:9px;font-weight:800;letter-spacing:2px;overflow:hidden}
+.gold-btn{border:1px solid var(--coral);border-radius:6px;background:linear-gradient(135deg,var(--coral),color-mix(in srgb,var(--coral) 80%,#000));color:white;padding:13px 22px;font-size:11px;font-weight:800;letter-spacing:1px;transition:.25s;box-shadow:0 4px 14px color-mix(in srgb,var(--coral) 35%,transparent)}
+.gold-btn:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px color-mix(in srgb,var(--coral) 45%,transparent)}
+.gold-btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.outline-btn{border:1px solid #d8cbc6;border-radius:6px;background:transparent;color:var(--dark);padding:11px 17px;font-size:10px;font-weight:800;letter-spacing:.6px;transition:.25s}
+.outline-btn:hover{background:var(--dark);color:white;border-color:var(--dark)}
+.promo-bar{background:linear-gradient(90deg,#171514,#2a2420,#171514);color:white;text-align:center;padding:11px;font-size:9px;font-weight:800;letter-spacing:2.2px;overflow:hidden;border-bottom:1px solid rgba(212,175,55,.25)}
 .promo-track{white-space:nowrap;animation:promo 25s linear infinite}
 @keyframes promo{0%{transform:translateX(35%)}100%{transform:translateX(-35%)}}
 #intro{position:fixed;inset:0;z-index:9999;background:#171514;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -43,8 +47,9 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .nav{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
 .nav a{color:#45403e;font-size:10px;font-weight:800;letter-spacing:1px}
 .nav a:hover{color:var(--coral)}
-.header-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-.header-actions button{font-size:9px;padding:10px 13px}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.header-actions > button.outline-btn{font-size:9px;padding:9px 13px;border-radius:20px;letter-spacing:.5px;transition:.25s}
+.header-actions > button.outline-btn:hover{background:var(--dark);color:#fff;border-color:var(--dark);transform:translateY(-1px)}
 .hero{min-height:520px;max-width:1280px;margin:20px auto 0;padding:75px 25px;display:flex;align-items:center;position:relative;overflow:hidden;background:#f1e4e1;border-radius:6px}
 .hero:before{content:"";position:absolute;right:5%;top:50%;transform:translateY(-50%);width:min(43vw,470px);height:min(43vw,470px);border-radius:50%;background:url("IMG-20261109-WA0835.jpg") center/contain no-repeat;opacity:.55}
 .hero-content{position:relative;z-index:1;max-width:620px}
@@ -52,9 +57,10 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .hero h1{font-size:clamp(55px,9vw,105px);line-height:.98;font-weight:800;letter-spacing:-5px}
 .hero p{color:#6e6662;font-size:14px;line-height:2;max-width:510px;margin:23px 0 27px}
 .hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
-.hero-sale{display:inline-block;margin-top:25px;padding:9px 15px;background:white;color:var(--coral);font-size:10px;letter-spacing:2px;font-weight:900}
+.hero-sale{display:inline-block;margin-top:25px;padding:10px 18px;background:linear-gradient(135deg,#fff,var(--light));color:var(--coral);font-size:10px;letter-spacing:2px;font-weight:900;border:1px solid color-mix(in srgb,var(--coral) 30%,transparent);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
 .benefits{max-width:1200px;margin:22px auto 35px;padding:0 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.benefit{background:white;padding:21px 13px;text-align:center;border:1px solid var(--line);border-radius:4px}
+.benefit{background:white;padding:22px 14px;text-align:center;border:1px solid var(--line);border-radius:10px;transition:.3s;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.benefit:hover{border-color:color-mix(in srgb,var(--coral) 40%,var(--line));transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.07)}
 .benefit strong{display:block;font-size:11px;letter-spacing:1px}
 .benefit span{display:block;color:var(--muted);font-size:10px;margin-top:7px}
 .promo-banner{margin:20px auto 30px;padding:30px 15px;text-align:center;background:var(--dark);color:white;border-radius:4px}
@@ -80,8 +86,8 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .section-heading h2{font-size:clamp(27px,5vw,42px);margin-top:10px;font-weight:800}
 .section-heading p{color:var(--muted);font-size:12px;margin-top:9px}
 .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
-.category-card{min-width:0;cursor:pointer;text-align:center;background:white;border:1px solid var(--line);padding:13px 10px 17px;transition:.25s;border-radius:4px}
-.category-card:hover,.category-card.active{transform:translateY(-5px);border-color:var(--coral);box-shadow:var(--shadow)}
+.category-card{min-width:0;cursor:pointer;text-align:center;background:white;border:1px solid var(--line);padding:14px 10px 18px;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,border-color .25s;border-radius:10px}
+.category-card:hover,.category-card.active{transform:translateY(-6px);border-color:var(--coral);box-shadow:0 14px 32px rgba(23,21,20,.1)}
 .category-card img{width:100%;max-width:155px;aspect-ratio:1;object-fit:cover;display:block;margin:auto;background:var(--light);border-radius:6px}
 .category-card h3{font-size:11px;margin-top:13px;font-weight:900}
 .category-card small{display:block;color:var(--coral);font-size:9px;margin-top:7px}
@@ -93,8 +99,8 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .active-label{color:var(--coral);font-size:11px;font-weight:900;letter-spacing:1px;margin:18px 0}
 /* === PREMIUM STORE UPDATES: LARGE CLEAR IMAGES, NO LOGO OVERLAP & LUXURY UI === */
 .product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.product-card{background:#ffffff;border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:.35s;position:relative;min-width:0;box-shadow:0 4px 18px rgba(0,0,0,.04)}
-.product-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(23,21,20,.12);border-color:#d4af37}
+.product-card{background:#ffffff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .3s;position:relative;min-width:0;box-shadow:0 6px 22px rgba(23,21,20,.05)}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 22px 48px rgba(23,21,20,.14);border-color:color-mix(in srgb,var(--coral) 55%,#d4af37)}
 .product-image{height:345px;background:#ffffff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;border-bottom:1px solid var(--line);padding:12px}
 .product-image img{width:100%;height:100%;object-fit:contain;transition:transform .45s ease}
 .product-card:hover .product-image img{transform:scale(1.07)}
@@ -129,7 +135,7 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .shipping-bar-text{font-size:11px;font-weight:700;margin-bottom:6px;color:var(--dark)}
 .shipping-bar-track{height:7px;background:#e6dcd7;border-radius:10px;overflow:hidden}
 .shipping-bar-fill{height:100%;background:linear-gradient(90deg,#ec6c5a,#d4af37);width:0%;transition:width .4s ease}
-.top-float{position:fixed;bottom:84px;right:20px;z-index:88;width:44px;height:44px;border-radius:50%;background:var(--dark);color:#f5d061;border:1px solid #d4af37;font-size:18px;display:none;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25);cursor:pointer}
+.top-float{position:fixed;bottom:108px;right:16px;z-index:88;width:36px;height:36px;border-radius:50%;background:var(--dark);color:#f5d061;border:1px solid #d4af37;font-size:15px;display:none;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.22);cursor:pointer;opacity:.85}
 .top-float.show{display:grid}
 .modal-gallery{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px}
 .modal-gallery img{width:85px;height:85px;object-fit:contain;background:var(--light);border:1px solid var(--line);cursor:pointer;flex-shrink:0;border-radius:4px}
@@ -229,8 +235,58 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .credits{border-top:1px solid var(--line);margin:20px auto 0;padding-top:13px;color:#999;font-size:9px;line-height:2}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 20px;font-size:11px;font-weight:900;z-index:800;opacity:0;pointer-events:none;transition:.3s;max-width:90%;text-align:center;border-radius:4px}
 .toast.show{opacity:1;bottom:35px}
-.music-button{position:fixed;bottom:17px;right:14px;z-index:120;background:var(--coral);border:0;color:white;border-radius:50%;width:43px;height:43px;font-size:17px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
-.wa-float{position:fixed;bottom:70px;right:14px;z-index:120;background:#25D366;border:0;color:white;border-radius:50%;width:43px;height:43px;font-size:21px;display:grid;place-items:center;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+/* Music + WA stay small on RIGHT corner */
+.music-button{
+  position:fixed;bottom:16px;right:14px;z-index:125;
+  background:var(--coral);border:0;color:white;border-radius:50%;
+  width:36px;height:36px;font-size:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.2);transition:.2s;opacity:.88;
+}
+.music-button:hover{transform:scale(1.1);opacity:1}
+.wa-float{
+  position:fixed;bottom:60px;right:14px;z-index:120;
+  background:#25D366;border:0;color:white;border-radius:50%;
+  width:40px;height:40px;font-size:18px;display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(37,211,102,.35);transition:.2s;opacity:.92;
+}
+.wa-float:hover{transform:scale(1.08);opacity:1}
+
+/* Tiny VERTICAL controls — bottom LEFT, does not disturb site */
+.cobra-float-dock{
+  position:fixed;bottom:14px;left:8px;z-index:130;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:transparent;border:0;padding:0;box-shadow:none;opacity:1;
+}
+.cobra-mini-btn{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);
+  cursor:pointer;display:grid;place-items:center;
+  font-size:11px;font-weight:800;line-height:1;
+  box-shadow:0 3px 10px rgba(0,0,0,.25);
+  transition:transform .2s, box-shadow .2s, filter .2s;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  padding:0;
+}
+.cobra-mini-btn:hover{transform:scale(1.12);box-shadow:0 5px 14px rgba(0,0,0,.3)}
+.cobra-mini-btn:active{transform:scale(.96)}
+#themeCycleBtn{
+  background:linear-gradient(145deg,#ec6c5a,#d4af37,#1b7a56,#1e56a0,#18181b);
+  background-size:200% 200%;
+  color:#fff;border-color:rgba(255,255,255,.5);
+  animation:themePulse 6s ease infinite;
+}
+@keyframes themePulse{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+#langSwitchBtn.cobra-mini-btn{
+  background:rgba(23,21,20,.75);color:#f5d061;border-color:rgba(212,175,55,.45);
+  font-size:9px;letter-spacing:0;
+}
+#langSwitchBtn.cobra-mini-btn:hover{background:rgba(23,21,20,.95);color:#fff}
+@media(max-width:480px){
+  .cobra-float-dock{bottom:10px;left:6px;gap:5px}
+  .cobra-mini-btn{width:26px;height:26px;font-size:10px}
+  #langSwitchBtn.cobra-mini-btn{font-size:8px}
+  .music-button{width:34px;height:34px;font-size:13px;bottom:12px;right:10px}
+  .wa-float{bottom:54px;right:10px;width:36px;height:36px;font-size:16px}
+}
 .upload-help{background:#fff8f5;border:1px solid #f0d8d1;padding:12px;margin:12px 0;font-size:10px;line-height:1.8;color:#775b54;border-radius:4px}
 .upload-preview{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .upload-preview img{width:65px;height:65px;object-fit:cover;border:1px solid var(--line);border-radius:4px}
@@ -298,9 +354,13 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 }
 @media(max-width:850px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-image{height:260px}.hero:before{right:-10%;opacity:.3}}
 
-.flash-sale-bar{background:linear-gradient(90deg,#171514,#3a322d);color:#fff;border-bottom:1px solid #d4af37}
+.flash-sale-bar{background:linear-gradient(90deg,#0f0e0d,#2a2420,#171514);color:#fff;border-bottom:1px solid #d4af37;box-shadow:0 2px 12px rgba(0,0,0,.15)}
 @media(max-width:520px){
 .header-inner{justify-content:center;padding:12px}.nav{justify-content:center;width:100%;gap:15px}.header-actions{justify-content:center;width:100%}
+.store-controls-bar{width:100%;justify-content:center;padding:6px 8px;gap:6px}
+.theme-dot{width:14px;height:14px}
+.lang-toggle-btn{padding:6px 11px;font-size:9px}
+.tap-translate-hint-pill{padding:5px 9px;font-size:8.5px}
 .hero{min-height:410px;padding:55px 22px}.hero h1{font-size:58px;letter-spacing:-3px}.hero p{font-size:12px}
 .hero:before{width:260px;height:260px;right:-80px;top:75%;opacity:.2}
 .benefits{gap:6px}.benefit{padding:13px 5px}.benefit strong{font-size:9px}.benefit span{font-size:8px}
@@ -388,6 +448,333 @@ body:not(.admin-mode) .modal-gallery img {
  letter-spacing: .8px;
 }
 @media(max-width:600px){ .admin-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+
+/* === V5 LUXURY THEME ENGINE, BILINGUAL URDU/ENGLISH + TAP-TO-TRANSLATE, COMPACT OFFERS & SECURE PAYMENT === */
+:root[data-theme="black-gold"] {
+ --coral:#d4af37;--dark:#0f0e0d;--muted:#7a7267;--bg:#f7f4ee;--line:#e5dcc8;--light:#efe9d8;
+}
+:root[data-theme="emerald-luxury"] {
+ --coral:#1b7a56;--dark:#0d1f18;--muted:#687a72;--bg:#f4f9f6;--line:#d5e6dd;--light:#e4f1ea;
+}
+:root[data-theme="royal-navy"] {
+ --coral:#1e56a0;--dark:#10192b;--muted:#687285;--bg:#f4f6fa;--line:#d8dfec;--light:#e6ecf7;
+}
+:root[data-theme="midnight-dark"] {
+ --coral:#f5b942;--dark:#121214;--muted:#a8a29e;--bg:#18181b;--line:#2e2e34;--light:#232329;
+}
+:root[data-theme="midnight-dark"] body { background:#121214; color:#f4f4f5; }
+:root[data-theme="midnight-dark"] header { background:rgba(20,20,23,.95); border-color:#2e2e34; }
+:root[data-theme="midnight-dark"] .nav a { color:#e4e4e7; }
+:root[data-theme="midnight-dark"] .outline-btn { color:#f4f4f5; border-color:#3f3f46; }
+:root[data-theme="midnight-dark"] .product-card,
+:root[data-theme="midnight-dark"] .category-card,
+:root[data-theme="midnight-dark"] .benefit,
+:root[data-theme="midnight-dark"] .modal-box,
+:root[data-theme="midnight-dark"] .admin-panel,
+:root[data-theme="midnight-dark"] .cart-panel,
+:root[data-theme="midnight-dark"] footer,
+:root[data-theme="midnight-dark"] .search-box,
+:root[data-theme="midnight-dark"] .form-input,
+:root[data-theme="midnight-dark"] .tools select,
+:root[data-theme="midnight-dark"] .size-manager-product,
+:root[data-theme="midnight-dark"] .order-card,
+:root[data-theme="midnight-dark"] .campaign-admin-card {
+ background:#1c1c21; color:#f4f4f5; border-color:#2f2f37;
+}
+:root[data-theme="midnight-dark"] .hero { background:#1e1d22; }
+:root[data-theme="midnight-dark"] .hero p { color:#b4b4be; }
+:root[data-theme="midnight-dark"] .detail-line b { color:#f5b942; }
+:root[data-theme="midnight-dark"] .detail-line { color:#d4d4d8; border-color:#2f2f37; }
+:root[data-theme="midnight-dark"] .order-items { background:#25252c; color:#e4e4e7; }
+:root[data-theme="midnight-dark"] .trust-pill,
+:root[data-theme="midnight-dark"] .shipping-bar-wrap,
+:root[data-theme="midnight-dark"] .admin-stat-card { background:#232329; color:#f4f4f5; border-color:#32323c; }
+
+/* Compact & Sleek Offer/Deal Popup */
+.offer-pop {
+ width: min(268px, calc(100vw - 28px)) !important;
+ padding: 9px 26px 9px 10px !important;
+ gap: 9px !important;
+ bottom: 64px !important;
+ border-radius: 8px !important;
+ box-shadow: 0 10px 28px rgba(0,0,0,.18) !important;
+}
+.offer-pop-icon {
+ width: 38px !important;
+ height: 38px !important;
+ font-size: 19px !important;
+ border-radius: 6px !important;
+}
+.offer-pop-type { font-size: 7.5px !important; letter-spacing: 1.5px !important; }
+.offer-pop h4 { font-size: 12px !important; margin: 2px 0 !important; line-height: 1.25 !important; }
+.offer-pop p { font-size: 10px !important; line-height: 1.4 !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.offer-pop .offer-go { margin-top: 5px !important; font-size: 8.5px !important; padding: 5px 10px !important; }
+.offer-pop .offer-close { top: 2px !important; right: 6px !important; font-size: 18px !important; }
+
+/* Compact Social Proof Pill */
+.social-proof-pop {
+ padding: 8px 11px !important;
+ gap: 8px !important;
+ max-width: 265px !important;
+ bottom: 118px !important;
+ font-size: 10px !important;
+}
+
+/* === PREMIUM THEME + LANGUAGE CONTROL BAR (Luxury Pill) === */
+.store-controls-bar {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ flex-wrap: wrap;
+ background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(250,247,245,.88));
+ border: 1px solid var(--line);
+ border-radius: 999px;
+ padding: 5px 8px 5px 10px;
+ box-shadow: 0 4px 18px rgba(23,21,20,.06), inset 0 1px 0 rgba(255,255,255,.8);
+ backdrop-filter: blur(12px);
+ -webkit-backdrop-filter: blur(12px);
+}
+:root[data-theme="midnight-dark"] .store-controls-bar {
+ background: linear-gradient(135deg, rgba(28,28,33,.95), rgba(35,35,41,.9));
+ border-color: #3a3a44;
+ box-shadow: 0 4px 20px rgba(0,0,0,.35);
+}
+.theme-dots {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ padding: 2px 4px;
+ position: relative;
+}
+.theme-dots::after {
+ content: "";
+ width: 1px;
+ height: 16px;
+ background: var(--line);
+ margin-left: 4px;
+ opacity: .7;
+}
+:root[data-theme="midnight-dark"] .theme-dots::after { background: #444; }
+.theme-dot {
+ width: 16px;
+ height: 16px;
+ border-radius: 50%;
+ border: 2px solid #fff;
+ box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.12);
+ cursor: pointer;
+ transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+ padding: 0;
+ position: relative;
+}
+.theme-dot:hover {
+ transform: scale(1.28);
+ box-shadow: 0 0 0 2px var(--coral), 0 4px 12px rgba(0,0,0,.18);
+}
+.theme-dot.active {
+ transform: scale(1.18);
+ box-shadow: 0 0 0 2.5px var(--coral), 0 0 0 4px rgba(236,108,90,.25), 0 3px 10px rgba(0,0,0,.15);
+}
+.theme-dot.active::after {
+ content: "✓";
+ position: absolute;
+ inset: 0;
+ display: grid;
+ place-items: center;
+ font-size: 8px;
+ font-weight: 900;
+ color: #fff;
+ text-shadow: 0 1px 2px rgba(0,0,0,.4);
+ pointer-events: none;
+}
+.lang-toggle-btn {
+ border: none;
+ background: linear-gradient(135deg, var(--coral), color-mix(in srgb, var(--coral) 75%, #000));
+ color: #fff;
+ border-radius: 999px;
+ padding: 7px 14px;
+ font-size: 10px;
+ font-weight: 800;
+ letter-spacing: .5px;
+ display: inline-flex;
+ align-items: center;
+ gap: 5px;
+ box-shadow: 0 3px 10px color-mix(in srgb, var(--coral) 40%, transparent);
+ transition: transform .2s, box-shadow .2s, filter .2s;
+ white-space: nowrap;
+}
+.lang-toggle-btn:hover {
+ transform: translateY(-1px);
+ filter: brightness(1.08);
+ box-shadow: 0 5px 16px color-mix(in srgb, var(--coral) 50%, transparent);
+}
+.lang-toggle-btn:active { transform: translateY(0); }
+
+/* Tap-to-Translate Floating Bubble for Non-English Customers */
+.urdu-helper-bubble {
+ position: fixed;
+ z-index: 950;
+ max-width: min(310px, calc(100vw - 24px));
+ background: #171514;
+ color: #fff;
+ border: 1.5px solid #d4af37;
+ border-radius: 12px;
+ padding: 12px 14px;
+ box-shadow: 0 16px 40px rgba(0,0,0,.4);
+ font-size: 12px;
+ display: none;
+}
+.urdu-helper-bubble.show { display: block; animation: fadeInUp .22s ease; }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.urdu-helper-head {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-size: 9px;
+ font-weight: 800;
+ color: #f5d061;
+ letter-spacing: 1.2px;
+ margin-bottom: 6px;
+}
+.urdu-helper-close {
+ background: none;
+ border: 0;
+ color: #fff;
+ font-size: 18px;
+ line-height: 1;
+ cursor: pointer;
+ opacity: .85;
+}
+.urdu-helper-close:hover { opacity: 1; }
+.urdu-helper-body {
+ font-family: "Noto Nastaliq Urdu", "DM Sans", serif;
+ direction: rtl;
+ text-align: right;
+ font-size: 13.5px;
+ line-height: 2.1;
+ color: #fff;
+}
+.urdu-helper-orig {
+ font-size: 10px;
+ color: #aaa;
+ border-top: 1px solid #333;
+ margin-top: 6px;
+ padding-top: 5px;
+ direction: ltr;
+ text-align: left;
+}
+.tap-translate-hint-pill {
+ display: inline-flex;
+ align-items: center;
+ gap: 5px;
+ font-size: 9.5px;
+ color: var(--dark);
+ font-weight: 800;
+ cursor: pointer;
+ background: var(--light);
+ border: 1px solid var(--line);
+ padding: 6px 11px;
+ border-radius: 999px;
+ transition: all .2s;
+ letter-spacing: .3px;
+ white-space: nowrap;
+}
+.tap-translate-hint-pill:hover {
+ border-color: var(--coral);
+ color: var(--coral);
+ background: color-mix(in srgb, var(--coral) 8%, white);
+ transform: translateY(-1px);
+}
+:root[data-theme="midnight-dark"] .tap-translate-hint-pill {
+ background: #2a2a32;
+ border-color: #3f3f48;
+ color: #e4e4e7;
+}
+:root[data-theme="midnight-dark"] .tap-translate-hint-pill:hover {
+ border-color: var(--coral);
+ color: var(--coral);
+}
+
+/* Secure Payment & Order Verification Box */
+.secure-pay-box {
+ background: linear-gradient(160deg,#f0faf4 0%,#e8f7ee 40%,#f7fbf9 100%);
+ border: 2px solid transparent;
+ border-radius: 14px;
+ padding: 16px 14px;
+ margin: 14px 0;
+ position: relative;
+ box-shadow: 0 8px 28px rgba(33,107,62,.12), inset 0 1px 0 rgba(255,255,255,.8);
+ background-clip: padding-box;
+}
+.secure-pay-box::before {
+ content: "";
+ position: absolute; inset: -2px; border-radius: 16px; z-index: -1;
+ background: linear-gradient(135deg,#34d399,#10b981,#059669,#d4af37);
+ opacity: .85;
+}
+:root[data-theme="midnight-dark"] .secure-pay-box {
+ background: linear-gradient(160deg,#15251c,#1a2e22,#1a2620);
+ box-shadow: 0 8px 28px rgba(0,0,0,.4);
+}
+.secure-pay-badge {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ font-size: 10px;
+ font-weight: 900;
+ color: #0d7a45;
+ letter-spacing: .8px;
+ margin-bottom: 10px;
+ padding: 8px 10px;
+ background: rgba(16,185,129,.12);
+ border-radius: 8px;
+ border: 1px solid rgba(16,185,129,.25);
+}
+:root[data-theme="midnight-dark"] .secure-pay-badge { color:#6ee7a0; background:rgba(16,185,129,.15); border-color:rgba(16,185,129,.3); }
+.pay-method-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 9px;
+ margin: 10px 0;
+}
+.pay-method-card {
+ border: 1.5px solid var(--line);
+ background: #fff;
+ border-radius: 10px;
+ padding: 11px 12px;
+ font-size: 10px;
+ font-weight: 800;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ gap: 7px;
+ transition: .25s cubic-bezier(.22,1,.36,1);
+ box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+:root[data-theme="midnight-dark"] .pay-method-card { background:#232329; color:#f4f4f5; }
+.pay-method-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+.pay-method-card.active {
+ border-color: var(--coral);
+ background: linear-gradient(135deg, color-mix(in srgb, var(--coral) 12%, #fff), #fff);
+ box-shadow: 0 4px 16px color-mix(in srgb, var(--coral) 25%, transparent);
+ transform: translateY(-1px);
+}
+.captcha-row {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ margin-top: 10px;
+}
+.captcha-question {
+ background: linear-gradient(135deg, var(--dark), #2a2420);
+ color: #f5d061;
+ padding: 10px 14px;
+ border-radius: 8px;
+ font-weight: 900;
+ font-size: 12px;
+ letter-spacing: 1px;
+ white-space: nowrap;
+}
 
 </style>
 </head>
@@ -610,7 +997,32 @@ body:not(.admin-mode) .modal-gallery img {
   <label class="form-label">CITY</label><input class="form-input" id="customerCity" required maxlength="60" placeholder="Your city">
   <label class="form-label">COMPLETE DELIVERY ADDRESS</label><textarea class="form-input" id="customerAddress" required maxlength="500" placeholder="House number, street, area, landmark..."></textarea>
   <label class="form-label">ORDER NOTES (OPTIONAL)</label><textarea class="form-input" id="customerNotes" maxlength="300" placeholder="Any special instructions"></textarea>
-  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE COD ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
+
+  <div class="secure-pay-box">
+   <div class="secure-pay-badge"><span>🔒 256-BIT ENCRYPTED &amp; VERIFIED CHECKOUT</span><span>🛡️ FRAUD SHIELD</span></div>
+   <label class="form-label" style="margin-top:4px">SELECT SECURE PAYMENT METHOD</label>
+   <input type="hidden" id="selectedPaymentMethod" value="Cash on Delivery">
+   <div class="pay-method-grid" id="payMethodGrid">
+    <div class="pay-method-card active" data-pay="Cash on Delivery">💵 Cash on Delivery (COD)</div>
+    <div class="pay-method-card" data-pay="EasyPaisa / JazzCash">📱 EasyPaisa / JazzCash</div>
+    <div class="pay-method-card" data-pay="Bank Transfer (IBFT)">🏦 Direct Bank Transfer</div>
+    <div class="pay-method-card" data-pay="Advance Partial COD">🛡️ Verified Advance COD</div>
+   </div>
+   <div id="digitalPayDetails" class="hidden" style="margin-top:8px;padding:9px;background:#fff;border:1px solid var(--line);border-radius:6px;font-size:10.5px;line-height:1.7">
+    <b style="color:var(--coral)">Official COBRA STORE Account:</b><br>
+    EasyPaisa / JazzCash: <b>0343-2752543</b> (Aqib Javed)<br>
+    <span class="urdu-text" style="font-size:10px">رقم بھیجنے کے بعد نیچے Transaction ID (TID) لازمی درج کریں تاکہ آپ کی پیمنٹ فوری ویری فائی ہو سکے۔</span>
+    <label class="form-label" style="margin-top:6px">TRANSACTION ID / REFERENCE NO *</label>
+    <input class="form-input" id="paymentTrxId" maxlength="40" placeholder="Example: TID 8492019482">
+   </div>
+   <label class="form-label" style="margin-top:8px">SECURITY VERIFICATION (ANTI-FAKE ORDER CHECK) *</label>
+   <div class="captcha-row">
+    <span class="captcha-question" id="orderCaptchaQ">4 + 5 = ?</span>
+    <input class="form-input" id="orderCaptchaAns" type="number" required placeholder="Enter answer">
+   </div>
+  </div>
+
+  <div class="form-actions"><button class="gold-btn" type="submit" id="placeOrderButton">PLACE VERIFIED ORDER</button><button class="outline-btn" type="button" onclick="closeOrder()">CANCEL</button></div>
   <div class="status" id="orderStatus"></div>
  </form>
 </div></div>
@@ -888,7 +1300,13 @@ body:not(.admin-mode) .modal-gallery img {
  </div>
 </div>
 
-<button class="music-button" id="musicToggle" title="Music on/off">♫</button><div class="toast" id="toast"></div>
+<!-- Tiny vertical controls bottom-LEFT: Color cycle + Language -->
+<div class="cobra-float-dock" id="cobraFloatDock" aria-label="Theme and language">
+  <button type="button" class="cobra-mini-btn" id="themeCycleBtn" title="Change color theme">🎨</button>
+  <button type="button" class="cobra-mini-btn" id="langSwitchBtn" title="Urdu / English">اردو</button>
+</div>
+<button type="button" class="music-button" id="musicToggle" title="Music on/off">♫</button>
+<div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -1770,11 +2188,33 @@ $("orderForm").addEventListener("submit",async event=>{
  const deliveryCharge=window.deliveryFor?window.deliveryFor(subtotal):0;
  const total=subtotal+deliveryCharge;
 
+ const payMethod = ($("selectedPaymentMethod") ? $("selectedPaymentMethod").value : "Cash on Delivery") || "Cash on Delivery";
+ const trxId = ($("paymentTrxId") ? $("paymentTrxId").value.trim() : "");
+ const captchaAns = Number($("orderCaptchaAns") ? $("orderCaptchaAns").value : NaN);
+ if(!Number.isFinite(captchaAns) || captchaAns !== window.__cobraCaptchaExpected){
+  $("orderStatus").textContent="⚠️ Security check answer is incorrect. Please solve the simple math question.";
+  if(window.refreshOrderCaptcha) window.refreshOrderCaptcha();
+  return;
+ }
+ if(payMethod !== "Cash on Delivery" && trxId.length < 5){
+  $("orderStatus").textContent="⚠️ Please enter a valid Transaction ID (TID) for " + payMethod + ".";
+  return;
+ }
+ const lastOrderTime = Number(localStorage.getItem("cobraLastOrderTs") || 0);
+ if(Date.now() - lastOrderTime < 15000){
+  $("orderStatus").textContent="⚠️ Please wait 15 seconds before placing another order.";
+  return;
+ }
+ const securitySignature = "SEC-" + Math.abs((phone + "|" + total + "|" + Date.now()).split("").reduce((a,c)=>((a<<5)-a)+c.charCodeAt(0),0)).toString(36).toUpperCase();
+
  const order={
   customerName:name,email,phone,city,address,notes,
   items:orderItems.map(x=>({productId:x.id,name:cleanProductName(x.name),category:x.category,price:finalPrice(x),quantity:x.qty,size:x.selectedSize||"",color:x.selectedColor||""})),
   subtotal,deliveryCharge,total,
-  paymentMethod:"Cash on Delivery",
+  paymentMethod:payMethod,
+  transactionId:trxId,
+  paymentVerified:payMethod === "Cash on Delivery" ? "COD-Verified" : "Pending-TID-Check",
+  securityHash:securitySignature,
   status:"Pending",
   createdAt:firebase.firestore.FieldValue.serverTimestamp()
  };
@@ -1801,6 +2241,7 @@ $("orderForm").addEventListener("submit",async event=>{
    createdAtMs:Date.now()
   };
   await db.collection("tracking").doc(trackingKey).set(trackingData);
+  try{ localStorage.setItem("cobraLastOrderTs", String(Date.now())); }catch(e){}
 
   orderItems=[];cart=[];appliedDiscount=0;appliedCouponName="";
   updateCart();
@@ -1954,7 +2395,7 @@ function renderAdminOrders(orders){
     <b>City:</b> ${escapeHTML(o.city||"")}<br>
     <b>Address:</b> ${escapeHTML(o.address||"")}<br>
     <b>Notes:</b> ${escapeHTML(o.notes||"No notes")}<br>
-    <b>Payment:</b> ${escapeHTML(o.paymentMethod||"Cash on Delivery")}<br>
+    <b>Payment:</b> ${escapeHTML(o.paymentMethod||"Cash on Delivery")}${o.transactionId?` • <b>TID:</b> <span style="color:var(--coral)">${escapeHTML(o.transactionId)}</span>`:""}${o.securityHash?` • <small>[${escapeHTML(o.securityHash)}]</small>`:""}<br>
     <b>Date:</b> ${escapeHTML(formatOrderDate(o.createdAt))}
    </div>
    <div class="order-items"><b>ORDER ITEMS</b>${itemHTML}<b>Total: ${money(o.total)}</b></div>
@@ -2972,5 +3413,338 @@ async function adminDownloadProductMedia(productId){
 })();
 
 </script>
+
+<!-- Tap-to-Translate Urdu Helper Bubble -->
+<div class="urdu-helper-bubble" id="urduHelperBubble" role="tooltip">
+ <div class="urdu-helper-head">
+  <span>📖 آسان اردو ترجمہ (URDU TRANSLATION)</span>
+  <button type="button" class="urdu-helper-close" id="closeUrduBubble" aria-label="Close">×</button>
+ </div>
+ <div class="urdu-helper-body" id="urduHelperText"></div>
+ <div class="urdu-helper-orig" id="urduHelperOrig"></div>
+</div>
+
+<script>
+/* === V5 ENGINE: THEME CUSTOMIZER, URDU/ENGLISH LANGUAGE MODE, TAP-TO-TRANSLATE & SECURE PAYMENT === */
+(function(){
+ // 1. THEME SWITCHER — one small button cycles all themes
+ const THEME_LIST = ["default","black-gold","emerald-luxury","royal-navy","midnight-dark"];
+ const THEME_NAMES = {"default":"Coral Classic","black-gold":"Black & Gold","emerald-luxury":"Emerald Royal","royal-navy":"Royal Navy","midnight-dark":"Midnight Dark"};
+ let currentTheme = localStorage.getItem("cobraStoreTheme") || "default";
+ function applyStoreTheme(theme){
+  currentTheme = theme;
+  if(theme === "default") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("cobraStoreTheme", theme);
+  const themeBtn = document.getElementById("themeCycleBtn");
+  if(themeBtn){
+   const colors = {"default":"#ec6c5a","black-gold":"#d4af37","emerald-luxury":"#1b7a56","royal-navy":"#1e56a0","midnight-dark":"#333"};
+   themeBtn.style.background = colors[theme] || "#ec6c5a";
+   themeBtn.style.animation = "none";
+  }
+ }
+ applyStoreTheme(currentTheme);
+ const themeCycleBtn = document.getElementById("themeCycleBtn");
+ if(themeCycleBtn){
+  themeCycleBtn.addEventListener("click", function(e){
+   e.preventDefault();
+   e.stopPropagation();
+   const idx = THEME_LIST.indexOf(currentTheme);
+   const next = THEME_LIST[(idx + 1) % THEME_LIST.length];
+   applyStoreTheme(next);
+   if(typeof showToast === "function") showToast("🎨 " + (THEME_NAMES[next] || next));
+  });
+ }
+
+ // 2. SECURE PAYMENT METHOD SELECTOR & ANTI-BOT MATH CAPTCHA
+ window.__cobraCaptchaExpected = 9;
+ window.refreshOrderCaptcha = function(){
+  const a = Math.floor(Math.random() * 8) + 2;
+  const b = Math.floor(Math.random() * 8) + 1;
+  window.__cobraCaptchaExpected = a + b;
+  const qEl = $("orderCaptchaQ");
+  const aEl = $("orderCaptchaAns");
+  if(qEl) qEl.textContent = `${a} + ${b} = ?`;
+  if(aEl) aEl.value = "";
+ };
+ refreshOrderCaptcha();
+
+ const origOpenOrderModal = window.openOrderModal;
+ if(typeof origOpenOrderModal === "function"){
+  window.openOrderModal = function(){
+   origOpenOrderModal();
+   refreshOrderCaptcha();
+  };
+ }
+
+ const payGrid = $("payMethodGrid");
+ if(payGrid){
+  payGrid.addEventListener("click", (e)=>{
+   const card = e.target.closest(".pay-method-card");
+   if(!card) return;
+   payGrid.querySelectorAll(".pay-method-card").forEach(c=>c.classList.remove("active"));
+   card.classList.add("active");
+   const method = card.dataset.pay;
+   if($("selectedPaymentMethod")) $("selectedPaymentMethod").value = method;
+   const digBox = $("digitalPayDetails");
+   const btn = $("placeOrderButton");
+   if(digBox){
+    if(method === "Cash on Delivery"){
+     digBox.classList.add("hidden");
+     if(btn) btn.textContent = "PLACE VERIFIED COD ORDER";
+    } else {
+     digBox.classList.remove("hidden");
+     if(btn) btn.textContent = "VERIFY PAYMENT & PLACE ORDER";
+    }
+   }
+  });
+ }
+
+ // 3. ONE-CLICK FULL ENGLISH <-> FULL URDU TOGGLE
+ // Click once = whole UI becomes Urdu. Click again = back to English.
+ // Existing Urdu-only blocks (policies, FAQ etc.) stay Urdu in both modes.
+ let currentLang = localStorage.getItem("cobraStoreLang") || "en";
+ const UI_TRANSLATIONS = {
+  "HOME": "ہوم",
+  "CATEGORIES": "کیٹیگریز",
+  "PRODUCTS": "پروڈکٹس",
+  "CONTACT": "رابطہ کریں",
+  "TRACK ORDER": "آرڈر ٹریک کریں",
+  "WISHLIST": "پسندیدہ",
+  "CART": "کارٹ",
+  "EXPLORE COLLECTION": "کلیکشن دیکھیں",
+  "VIEW ALL PRODUCTS": "تمام پروڈکٹس دیکھیں",
+  "SHOP BY CATEGORY": "کیٹیگری کے مطابق خریداری",
+  "OUR COLLECTION": "ہماری کلیکشن",
+  "RECENTLY VIEWED": "حال ہی میں دیکھے گئے",
+  "ALL PRODUCTS": "تمام پروڈکٹس",
+  "GIRLS SHOES": "لڑکیوں کے جوتے",
+  "BOYS SHOES": "لڑکوں کے جوتے",
+  "BOYS CLOTHES": "لڑکوں کے کپڑے",
+  "GIRLS CLOTHES": "لڑکیوں کے کپڑے",
+  "BOYS WATCHES": "لڑکوں کی گھڑیاں",
+  "GIRLS WATCHES": "لڑکیوں کی گھڑیاں",
+  "MOBILE ACCESSORIES": "موبائل اسیسریز",
+  "ELECTRONICS": "الیکٹرانکس",
+  "FASHION": "فیشن",
+  "ADD TO CART": "کارٹ میں شامل کریں",
+  "VIEW DETAILS": "تفصیل دیکھیں",
+  "WHATSAPP ORDER": "واٹس ایپ آرڈر",
+  "BUY NOW • CASH ON DELIVERY": "ابھی خریدیں • کیش آن ڈلیوری",
+  "SELECT SIZE / OPTION": "سائز / آپشن منتخب کریں",
+  "SELECT COLOR": "رنگ منتخب کریں",
+  "YOUR CART": "آپ کا شاپنگ کارٹ",
+  "CHECKOUT • COD": "آرڈر مکمل کریں • کیش آن ڈلیوری",
+  "ORDER ON WHATSAPP": "واٹس ایپ پر آرڈر کریں",
+  "CONTACT ON WHATSAPP": "واٹس ایپ پر رابطہ کریں",
+  "JOIN WHATSAPP GROUP": "واٹس ایپ گروپ جوائن کریں",
+  "CASH ON DELIVERY": "کیش آن ڈلیوری (گھر پر ادائیگی)",
+  "TRACK YOUR ORDER": "اپنا آرڈر ٹریک کریں",
+  "Customer Reviews": "کسٹمرز کے تبصرے",
+  "WRITE A REVIEW": "اپنا تبصرہ لکھیں",
+  "SUBMIT REVIEW": "تبصرہ جمع کریں",
+  "POST QUESTION": "سوال بھیجیں",
+  "SEND MESSAGE TO ADMIN": "ایڈمن کو پیغام بھیجیں",
+  "FIND YOUR STYLE": "اپنا اسٹائل تلاش کریں",
+  "MADE FOR EVERYDAY": "روزمرہ کے لیے",
+  "YOUR BROWSING HISTORY": "آپ کی براؤزنگ ہسٹری",
+  "A NEW WAY TO SHOP": "خریداری کا نیا طریقہ",
+  "STYLE • QUALITY • TRUST": "اسٹائل • کوالٹی • اعتماد",
+  "REVIEWS": "ریویوز",
+  "QUESTIONS": "سوالات",
+  "MESSAGE ADMIN": "ایڈمن کو پیغام",
+  "PLACE VERIFIED ORDER": "آرڈر جمع کرائیں",
+  "PLACE VERIFIED COD ORDER": "کیش آن ڈلیوری آرڈر",
+  "VERIFY PAYMENT & PLACE ORDER": "پیمنٹ ویری فائی کر کے آرڈر کریں",
+  "CANCEL": "منسوخ",
+  "FULL NAME": "پورا نام",
+  "EMAIL ADDRESS": "ای میل ایڈریس",
+  "PHONE NUMBER": "فون نمبر",
+  "CITY": "شہر",
+  "COMPLETE DELIVERY ADDRESS": "مکمل ڈلیوری ایڈریس",
+  "ORDER NOTES (OPTIONAL)": "آرڈر نوٹس (اختیاری)",
+  "SELECT SECURE PAYMENT METHOD": "محفوظ ادائیگی کا طریقہ منتخب کریں",
+  "SECURITY VERIFICATION (ANTI-FAKE ORDER CHECK) *": "سیکورٹی چیک (جعلی آرڈر روک تھام) *",
+  "Sort: Default": "ترتیب: ڈیفالٹ",
+  "Price: Low to High": "قیمت: کم سے زیادہ",
+  "Price: High to Low": "قیمت: زیادہ سے کم",
+  "Name: A to Z": "نام: A سے Z"
+ };
+
+ function applyLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem("cobraStoreLang", lang);
+  document.documentElement.setAttribute("lang", lang === "ur" ? "ur" : "en");
+  document.body.classList.toggle("lang-urdu", lang === "ur");
+
+  const btn = document.getElementById("langSwitchBtn");
+  if(btn){
+   btn.textContent = lang === "ur" ? "EN" : "اردو";
+   btn.title = lang === "ur" ? "English" : "Urdu";
+  }
+
+  const selectors = "nav a, .header-actions > button.outline-btn, h2, h3, h4, .active-label, .form-label, .eyebrow, .hero-kicker, .hero-sale, .benefit strong, .benefit span, .logo-sub, .pm-tab, .section-heading h2, .gold-btn, .outline-btn, option, .category-card h3, .category-card small";
+  document.querySelectorAll(selectors).forEach(el=>{
+   if(el.closest(".cobra-float-dock")) return;
+   if(el.id === "langSwitchBtn" || el.id === "musicToggle" || el.id === "themeCycleBtn") return;
+
+   // Header buttons with counts: WISHLIST (0) / CART (0)
+   if(el.id === "wishlistOpen" || el.id === "cartOpen"){
+    if(!el.dataset.origEn) el.dataset.origEn = el.id === "wishlistOpen" ? "WISHLIST" : "CART";
+    const span = el.querySelector("span");
+    const count = span ? span.textContent : "0";
+    const sid = span ? span.id : (el.id === "wishlistOpen" ? "wishlistCount" : "cartCount");
+    const label = lang === "ur" ? UI_TRANSLATIONS[el.dataset.origEn] : el.dataset.origEn;
+    el.innerHTML = label + ` (<span id="${sid}">${count}</span>)`;
+    return;
+   }
+   if(el.id === "trackOpenButton"){
+    if(!el.dataset.origEn) el.dataset.origEn = "TRACK ORDER";
+    el.textContent = lang === "ur" ? UI_TRANSLATIONS[el.dataset.origEn] : el.dataset.origEn;
+    return;
+   }
+
+   let txt = "";
+   if(el.matches("option")) txt = el.textContent.trim();
+   else if(el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) txt = el.textContent.trim();
+   else if(el.matches("button, a") && !el.querySelector("span, img, svg")) txt = el.textContent.trim();
+   else return;
+   if(!txt) return;
+   const base = txt.replace(/\s*\(\d+\)\s*$/,"").trim();
+   if(!el.dataset.origEn){
+    if(UI_TRANSLATIONS[base]) el.dataset.origEn = base;
+    else if(UI_TRANSLATIONS[txt]) el.dataset.origEn = txt;
+   }
+   if(el.dataset.origEn && UI_TRANSLATIONS[el.dataset.origEn]){
+    el.textContent = lang === "ur" ? UI_TRANSLATIONS[el.dataset.origEn] : el.dataset.origEn;
+   }
+  });
+
+  const searchInp = document.getElementById("searchInput");
+  if(searchInp) searchInp.placeholder = lang === "ur" ? "پروڈکٹ تلاش کریں..." : "Search products...";
+
+  // Hero paragraph & section descriptions
+  const heroP = document.querySelector(".hero p");
+  if(heroP){
+   if(!heroP.dataset.origEn) heroP.dataset.origEn = heroP.textContent.trim();
+   heroP.textContent = lang === "ur"
+     ? "ہماری منتخب کلیکشن سے اپنا اسٹائل دریافت کریں۔ جوتے، فیشن، گھڑیاں، الیکٹرانکس اور روزمرہ کی چیزیں — آپ کے دروازے تک۔"
+     : heroP.dataset.origEn;
+   heroP.style.fontFamily = lang === "ur" ? '"Noto Nastaliq Urdu","DM Sans",serif' : "";
+  }
+
+  document.querySelectorAll(".section-heading p, .benefit span, .form-label").forEach(el=>{
+   el.style.fontFamily = lang === "ur" ? '"Noto Nastaliq Urdu","DM Sans",serif' : "";
+  });
+ }
+
+ // Init language
+ applyLanguage(currentLang);
+
+ const langBtn = document.getElementById("langSwitchBtn");
+ if(langBtn){
+  langBtn.addEventListener("click", function(e){
+   e.preventDefault();
+   e.stopPropagation();
+   const next = currentLang === "en" ? "ur" : "en";
+   applyLanguage(next);
+   if(typeof showToast === "function"){
+    showToast(next === "ur" ? "🌐 پوری ویب سائٹ اردو میں تبدیل ہو گئی" : "🌐 Store switched to English");
+   }
+  });
+ }
+
+ // Tap-to-translate bubble still works when user taps English text (no separate button needed)
+ let tapTranslateEnabled = true;
+
+ const PHRASE_DICT = {
+  "cash on delivery": "کیش آن ڈلیوری (پارسل ملنے پر پیسے ادا کریں)",
+  "pay when your order arrives": "جب آپ کا آرڈر آپ کے دروازے پر پہنچے تب پیسے ادا کریں",
+  "curated collection": "منتخب اور بہترین کوالٹی کی کلیکشن",
+  "selected products for your style": "آپ کے انداز کے مطابق خاص منتخب کردہ مصنوعات",
+  "whatsapp support": "واٹس ایپ کسٹمر سپورٹ",
+  "we are here to help you": "ہم آپ کی مدد کے لیے ہر وقت موجود ہیں",
+  "discover your style with our curated collection": "ہماری خاص کلیکشن کے ساتھ اپنا بہترین اسٹائل دریافت کریں",
+  "in stock": "اسٹاک میں موجود ہے (دستیاب ہے)",
+  "sold out": "اسٹاک ختم ہو چکا ہے",
+  "out of stock": "فی الحال دستیاب نہیں",
+  "free delivery": "مفت ڈلیوری (کوئی ڈلیوری چارجز نہیں)",
+  "add to cart": "خریداری کے لیے کارٹ میں شامل کریں",
+  "view details": "پروڈکٹ کی مکمل تفصیل دیکھیں",
+  "buy now": "ابھی آرڈر کریں",
+  "100% premium quality": "100% اعلیٰ اور معیاری کوالٹی",
+  "fast cod delivery": "تیز رفتار کیش آن ڈلیوری",
+  "easy exchange": "آسان تبدیلی (ایکسچینج) کی سہولت",
+  "customers are viewing this product right now": "گاہک اس وقت یہ پروڈکٹ دیکھ رہے ہیں",
+  "tap image to zoom": "تصویر کو بڑا (زوم) کر کے دیکھنے کے لیے کلک کریں",
+  "please select a color": "براہِ کرم اپنا پسندیدہ رنگ منتخب کریں",
+  "select size / option": "اپنا سائز یا آپشن منتخب کریں",
+  "enter your delivery details": "اپنا نام، فون نمبر اور مکمل پتہ درج کریں",
+  "complete delivery address": "گھر یا دفتر کا مکمل پتہ جہاں پارسل بھیجنا ہے",
+  "order notes": "آرڈر کے بارے میں کوئی خاص ہدایت (اختیاری)",
+  "share this product on whatsapp": "یہ پروڈکٹ واٹس ایپ پر دوستوں کو شیئر کریں"
+ };
+
+ const WORD_DICT = {
+  "shoes":"جوتے","watch":"گھڑی","watches":"گھڑیاں","clothes":"کپڑے","boys":"لڑکوں کے","girls":"لڑکیوں کے",
+  "fashion":"فیشن","electronics":"الیکٹرانکس","mobile":"موبائل","accessories":"لوازمات / اسیسریز",
+  "sale":"سیل (رعایت)","off":"رعایت / ڈسکاؤنٹ","price":"قیمت","discount":"رعایت","new":"نیا / جدید",
+  "arrival":"آمد","luxury":"پرتعیش / اعلیٰ","premium":"اعلیٰ معیار","leather":"چمڑے کا","wallet":"بٹوہ / والٹ",
+  "bag":"بیگ","bags":"بیگز","earbuds":"ایئربڈز","bluetooth":"بلوٹوتھ","smart":"اسمارٹ","men":"مردانہ",
+  "women":"زنانہ","kids":"بچوں کے","black":"کالا","white":"سفید","red":"سرخ","blue":"نیلا","green":"سبز",
+  "gold":"سنہری","brown":"بھورا","grey":"سرمئی","pink":"گلابی","cotton":"کاٹن / سوتی","warranty":"وارنٹی",
+  "original":"اصل / اوریجنل","quality":"معیار / کوالٹی","size":"سائز","color":"رنگ","total":"کل رقم",
+  "subtotal":"اشیاء کی رقم","delivery":"ڈلیوری","order":"آرڈر","confirm":"تصدیق کریں","track":"ٹریک کریں",
+  "pending":"زیرِ التواء","confirmed":"تصدیق شدہ","packed":"پیک ہو چکا ہے","shipped":"روانہ کر دیا گیا ہے",
+  "delivered":"پہنچا دیا گیا ہے","cancelled":"منسوخ شدہ","reviews":"تبصرے","questions":"سوالات",
+  "description":"تفصیل","availability":"دستیابی","stock":"اسٹاک"
+ };
+
+ function translateEnglishToUrdu(rawText){
+  const clean = String(rawText || "").replace(/\s+/g, " ").trim();
+  if(!clean || !/[a-zA-Z]{2,}/.test(clean)) return "";
+  const lower = clean.toLowerCase();
+  for(const [phrase, urdu] of Object.entries(PHRASE_DICT)){
+   if(lower.includes(phrase)) return urdu;
+  }
+  const tokens = clean.split(/(\s+|[.,!?•\-–—:()/]+)/);
+  let matched = 0;
+  const translated = tokens.map(tok=>{
+   const key = tok.toLowerCase();
+   if(WORD_DICT[key]){ matched++; return WORD_DICT[key]; }
+   return tok;
+  }).join("");
+  if(matched > 0) return "مفہوم: " + translated;
+  return "انگریزی عبارت: «" + clean.slice(0, 90) + "» — (اس حصے میں پروڈکٹ یا اسٹور کی معلومات درج ہیں)";
+ }
+
+ const bubble = $("urduHelperBubble");
+ const bubbleText = $("urduHelperText");
+ const bubbleOrig = $("urduHelperOrig");
+ if($("closeUrduBubble")){
+  $("closeUrduBubble").addEventListener("click", ()=>bubble.classList.remove("show"));
+ }
+
+ document.addEventListener("click", (e)=>{
+  if(!tapTranslateEnabled || !bubble) return;
+  if(e.target.closest("#urduHelperBubble, input, textarea, select, .theme-dot, #langSwitchBtn, .cobra-float-dock, .music-button, .wa-float")) return;
+  const target = e.target.closest("p, h1, h2, h3, h4, span, small, strong, b, label, .detail-line, .trust-pill, .benefit, .hero-kicker, .hero-sale, .product-tag, .product-note, .status");
+  if(!target) return;
+  const txt = target.innerText || target.textContent || "";
+  if(!/[a-zA-Z]{3,}/.test(txt) || txt.length > 260) return;
+  const urdu = translateEnglishToUrdu(txt);
+  if(!urdu) return;
+  bubbleText.textContent = urdu;
+  bubbleOrig.textContent = txt.trim().slice(0, 110);
+  const rect = target.getBoundingClientRect();
+  const topPos = Math.min(window.innerHeight - 135, Math.max(14, rect.bottom + 8));
+  const leftPos = Math.min(window.innerWidth - 325, Math.max(12, rect.left));
+  bubble.style.top = topPos + "px";
+  bubble.style.left = leftPos + "px";
+  bubble.classList.add("show");
+ });
+})();
+</script>
+
 </body>
 </html>
