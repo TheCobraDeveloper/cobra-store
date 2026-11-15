@@ -2924,11 +2924,17 @@ function finishIntro(){
   intro.style.display="none";
   try{introVideo.pause()}catch(e){}
   startOfferPopups();startCobra();
-  // Soft welcome only (not full catalog) — for visitors
-  setTimeout(function(){ if(typeof playWelcomeVoiceOnly==="function") playWelcomeVoiceOnly(); }, 700);
- },950);
+  // Direct welcome only — no other intro voice
+  setTimeout(function(){ if(typeof playWelcomeVoiceOnly==="function") playWelcomeVoiceOnly(); }, 400);
+ },500);
 }
-$("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
+$("skipIntro").addEventListener("click",function(e){
+ e.preventDefault();
+ try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(err){}
+ finishIntro();
+});
+introVideo.addEventListener("ended",finishIntro);
+introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
 let cobraVoiceOn=false,cobraAmbientCtx=null,cobraAmbientNodes=[],cobraSpeakQueue=[],cobraSpeakBusy=false,cobraClickSpeakLast=0;
@@ -2973,15 +2979,23 @@ function speakLine(text,preferUrdu,onEnd){
  try{speechSynthesis.speak(u)}catch(e){if(onEnd)onEnd()}
 }
 function playWelcomeVoiceOnly(){
- // After intro video: only "Welcome to the Cobra Premium Store" — not full music intro
+ // Skip intro / video end → ONLY this line. Full catalog only via music button.
  if(typeof isAdmin!=="undefined"&&isAdmin)return;
  if(!window.speechSynthesis)return;
- if(cobraVoiceOn||cobraSpeakQueue.length)return;
+ try{speechSynthesis.cancel()}catch(e){}
+ cobraSpeakQueue=[];cobraSpeakBusy=false;cobraVoiceOn=false;
  const urdu=(localStorage.getItem("cobraStoreLang")==="ur");
  const msg=urdu
-  ?"خوش آمدید کو برا پریمیم سٹور میں۔"
+  ?"Welcome to the Cobra Premium Store. خوش آمدید کو برا پریمیم سٹور میں۔"
   :"Welcome to the Cobra Premium Store.";
- speakLine(msg,urdu,null);
+ // Prefer clear English welcome as requested
+ const u=new SpeechSynthesisUtterance(msg);
+ u.rate=0.95;u.pitch=1;u.volume=1;
+ u.lang="en-US";
+ const voices=speechSynthesis.getVoices()||[];
+ const v=voices.find(x=>/^en/i.test(x.lang)&&/female|zira|samantha|google|natural/i.test(x.name))||voices.find(x=>/^en/i.test(x.lang));
+ if(v)u.voice=v;
+ try{speechSynthesis.speak(u)}catch(e){}
 }
 function runSpeakQueue(){
  if(cobraSpeakBusy||!cobraSpeakQueue.length){
