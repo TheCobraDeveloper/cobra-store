@@ -315,6 +315,80 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 .size-manager-add{grid-template-columns:1fr}.size-manager-add button{width:100%}
 .campaign-public{padding:0 12px}.campaign-public-inner{grid-template-columns:1fr}.campaign-public-image{max-height:210px;min-height:150px;grid-row:1}
 }
+
+/* === V4 STEALTH ADMIN & MEDIA PROTECTION === */
+body:not(.admin-mode) img, body:not(.admin-mode) video {
+ -webkit-user-select: none;
+ user-select: none;
+ -webkit-touch-callout: none;
+}
+body:not(.admin-mode) .product-image img,
+body:not(.admin-mode) .modal-icon img,
+body:not(.admin-mode) .modal-gallery img {
+ pointer-events: none;
+}
+.modal-icon { cursor: zoom-in; }
+.admin-media-bar {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+ margin: 12px 0;
+ padding: 11px;
+ background: #171514;
+ border: 1px solid #d4af37;
+ border-radius: 6px;
+ align-items: center;
+ justify-content: space-between;
+}
+.admin-media-bar span {
+ color: #f5d061;
+ font-size: 10px;
+ font-weight: 800;
+ letter-spacing: .8px;
+}
+.admin-media-bar .admin-dl-btns {
+ display: flex;
+ gap: 6px;
+ flex-wrap: wrap;
+}
+.admin-dl-btn {
+ background: #d4af37;
+ color: #171514;
+ border: 0;
+ border-radius: 4px;
+ padding: 7px 11px;
+ font-size: 9px;
+ font-weight: 900;
+ letter-spacing: .6px;
+}
+.admin-dl-btn:hover { background: #f5d061; }
+.admin-stats-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 10px;
+ margin: 12px 0 18px;
+}
+.admin-stat-card {
+ background: #faf7f5;
+ border: 1px solid var(--line);
+ border-radius: 6px;
+ padding: 12px 8px;
+ text-align: center;
+}
+.admin-stat-card strong {
+ display: block;
+ font-size: 18px;
+ color: var(--coral);
+ font-family: "Syne", sans-serif;
+}
+.admin-stat-card span {
+ font-size: 9px;
+ font-weight: 800;
+ color: var(--muted);
+ letter-spacing: .8px;
+}
+@media(max-width:600px){ .admin-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
 </style>
 </head>
 <body>
@@ -356,7 +430,7 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
   <button class="outline-btn" id="wishlistOpen">WISHLIST (<span id="wishlistCount">0</span>)</button>
   <button class="outline-btn" id="cartOpen">CART (<span id="cartCount">0</span>)</button>
   <button class="outline-btn" id="trackOpenButton">TRACK ORDER</button>
-  <button class="outline-btn" id="adminLoginButton">ADMIN LOGIN</button>
+  <button class="outline-btn hidden" id="adminLoginButton" aria-hidden="true">ADMIN LOGIN</button>
   <button class="outline-btn hidden" id="adminPanelButton">ADMIN PANEL</button>
   <button class="outline-btn hidden" id="adminLogoutButton">LOGOUT</button>
  </div>
@@ -459,8 +533,9 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 <div class="modal" id="productModal" onclick="closeModalOutside(event)"><div class="modal-box">
  <button class="close" onclick="closeModal()">×</button>
  <div class="modal-icon" id="modalIcon"></div><div class="modal-gallery" id="modalGallery"></div>
- <video id="modalVideo" class="modal-video hidden" controls playsinline></video>
+ <video id="modalVideo" class="modal-video hidden" controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsinline></video>
  <iframe id="modalVideoFrame" class="modal-video hidden" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+ <div id="adminProductMediaBar" class="admin-media-bar hidden"></div>
  <div class="product-tag" id="modalCategory"></div><h3 id="modalName"></h3><p id="modalDescription"></p>
  <div class="modal-price" id="modalPrice"></div><div class="detail-line" id="modalStock"></div>
  <div class="detail-line" id="modalSizes"></div><div class="detail-line" id="modalExtraDetails"></div>
@@ -623,7 +698,13 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 
 <div class="modal" id="adminModal"><div class="admin-panel">
  <div class="admin-top"><h2>COBRA ADMIN PANEL</h2><button class="outline-btn" onclick="closeAdmin()">CLOSE ✕</button></div>
- <div class="status">Administrator access enabled.</div>
+ <div class="status">Administrator access enabled. Stealth visitor mode is active (visitors cannot see admin controls or download media).</div>
+ <div class="admin-stats-grid" id="adminStatsGrid">
+  <div class="admin-stat-card"><strong id="statProducts">0</strong><span>PRODUCTS</span></div>
+  <div class="admin-stat-card"><strong id="statPending">0</strong><span>PENDING ORDERS</span></div>
+  <div class="admin-stat-card"><strong id="statConfirmed">0</strong><span>CONFIRMED</span></div>
+  <div class="admin-stat-card"><strong id="statRevenue">Rs. 0</strong><span>CONFIRMED SALES</span></div>
+ </div>
 
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
  <div class="status urdu-text">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
@@ -1767,8 +1848,27 @@ $("reviewForm").addEventListener("submit",async event=>{
  finally{button.disabled=false;button.textContent="SUBMIT REVIEW"}
 });
 
+let adminLoginRevealed = new URLSearchParams(window.location.search).get("admin") === "1";
 function updateAdminButtons(){
- $("adminLoginButton").classList.toggle("hidden",isAdmin);$("adminPanelButton").classList.toggle("hidden",!isAdmin);$("adminLogoutButton").classList.toggle("hidden",!isAdmin);
+ document.body.classList.toggle("admin-mode", isAdmin);
+ $("adminLoginButton").classList.toggle("hidden", isAdmin || !adminLoginRevealed);
+ $("adminPanelButton").classList.toggle("hidden", !isAdmin);
+ $("adminLogoutButton").classList.toggle("hidden", !isAdmin);
+ const vid = $("modalVideo");
+ if(vid){
+  if(isAdmin) vid.removeAttribute("controlsList");
+  else vid.setAttribute("controlsList", "nodownload noremoteplayback");
+ }
+ if(currentProduct && $("productModal").classList.contains("show")){
+  renderAdminMediaDownloadBar(currentProduct);
+ }
+}
+function revealAdminLogin(){
+ if(isAdmin){ openAdmin(); return; }
+ adminLoginRevealed = true;
+ updateAdminButtons();
+ $("loginStatus").textContent = "";
+ $("loginModal").classList.add("show");
 }
 $("adminLoginButton").addEventListener("click",()=>{$("loginStatus").textContent="";$("loginModal").classList.add("show")});
 function closeLogin(){$("loginModal").classList.remove("show")}
@@ -1833,7 +1933,11 @@ function renderAdminOrders(orders){
  if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
  if(!orders.length){box.innerHTML='<div class="status">ابھی کوئی ویب سائٹ آرڈر موصول نہیں ہوا۔</div>';return}
  const pending=orders.filter(o=>["","pending"].includes(String(o.status||"").toLowerCase()));
- const confirmed=orders.filter(o=>!["","pending"].includes(String(o.status||"").toLowerCase()));
+ const confirmed=orders.filter(o=>!["","pending","cancelled"].includes(String(o.status||"").toLowerCase()));
+ const revenue=confirmed.reduce((sum,o)=>sum+(Number(o.total)||0),0);
+ if($("statPending")) $("statPending").textContent = pending.length;
+ if($("statConfirmed")) $("statConfirmed").textContent = confirmed.length;
+ if($("statRevenue")) $("statRevenue").textContent = money(revenue);
  function orderCard(o,isConfirmed){
   const items=Array.isArray(o.items)?o.items:[];
   const itemHTML=items.map(item=>
@@ -1897,7 +2001,8 @@ function renderAdminProducts(){
  const list=$("adminProductList");if(!list)return;
  if(!requireAdmin()){list.innerHTML='<div class="status">Please sign in as administrator.</div>';return}
  if(!products.length){list.innerHTML='<div class="status">No products added yet.</div>';return}
- list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
+ if($("statProducts")) $("statProducts").textContent = products.length;
+ list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
 }
 
 function getManagerDraft(product){
@@ -2728,6 +2833,144 @@ if(db){
   }, {passive:true});
  }
 })();
+
+/* === V4 ADMIN-ONLY MEDIA DOWNLOADER, STEALTH VISITOR ACCESS & ANTI-DOWNLOAD SHIELD === */
+async function forceDownloadFile(url, filename){
+ if(!requireAdmin()){
+  showToast("🛡️ Only Admin can download product photos and videos.");
+  return;
+ }
+ try{
+  showToast("Downloading: " + filename + "...");
+  const resp = await fetch(url, {mode: "cors"});
+  if(!resp.ok) throw new Error("Fetch blocked");
+  const blob = await resp.blob();
+  const blobUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(blobUrl), 4000);
+ }catch(e){
+  // Fallback open in new tab if CORS headers restrict blob fetch
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.target = "_blank";
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+ }
+}
+
+function renderAdminMediaDownloadBar(p){
+ const bar = $("adminProductMediaBar");
+ if(!bar) return;
+ if(!requireAdmin() || !p){
+  bar.classList.add("hidden");
+  bar.innerHTML = "";
+  return;
+ }
+ const imgs = productImages(p);
+ const safeTitle = cleanProductName(p.name).replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g,"") || "cobra_product";
+ const hasDirectVideo = p.videoUrl && safeImageURL(p.videoUrl) && !youtubeEmbedURL(p.videoUrl);
+ if(!imgs.length && !hasDirectVideo){
+  bar.classList.add("hidden");
+  return;
+ }
+ let btns = "";
+ imgs.forEach((u, idx)=>{
+  btns += `<button type="button" class="admin-dl-btn" onclick="forceDownloadFile('${escapeHTML(u)}','${escapeHTML(safeTitle)}_photo_${idx+1}.jpg')">⬇ PHOTO ${idx+1}</button>`;
+ });
+ if(imgs.length > 1){
+  btns += `<button type="button" class="admin-dl-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')">⬇ ALL (${imgs.length})</button>`;
+ }
+ if(hasDirectVideo){
+  btns += `<button type="button" class="admin-dl-btn" onclick="forceDownloadFile('${escapeHTML(p.videoUrl)}','${escapeHTML(safeTitle)}_video.mp4')">⬇ VIDEO</button>`;
+ }
+ bar.innerHTML = `<span>👑 ADMIN MEDIA DOWNLOAD:</span><div class="admin-dl-btns">${btns}</div>`;
+ bar.classList.remove("hidden");
+}
+
+async function adminDownloadProductMedia(productId){
+ if(!requireAdmin()){ showToast("Admin access required."); return; }
+ const p = products.find(x=>x.id===productId);
+ if(!p) return;
+ const imgs = productImages(p);
+ const safeTitle = cleanProductName(p.name).replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g,"") || "cobra_product";
+ const hasDirectVideo = p.videoUrl && safeImageURL(p.videoUrl) && !youtubeEmbedURL(p.videoUrl);
+ if(!imgs.length && !hasDirectVideo){ showToast("No downloadable media on this product."); return; }
+ for(let i=0; i<imgs.length; i++){
+  await forceDownloadFile(imgs[i], `${safeTitle}_photo_${i+1}.jpg`);
+  await new Promise(r=>setTimeout(r, 350));
+ }
+ if(hasDirectVideo){
+  await forceDownloadFile(p.videoUrl, `${safeTitle}_video.mp4`);
+ }
+}
+
+// Hook into openProduct so Admin sees download bar & Visitors have strict media protection
+(function(){
+ const prevOpen = window.openProduct;
+ if(typeof prevOpen === "function"){
+  window.openProduct = function(id){
+   prevOpen(id);
+   if(currentProduct) renderAdminMediaDownloadBar(currentProduct);
+  };
+ }
+})();
+
+// Strict Visitor Protection: Block Right-Click, Dragging, Long-Press, and Save Shortcuts on Images & Videos for Non-Admins
+(function(){
+ document.addEventListener("contextmenu", function(e){
+  if(isAdmin) return;
+  if(e.target && (e.target.tagName === "IMG" || e.target.tagName === "VIDEO" || e.target.closest(".product-image, .modal-icon, .modal-gallery"))){
+   e.preventDefault();
+   showToast("🛡️ Protected Media: Downloading is restricted to Store Admin.");
+  }
+ }, true);
+
+ document.addEventListener("dragstart", function(e){
+  if(isAdmin) return;
+  if(e.target && (e.target.tagName === "IMG" || e.target.tagName === "VIDEO")){
+   e.preventDefault();
+  }
+ }, true);
+
+ document.addEventListener("keydown", function(e){
+  // Secret Admin Shortcut: Ctrl + Shift + A (or Cmd + Shift + A)
+  if((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "a"){
+   e.preventDefault();
+   revealAdminLogin();
+   return;
+  }
+  // Block Ctrl+S / Ctrl+U for visitors
+  if(!isAdmin && (e.ctrlKey || e.metaKey) && ["s","u"].includes(e.key.toLowerCase())){
+   e.preventDefault();
+   showToast("🛡️ COBRA STORE Content Protected.");
+  }
+ });
+
+ // Secret 5-Tap Trigger on Header Logo or Footer Credits for Mobile/Desktop Admin Login
+ let tapCount = 0, tapTimer = null;
+ function handleSecretAdminTap(){
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(()=>{ tapCount = 0; }, 1800);
+  if(tapCount >= 5){
+   tapCount = 0;
+   revealAdminLogin();
+  }
+ }
+ const headerLogo = document.querySelector("header .logo");
+ const footerCredits = document.querySelector("footer .credits");
+ if(headerLogo) headerLogo.addEventListener("click", handleSecretAdminTap);
+ if(footerCredits) footerCredits.addEventListener("click", handleSecretAdminTap);
+})();
+
 </script>
 </body>
 </html>
