@@ -251,39 +251,39 @@ footer p{color:#888;font-size:11px;line-height:1.9;margin:12px auto;max-width:50
 }
 .wa-float:hover{transform:scale(1.08);opacity:1}
 
-/* Tiny VERTICAL controls — bottom LEFT, does not disturb site */
+/* Extra-small vertical controls — bottom LEFT */
 .cobra-float-dock{
-  position:fixed;bottom:14px;left:8px;z-index:130;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
+  position:fixed;bottom:12px;left:6px;z-index:130;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
   background:transparent;border:0;padding:0;box-shadow:none;opacity:1;
 }
 .cobra-mini-btn{
-  width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);
+  width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,255,255,.35);
   cursor:pointer;display:grid;place-items:center;
-  font-size:11px;font-weight:800;line-height:1;
-  box-shadow:0 3px 10px rgba(0,0,0,.25);
-  transition:transform .2s, box-shadow .2s, filter .2s;
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  font-size:9px;font-weight:800;line-height:1;
+  box-shadow:0 2px 8px rgba(0,0,0,.22);
+  transition:transform .18s, box-shadow .18s;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
   padding:0;
 }
-.cobra-mini-btn:hover{transform:scale(1.12);box-shadow:0 5px 14px rgba(0,0,0,.3)}
-.cobra-mini-btn:active{transform:scale(.96)}
+.cobra-mini-btn:hover{transform:scale(1.12);box-shadow:0 3px 10px rgba(0,0,0,.28)}
+.cobra-mini-btn:active{transform:scale(.95)}
 #themeCycleBtn{
   background:linear-gradient(145deg,#ec6c5a,#d4af37,#1b7a56,#1e56a0,#18181b);
   background-size:200% 200%;
-  color:#fff;border-color:rgba(255,255,255,.5);
+  color:#fff;border-color:rgba(255,255,255,.45);
   animation:themePulse 6s ease infinite;
 }
 @keyframes themePulse{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 #langSwitchBtn.cobra-mini-btn{
-  background:rgba(23,21,20,.75);color:#f5d061;border-color:rgba(212,175,55,.45);
-  font-size:9px;letter-spacing:0;
+  background:rgba(23,21,20,.8);color:#f5d061;border-color:rgba(212,175,55,.45);
+  font-size:8px;letter-spacing:0;
 }
 #langSwitchBtn.cobra-mini-btn:hover{background:rgba(23,21,20,.95);color:#fff}
 @media(max-width:480px){
-  .cobra-float-dock{bottom:10px;left:6px;gap:5px}
-  .cobra-mini-btn{width:26px;height:26px;font-size:10px}
-  #langSwitchBtn.cobra-mini-btn{font-size:8px}
+  .cobra-float-dock{bottom:8px;left:5px;gap:2px}
+  .cobra-mini-btn{width:22px;height:22px;font-size:8px}
+  #langSwitchBtn.cobra-mini-btn{font-size:7px}
   .music-button{width:34px;height:34px;font-size:13px;bottom:12px;right:10px}
   .wa-float{bottom:54px;right:10px;width:36px;height:36px;font-size:16px}
 }
@@ -2057,9 +2057,24 @@ function renderRelatedProducts(curr){
  if(!related.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1;padding:15px">No related products found.</div>';return}
  grid.innerHTML=related.map(p=>{
   const imgs=productImages(p);
-  return `<article class="product-card" onclick="openProduct('${escapeHTML(p.id)}')"><div class="product-image" style="height:140px"><img src="${escapeHTML(imgs[0]||"")}" alt=""></div>
-  <div class="product-info" style="padding:10px"><h3>${escapeHTML(cleanProductName(p.name))}</h3><div class="product-price" style="font-size:13px">${money(finalPrice(p))}</div></div></article>`;
+  const pid=escapeHTML(p.id);
+  return `<article class="product-card related-card" data-open-id="${pid}" style="cursor:pointer">
+   <div class="product-image" style="height:140px;pointer-events:none"><img src="${escapeHTML(imgs[0]||"")}" alt="" style="pointer-events:none"></div>
+   <div class="product-info" style="padding:10px">
+    <h3 style="font-size:12px">${escapeHTML(cleanProductName(p.name))}</h3>
+    <div class="product-price" style="font-size:13px">${money(finalPrice(p))}</div>
+    <button type="button" class="gold-btn" style="width:100%;margin-top:8px;padding:8px;font-size:9px" data-open-id="${pid}">VIEW PRODUCT</button>
+   </div>
+  </article>`;
  }).join("");
+ grid.onclick=function(e){
+  const t=e.target.closest("[data-open-id]");
+  if(!t)return;
+  e.preventDefault();
+  e.stopPropagation();
+  const id=t.getAttribute("data-open-id");
+  if(id) openProduct(id);
+ };
 }
 function validateSelections(p){
  const sizes=getProductSizes(p),colors=getProductColors(p);
@@ -2907,10 +2922,77 @@ function finishIntro(){if(introFinished)return;introFinished=true;intro.classLis
 $("skipIntro").addEventListener("click",finishIntro);introVideo.addEventListener("ended",finishIntro);introVideo.addEventListener("error",finishIntro);
 const playIntro=introVideo.play();if(playIntro&&typeof playIntro.catch==="function")playIntro.catch(()=>{});
 const music=$("backgroundMusic");
+let cobraVoiceOn=false,cobraSpeakUtt=null,cobraAmbientCtx=null,cobraAmbientNodes=[];
+function stopCobraVoice(){
+ try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}
+ cobraSpeakUtt=null;
+ cobraAmbientNodes.forEach(n=>{try{n.stop()}catch(e){}});
+ cobraAmbientNodes=[];
+ if(cobraAmbientCtx){try{cobraAmbientCtx.close()}catch(e){} cobraAmbientCtx=null}
+ cobraVoiceOn=false;
+ const mb=$("musicToggle");if(mb)mb.textContent="♫";
+}
+function startCobraAmbient(){
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  cobraAmbientCtx=new AC();
+  const ctx=cobraAmbientCtx;
+  const master=ctx.createGain();master.gain.value=0.045;master.connect(ctx.destination);
+  [196,246.94,293.66].forEach((freq,i)=>{
+   const o=ctx.createOscillator();
+   const g=ctx.createGain();
+   o.type=i===0?"sine":"triangle";
+   o.frequency.value=freq;
+   g.gain.value=0.2-i*0.04;
+   o.connect(g);g.connect(master);
+   o.start();
+   cobraAmbientNodes.push(o);
+  });
+ }catch(e){}
+}
+function playCobraStoreIntro(){
+ stopCobraVoice();
+ if(!window.speechSynthesis){
+  showToast("Browser voice support not available.");
+  return;
+ }
+ startCobraAmbient();
+ const ur="السلام علیکم! خوش آمدید۔ یہ ہے کو برا سٹور، آپ کا پریمیم آن لائن شاپنگ اسٹور۔ یہاں دستیاب ہے: لڑکوں اور لڑکیوں کے جوتے، کپڑے، گھڑیاں، موبائل اسیسریز، الیکٹرانکس اور فیشن۔ پاکستان بھر میں کیش آن ڈلیوری۔ آرڈر ٹریک کریں، واٹس ایپ سپورٹ حاصل کریں۔ اور اب تعارف: دی کو برا ڈیولپرز۔ ہم ویب سائٹ، لینڈنگ پیج، مکمل آن لائن سٹور مع ایڈمن پینل، آرڈر ٹریکنگ سسٹم، فائر بیس سیٹ اپ، اور واٹس ایپ آرڈرنگ کیو آر بناتے ہیں۔ اپنا کاروبار ڈیجیٹل بنائیں، دی کو برا ڈیولپرز کے ساتھ۔ شکریہ!";
+ const en="Assalam o Alaikum! Welcome. This is COBRA STORE, your premium online shopping store. Available here: boys and girls shoes, clothes, watches, mobile accessories, electronics and fashion. Cash on delivery all over Pakistan. Track your order and get WhatsApp support. And now the introduction: The Cobra Developers. We build websites, landing pages, full online stores with admin panel, order tracking systems, Firebase setup, and WhatsApp ordering with QR. Digitize your business with The Cobra Developers. Thank you!";
+ const text=(localStorage.getItem("cobraStoreLang")==="ur")?ur:en;
+ const u=new SpeechSynthesisUtterance(text);
+ u.rate=0.95;u.pitch=1;u.volume=1;
+ const voices=speechSynthesis.getVoices()||[];
+ if(localStorage.getItem("cobraStoreLang")==="ur"){
+  const v=voices.find(x=>/urdu|hindi|pakistan|india/i.test(x.lang+" "+x.name));
+  if(v)u.voice=v;
+  u.lang="ur-PK";
+ }else{
+  const v=voices.find(x=>/en(-|_)?(GB|US|IN|PK)?/i.test(x.lang)&&/female|zira|samantha|google/i.test(x.name))||voices.find(x=>/^en/i.test(x.lang));
+  if(v)u.voice=v;
+  u.lang="en-US";
+ }
+ u.onend=()=>{stopCobraVoice();};
+ u.onerror=()=>{stopCobraVoice();};
+ cobraSpeakUtt=u;
+ cobraVoiceOn=true;
+ const mb=$("musicToggle");if(mb)mb.textContent="♪";
+ try{speechSynthesis.speak(u);}catch(e){stopCobraVoice();showToast("Voice could not start.");}
+}
 $("musicToggle").addEventListener("click",async()=>{
- try{if(music.paused){await music.play();$("musicToggle").textContent="♫"}else{music.pause();$("musicToggle").textContent="♪"}}
- catch(error){showToast("Music could not be played. Check cobra-music.mp3 file.")}
+ // Prefer built-in Cobra Store voice intro (no file needed). Optional mp3 if present.
+ if(cobraVoiceOn){stopCobraVoice();showToast("Stopped");return;}
+ try{
+  if(music && music.src && !music.error){
+   // try silent check — if file missing, fall through to voice
+   music.load();
+  }
+ }catch(e){}
+ playCobraStoreIntro();
+ showToast("COBRA STORE intro playing…");
 });
+// Preload voices
+if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
 
 updateCart();updateAdminButtons();renderProducts();renderSizeAvailabilityEditor();
 
