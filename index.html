@@ -198,10 +198,13 @@ textarea.form-input{min-height:85px;resize:vertical}
 .admin-panel{width:min(850px,100%);max-height:94vh;overflow-y:auto;background:white;border:1px solid var(--line);border-radius:6px;padding:22px}
 .admin-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
 .admin-top h2{font-family:"Syne";font-size:22px}
-.admin-product{border-bottom:1px solid var(--line);padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-product{border-bottom:1px solid var(--line);padding:13px 3px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.admin-product-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.admin-product-thumb{width:56px;height:56px;object-fit:contain;background:var(--light);border:1px solid var(--line);border-radius:6px;flex-shrink:0}
+.admin-product-thumb.ph{display:grid;place-items:center;font-size:22px}
 .admin-product strong{font-size:11px}
 .admin-product small{display:block;color:#999;margin-top:5px}
-.admin-product-actions{display:flex;gap:6px}
+.admin-product-actions{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
 .admin-product-actions button{font-size:9px;padding:8px 10px}
 .admin-section-title{font-family:"Syne";font-size:18px;margin:22px 0 12px}
 .order-card{border:1px solid var(--line);padding:14px;margin:10px 0;background:#fffdfc;border-radius:4px}
@@ -1157,7 +1160,7 @@ body:not(.admin-mode) .modal-gallery img {
  </div>
 
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
- <div class="status urdu-text">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm کرنے کے لیے بٹن دبائیں۔</div>
+ <div class="status urdu-text">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm یا Delete کریں۔ Confirmed آرڈرز کو بھی Delete کر کے جگہ خالی کی جا سکتی ہے۔</div>
  <div id="adminOrdersList"><div class="status">Orders loading...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
@@ -1231,7 +1234,7 @@ body:not(.admin-mode) .modal-gallery img {
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
  <h3 class="admin-section-title">CATEGORY MANAGEMENT</h3>
- <div class="status urdu-text">یہاں نئی کیٹیگری بنائیں۔ وہ ویب سائٹ کی کیٹیگری لسٹ اور پروڈکٹ فارم میں خودکار شامل ہو جائے گی۔</div>
+ <div class="status urdu-text">یہاں نئی کیٹیگری بنائیں، تصویر تبدیل کریں، ↑ ↓ سے ترتیب بدلیں، اور DELETE سے کیٹیگری ہٹائیں۔ Built-in کیٹیگری چھپ جاتی ہے (RESTORE سے واپس)، Custom مستقل حذف ہوتی ہے۔ ALL PRODUCTS کی تصویر بھی یہاں سے تبدیل کریں۔</div>
  <form id="categoryForm">
   <input type="hidden" id="categoryId">
   <label class="form-label">CATEGORY NAME</label><input class="form-input" id="categoryName" required maxlength="40" placeholder="Example: Bags">
@@ -2504,6 +2507,7 @@ function renderAdminOrders(orders){
    <div class="order-actions">
     ${isConfirmed?'<span class="status">یہ آرڈر کنفرم ہو چکا ہے۔</span>':`<button class="gold-btn" onclick="confirmOrder('${escapeHTML(o.id)}')">✓ CONFIRM ORDER</button>`}
     <button class="outline-btn" onclick="contactOrderCustomer('${escapeHTML(o.id)}')">WHATSAPP CUSTOMER</button>
+    <button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteOrder('${escapeHTML(o.id)}')">DELETE ORDER</button>
    </div>
   </div>`;
  }
@@ -2522,6 +2526,18 @@ async function confirmOrder(orderId){
   showToast("Order successfully confirmed!");
  }catch(error){
   console.error(error);showToast("Order confirmation failed: "+getErrorMessage(error));
+ }
+}
+async function deleteOrder(orderId){
+ if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ if(!confirm("کیا آپ واقعی اس آرڈر کو مستقل طور پر حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں ہو سکتا۔"))return;
+ try{
+  const key=String(orderId).slice(-8).toUpperCase();
+  await db.collection("orders").doc(orderId).delete();
+  await db.collection("tracking").doc(key).delete().catch(()=>{});
+  showToast("Order deleted successfully.");
+ }catch(error){
+  console.error(error);showToast("Order delete failed: "+getErrorMessage(error));
  }
 }
 async function contactOrderCustomer(orderId){
@@ -2545,7 +2561,11 @@ function renderAdminProducts(){
  if(!requireAdmin()){list.innerHTML='<div class="status">Please sign in as administrator.</div>';return}
  if(!products.length){list.innerHTML='<div class="status">No products added yet.</div>';return}
  if($("statProducts")) $("statProducts").textContent = products.length;
- list.innerHTML=products.map(p=>`<div class="admin-product"><div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${productImages(p).length} photos • ${p.videoUrl?"Video":"No video"}</small></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`).join("");
+ list.innerHTML=products.map(p=>{
+  const imgs=productImages(p);
+  const thumb=imgs.length?`<img class="admin-product-thumb" src="${escapeHTML(imgs[0])}" alt="">`:`<div class="admin-product-thumb ph">🐍</div>`;
+  return `<div class="admin-product"><div class="admin-product-left">${thumb}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${imgs.length} photos • ${p.videoUrl?"Video":"No video"}</small></div></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`;
+ }).join("");
 }
 
 function getManagerDraft(product){
@@ -3321,6 +3341,13 @@ window.customCategoryName=function(id){const c=customCategories.find(x=>x.id===i
 function staticCategoryCards(){
  return [...$("categoryGrid").querySelectorAll(".category-card:not(.custom-cat):not(.all-card)")];
 }
+function allCategoryCard(){
+ return $("categoryGrid")?.querySelector(".category-card.all-card")||null;
+}
+function getCategorySortOrder(id){
+ const c=customCategories.find(x=>x.id===id);
+ return (c&&Number.isFinite(Number(c.sortOrder)))?Number(c.sortOrder):9999;
+}
 function renderStaticCategoryImages(){
  const docs=new Map(customCategories.map(c=>[c.id,c]));
  staticCategoryCards().forEach(card=>{
@@ -3330,49 +3357,143 @@ function renderStaticCategoryImages(){
   const override=safeImageURL(c&&c.imageUrl);
   img.src=override||img.dataset.defaultSrc;
  });
+ // ALL PRODUCTS category image (changeable from admin)
+ const allCard=allCategoryCard();
+ if(allCard){
+  const img=allCard.querySelector("img");
+  if(img){
+   if(!img.dataset.defaultSrc)img.dataset.defaultSrc=img.getAttribute("src")||"";
+   const allDoc=docs.get("all");
+   const override=safeImageURL(allDoc&&allDoc.imageUrl);
+   img.src=override||img.dataset.defaultSrc;
+  }
+ }
+}
+function isCategoryHidden(id){
+ const c=customCategories.find(x=>x.id===id);
+ return !!(c&&c.hidden);
 }
 function renderCustomCategories(){
  const grid=$("categoryGrid"),all=grid.querySelector(".all-card");
  grid.querySelectorAll(".custom-cat").forEach(e=>e.remove());
+ // Hide / show built-in category cards based on Firestore hidden flag
+ staticCategoryCards().forEach(card=>{
+  card.style.display=isCategoryHidden(card.dataset.category)?"none":"";
+ });
  const staticIds=new Set(staticCategoryCards().map(card=>card.dataset.category));
- customCategories.filter(c=>!staticIds.has(c.id)).forEach(c=>{
+ const customs=customCategories.filter(c=>!staticIds.has(c.id)&&c.id!=="all"&&!c.hidden)
+  .slice().sort((a,b)=>getCategorySortOrder(a.id)-getCategorySortOrder(b.id));
+ customs.forEach(c=>{
   const d=document.createElement("div"),img=safeImageURL(c.imageUrl);
   d.className="category-card custom-cat"+(selectedCategory===c.id?" active":"");d.dataset.category=c.id;
   d.innerHTML=(img?`<img src="${escapeHTML(img)}" alt="${escapeHTML(c.name)}">`:'<div class="cat-ph">🐍</div>')+`<h3>${escapeHTML(String(c.name||"").toUpperCase())}</h3><small>Explore collection →</small>`;
   d.addEventListener("click",()=>selectCategory(c.id,d));grid.insertBefore(d,all);
  });
+ // Reorder visible static + custom by sortOrder (ALL PRODUCTS stays last)
+ const movable=[...grid.querySelectorAll(".category-card:not(.all-card)")].filter(c=>c.style.display!=="none");
+ movable.sort((a,b)=>getCategorySortOrder(a.dataset.category)-getCategorySortOrder(b.dataset.category));
+ movable.forEach(card=>grid.insertBefore(card,all));
  renderStaticCategoryImages();
 }
 function populateCategorySelect(){
  const sel=$("productCategory"),keep=sel.value;
  sel.querySelectorAll("option[data-custom]").forEach(o=>o.remove());
  const staticIds=new Set(staticCategoryCards().map(card=>card.dataset.category));
- customCategories.filter(c=>!staticIds.has(c.id)).forEach(c=>{const o=document.createElement("option");o.value=c.id;o.dataset.custom="1";o.textContent=c.name;sel.appendChild(o)});
+ customCategories.filter(c=>!staticIds.has(c.id)&&c.id!=="all"&&!c.hidden).forEach(c=>{const o=document.createElement("option");o.value=c.id;o.dataset.custom="1";o.textContent=c.name;sel.appendChild(o)});
+ // Disable hidden built-in options in select if present
+ [...sel.options].forEach(opt=>{
+  if(staticIds.has(opt.value)&&isCategoryHidden(opt.value))opt.disabled=true;
+  else if(staticIds.has(opt.value))opt.disabled=false;
+ });
  sel.value=keep;
 }
 function renderAdminCategories(){
  const box=$("adminCategoryList");if(!box)return;
  if(!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}
  const docs=new Map(customCategories.map(c=>[c.id,c]));
- const staticCards=staticCategoryCards().map(card=>{
-  const id=card.dataset.category,c=docs.get(id)||{},name=card.querySelector("h3")?.textContent?.trim()||id;
-  const img=safeImageURL(c.imageUrl)||card.querySelector("img")?.src||"";
-  return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(name)}</strong><small>${products.filter(p=>p.category===id).length} product(s) · Built-in category</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(id)}')">CHANGE IMAGE</button></div></div>`;
+ const staticList=staticCategoryCards().map(card=>{
+  const id=card.dataset.category;
+  return {id,name:card.querySelector("h3")?.textContent?.trim()||id,type:"built-in",sort:getCategorySortOrder(id)};
+ });
+ const customList=customCategories.filter(c=>!staticCategoryCards().some(card=>card.dataset.category===c.id)&&c.id!=="all")
+  .map(c=>({id:c.id,name:c.name||c.id,type:"custom",sort:getCategorySortOrder(c.id)}));
+ const allCard=allCategoryCard();
+ const allEntry=allCard?[{id:"all",name:"ALL PRODUCTS",type:"all",sort:99999}]:[];
+ const ordered=[...staticList,...customList].sort((a,b)=>a.sort-b.sort).concat(allEntry);
+ const html=ordered.map(item=>{
+  const c=docs.get(item.id)||{};
+  let img="";
+  if(item.type==="all"&&allCard){
+   img=safeImageURL(c.imageUrl)||allCard.querySelector("img")?.src||"";
+  }else if(item.type==="built-in"){
+   const card=staticCategoryCards().find(x=>x.dataset.category===item.id);
+   img=safeImageURL(c.imageUrl)||card?.querySelector("img")?.src||"";
+  }else{
+   img=safeImageURL(c.imageUrl)||"";
+  }
+  const count=item.id==="all"?products.length:products.filter(p=>p.category===item.id).length;
+  const hidden=isCategoryHidden(item.id);
+  const typeLabel=item.type==="all"?"All products card":(item.type==="built-in"?(hidden?"Built-in · Hidden":"Built-in category"):(hidden?"Custom · Hidden":"Custom category"));
+  const canDelete=item.type!=="all";
+  const canMove=item.type!=="all"&&!hidden;
+  return `<div class="campaign-admin-card" data-cat-id="${escapeHTML(item.id)}" style="${hidden?"opacity:.55":""}">
+   <div class="campaign-admin-head">
+    ${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}
+    <div><strong>${escapeHTML(item.name)}</strong><small>${count} product(s) · ${typeLabel}</small></div>
+   </div>
+   <div class="campaign-admin-actions">
+    ${canMove?`<button class="outline-btn" type="button" onclick="moveCategory('${escapeHTML(item.id)}',-1)" title="Move Up">↑</button>
+    <button class="outline-btn" type="button" onclick="moveCategory('${escapeHTML(item.id)}',1)" title="Move Down">↓</button>`:""}
+    <button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(item.id)}')">${item.type==="custom"?"EDIT":"CHANGE IMAGE"}</button>
+    ${canDelete?(hidden
+      ?`<button class="gold-btn" type="button" onclick="restoreCategory('${escapeHTML(item.id)}')">RESTORE</button>`
+      :`<button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(item.id)}')">DELETE</button>`
+    ):""}
+   </div>
+  </div>`;
  }).join("");
- const custom=customCategories.filter(c=>!staticCategoryCards().some(card=>card.dataset.category===c.id));
- const customHTML=custom.map(c=>{const img=safeImageURL(c.imageUrl);return `<div class="campaign-admin-card"><div class="campaign-admin-head">${img?`<img src="${escapeHTML(img)}" alt="">`:'<div style="width:85px;height:85px;background:var(--light);display:grid;place-items:center;font-size:30px">🐍</div>'}<div><strong>${escapeHTML(c.name||"")}</strong><small>${products.filter(p=>p.category===c.id).length} product(s) · Custom category</small></div></div><div class="campaign-admin-actions"><button class="outline-btn" type="button" onclick="editCategory('${escapeHTML(c.id)}')">EDIT</button><button class="outline-btn" type="button" style="color:#d95746;border-color:#d95746" onclick="deleteCategory('${escapeHTML(c.id)}')">DELETE</button></div></div>`}).join("");
- box.innerHTML=staticCards+customHTML||'<div class="status urdu-text">کوئی کیٹیگری دستیاب نہیں۔</div>';
+ box.innerHTML=html||'<div class="status urdu-text">کوئی کیٹیگری دستیاب نہیں۔</div>';
 }
-function resetCategoryForm(){$("categoryForm").reset();$("categoryId").value="";$("categoryStatus").textContent="";$("saveCategoryButton").textContent="SAVE CATEGORY"}
+async function moveCategory(id,direction){
+ if(!requireAdmin()||!db||id==="all")return;
+ const staticIds=staticCategoryCards().map(c=>c.dataset.category);
+ const movableIds=[
+  ...staticIds,
+  ...customCategories.filter(c=>!staticIds.includes(c.id)&&c.id!=="all").map(c=>c.id)
+ ].sort((a,b)=>getCategorySortOrder(a)-getCategorySortOrder(b));
+ const idx=movableIds.indexOf(id);
+ if(idx<0)return;
+ const newIdx=idx+direction;
+ if(newIdx<0||newIdx>=movableIds.length)return;
+ const other=movableIds[newIdx];
+ movableIds[idx]=other;
+ movableIds[newIdx]=id;
+ try{
+  const batch=db.batch();
+  movableIds.forEach((cid,i)=>{
+   const ref=db.collection("categories").doc(cid);
+   const existing=customCategories.find(c=>c.id===cid)||{};
+   const name=existing.name||(staticCategoryCards().find(card=>card.dataset.category===cid)?.querySelector("h3")?.textContent?.trim())||cid;
+   batch.set(ref,{name,sortOrder:i,imageUrl:existing.imageUrl||"",imagePath:existing.imagePath||"",hidden:!!existing.hidden,createdAtMs:existing.createdAtMs||Date.now()},{merge:true});
+  });
+  await batch.commit();
+  showToast("Category order updated");
+ }catch(err){
+  showToast("Reorder failed: "+getErrorMessage(err));
+ }
+}
+function resetCategoryForm(){$("categoryForm").reset();$("categoryId").value="";$("categoryStatus").textContent="";$("saveCategoryButton").textContent="SAVE CATEGORY";if($("categoryName"))$("categoryName").readOnly=false}
 function editCategory(id){
  const c=customCategories.find(x=>x.id===id);
  const card=staticCategoryCards().find(x=>x.dataset.category===id);
- if((!c&&!card)||!requireAdmin())return;
- const name=(c&&c.name)||(card&&card.querySelector("h3")?.textContent.trim())||"";
+ const isAll=id==="all";
+ if((!c&&!card&&!isAll)||!requireAdmin())return;
+ const name=isAll?"ALL PRODUCTS":((c&&c.name)||(card&&card.querySelector("h3")?.textContent.trim())||"");
  $("categoryId").value=id;$("categoryName").value=name;$("categoryImageFile").value="";
  $("categoryImageUrl").value=(c&&c.imageUrl&&!c.imagePath)?c.imageUrl:"";
  $("categoryStatus").textContent="Upload a new image or paste an image URL. Leave both empty to keep the current image.";
- $("saveCategoryButton").textContent=card?"UPDATE CATEGORY IMAGE":"UPDATE CATEGORY";
+ $("saveCategoryButton").textContent=(card||isAll)?"UPDATE CATEGORY IMAGE":"UPDATE CATEGORY";
+ $("categoryName").readOnly=!!(card||isAll);
  $("categoryForm").scrollIntoView({behavior:"smooth",block:"center"});
 }
 $("categoryForm").addEventListener("submit",async e=>{
@@ -3388,18 +3509,51 @@ $("categoryForm").addEventListener("submit",async e=>{
   let imageUrl=old.imageUrl||"",imagePath=old.imagePath||"";
   if(file){const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";const up=await uploadFile(file,"category-media/"+id+"/"+Date.now()+"."+ext);imageUrl=up.url;imagePath=up.path}
   else if(link&&link!==old.imageUrl){imageUrl=link;imagePath=""}
-  await db.collection("categories").doc(id).set({name,imageUrl,imagePath,createdAtMs:old.createdAtMs||Date.now()},{merge:true});
+  const payload={name,imageUrl,imagePath,createdAtMs:old.createdAtMs||Date.now()};
+  if(Number.isFinite(Number(old.sortOrder)))payload.sortOrder=Number(old.sortOrder);
+  else if(!editId)payload.sortOrder=Date.now();
+  await db.collection("categories").doc(id).set(payload,{merge:true});
   if(old.imagePath&&old.imagePath!==imagePath)await storage.ref().child(old.imagePath).delete().catch(()=>{});
-  showToast("Category image saved!");resetCategoryForm();
+  showToast(id==="all"?"ALL PRODUCTS image saved!":"Category saved!");
+  resetCategoryForm();
+  $("categoryName").readOnly=false;
  }catch(err){$("categoryStatus").textContent="Save failed: "+getErrorMessage(err)}
  finally{btn.disabled=false;btn.textContent=$("categoryId").value?"UPDATE CATEGORY":"SAVE CATEGORY"}
 });
 async function deleteCategory(id){
- const c=customCategories.find(x=>x.id===id);if(!c||!requireAdmin())return;
+ if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ if(id==="all"){showToast("ALL PRODUCTS category cannot be deleted.");return}
+ const c=customCategories.find(x=>x.id===id)||{};
+ const isBuiltIn=staticCategoryCards().some(card=>card.dataset.category===id);
  const used=products.filter(p=>p.category===id).length;
- if(!confirm((used?used+" پروڈکٹس اس کیٹیگری میں ہیں۔ ":"")+"کیا اس کیٹیگری کو حذف کریں؟"))return;
- try{await db.collection("categories").doc(id).delete();if(c.imagePath)await storage.ref().child(c.imagePath).delete().catch(()=>{});showToast("Category deleted.")}
- catch(err){showToast("Delete failed: "+getErrorMessage(err))}
+ const msg=(used?used+" پروڈکٹس اس کیٹیگری میں ہیں۔ ":"")+(isBuiltIn
+  ?"کیا اس کیٹیگری کو سٹور سے چھپانا ہے؟ (بعد میں RESTORE سے واپس لا سکتے ہیں)"
+  :"کیا اس کیٹیگری کو مستقل حذف کرنا ہے؟");
+ if(!confirm(msg))return;
+ try{
+  if(isBuiltIn){
+   // Soft-hide built-in category (can restore later)
+   const name=c.name||(staticCategoryCards().find(card=>card.dataset.category===id)?.querySelector("h3")?.textContent?.trim())||id;
+   await db.collection("categories").doc(id).set({
+    name,hidden:true,imageUrl:c.imageUrl||"",imagePath:c.imagePath||"",
+    sortOrder:Number.isFinite(Number(c.sortOrder))?Number(c.sortOrder):9999,
+    createdAtMs:c.createdAtMs||Date.now()
+   },{merge:true});
+   showToast("Category hidden from store. RESTORE سے واپس لا سکتے ہیں۔");
+  }else{
+   // Hard delete custom category
+   await db.collection("categories").doc(id).delete();
+   if(c.imagePath)await storage.ref().child(c.imagePath).delete().catch(()=>{});
+   showToast("Category deleted.");
+  }
+ }catch(err){showToast("Delete failed: "+getErrorMessage(err))}
+}
+async function restoreCategory(id){
+ if(!requireAdmin()||!db||id==="all")return;
+ try{
+  await db.collection("categories").doc(id).set({hidden:false},{merge:true});
+  showToast("Category restored on store.");
+ }catch(err){showToast("Restore failed: "+getErrorMessage(err))}
 }
 
 window.deliveryFor=function(sub){const s=deliverySettings;if(!s.charge)return 0;if(s.freeAbove>0&&sub>=s.freeAbove)return 0;return s.charge};
