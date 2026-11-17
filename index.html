@@ -810,6 +810,17 @@ body:not(.admin-mode) .modal-gallery img {
 .related-card:hover{transform:translateY(-4px);border-color:var(--coral);box-shadow:0 10px 24px rgba(0,0,0,.1)}
 
 </style>
+<!-- Google Analytics 4: COBRA STORE -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HT8ZF49BP2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HT8ZF49BP2');
+  window.cobraTrack = function(name, params){
+    if(typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  };
+</script>
 </head>
 <body>
 
@@ -1422,7 +1433,10 @@ function youtubeEmbedURL(value){
 }
 function whatsappURL(message){return "https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message)}
 function showToast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),3200)}
-function contactWhatsApp(){window.open(whatsappURL("Assalam-o-Alaikum! I want to contact COBRA STORE."),"_blank","noopener")}
+function contactWhatsApp(){
+ if(window.cobraTrack) window.cobraTrack("whatsapp_contact_click",{method:"WhatsApp"});
+ window.open(whatsappURL("Assalam-o-Alaikum! I want to contact COBRA STORE."),"_blank","noopener")
+}
 function goToCategories(){$("categories").scrollIntoView({behavior:"smooth"})}
 function cleanProductName(value){return String(value||"").replace(/skip to main content/ig,"").replace(/\s+/g," ").trim()||"Product name unavailable"}
 function salePercent(p){const n=Number(p.salePercent);return Number.isFinite(n)&&n>=0&&n<=90?n:DEFAULT_SALE}
@@ -2079,6 +2093,11 @@ function openProduct(id){
  const targetProd=products.find(p=>String(p.id)===String(id));
  if(!targetProd)return;
  currentProduct=targetProd;
+ if(window.cobraTrack) window.cobraTrack("view_item", {
+  currency:"PKR",
+  value:Number(targetProd.price)||0,
+  items:[{item_id:String(targetProd.id),item_name:cleanProductName(targetProd.name),item_category:categoryName(targetProd.category)}]
+ });
  selectedSize="";selectedColor="";modalQuantity=1;
  if($("modalQtyVal"))$("modalQtyVal").textContent="1";
  addRecentView(currentProduct);
@@ -2209,6 +2228,10 @@ function validateOrderItems(items){
 }
 function checkoutWhatsApp(){
  if(!cart.length){showToast("Your cart is empty!");return}
+ if(window.cobraTrack) window.cobraTrack("whatsapp_order_click", {
+  method:"WhatsApp",
+  items:cart.map(x=>({item_id:String(x.id||""),item_name:cleanProductName(x.name),quantity:Number(x.qty)||1}))
+ });
  if(!validateOrderItems(cart))return;
  let subtotal=cart.reduce((s,x)=>s+finalPrice(x)*x.qty,0);
  if(appliedDiscount>0)subtotal=Math.round(subtotal*(1-appliedDiscount/100));
