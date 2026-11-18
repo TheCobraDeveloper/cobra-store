@@ -832,6 +832,27 @@ body:not(.admin-mode) .modal-gallery img {
     if(typeof window.gtag === 'function') window.gtag('event', name, params || {});
   };
 </script>
+<style>
+.cobra-smart-hunter{margin:18px 0;padding:16px;border:1px solid #d4af37;border-radius:10px;background:linear-gradient(145deg,#171514,#29231e);color:#fff;box-shadow:0 10px 28px #0002}
+.cobra-smart-head{display:flex;flex-direction:column;gap:5px;color:#f5d061;font-weight:900;letter-spacing:1px}
+.cobra-smart-head span{font-family:Syne,sans-serif;font-size:17px}.cobra-smart-head small{font-size:8px;color:#d6c8a1;letter-spacing:1.2px}
+.cobra-smart-hunter>p{font-size:11px;line-height:1.9;color:#eee;margin:10px 0}
+.cobra-smart-controls{display:flex;gap:9px;align-items:end;flex-wrap:wrap}
+.cobra-smart-controls label{display:grid;gap:5px;font-size:9px;color:#f5d061;font-weight:800}
+.cobra-smart-controls select{padding:11px;border:1px solid #d4af37;border-radius:5px;background:#fff;color:#171514}
+.cobra-smart-controls button{font-size:9px;padding:11px 13px}
+.cobra-smart-progress{height:8px;background:#51483d;border-radius:20px;overflow:hidden;margin:14px 0 7px}
+#cobraSmartProgressBar{height:100%;width:0;background:linear-gradient(90deg,#d4af37,#f5d061);transition:width .2s}
+.cobra-smart-hunter .status{color:#f3e8cf}.cobra-smart-summary{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.cobra-smart-chip{border:1px solid #74613b;background:#30291e;color:#f5d061;padding:7px 9px;border-radius:5px;font-size:9px}
+.cobra-smart-preview{max-height:420px;overflow:auto;margin-top:10px;background:#fff;color:#171514;border-radius:7px;padding:8px}
+.cobra-smart-row{display:flex;gap:9px;align-items:center;padding:9px 4px;border-bottom:1px solid #eee;font-size:10px}
+.cobra-smart-row img{width:48px;height:48px;object-fit:contain;border:1px solid #eee;border-radius:5px;flex-shrink:0}
+.cobra-smart-row .meta{min-width:0;flex:1;line-height:1.6}.cobra-smart-row .score{font-weight:900;color:#8a6413;white-space:nowrap}
+.cobra-smart-note{font-size:9px;color:#766;margin:8px 0;line-height:1.7}
+@media(max-width:520px){.cobra-smart-controls>*{width:100%}.cobra-smart-controls label select{width:100%}}
+#hhcTest,#hhcSearchBtn,#hhcCategoriesBtn,#hhcImportAll,#hhcClearImported,#hhcImportSelected{display:none!important}
+</style>
 </head>
 <body>
 
@@ -1312,6 +1333,20 @@ body:not(.admin-mode) .modal-gallery img {
   <div class="form-actions"><button class="outline-btn" type="button" id="hhcClearImported" style="color:#b42318;border-color:#b42318">CLEAR ONLY HHC-IMPORTED PRODUCTS</button></div>
   <div class="status urdu-text">صفائی صرف HHC supplier والی پروڈکٹس کو ہٹائے گی؛ دستی پروڈکٹس، آرڈرز اور کسٹمر ریکارڈ کو نہیں چھیڑے گی۔ پہلے بیک اپ رکھیں۔</div>
   <div class="status" id="hhcStatus">HHC Worker پہلے سے منسلک ہے۔ One-Click Sync سے صرف Published اور In Stock پروڈکٹس آئیں گی؛ منافع ڈیفالٹ Rs. 150 فی پروڈکٹ ہوگا اور موجودہ 11.11% Sale برقرار رہے گی۔</div>
+
+  <div class="cobra-smart-hunter">
+   <div class="cobra-smart-head"><span>🐍 COBRA SMART HUNTER</span><small>FULL CATALOG • CATEGORY BALANCE • PROFIT & QUALITY CHECK</small></div>
+   <p>START دبائیں: HHC کی تمام صفحات اور کیٹیگریز خود چیک ہوں گی۔ منتخب بیچ تیار ہونے کے بعد ADD دبائیں۔ اگلا بیچ خود تیار ہو جائے گا۔</p>
+   <div class="cobra-smart-controls">
+    <label>ہر بیچ میں پروڈکٹس<select id="cobraSmartBatchSize"><option value="15" selected>15 پروڈکٹس</option><option value="10">10 پروڈکٹس</option></select></label>
+    <button class="gold-btn" type="button" id="cobraSmartStart">▶ START SMART HUNTER</button>
+    <button class="outline-btn" type="button" id="cobraSmartAdd" disabled>ADD SELECTED TO STORE</button>
+   </div>
+   <div class="cobra-smart-progress"><div id="cobraSmartProgressBar"></div></div>
+   <div class="status" id="cobraSmartStatus">اسکین ابھی شروع نہیں ہوا۔ اصل ریٹنگ صرف HHC کے فراہم کردہ ڈیٹا سے دکھائی جائے گی۔</div>
+   <div id="cobraSmartSummary" class="cobra-smart-summary" hidden></div>
+   <div id="cobraSmartPreview" class="cobra-smart-preview" hidden></div>
+  </div>
   <div id="hhcCategoryList" class="supplier-import-preview" hidden></div>
   <div id="hhcProductList" class="supplier-import-preview" hidden></div>
   <div class="form-actions"><button class="gold-btn" type="button" id="hhcImportSelected">IMPORT SELECTED PRODUCTS</button></div>
@@ -2052,7 +2087,7 @@ function renderProducts(){
  const query=$("searchInput").value.toLowerCase().trim();
  let list=products.filter(p=>{
   const match=selectedCategory==="all"||p.category===selectedCategory;
-  return match&&[cleanProductName(p.name),p.label,p.description,p.details].join(" ").toLowerCase().includes(query);
+  return match&&[cleanProductName(p.name),p.label,p.description,p.details,p.categoryName,p.sourceParentCategory,p.supplierCategory].join(" ").toLowerCase().includes(query);
  });
  const sort=$("sortSelect").value;
  if(sort==="low")list.sort((a,b)=>finalPrice(a)-finalPrice(b));
@@ -2078,7 +2113,7 @@ function renderProducts(){
      <button class="wishlist-inline-btn ${isWishlist?"active":""}" title="Save to Wishlist" onclick="event.stopPropagation();toggleWishlist('${escapeHTML(p.id)}')">${isWishlist?"❤️":"🤍"}</button>
     </div>
     <h3 onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">${escapeHTML(name)}</h3>
-    <div class="card-rating"><span class="stars">★★★★★</span><span>(4.9 • 15+ Reviews)</span></div>
+    <div class="card-rating">${p.supplierName==="HHC"?(Number(p.supplierRating)>0?`<span class="stars">${"★".repeat(Math.max(1,Math.min(5,Math.round(Number(p.supplierRating)))))}</span><span>${Number(p.supplierRating).toFixed(1)} / 5${Number(p.supplierReviewCount)>0?" · "+Number(p.supplierReviewCount)+" HHC reviews":" · HHC rating"}</span>`:`<span style="font-size:9px;color:#8a6413;font-weight:800">COBRA SMART SCORE ${Number(p.smartScore)||0}/100</span><span style="font-size:8px;color:#888"> · AI score, not customer rating</span>`):'<span class="stars">★★★★★</span><span>(4.9 • 15+ Reviews)</span>'}</div>
     <div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
     <div class="product-note">${mediaNote} • ${escapeHTML(p.stock||"In Stock")}</div>
     <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div>
@@ -2182,7 +2217,9 @@ function openProduct(id){
  $("modalPrice").innerHTML=money(finalPrice(p))+` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
  $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
  $("modalSizes").innerHTML="";$("modalSizes").classList.add("hidden");
- $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
+ const hhcTrustLine=p.supplierName==="HHC"?(Number(p.supplierRating)>0?"<br><b>HHC Supplier Rating:</b> "+Number(p.supplierRating).toFixed(1)+"/5"+(Number(p.supplierReviewCount)>0?" ("+Number(p.supplierReviewCount)+" reviews)":""):"<br><b>COBRA SMART SCORE:</b> "+(Number(p.smartScore)||0)+"/100 (AI selection score, not a customer rating)"):"";
+ const hhcStockLine=p.supplierName==="HHC"?"<br><b>Supplier stock quantity:</b> "+Number(p.supplierStockQuantity||0):"";
+ $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.")+hhcTrustLine+hhcStockLine;
  renderSizeOptions();renderCustomerColors();
  renderRelatedProducts(p);
  $("modalAdd").onclick=()=>{if(!validateSelections(p))return;for(let i=0;i<modalQuantity;i++)addToCart(p.id,selectedSize,selectedColor);closeModal()};
@@ -2454,7 +2491,7 @@ function getBuiltInProductReviews(p){
 async function loadReviews(productId){
  const box=$("reviewList"),token=++reviewRequestToken;
  const prod = products.find(x=>String(x.id)===String(productId)) || currentProduct;
- const builtIn = getBuiltInProductReviews(prod);
+ const builtIn = prod&&prod.supplierName==="HHC" ? [] : getBuiltInProductReviews(prod);
  let liveDocs = [];
  if(db){
   try{
@@ -3009,6 +3046,136 @@ async function hhcImportAll(){
  }finally{btn.disabled=false;btn.textContent=oldText}
 }
 $('hhcImportAll')?.addEventListener('click',hhcImportAll);
+
+// === COBRA SMART HUNTER: full HHC scan, diversified ranked batches, explicit final approval ===
+const COBRA_SMART_QUEUE_KEY="cobra_smart_hunter_queue_v1",COBRA_SMART_STATE_KEY="cobra_smart_hunter_state_v1";
+let cobraSmartQueue=[],cobraSmartCurrentBatch=[],cobraSmartCategories=[];
+function cobraSmartSlug(v){return String(v||"category").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48)||"category"}
+function cobraSmartRating(raw){
+ const vals=[raw.rating,raw.average_rating,raw.averageRating,raw.avg_rating,raw.review_rating,raw.customer_rating,raw.supplier_rating,raw.ratings&&raw.ratings.average,raw.ratings&&raw.ratings.average_rating];
+ let rating=null;for(const v of vals){const n=Number(typeof v==="object"&&v?v.average||v.rating||v.value:v);if(Number.isFinite(n)&&n>0&&n<=5){rating=n;break}}
+ const counts=[raw.review_count,raw.reviews_count,raw.total_reviews,raw.rating_count,raw.ratings_count,raw.reviews&&raw.reviews.length];
+ let reviewCount=0;for(const v of counts){const n=Number(v);if(Number.isFinite(n)&&n>0){reviewCount=n;break}}
+ return {rating,reviewCount};
+}
+function cobraSmartTrend(raw){
+ const flags=[raw.is_trending,raw.trending,raw.isTrending,raw.is_popular,raw.popular];
+ const yes=flags.some(v=>v===true||v===1||String(v).toLowerCase()==="yes"||String(v).toLowerCase()==="true");
+ const vals=[raw.total_sales,raw.sales_count,raw.sold_count,raw.units_sold,raw.order_count,raw.orders_count,raw.sold];
+ let salesCount=null;for(const v of vals){const n=Number(v);if(Number.isFinite(n)&&n>0){salesCount=n;break}}
+ return {trending:yes||salesCount!==null,salesCount};
+}
+function cobraSmartCategory(raw,categoryMap,parentMap){
+ const id=String(raw.category_id||raw.categoryId||raw.sub_category_id||raw.subCategoryId||"");
+ const name=String(hhcCategoryName(raw,categoryMap)||"Other").trim();
+ return {id:"hhc-cat-"+(id?id.replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40):cobraSmartSlug(name)),name,parent:parentMap[id]||"",sourceId:id};
+}
+function cobraSmartBlocked(raw,cat){
+ const t=(String(raw.name||"")+" "+String(cat||"")+" "+String(raw.description||"")).toLowerCase();
+ return /\b(steroid|anabolic|dnp|prescription|antibiotic|medicine|medication|pharmaceutical|height growth|height increase|weight loss pill|slimming pill|sexual enhancement|testosterone booster|hormone therapy)\b/.test(t);
+}
+function cobraSmartEvaluate(raw,categoryMap,parentMap,deliveryCost,codCost){
+ const p=hhcNormalizeProduct(raw,0,categoryMap),cat=cobraSmartCategory(raw,categoryMap,parentMap);
+ const variations=Array.isArray(raw.variations)?raw.variations:[];
+ const variantQty=variations.reduce((n,v)=>n+(Number(v.quantity)||0),0);
+ const hasQty=raw.quantity!==undefined&&raw.quantity!==null&&raw.quantity!=="";
+ const qty=variations.length?variantQty:(hasQty?Number(raw.quantity)||0:0);
+ const stockFlag=Number(raw.stockStatus)===1||String(raw.stock_status_name||"").toLowerCase()==="in stock";
+ const inStock=variations.length?variantQty>0:(qty>0||(!hasQty&&stockFlag));
+ const rating=cobraSmartRating(raw),trend=cobraSmartTrend(raw);
+ const dateValue=raw.created_at||raw.createdAt||raw.published_at||raw.date_created||raw.created_on||"";
+ const createdAt=Date.parse(dateValue)||0;
+ if(!p.id||!p.name||p.cost<=0||!p.published||!inStock||!p.images.length||cobraSmartBlocked(raw,cat.name))return null;
+ if(hasQty&&!variations.length&&Number(raw.quantity)<=0)return null;
+ const profit=hhcProfitForCost(p.cost),net=profit-deliveryCost-codCost;if(net<=0)return null;
+ const desc=hhcPlainText(raw.description).length;
+ const quality=(p.images.length?0.45:0)+(desc>=80?0.35:desc>=25?0.2:0)+(variations.length?0.2:0);
+ const profitScore=Math.max(0,Math.min(1,net/Math.max(150,p.cost*.35)));
+ const ratingScore=rating.rating?rating.rating/5:0,trendScore=trend.trending?1:0;
+ const recentScore=createdAt?Math.max(0,1-Math.max(0,Date.now()-createdAt)/(90*86400000)):0;
+ const score=Math.round(50*quality+20*profitScore+20*ratingScore+7*trendScore+3*recentScore);
+ return {id:String(p.id),name:p.name,cost:p.cost,description:p.description,images:p.images,sourceCategory:cat.name,sourceCategoryId:cat.sourceId,sourceParentCategory:cat.parent,category:cat.id,categoryName:cat.name,stockQty:qty,stockLabel:"In Stock",published:true,variations:(p.variations||[]).map(()=>({})),colors:p.colors,sizes:p.sizes,storeName:p.storeName,storeCity:p.storeCity,slug:p.slug,sourceRating:rating.rating,sourceReviewCount:rating.reviewCount,sourceTrend:trend.trending,sourceSalesCount:trend.salesCount,sourceCreatedAt:createdAt,smartScore:score,estimatedNetProfit:net};
+}
+function cobraSmartPickBatch(queue,size){
+ const ranked=[...queue].sort((a,b)=>(Number(b.smartScore)||0)-(Number(a.smartScore)||0)),picked=[],counts={};
+ for(const p of ranked){if(picked.length>=size)break;const c=p.category||"other";if(!counts[c]){picked.push(p);counts[c]=1}}
+ for(const p of ranked){if(picked.length>=size)break;if(picked.some(x=>x.id===p.id))continue;const c=p.category||"other";if((counts[c]||0)<2){picked.push(p);counts[c]=(counts[c]||0)+1}}
+ for(const p of ranked){if(picked.length>=size)break;if(picked.some(x=>x.id===p.id))continue;const c=p.category||"other";if((counts[c]||0)<3){picked.push(p);counts[c]=(counts[c]||0)+1}}
+ return picked;
+}
+function cobraSmartSave(){try{localStorage.setItem(COBRA_SMART_QUEUE_KEY,JSON.stringify(cobraSmartQueue));localStorage.setItem(COBRA_SMART_STATE_KEY,JSON.stringify({categories:cobraSmartCategories,updatedAt:Date.now()}))}catch(e){throw new Error("موبائل براؤزر میں فہرست محفوظ نہیں ہو سکی۔ جگہ خالی کرکے دوبارہ START کریں۔")}}
+function cobraSmartLoad(){try{cobraSmartQueue=JSON.parse(localStorage.getItem(COBRA_SMART_QUEUE_KEY)||"[]")||[];const x=JSON.parse(localStorage.getItem(COBRA_SMART_STATE_KEY)||"{}")||{};cobraSmartCategories=Array.isArray(x.categories)?x.categories:[]}catch(e){cobraSmartQueue=[];cobraSmartCategories=[]}}
+function cobraSmartRender(){
+ const size=Number($("cobraSmartBatchSize")?.value)||15;
+ cobraSmartCurrentBatch=cobraSmartPickBatch(cobraSmartQueue,size);
+ const preview=$("cobraSmartPreview"),add=$("cobraSmartAdd"),summary=$("cobraSmartSummary");if(!preview||!add)return;
+ if(!cobraSmartCurrentBatch.length){preview.hidden=true;add.disabled=true;summary.hidden=false;summary.innerHTML='<span class="cobra-smart-chip">تمام تیار شدہ بیچ مکمل ہو گئے</span>';return}
+ add.disabled=false;preview.hidden=false;
+ const categories=new Set(cobraSmartCurrentBatch.map(p=>p.categoryName)),rated=cobraSmartCurrentBatch.filter(p=>p.sourceRating>0).length;
+ summary.hidden=false;summary.innerHTML='<span class="cobra-smart-chip">اس بیچ میں '+cobraSmartCurrentBatch.length+' پروڈکٹس</span><span class="cobra-smart-chip">'+categories.size+' کیٹیگریز</span><span class="cobra-smart-chip">'+rated+' اصل ریٹنگ دستیاب</span><span class="cobra-smart-chip">باقی queue: '+cobraSmartQueue.length+'</span>';
+ preview.innerHTML=cobraSmartCurrentBatch.map(p=>'<div class="cobra-smart-row"><img src="'+escapeHTML(safeImageURL(p.images&&p.images[0])||"")+'" onerror="this.style.display=\'none\'" alt=""><div class="meta"><b>'+escapeHTML(p.name)+'</b><br>'+escapeHTML(p.categoryName)+' · اسٹاک '+Number(p.stockQty||0)+' · لاگت Rs. '+Number(p.cost).toLocaleString("en-PK")+'<br>'+(p.sourceRating>0?'HHC اصل ریٹنگ: '+Number(p.sourceRating).toFixed(1)+'/5'+(p.sourceReviewCount?' ('+p.sourceReviewCount+' reviews)':''):'HHC rating not supplied')+' · متوقع خالص منافع Rs. '+Number(p.estimatedNetProfit).toLocaleString("en-PK")+'</div><div class="score">'+p.smartScore+'/100</div></div>').join('')+'<div class="cobra-smart-note">اسکور AI انتخابی اسکور ہے، کسٹمر ریٹنگ نہیں۔ حقیقی ٹرینڈنگ صرف HHC کے واضح سیلز/ٹرینڈ ڈیٹا پر ظاہر ہوگی۔</div>';
+}
+async function cobraSmartStart(){
+ if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ const btn=$("cobraSmartStart"),add=$("cobraSmartAdd");btn.disabled=true;add.disabled=true;
+ $("cobraSmartProgressBar").style.width="0%";$("cobraSmartStatus").textContent="HHC کی categories اور مکمل catalog چیک ہو رہا ہے...";
+ $("cobraSmartPreview").hidden=true;$("cobraSmartSummary").hidden=true;cobraSmartQueue=[];cobraSmartCategories=[];
+ try{
+  const response=await hhcRequestWithRetry("/categories",5),categoryMap={},parentMap={},meta=[];
+  (Array.isArray(response.data)?response.data:[]).forEach(c=>{
+   const parent=String(c.name||"").trim();categoryMap[String(c.id)]=parent;meta.push({id:"hhc-cat-"+String(c.id),name:parent,parent:"",sourceId:String(c.id)});
+   (Array.isArray(c.subCategories)?c.subCategories:[]).forEach(sc=>{categoryMap[String(sc.id)]=String(sc.name||parent);parentMap[String(sc.id)]=parent;meta.push({id:"hhc-cat-"+String(sc.id),name:String(sc.name||"").trim(),parent,sourceId:String(sc.id)})});
+  });
+  const perPage=100,first=await hhcRequestWithRetry("/products?paginate="+perPage+"&page=1",5);
+  const total=Number(first.total||first.total_records||0),pages=Math.max(1,Number(first.last_page)||Math.ceil(total/perPage)||1);
+  if(!Array.isArray(first.data))throw new Error("HHC page 1 کا data درست نہیں آیا۔");
+  let scanned=0,eligible=0,skipped=0,candidates=[];
+  const process=rows=>{for(const raw of rows){scanned++;const p=cobraSmartEvaluate(raw,categoryMap,parentMap,Math.max(0,Number($("hhcDeliveryCost")?.value)||0),Math.max(0,Number($("hhcCodCost")?.value)||0));if(p){eligible++;candidates.push(p)}else skipped++}};
+  process(first.data);$("cobraSmartProgressBar").style.width=(100/pages).toFixed(1)+"%";
+  for(let page=2;page<=pages;page++){
+   const data=await hhcRequestWithRetry("/products?paginate="+perPage+"&page="+page,5),rows=Array.isArray(data.data)?data.data:(Array.isArray(data.products)?data.products:[]);
+   const returned=Number(data.current_page||data.currentPage||page);if(returned!==page)throw new Error("Page "+page+" کی جگہ "+returned+" آیا؛ اسکین روک دیا گیا۔");
+   if(!rows.length&&page<pages)throw new Error("HHC page "+page+" خالی آیا؛ مکمل اسکین کی تصدیق نہیں ہوئی۔");
+   process(rows);$("cobraSmartProgressBar").style.width=(page/pages*100).toFixed(1)+"%";
+   $("cobraSmartStatus").textContent="اسکین جاری: Page "+page+"/"+pages+" · "+scanned.toLocaleString("en-PK")+" چیک · "+eligible.toLocaleString("en-PK")+" اہل";
+   await hhcWait(180);
+  }
+  const groups={};candidates.sort((a,b)=>b.smartScore-a.smartScore);
+  candidates.forEach(p=>{if(!groups[p.category])groups[p.category]=[];if(groups[p.category].length<15)groups[p.category].push(p)});
+  cobraSmartQueue=Object.values(groups).flat().sort((a,b)=>b.smartScore-a.smartScore).slice(0,300);cobraSmartCategories=meta;cobraSmartSave();
+  $("cobraSmartStatus").textContent="مکمل اسکین: "+scanned.toLocaleString("en-PK")+" چیک، "+eligible.toLocaleString("en-PK")+" اہل، "+skipped.toLocaleString("en-PK")+" خارج۔ پہلا بیچ تیار ہے۔";
+  cobraSmartRender();showToast("COBRA SMART HUNTER scan completed.");
+ }catch(e){$("cobraSmartStatus").textContent="اسکین مکمل نہیں ہوا: "+(e.message||getErrorMessage(e))+"؛ نامکمل اسکین سے کوئی پروڈکٹ درآمد نہیں ہوگی۔";console.error("Smart Hunter scan:",e)}
+ finally{btn.disabled=false}
+}
+async function cobraSmartAddBatch(){
+ if(!requireAdmin()||!db){showToast("Admin access required.");return}
+ const btn=$("cobraSmartAdd");if(!btn||!cobraSmartCurrentBatch.length)return;btn.disabled=true;let added=0,duplicates=0;
+ const delivery=Math.max(0,Number($("hhcDeliveryCost")?.value)||0),cod=Math.max(0,Number($("hhcCodCost")?.value)||0);
+ try{
+  const docs=new Map(cobraSmartCategories.map(c=>[c.id,c]));
+  cobraSmartCurrentBatch.forEach(p=>{if(!docs.has(p.category))docs.set(p.category,{id:p.category,name:p.categoryName,parent:p.sourceParentCategory||"",sourceId:p.sourceCategoryId||""})});
+  for(const c of docs.values())await db.collection("categories").doc(c.id).set({name:c.name||"HHC Category",hidden:false,source:"HHC",sourceCategoryId:String(c.sourceId||""),parentCategory:String(c.parent||""),imageUrl:"",createdAtMs:Date.now()},{merge:true});
+  for(const p of cobraSmartCurrentBatch){
+   if(!p.id||!p.cost)continue;
+   const ref=db.collection(COLLECTION_NAME).doc("hhc_"+p.id),existing=await ref.get();if(existing.exists){duplicates++;continue}
+   const profit=hhcProfitForCost(p.cost),net=profit-delivery-cod;if(net<=0)continue;
+   const doc=hhcFirestoreProduct({...p,stockLabel:"In Stock"},profit,delivery,cod);
+   Object.assign(doc,{supplierRating:p.sourceRating||null,supplierReviewCount:p.sourceReviewCount||0,ratingSource:p.sourceRating>0?"HHC":"not-provided",smartScore:p.smartScore,smartScoreLabel:"COBRA SMART SCORE",sourceTrending:!!p.sourceTrend,sourceSalesCount:p.sourceSalesCount||null,sourceCreatedAtMs:p.sourceCreatedAt||null,category:p.category,categoryName:p.categoryName,sourceParentCategory:p.sourceParentCategory||"",netProfitEstimate:net,smartHunterImported:true});
+   await ref.set(doc,{merge:false});added++;
+  }
+  const ids=new Set(cobraSmartCurrentBatch.map(p=>p.id));cobraSmartQueue=cobraSmartQueue.filter(p=>!ids.has(p.id));cobraSmartSave();
+  $("cobraSmartStatus").textContent=added+" نئی پروڈکٹس شامل ہوئیں؛ "+duplicates+" پہلے سے موجود تھیں، دوبارہ شامل نہیں کی گئیں۔";
+  showToast(added+" products added to COBRA STORE.");cobraSmartRender();
+ }catch(e){$("cobraSmartStatus").textContent="بیچ میں مسئلہ آیا۔ "+added+" پروڈکٹس محفوظ ہوئیں۔ وجہ: "+(e.message||getErrorMessage(e));console.error("Smart Hunter import:",e)}
+ finally{btn.disabled=false}
+}
+$("cobraSmartStart")?.addEventListener("click",cobraSmartStart);
+$("cobraSmartAdd")?.addEventListener("click",cobraSmartAddBatch);
+$("cobraSmartBatchSize")?.addEventListener("change",()=>{if(cobraSmartQueue.length)cobraSmartRender()});
+cobraSmartLoad();
+if(cobraSmartQueue.length){$("cobraSmartStatus").textContent="پچھلی محفوظ queue میں "+cobraSmartQueue.length+" پروڈکٹس باقی ہیں۔ اگلا بیچ تیار ہے۔";cobraSmartRender()}
+
 async function clearOnlyHHCImportedProducts(){
  if(!requireAdmin()||!db)return;
  const button=$('hhcClearImported');if(button){button.disabled=true;button.textContent='CHECKING HHC PRODUCTS...'}
