@@ -1292,7 +1292,23 @@ body:not(.admin-mode) .modal-gallery img {
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
- <h3 class="admin-section-title">SUPPLIER IMPORT</h3>
+ <h3 class="admin-section-title">DIRECT SUPPLIER CATALOG</h3>
+ <div class="status urdu-text">HHC کے مجاز API کے ذریعے پروڈکٹس تلاش کریں، تفصیل دیکھیں، منتخب کریں اور COBRA STORE میں درآمد کریں۔ API Key ویب سائٹ میں نہیں رکھی جاتی؛ یہ محفوظ Cloudflare Worker میں Secret ہوگی۔</div>
+ <div class="supplier-import-box">
+  <div class="supplier-import-grid">
+   <div class="full"><label class="form-label">SECURE HHC WORKER URL</label><input class="form-input" id="hhcWorkerUrl" type="url" placeholder="https://your-hhc-worker.workers.dev"></div>
+   <div><label class="form-label">SEARCH PRODUCTS</label><input class="form-input" id="hhcSearch" placeholder="مثلاً watch, wallet, shoes"></div>
+   <div><label class="form-label">CATEGORY FILTER (OPTIONAL ID)</label><input class="form-input" id="hhcCategoryId" type="number" min="1" placeholder="HHC category ID"></div>
+   <div><label class="form-label">PROFIT PER PRODUCT (PKR)</label><input class="form-input" id="hhcProfit" type="number" min="0" step="1" value="150"></div>
+   <div><label class="form-label">PRODUCTS PER PAGE</label><select class="form-input" id="hhcPageSize"><option value="10">10</option><option value="20" selected>20</option><option value="50">50</option><option value="100">100</option></select></div>
+  </div>
+  <div class="form-actions"><button class="outline-btn" type="button" id="hhcTest">TEST CONNECTION</button><button class="gold-btn" type="button" id="hhcSearchBtn">SEARCH HHC PRODUCTS</button><button class="outline-btn" type="button" id="hhcCategoriesBtn">LOAD CATEGORIES</button></div>
+  <div class="status" id="hhcStatus">HHC API ابھی Worker URL لگانے اور Cloudflare میں Secret سیٹ کرنے کے بعد چلے گی۔</div>
+  <div id="hhcCategoryList" class="supplier-import-preview" hidden></div>
+  <div id="hhcProductList" class="supplier-import-preview" hidden></div>
+  <div class="form-actions"><button class="gold-btn" type="button" id="hhcImportSelected">IMPORT SELECTED PRODUCTS</button></div>
+ </div>
+ <h3 class="admin-section-title">SUPPLIER IMPORT (CSV)</h3>
  <div class="status urdu-text">HHC، Markaz یا کسی دوسرے سپلائر سے حاصل کردہ پروڈکٹ ڈیٹا یہاں CSV فائل یا پیسٹ کی گئی CSV کے ذریعے درآمد کریں۔ امپورٹ کے بعد پروڈکٹ عام Product Manager میں بھی ایڈٹ ہوگی۔</div>
  <div class="supplier-import-box">
   <div class="supplier-import-help"><b>استعمال:</b> سپلائر سے دستیاب CSV/Excel کو CSV میں محفوظ کریں، یا نیچے دیے گئے فارمیٹ میں ڈیٹا پیسٹ کریں۔ سپلائر کی ویب سائٹ سے خودکار ڈیٹا کھینچنا صرف اسی وقت ممکن ہوگا جب اس کا مجاز API یا export دستیاب ہو۔</div>
@@ -2834,6 +2850,20 @@ async function deleteStorageFiles(paths){
  if(!Array.isArray(paths)||!storage)return;
  await Promise.all(paths.filter(Boolean).map(path=>storage.ref().child(path).delete().catch(err=>console.warn("Old media cleanup:",err))));
 }
+
+// === HHC DIRECT API IMPORT (via secure Cloudflare Worker) ===
+let hhcCatalogRows=[];
+function hhcWorkerBase(){return String($('hhcWorkerUrl')?.value||'').trim().replace(/\/$/,'')}
+function hhcEndpoint(path){const base=hhcWorkerBase();if(!base)throw new Error('پہلے Secure HHC Worker URL درج کریں۔');const u=new URL(base);if(u.protocol!=='https:')throw new Error('Worker URL لازماً HTTPS ہونا چاہیے۔');return base+path}
+async function hhcRequest(path){const res=await fetch(hhcEndpoint(path),{method:'GET',headers:{'Accept':'application/json'}});let data={};try{data=await res.json()}catch(e){}if(!res.ok)throw new Error(data.error||('Worker error HTTP '+res.status));return data}
+function hhcSafeProduct(p){const price=Number(p.wholesalePrice??p.wholesale_price??p.price??0);return {id:p.id,name:String(p.name||'').trim(),cost:price,description:String(p.description||''),image:p.product_thumbnail||p.image||'',category:(p.categories&&p.categories[0]&&p.categories[0].name)||p.category||'fashion',stock:Number(p.quantity??0),stockLabel:p.stock_status_name||((Number(p.quantity??0)>0)?'In Stock':'Out of Stock'),sourceUrl:p.url||p.source_url||'',slug:p.slug||'',type:p.type||'simple',variations:Array.isArray(p.variations)?p.variations:[]}}
+function renderHHCProducts(){const box=$('hhcProductList');box.hidden=false;box.innerHTML=hhcCatalogRows.length?'<b>'+hhcCatalogRows.length+' HHC products loaded</b>'+hhcCatalogRows.map((p,i)=>'<label class="supplier-import-row" style="align-items:center"><span style="display:flex;gap:9px;align-items:center;min-width:0"><input type="checkbox" class="hhc-product-check" data-index="'+i+'" checked style="width:auto"><img src="'+escapeHTML(safeImageURL(p.image)||'')+'" alt="" style="width:54px;height:54px;object-fit:contain;background:#fff;border:1px solid #eee" onerror="this.style.display=\'none\'"><span><b>'+escapeHTML(p.name||'Unnamed product')+'</b><br><small>HHC ID: '+escapeHTML(p.id)+' · '+escapeHTML(p.stockLabel)+'</small></span></span><b style="white-space:nowrap">Rs. '+(p.cost||0).toLocaleString('en-PK')+'</b></label>').join(''):'کوئی پروڈکٹ نہیں ملی۔'}
+async function hhcLoadProducts(){if(!requireAdmin()){showToast('Admin access required.');return}const btn=$('hhcSearchBtn');btn.disabled=true;$('hhcStatus').textContent='HHC catalog سے پروڈکٹس حاصل ہو رہی ہیں...';try{const q=new URLSearchParams({paginate:$('hhcPageSize').value||'20',search:$('hhcSearch').value.trim()});const cat=$('hhcCategoryId').value.trim();if(cat)q.set('category_id',cat);const data=await hhcRequest('/products?'+q.toString());const rows=Array.isArray(data.data)?data.data:(Array.isArray(data.products)?data.products:[]);hhcCatalogRows=rows.map(hhcSafeProduct).filter(p=>p.name&&p.cost>0);renderHHCProducts();$('hhcStatus').textContent='HHC سے '+hhcCatalogRows.length+' پروڈکٹس موصول ہوئیں۔ قیمت wholesale cost ہے؛ ابھی اسٹور میں درآمد نہیں ہوئیں۔'}catch(e){$('hhcStatus').textContent='HHC search failed: '+e.message;hhcCatalogRows=[];$('hhcProductList').hidden=true}finally{btn.disabled=false}}
+$('hhcTest')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}$('hhcStatus').textContent='Worker connection test...';try{const d=await hhcRequest('/health');$('hhcStatus').textContent='Worker connected: '+(d.status||'OK')+'. '+(d.supplier||'HHC API proxy');}catch(e){$('hhcStatus').textContent='Connection failed: '+e.message}});
+$('hhcSearchBtn')?.addEventListener('click',hhcLoadProducts);
+$('hhcCategoriesBtn')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}try{const d=await hhcRequest('/categories');const rows=Array.isArray(d.data)?d.data:[];const box=$('hhcCategoryList');box.hidden=false;box.innerHTML='<b>HHC Categories</b>'+rows.map(c=>'<div class="supplier-import-row"><span>'+escapeHTML(c.name||'')+'</span><b>ID: '+escapeHTML(c.id)+'</b></div>').join('');$('hhcStatus').textContent=rows.length+' categories loaded. Category ID اوپر درج کر کے filter کریں۔'}catch(e){$('hhcStatus').textContent='Categories failed: '+e.message}});
+$('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0;const profit=Math.max(0,Number($('hhcProfit').value)||0);try{for(const p of selected){const image=safeImageURL(p.image||'');await db.collection(COLLECTION_NAME).add({name:cleanProductName(p.name).slice(0,100),category:supplierCategory(p.category),price:Math.round(p.cost+profit),costPrice:p.cost,profitAmount:profit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:safeImageURL(p.sourceUrl||''),label:'HHC',sizes:[],unavailableSizes:[],availableColors:[],stock:String(p.stockLabel||'In Stock').slice(0,80),description:String(p.description||'').slice(0,1500),details:'Imported from HHC. Supplier product ID: '+p.id,image,extraImages:[],videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp()});added++}$('hhcStatus').textContent=added+' products COBRA STORE میں درآمد ہو گئیں۔ اب YOUR PRODUCTS میں قیمت، تصاویر اور تفصیل چیک کریں۔';showToast(added+' HHC products imported.');hhcCatalogRows=[];$('hhcProductList').hidden=true}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
+// === END HHC DIRECT API IMPORT ===
 
 // === COBRA STORE SUPPLIER CSV IMPORT ===
 let supplierImportRows=[];
