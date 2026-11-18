@@ -809,6 +809,17 @@ body:not(.admin-mode) .modal-gallery img {
 .related-card{transition:transform .25s,box-shadow .25s,border-color .25s}
 .related-card:hover{transform:translateY(-4px);border-color:var(--coral);box-shadow:0 10px 24px rgba(0,0,0,.1)}
 
+
+/* === COBRA SUPPLIER IMPORT === */
+.supplier-import-box{border:1px solid var(--line);background:#fffaf8;padding:16px;border-radius:8px;margin:12px 0 20px}
+.supplier-import-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.supplier-import-grid .full{grid-column:1/-1}
+.supplier-import-help{font-size:11px;line-height:1.9;color:#756d68;margin:8px 0 12px}
+.supplier-import-preview{border:1px solid var(--line);border-radius:6px;padding:10px;margin-top:10px;max-height:260px;overflow:auto;background:white;font-size:11px}
+.supplier-import-row{padding:8px 2px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:8px}
+.supplier-import-row:last-child{border-bottom:0}
+@media(max-width:600px){.supplier-import-grid{grid-template-columns:1fr}.supplier-import-grid .full{grid-column:auto}}
+
 </style>
 <!-- Google Analytics 4: COBRA STORE -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HT8ZF49BP2"></script>
@@ -1279,6 +1290,27 @@ body:not(.admin-mode) .modal-gallery img {
  <div id="adminSizeManager"><div class="status">Loading all products and sizes...</div></div>
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+
+ <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <h3 class="admin-section-title">SUPPLIER IMPORT</h3>
+ <div class="status urdu-text">HHC، Markaz یا کسی دوسرے سپلائر سے حاصل کردہ پروڈکٹ ڈیٹا یہاں CSV فائل یا پیسٹ کی گئی CSV کے ذریعے درآمد کریں۔ امپورٹ کے بعد پروڈکٹ عام Product Manager میں بھی ایڈٹ ہوگی۔</div>
+ <div class="supplier-import-box">
+  <div class="supplier-import-help"><b>استعمال:</b> سپلائر سے دستیاب CSV/Excel کو CSV میں محفوظ کریں، یا نیچے دیے گئے فارمیٹ میں ڈیٹا پیسٹ کریں۔ سپلائر کی ویب سائٹ سے خودکار ڈیٹا کھینچنا صرف اسی وقت ممکن ہوگا جب اس کا مجاز API یا export دستیاب ہو۔</div>
+  <div class="supplier-import-grid">
+   <div><label class="form-label">SUPPLIER</label><select class="form-input" id="supplierImportName"><option>HHC</option><option>Markaz</option><option>Other</option></select></div>
+   <div><label class="form-label">PROFIT PER PRODUCT (PKR)</label><input class="form-input" id="supplierImportProfit" type="number" min="0" step="1" value="150"></div>
+   <div class="full"><label class="form-label">UPLOAD CSV FILE</label><input class="form-input" id="supplierCsvFile" type="file" accept=".csv,text/csv"></div>
+   <div class="full"><label class="form-label">OR PASTE CSV DATA</label><textarea class="form-input" id="supplierCsvText" rows="6" placeholder="name,cost,description,image,category,stock,sourceUrl&#10;Sample Product,500,Product details,https://example.com/image.jpg,fashion,In Stock,https://supplier.example/product"></textarea></div>
+  </div>
+  <div class="form-actions">
+   <button class="outline-btn" type="button" id="supplierCsvTemplate">DOWNLOAD CSV TEMPLATE</button>
+   <button class="outline-btn" type="button" id="supplierCsvPreview">PREVIEW IMPORT</button>
+   <button class="gold-btn" type="button" id="supplierCsvImport">IMPORT PRODUCTS</button>
+  </div>
+  <div class="status" id="supplierImportStatus">CSV columns: name, cost, description, image, category, stock, sourceUrl. Cost + profit = store selling price.</div>
+  <div class="supplier-import-preview" id="supplierImportPreview" hidden></div>
+ </div>
+
  <h3 class="form-title" id="productFormTitle">ADD NEW PRODUCT</h3>
  <form id="productForm">
   <input type="hidden" id="editProductId">
@@ -2802,6 +2834,65 @@ async function deleteStorageFiles(paths){
  if(!Array.isArray(paths)||!storage)return;
  await Promise.all(paths.filter(Boolean).map(path=>storage.ref().child(path).delete().catch(err=>console.warn("Old media cleanup:",err))));
 }
+
+// === COBRA STORE SUPPLIER CSV IMPORT ===
+let supplierImportRows=[];
+function parseSupplierCSV(text){
+ const rows=[];let row=[],cell='',quoted=false;
+ text=String(text||'').replace(/^\\uFEFF/,'');
+ for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];
+  if(c==='"'&&quoted&&n==='"'){cell+='"';i++;continue}
+  if(c==='"'){quoted=!quoted;continue}
+  if(c===','&&!quoted){row.push(cell.trim());cell='';continue}
+  if((c==='\
+'||c==='\\r')&&!quoted){if(c==='\\r'&&n==='\
+')i++;row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);row=[];cell='';continue}
+  cell+=c;
+ }
+ row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);
+ if(rows.length<2)throw new Error('CSV میں header اور کم از کم ایک product row ضروری ہے۔');
+ const headers=rows.shift().map(h=>h.replace(/^\\s+|\\s+$/g,'').toLowerCase());
+ const required=['name','cost'];for(const key of required)if(!headers.includes(key))throw new Error('CSV میں name اور cost columns لازمی ہیں۔');
+ return rows.map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]||'');return o}).filter(o=>o.name&&Number(o.cost)>0);
+}
+function supplierCategory(value){
+ const v=String(value||'fashion').toLowerCase().trim();
+ const allowed=['girls-shoes','boys-shoes','boys-clothes','girls-clothes','boys-watches','girls-watches','mobile-accessories','electronics','fashion'];
+ if(allowed.includes(v))return v;
+ const map={'shoes':'boys-shoes','watch':'boys-watches','watches':'boys-watches','clothes':'boys-clothes','mobile accessories':'mobile-accessories'};return map[v]||'fashion';
+}
+async function getSupplierCSVText(){
+ const file=$('supplierCsvFile')?.files?.[0];
+ if(file){if(file.size>2*1024*1024)throw new Error('CSV فائل 2 MB سے کم ہونی چاہیے۔');return await file.text()}
+ return $('supplierCsvText')?.value||'';
+}
+function previewSupplierImport(){
+ try{const rows=parseSupplierCSV($('supplierCsvText').value);supplierImportRows=rows;
+  const box=$('supplierImportPreview');box.hidden=false;
+  box.innerHTML='<b>'+rows.length+' products found</b>'+rows.slice(0,20).map((r,i)=>'<div class="supplier-import-row"><span>'+escapeHTML(r.name)+'</span><b>Cost Rs. '+Number(r.cost).toLocaleString('en-PK')+' → Sell Rs. '+(Number(r.cost)+Math.max(0,Number($('supplierImportProfit').value)||0)).toLocaleString('en-PK')+'</b></div>').join('')+(rows.length>20?'<div class="status">First 20 products shown.</div>':'');
+  $('supplierImportStatus').textContent='Preview ready. '+rows.length+' valid products found.';
+ }catch(e){$('supplierImportStatus').textContent=e.message;supplierImportRows=[]}
+}
+$('supplierCsvFile')?.addEventListener('change',async e=>{try{$('supplierCsvText').value=await e.target.files[0].text();$('supplierImportStatus').textContent='CSV file loaded. Press PREVIEW IMPORT.'}catch(err){$('supplierImportStatus').textContent='Could not read CSV file.'}});
+$('supplierCsvPreview')?.addEventListener('click',previewSupplierImport);
+$('supplierCsvTemplate')?.addEventListener('click',()=>{const csv='name,cost,description,image,category,stock,sourceUrl\\r\
+Sample Product,500,Product details,https://example.com/image.jpg,fashion,In Stock,https://supplier.example/product\\r\
+';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='cobra-store-supplier-template.csv';a.click();URL.revokeObjectURL(a.href)});
+$('supplierCsvImport')?.addEventListener('click',async()=>{
+ if(!requireAdmin()){showToast('Admin access required.');return}
+ try{const raw=await getSupplierCSVText();supplierImportRows=parseSupplierCSV(raw);if(!supplierImportRows.length)throw new Error('کوئی درست پروڈکٹ نہیں ملی۔');
+  const supplier=$('supplierImportName').value,profit=Math.max(0,Number($('supplierImportProfit').value)||0),btn=$('supplierCsvImport');btn.disabled=true;let added=0;
+  $('supplierImportStatus').textContent='Importing products to your COBRA STORE database...';
+  for(const r of supplierImportRows){const cost=Number(r.cost),image=safeImageURL(r.image||'');const price=Math.round(cost+profit);
+   if(!r.name||!Number.isFinite(cost)||cost<=0)continue;
+   await db.collection(COLLECTION_NAME).add({name:cleanProductName(r.name).slice(0,100),category:supplierCategory(r.category),price,costPrice:cost,profitAmount:profit,supplierName:supplier,supplierSourceUrl:safeImageURL(r.sourceurl||''),label:supplier, sizes:[],unavailableSizes:[],availableColors:[],stock:String(r.stock||'In Stock').slice(0,80),description:String(r.description||'').slice(0,1500),details:'Imported from '+supplier,image,extraImages:[],videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp()});added++;
+  }
+  $('supplierImportStatus').textContent=added+' products imported successfully. They will appear in YOUR PRODUCTS and the storefront.';showToast(added+' supplier products imported.');$('supplierCsvText').value='';$('supplierCsvFile').value='';$('supplierImportPreview').hidden=true;supplierImportRows=[];
+ }catch(e){console.error('Supplier import:',e);$('supplierImportStatus').textContent='Import failed: '+(e.message||getErrorMessage(e));}
+ finally{$('supplierCsvImport').disabled=false}
+});
+// === END SUPPLIER IMPORT ===
+
 $("productForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!requireAdmin()){showToast("Admin access required.");return}
  const name=cleanProductName($("productName").value),category=$("productCategory").value;
