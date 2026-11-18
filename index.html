@@ -1299,11 +1299,18 @@ body:not(.admin-mode) .modal-gallery img {
    <div class="full"><label class="form-label">SECURE HHC WORKER URL</label><input class="form-input" id="hhcWorkerUrl" type="url" value="https://wispy-pine-70ccobra-store-hhc-worker3.muhajirhackers.workers.dev" placeholder="https://your-hhc-worker.workers.dev"></div>
    <div><label class="form-label">SEARCH PRODUCTS</label><input class="form-input" id="hhcSearch" placeholder="مثلاً watch, wallet, shoes"></div>
    <div><label class="form-label">CATEGORY FILTER (OPTIONAL ID)</label><input class="form-input" id="hhcCategoryId" type="number" min="1" placeholder="HHC category ID"></div>
-   <div><label class="form-label">PROFIT PER PRODUCT (PKR)</label><input class="form-input" id="hhcProfit" type="number" min="0" step="1" value="150"></div>
+   <div><label class="form-label">MANUAL PROFIT OVERRIDE (0 = AUTO TIERS)</label><input class="form-input" id="hhcProfit" type="number" min="0" step="1" value="0"></div>
+   <div><label class="form-label">LOW-COST LIMIT (PKR)</label><input class="form-input" id="hhcSmallCostLimit" type="number" min="0" step="1" value="500"></div>
+   <div><label class="form-label">PROFIT UP TO LIMIT (PKR)</label><input class="form-input" id="hhcSmallProfit" type="number" min="0" step="1" value="400"></div>
+   <div><label class="form-label">PROFIT ABOVE LIMIT (%)</label><input class="form-input" id="hhcLargeProfitPercent" type="number" min="0" max="500" step="1" value="50"></div>
+   <div><label class="form-label">DELIVERY COST ESTIMATE (PKR)</label><input class="form-input" id="hhcDeliveryCost" type="number" min="0" step="1" value="0"></div>
+   <div><label class="form-label">COD / PAYMENT COST (PKR)</label><input class="form-input" id="hhcCodCost" type="number" min="0" step="1" value="0"></div>
    <div><label class="form-label">PRODUCTS PER PAGE</label><select class="form-input" id="hhcPageSize"><option value="10">10</option><option value="20" selected>20</option><option value="50">50</option><option value="100">100</option></select></div>
   </div>
   <div class="form-actions"><button class="outline-btn" type="button" id="hhcTest">TEST CONNECTION</button><button class="gold-btn" type="button" id="hhcSearchBtn">SEARCH HHC PRODUCTS</button><button class="outline-btn" type="button" id="hhcCategoriesBtn">LOAD CATEGORIES</button></div>
   <div class="form-actions"><button class="gold-btn" type="button" id="hhcImportAll">⬇ ONE-CLICK SYNC ALL HHC PRODUCTS</button></div>
+  <div class="form-actions"><button class="outline-btn" type="button" id="hhcClearImported" style="color:#b42318;border-color:#b42318">CLEAR ONLY HHC-IMPORTED PRODUCTS</button></div>
+  <div class="status urdu-text">صفائی صرف HHC supplier والی پروڈکٹس کو ہٹائے گی؛ دستی پروڈکٹس، آرڈرز اور کسٹمر ریکارڈ کو نہیں چھیڑے گی۔ پہلے بیک اپ رکھیں۔</div>
   <div class="status" id="hhcStatus">HHC Worker پہلے سے منسلک ہے۔ One-Click Sync سے صرف Published اور In Stock پروڈکٹس آئیں گی؛ منافع ڈیفالٹ Rs. 150 فی پروڈکٹ ہوگا اور موجودہ 11.11% Sale برقرار رہے گی۔</div>
   <div id="hhcCategoryList" class="supplier-import-preview" hidden></div>
   <div id="hhcProductList" class="supplier-import-preview" hidden></div>
@@ -1363,7 +1370,15 @@ body:not(.admin-mode) .modal-gallery img {
   <div class="status" id="uploadStatus"></div>
  </form>
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
- <h3 class="form-title">YOUR PRODUCTS</h3><div id="adminProductList"></div>
+ <h3 class="form-title">YOUR PRODUCTS — ALL STORE PRODUCTS</h3>
+ <div class="status urdu-text">تمام مینجمنٹ اور امپورٹ آپشنز اوپر ہیں۔ یہاں تمام پروڈکٹس آخر میں سرچ اور صفحات کے ساتھ دکھائی جائیں گی؛ ہر پروڈکٹ کے اپنے Edit، Delete اور Media بٹن ساتھ موجود ہیں۔</div>
+ <div class="supplier-import-grid" style="margin:12px 0">
+  <div class="full"><label class="form-label">SEARCH PRODUCTS</label><input class="form-input" id="adminProductSearch" placeholder="نام، برانڈ یا سپلائر تلاش کریں"></div>
+  <div><label class="form-label">CATEGORY</label><select class="form-input" id="adminProductCategoryFilter"><option value="all">All categories</option></select></div>
+  <div><label class="form-label">PRODUCTS PER PAGE</label><select class="form-input" id="adminProductPageSize"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></div>
+ </div>
+ <div class="status" id="adminProductListStatus" aria-live="polite"></div><div id="adminProductList"></div>
+ <div class="form-actions"><button class="outline-btn" type="button" id="adminProductsPrev">← PREVIOUS</button><button class="outline-btn" type="button" id="adminProductsNext">NEXT →</button></div>
 </div></div>
 
 <div class="cart-panel" id="cartPanel">
@@ -2631,20 +2646,39 @@ async function contactOrderCustomer(orderId){
  }catch(error){showToast("Customer details could not load: "+getErrorMessage(error))}
 }
 
-let adminProductLimit=100;
+let adminProductPage=1;
 function renderAdminProducts(){
- const list=$("adminProductList");if(!list)return;
+ const list=$('adminProductList');if(!list)return;
  if(!requireAdmin()){list.innerHTML='<div class="status">Please sign in as administrator.</div>';return}
- if(!products.length){list.innerHTML='<div class="status">No products added yet.</div>';return}
- if($("statProducts")) $("statProducts").textContent = products.length;
- const visibleProducts=products.slice(0,adminProductLimit);
- list.innerHTML=visibleProducts.map(p=>{
-  const imgs=productImages(p);
-  const thumb=imgs.length?`<img class="admin-product-thumb" src="${escapeHTML(imgs[0])}" alt="">`:`<div class="admin-product-thumb ph">🐍</div>`;
-  return `<div class="admin-product"><div class="admin-product-left">${thumb}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${imgs.length} photos • ${p.videoUrl?"Video":"No video"}</small></div></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`;
- }).join("")+(products.length>adminProductLimit?`<div class="status" style="text-align:center"><button class="outline-btn" type="button" onclick="loadMoreAdminProducts()">LOAD MORE (${products.length-adminProductLimit} remaining)</button></div>`:"");
+ if($('statProducts'))$('statProducts').textContent=products.length;
+ const search=String($('adminProductSearch')?.value||'').trim().toLowerCase();
+ const category=$('adminProductCategoryFilter')?.value||'all';
+ const pageSize=Math.max(1,Number($('adminProductPageSize')?.value)||50);
+ const categorySelect=$('adminProductCategoryFilter');
+ if(categorySelect){
+  const current=categorySelect.value;const cats=[...new Set(products.map(p=>String(p.category||'')).filter(Boolean))].sort();
+  if(categorySelect.options.length!==cats.length+1){categorySelect.innerHTML='<option value="all">All categories</option>'+cats.map(c=>'<option value="'+escapeHTML(c)+'">'+escapeHTML(categoryName(c))+'</option>').join('');}
+  if([...categorySelect.options].some(o=>o.value===current))categorySelect.value=current;
+ }
+ const filtered=products.filter(p=>{
+  const hay=[p.name,p.description,p.brand,p.category,p.supplierName,p.supplierStoreName,p.supplierProductId].join(' ').toLowerCase();
+  return (!search||hay.includes(search))&&(category==='all'||String(p.category||'')===category);
+ });
+ const pages=Math.max(1,Math.ceil(filtered.length/pageSize));adminProductPage=Math.min(Math.max(1,adminProductPage),pages);
+ const visible=filtered.slice((adminProductPage-1)*pageSize,adminProductPage*pageSize);
+ const status=$('adminProductListStatus');if(status)status.textContent='کل '+products.length.toLocaleString('en-PK')+' پروڈکٹس · فلٹر کے بعد '+filtered.length.toLocaleString('en-PK')+' · صفحہ '+adminProductPage+'/'+pages;
+ const prev=$('adminProductsPrev'),next=$('adminProductsNext');if(prev)prev.disabled=adminProductPage<=1;if(next)next.disabled=adminProductPage>=pages;
+ if(!visible.length){list.innerHTML='<div class="status">کوئی پروڈکٹ نہیں ملی۔</div>';return}
+ list.innerHTML=visible.map(p=>{
+  const imgs=productImages(p);const thumb=imgs.length?`<img class="admin-product-thumb" loading="lazy" src="${escapeHTML(imgs[0])}" alt="">`:`<div class="admin-product-thumb ph">🐍</div>`;
+  return `<div class="admin-product"><div class="admin-product-left">${thumb}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${imgs.length} photos • ${p.videoUrl?'Video':'No video'} • ${escapeHTML(p.supplierName||'Store')}</small></div></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`;
+ }).join('');
 }
-function loadMoreAdminProducts(){adminProductLimit+=100;renderAdminProducts()}
+$('adminProductSearch')?.addEventListener('input',()=>{adminProductPage=1;renderAdminProducts()});
+$('adminProductCategoryFilter')?.addEventListener('change',()=>{adminProductPage=1;renderAdminProducts()});
+$('adminProductPageSize')?.addEventListener('change',()=>{adminProductPage=1;renderAdminProducts()});
+$('adminProductsPrev')?.addEventListener('click',()=>{adminProductPage=Math.max(1,adminProductPage-1);renderAdminProducts()});
+$('adminProductsNext')?.addEventListener('click',()=>{adminProductPage++;renderAdminProducts()});
 
 function getManagerDraft(product){
  const saved=sizeManagerDrafts[product.id];
@@ -2889,43 +2923,112 @@ async function hhcLoadProducts(){if(!requireAdmin()){showToast('Admin access req
 $('hhcTest')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}$('hhcStatus').textContent='Worker connection test...';try{const d=await hhcRequest('/health');$('hhcStatus').textContent='Worker connected: '+(d.status||'OK')+'. '+(d.supplier||'HHC API proxy');}catch(e){$('hhcStatus').textContent='Connection failed: '+e.message}});
 $('hhcSearchBtn')?.addEventListener('click',hhcLoadProducts);
 $('hhcCategoriesBtn')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}try{const d=await hhcRequest('/categories');const rows=Array.isArray(d.data)?d.data:[];const box=$('hhcCategoryList');box.hidden=false;box.innerHTML='<b>HHC Categories</b>'+rows.map(c=>'<div class="supplier-import-row"><span>'+escapeHTML(c.name||'')+'</span><b>ID: '+escapeHTML(c.id)+'</b></div>').join('');$('hhcStatus').textContent=rows.length+' categories loaded.'}catch(e){$('hhcStatus').textContent='Categories failed: '+e.message}});
-function hhcFirestoreProduct(p,profit){const images=p.images||[];return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:Math.ceil((p.cost+profit)/(1-DEFAULT_SALE/100)),costPrice:p.cost,profitAmount:profit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:(p.sourceCategory?'HHC · '+p.sourceCategory:'HHC').slice(0,50),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:'HHC supplier product ID: '+p.id+(p.storeName?' · Supplier: '+p.storeName:'')+(p.storeCity?' · City: '+p.storeCity:'')+(p.variations&&p.variations.length?' · '+p.variations.length+' options/variations':''),image:images[0]||'',extraImages:images.slice(1,4),videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()}}
-$('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()||!db){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0;const profit=Math.max(0,Number($('hhcProfit').value)||0);try{let batch=db.batch(),pending=0;for(const p of selected){if(!p.id||!p.cost)continue;const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);batch.set(ref,hhcFirestoreProduct(p,profit),{merge:true});pending++;added++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}if(pending)await batch.commit();$('hhcStatus').textContent=added+' پروڈکٹس COBRA STORE میں Sync ہو گئیں۔';showToast(added+' HHC products imported.')}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
+function hhcProfitForCost(cost){
+ const manual=Math.max(0,Number($('hhcProfit')?.value)||0);
+ if(manual>0)return manual;
+ const limit=Math.max(0,Number($('hhcSmallCostLimit')?.value)||500);
+ const smallProfit=Math.max(0,Number($('hhcSmallProfit')?.value)||0);
+ const largePercent=Math.max(0,Math.min(500,Number($('hhcLargeProfitPercent')?.value)||0));
+ return Number(cost)<=limit?smallProfit:Math.round(Number(cost)*largePercent/100);
+}
+function hhcFirestoreProduct(p,profit,deliveryCost=0,codCost=0){const images=p.images||[];const netProfit=profit-deliveryCost-codCost;return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:Math.ceil((p.cost+profit)/(1-DEFAULT_SALE/100)),costPrice:p.cost,profitAmount:profit,deliveryCostEstimate:deliveryCost,codCostEstimate:codCost,netProfitEstimate:netProfit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:(p.sourceCategory?'HHC · '+p.sourceCategory:'HHC').slice(0,50),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:'HHC supplier product ID: '+p.id+(p.storeName?' · Supplier: '+p.storeName:'')+(p.storeCity?' · City: '+p.storeCity:'')+(p.variations&&p.variations.length?' · '+p.variations.length+' options/variations':''),image:images[0]||'',extraImages:images.slice(1,4),videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()}}
+$('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()||!db){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0;const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0);try{let batch=db.batch(),pending=0;for(const p of selected){if(!p.id||!p.cost)continue;const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);const itemProfit=hhcProfitForCost(p.cost);batch.set(ref,hhcFirestoreProduct(p,itemProfit,deliveryCost,codCost),{merge:true});pending++;added++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}if(pending)await batch.commit();$('hhcStatus').textContent=added+' پروڈکٹس COBRA STORE میں Sync ہو گئیں۔';showToast(added+' HHC products imported.')}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
+const HHC_SYNC_CHECKPOINT_KEY='cobra_hhc_sync_checkpoint_v2';
+const HHC_SYNC_DELAY_MS=250;
+function hhcWait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+async function hhcRequestWithRetry(path,attempts=5){
+ let lastError;
+ for(let attempt=1;attempt<=attempts;attempt++){
+  try{return await hhcRequest(path)}catch(error){
+   lastError=error;
+   if(attempt===attempts)break;
+   const wait=Math.min(15000,800*Math.pow(2,attempt-1))+Math.floor(Math.random()*350);
+   const status=$('hhcStatus');if(status)status.textContent='عارضی نیٹ ورک/API مسئلہ۔ '+attempt+'/'+attempts+' دوبارہ کوشش؛ '+Math.ceil(wait/1000)+' سیکنڈ انتظار...';
+   await hhcWait(wait);
+  }
+ }
+ throw lastError||new Error('HHC API request failed');
+}
+function hhcCheckpointRead(){try{return JSON.parse(localStorage.getItem(HHC_SYNC_CHECKPOINT_KEY)||'null')}catch(e){return null}}
+function hhcCheckpointWrite(data){try{localStorage.setItem(HHC_SYNC_CHECKPOINT_KEY,JSON.stringify(data))}catch(e){console.warn('Could not save HHC sync checkpoint',e)}}
 async function hhcImportAll(){
  if(!requireAdmin()||!db){showToast('Admin access required.');return}
  const btn=$('hhcImportAll');if(!btn)return;
- if(!confirm('HHC کی تمام Published اور In Stock پروڈکٹس COBRA STORE میں Sync ہوں گی۔ ڈیفالٹ منافع Rs. '+(Number($('hhcProfit').value)||150)+' فی پروڈکٹ ہوگا۔ پہلے سے درآمد شدہ HHC پروڈکٹس دوبارہ duplicate نہیں ہوں گی۔ یہ عمل چند منٹ لے سکتا ہے۔ کیا شروع کریں؟'))return;
- btn.disabled=true;const oldText=btn.textContent;btn.textContent='SYNCING... PLEASE WAIT';
- const profit=Math.max(0,Number($('hhcProfit').value)||0),perPage=100;let page=1,total=0,synced=0,skipped=0,batch=db.batch(),pending=0;
- async function commit(){if(pending){await batch.commit();batch=db.batch();pending=0}}
+ const profit=Math.max(0,Number($('hhcProfit').value)||0);
+ const smallCostLimit=Math.max(0,Number($('hhcSmallCostLimit')?.value)||500),smallProfit=Math.max(0,Number($('hhcSmallProfit')?.value)||0),largeProfitPercent=Math.max(0,Math.min(500,Number($('hhcLargeProfitPercent')?.value)||0));
+ const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0);
+ const codCost=Math.max(0,Number($('hhcCodCost')?.value)||0);
+ const perPage=100;
+ const saved=hhcCheckpointRead();
+ const canResume=saved&&saved.worker===hhcWorkerBase()&&saved.perPage===perPage&&saved.profit===profit&&saved.smallCostLimit===smallCostLimit&&saved.smallProfit===smallProfit&&saved.largeProfitPercent===largeProfitPercent&&saved.deliveryCost===deliveryCost&&saved.codCost===codCost&&saved.totalPages>0;
+ let startPage=canResume?Math.max(1,Number(saved.nextPage)||1):1;
+ if(!confirm((canResume?'پچھلی امپورٹ Page '+startPage+' سے دوبارہ جاری ہوگی۔':'HHC کی تمام Published اور In Stock پروڈکٹس امپورٹ ہوں گی۔')+' ہر پروڈکٹ کا مستقل HHC ID استعمال ہوگا، اس لیے دوبارہ چلانے سے duplicate نہیں بننی چاہیے۔ کیا شروع کریں؟'))return;
+ btn.disabled=true;const oldText=btn.textContent;btn.textContent='SYNCING — PLEASE WAIT';
+ let page=startPage,totalPages=Number(saved?.totalPages)||0,synced=Number(saved?.synced)||0,skipped=Number(saved?.skipped)||0;
+ let lastCompletedSynced=synced,lastCompletedSkipped=skipped;
+ let batch=db.batch(),pending=0;
+ async function commit(){if(!pending)return;await batch.commit();batch=db.batch();pending=0}
  try{
-  const categoryResponse=await hhcRequest('/categories');const categoryMap={};(Array.isArray(categoryResponse.data)?categoryResponse.data:[]).forEach(c=>{categoryMap[String(c.id)]=c.name||'';(Array.isArray(c.subCategories)?c.subCategories:[]).forEach(sc=>categoryMap[String(sc.id)]=sc.name||c.name||'')});
-  const first=await hhcRequest('/products?paginate='+perPage+'&page=1');
-  let rows=Array.isArray(first.data)?first.data:[];total=Number(first.total)||rows.length;const totalPages=Math.max(1,Math.ceil(total/perPage));
-  const second=totalPages>1?await hhcRequest('/products?paginate='+perPage+'&page=2'):null;
-  if(totalPages>1&&(!second||!Array.isArray(second.data)||!second.data.length))throw new Error('HHC page=2 سے ڈیٹا نہیں آیا۔ Cloudflare Worker میں page support شامل کر کے Deploy کریں۔');
-  if(second&&rows.length&&String(second.data[0].id)===String(rows[0].id))throw new Error('Cloudflare Worker ابھی page=2 آگے نہیں بھیج رہا۔ پہلے updated Worker code Deploy کریں۔');
-  if(second&&Number(second.current_page)===1)throw new Error('Worker page=2 کو page=1 بنا رہا ہے۔ Updated Worker code Deploy کریں۔');
-  for(page=1;page<=totalPages;page++){
-   const data=page===1?first:(page===2?second:await hhcRequest('/products?paginate='+perPage+'&page='+page));
-   rows=Array.isArray(data.data)?data.data:[];if(!rows.length)break;
+  let categoryMap=saved?.categoryMap||{};
+  if(!Object.keys(categoryMap).length){const categoryResponse=await hhcRequestWithRetry('/categories');(Array.isArray(categoryResponse.data)?categoryResponse.data:[]).forEach(c=>{categoryMap[String(c.id)]=c.name||'';(Array.isArray(c.subCategories)?c.subCategories:[]).forEach(sc=>categoryMap[String(sc.id)]=sc.name||c.name||'')})}
+  if(!totalPages){const first=await hhcRequestWithRetry('/products?paginate='+perPage+'&page=1');const total=Number(first.total)||Number(first.total_records)||0;totalPages=Math.max(1,Number(first.last_page)||Math.ceil(total/perPage)||1);if(!Array.isArray(first.data))throw new Error('HHC page 1 کا data درست format میں نہیں آیا۔');}
+  hhcCheckpointWrite({worker:hhcWorkerBase(),perPage,profit,smallCostLimit,smallProfit,largeProfitPercent,deliveryCost,codCost,totalPages,nextPage:startPage,synced,skipped,categoryMap,updatedAt:Date.now()});
+  for(page=startPage;page<=totalPages;page++){
+   const data=await hhcRequestWithRetry('/products?paginate='+perPage+'&page='+page,5);
+   const rows=Array.isArray(data.data)?data.data:(Array.isArray(data.products)?data.products:[]);
+   if(!rows.length){
+    if(page<=totalPages && Number(data.current_page||page)!==page)throw new Error('HHC نے page '+page+' کے بجائے مختلف صفحہ واپس کیا۔ دوبارہ کوشش کے لیے Sync دوبارہ دبائیں۔');
+    if(page<totalPages)throw new Error('HHC page '+page+' خالی آیا؛ باقی صفحات چھوڑے نہیں گئے۔ دوبارہ Sync دبائیں۔');
+    break;
+   }
+   const returnedPage=Number(data.current_page||data.currentPage||page);
+   if(returnedPage!==page)throw new Error('Page mismatch: مانگا '+page+', ملا '+returnedPage+'.');
    for(const raw of rows){
-    const p=hhcNormalizeProduct(raw,profit,categoryMap);
-    if(!p.id||!p.name||!p.cost||!p.published||!p.stockLabel.includes('In Stock')){skipped++;continue}
-    const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);
-    batch.set(ref,hhcFirestoreProduct(p,profit),{merge:true});pending++;synced++;
+    const product=hhcNormalizeProduct(raw,hhcProfitForCost(Number(raw.wholesalePrice||raw.wholesale_price||raw.salePrice||raw.sale_price||raw.price||0)),categoryMap);
+    if(!product.id||!product.name||!product.cost||!product.published||!product.stockLabel.includes('In Stock')){skipped++;continue}
+    const ref=db.collection(COLLECTION_NAME).doc('hhc_'+product.id);
+    const itemProfit=hhcProfitForCost(product.cost);batch.set(ref,hhcFirestoreProduct(product,itemProfit,deliveryCost,codCost),{merge:true});pending++;synced++;
     if(pending>=400)await commit();
    }
-   $('hhcStatus').textContent='HHC Sync جاری ہے: Page '+page+'/'+totalPages+' · '+synced.toLocaleString('en-PK')+' پروڈکٹس تیار · '+skipped.toLocaleString('en-PK')+' خارج';
-   if(pending>=300)await commit();
+   await commit();
+   lastCompletedSynced=synced;lastCompletedSkipped=skipped;
+   const nextPage=page+1;
+   hhcCheckpointWrite({worker:hhcWorkerBase(),perPage,profit,smallCostLimit,smallProfit,largeProfitPercent,deliveryCost,codCost,totalPages,nextPage,synced,skipped,categoryMap,updatedAt:Date.now()});
+   $('hhcStatus').textContent='امپورٹ جاری ہے: Page '+page+'/'+totalPages+' مکمل · '+synced.toLocaleString('en-PK')+' محفوظ · '+skipped.toLocaleString('en-PK')+' خارج۔ اگلا صفحہ خود شروع ہوگا۔';
+   await hhcWait(HHC_SYNC_DELAY_MS);
   }
-  await commit();
-  $('hhcStatus').textContent='مکمل! '+synced.toLocaleString('en-PK')+' Published اور In Stock HHC پروڈکٹس COBRA STORE میں Sync ہو گئیں۔ '+skipped.toLocaleString('en-PK')+' غیر دستیاب/نامکمل پروڈکٹس خارج ہوئیں۔';
-  showToast(synced.toLocaleString('en-PK')+' HHC products synced successfully.');
- }catch(e){try{await commit()}catch(commitError){console.error('Final batch commit:',commitError)}$('hhcStatus').textContent='Sync اس صفحے پر رک گئی: '+page+'۔ '+synced+' پروڈکٹس محفوظ ہو چکی ہیں۔ Error: '+(e.message||getErrorMessage(e));console.error('HHC full sync:',e)}
- finally{btn.disabled=false;btn.textContent=oldText}
+  localStorage.removeItem(HHC_SYNC_CHECKPOINT_KEY);
+  $('hhcStatus').textContent='مکمل! تمام '+totalPages+' صفحات چیک ہو گئے۔ '+synced.toLocaleString('en-PK')+' HHC پروڈکٹس محفوظ/اپ ڈیٹ ہوئیں، '+skipped.toLocaleString('en-PK')+' خارج ہوئیں۔';
+  showToast('HHC Sync completed: '+synced+' products.');
+ }catch(e){
+  try{await commit()}catch(commitError){console.error('HHC final commit error',commitError)}
+  synced=lastCompletedSynced;skipped=lastCompletedSkipped;
+  hhcCheckpointWrite({worker:hhcWorkerBase(),perPage,profit,smallCostLimit,smallProfit,largeProfitPercent,deliveryCost,codCost,totalPages,nextPage:page,synced,skipped,categoryMap,updatedAt:Date.now()});
+  $('hhcStatus').textContent='امپورٹ Page '+page+' پر رکی۔ '+synced+' پروڈکٹس محفوظ ہیں۔ آپ دوبارہ Sync دبائیں؛ یہ Page '+page+' سے جاری ہوگی۔ وجہ: '+(e.message||getErrorMessage(e));
+  console.error('HHC resumable sync error:',e);
+ }finally{btn.disabled=false;btn.textContent=oldText}
 }
 $('hhcImportAll')?.addEventListener('click',hhcImportAll);
+async function clearOnlyHHCImportedProducts(){
+ if(!requireAdmin()||!db)return;
+ const button=$('hhcClearImported');if(button){button.disabled=true;button.textContent='CHECKING HHC PRODUCTS...'}
+ try{
+  const snap=await db.collection(COLLECTION_NAME).where('supplierName','==','HHC').get();
+  const docs=snap.docs;
+  if(!docs.length){$('hhcStatus').textContent='HHC supplier کے نام سے کوئی پروڈکٹ نہیں ملی۔';showToast('HHC imported products نہیں ملیں۔');return}
+  const count=docs.length;
+  if(!confirm('صرف '+count+' HHC supplier والی پروڈکٹس مستقل حذف ہوں گی۔ دستی پروڈکٹس، آرڈرز، کسٹمرز اور باقی ڈیٹا حذف نہیں ہوگا۔ کیا آپ نے بیک اپ محفوظ کر لیا ہے؟'))return;
+  for(let i=0;i<docs.length;i+=400){
+   const batch=db.batch();docs.slice(i,i+400).forEach(doc=>batch.delete(doc.ref));
+   await batch.commit();
+   if(button)button.textContent='DELETING '+Math.min(i+400,count)+'/'+count;
+  }
+  showToast(count+' HHC products deleted.');
+  $('hhcStatus').textContent=count+' HHC پروڈکٹس حذف ہو گئیں۔ باقی ڈیٹا محفوظ رہا۔ اب دوبارہ Sync کر سکتے ہیں۔';
+ }catch(error){console.error('HHC cleanup failed',error);$('hhcStatus').textContent='صفائی مکمل نہیں ہوئی: '+getErrorMessage(error)+'. دوبارہ دبانے سے باقی HHC پروڈکٹس بھی صاف ہو سکتی ہیں۔';showToast('HHC cleanup failed: '+getErrorMessage(error))}
+ finally{if(button){button.disabled=false;button.textContent='CLEAR ONLY HHC-IMPORTED PRODUCTS'}}
+}
+$('hhcClearImported')?.addEventListener('click',clearOnlyHHCImportedProducts);
 // === END HHC DIRECT API IMPORT ===
 
 // === COBRA STORE SUPPLIER CSV IMPORT ===
