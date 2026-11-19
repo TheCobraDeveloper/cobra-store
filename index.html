@@ -904,6 +904,16 @@ body:not(.admin-mode) .modal-gallery img {
     if(typeof window.gtag === 'function') window.gtag('event', name, params || {});
   };
 </script>
+
+<style>
+.cobra-shop-dashboard{margin:16px 0 22px;padding:14px;border:1px solid #e7ddd5;border-radius:13px;background:linear-gradient(145deg,#fffaf5,#fff);color:#2d2520}
+.cobra-dash-head,.cobra-products-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.cobra-dash-head h3{font-size:14px;margin:0 0 4px}.cobra-dash-head small,.cobra-dash-exports small{font-size:10px;color:#81736b}
+.cobra-dash-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+.cobra-dash-card{background:#fff;border:1px solid #eee4dc;border-radius:9px;padding:10px;min-width:0}.cobra-dash-card b{display:block;font-size:19px;line-height:1.4;overflow-wrap:anywhere}.cobra-dash-card span{display:block;font-size:9px;color:#81736b;font-weight:700;letter-spacing:.2px}
+.cobra-dash-bottom{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin:10px 0}.cobra-dash-bottom>div{padding:10px;border:1px solid #eee4dc;border-radius:9px;background:#fff}.cobra-dash-bottom b{font-size:11px}.cobra-dash-bars{display:grid;gap:7px;margin-top:10px}.cobra-dash-bar-row{display:grid;grid-template-columns:88px 1fr 24px;align-items:center;gap:6px;font-size:10px}.cobra-dash-bar-track{height:8px;border-radius:8px;background:#f0eae5;overflow:hidden}.cobra-dash-bar-fill{height:100%;background:#bd8b42;border-radius:8px}.cobra-dash-exports{display:flex;flex-direction:column;gap:8px}.cobra-dash-exports button{width:100%;font-size:10px}.cobra-products-head .form-title{margin:0}.cobra-status-select{padding:7px;border:1px solid #ded4cd;border-radius:6px;background:#fff;font-size:11px;max-width:100%}.cobra-order-status-line{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0}
+@media(max-width:650px){.cobra-dash-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cobra-dash-bottom{grid-template-columns:1fr}.cobra-dash-card b{font-size:17px}}
+</style>
+
 </head>
 <body>
 
@@ -1257,6 +1267,21 @@ body:not(.admin-mode) .modal-gallery img {
   <div class="admin-stat-card"><strong id="statConfirmed">0</strong><span>CONFIRMED</span></div>
   <div class="admin-stat-card"><strong id="statRevenue">Rs. 0</strong><span>CONFIRMED SALES</span></div>
  </div>
+ <section id="cobraShopDashboard" class="cobra-shop-dashboard">
+  <div class="cobra-dash-head"><div><h3>STORE ANALYTICS & BUSINESS OVERVIEW</h3><small>Live figures from your Firebase products and orders</small></div><button type="button" class="outline-btn" onclick="cobraRefreshDashboard()">↻ REFRESH</button></div>
+  <div class="cobra-dash-grid">
+   <div class="cobra-dash-card"><b id="cobraDashOrders">0</b><span>TOTAL ORDERS</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashToday">0</b><span>ORDERS TODAY</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashDelivered">0</b><span>DELIVERED</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashCancelled">0</b><span>CANCELLED / RETURNED</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashSales">Rs. 0</b><span>CONFIRMED ORDER VALUE</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashDeliveredSales">Rs. 0</b><span>DELIVERED SALES</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashAverage">Rs. 0</b><span>AVERAGE ORDER VALUE</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashReviews">—</b><span>PRODUCT REVIEWS</span></div>
+  </div>
+  <div class="cobra-dash-bottom"><div><b>ORDER STATUS BREAKDOWN</b><div id="cobraDashStatusBars" class="cobra-dash-bars"><span>Orders will appear here when loaded.</span></div></div><div class="cobra-dash-exports"><b>REPORT EXPORTS</b><button class="gold-btn" type="button" onclick="cobraExportProducts()">⬇ EXPORT ALL PRODUCTS + LINKS (CSV)</button><button class="outline-btn" type="button" onclick="cobraExportOrders()">⬇ EXPORT ORDERS (CSV)</button><small>CSV files can be opened in Excel or Google Sheets.</small></div></div>
+  <div class="status urdu-text">نوٹ: Confirmed Order Value میں Confirmed، Processing، Shipped اور Delivered آرڈرز شامل ہیں۔ Delivered Sales صرف Delivered آرڈرز کی رقم ہے۔ Cancelled/Returned آرڈرز فروخت میں شامل نہیں ہوں گے۔</div>
+ </section>
 
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
  <div class="status urdu-text">یہاں ویب سائٹ کے تمام آرڈرز نظر آئیں گے۔ Pending آرڈر کو Confirm یا Delete کریں۔ Confirmed آرڈرز کو بھی Delete کر کے جگہ خالی کی جا سکتی ہے۔</div>
@@ -1449,7 +1474,7 @@ body:not(.admin-mode) .modal-gallery img {
   <div class="status" id="uploadStatus"></div>
  </form>
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
- <h3 class="form-title">YOUR PRODUCTS — ALL STORE PRODUCTS</h3>
+ <div class="cobra-products-head"><h3 class="form-title">YOUR PRODUCTS — ALL STORE PRODUCTS</h3><button class="gold-btn" type="button" onclick="cobraExportProducts()">⬇ EXPORT PRODUCT LIST + LINKS</button></div>
  <div class="status urdu-text">تمام مینجمنٹ اور امپورٹ آپشنز اوپر ہیں۔ یہاں تمام پروڈکٹس آخر میں سرچ اور صفحات کے ساتھ دکھائی جائیں گی؛ ہر پروڈکٹ کے اپنے Edit، Delete اور Media بٹن ساتھ موجود ہیں۔</div>
  <div class="supplier-import-grid" style="margin:12px 0">
   <div class="full"><label class="form-label">SEARCH PRODUCTS</label><input class="form-input" id="adminProductSearch" placeholder="نام، برانڈ یا سپلائر تلاش کریں"></div>
@@ -4893,6 +4918,38 @@ s0.parentNode.insertBefore(s1,s0);
  function openDeepLink(){try{const id=new URL(location.href).searchParams.get('product');if(id&&safeProduct().some(p=>String(p.id)===id)&&typeof openProduct==='function')openProduct(id);}catch(e){}}
  const wait=setInterval(()=>{if(safeProduct().length){clearInterval(wait);renderStoreTrend();openDeepLink();}},500);setTimeout(()=>clearInterval(wait),15000);
  window.addEventListener('storage',renderStoreTrend);
+})();
+</script>
+
+
+<script>
+/* COBRA STORE V12 — Admin analytics, order lifecycle and catalog export */
+(function(){
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ const moneySafe=n=>{try{return typeof money==='function'?money(Number(n)||0):'Rs. '+(Number(n)||0).toLocaleString('en-PK')}catch(e){return 'Rs. '+(Number(n)||0).toLocaleString('en-PK')}};
+ const statusList=['Pending','Confirmed','Processing','Shipped','Delivered','Cancelled','Returned'];
+ const normalized=s=>String(s||'Pending').trim().toLowerCase();
+ const orderDate=o=>{const v=o&&o.createdAt;if(v&&typeof v.toDate==='function')return v.toDate();if(v&&v.seconds)return new Date(v.seconds*1000);if(v instanceof Date)return v;return null};
+ const csvCell=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+ function downloadCSV(name,rows){if(!rows||!rows.length){if(typeof showToast==='function')showToast('No records available to export.');return}const csv='\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+ window.cobraExportProducts=function(){if(typeof requireAdmin==='function'&&!requireAdmin())return;const ps=Array.isArray(window.products)?window.products:(typeof products!=='undefined'?products:[]);if(!ps.length){if(typeof showToast==='function')showToast('Products are not loaded yet.');return}const base=location.origin+location.pathname;const rows=[['Product ID','Product Name','Category','Selling Price PKR','Cost Price PKR','Stock','Supplier','Supplier Product ID','Supplier Source URL','Store Product Link','Image URL']];ps.forEach(p=>{const u=new URL(base);u.searchParams.set('product',String(p.id||''));u.hash='products';rows.push([p.id,p.name,p.category,p.price,p.costPrice||p.wholesalePrice||'',p.stock||p.stockStatus||'',p.supplierName||'',p.supplierProductId||'',p.supplierSourceUrl||'',u.href,p.image||'']);});downloadCSV('COBRA-STORE-ALL-PRODUCTS-'+new Date().toISOString().slice(0,10)+'.csv',rows);};
+ window.cobraExportOrders=function(){if(typeof requireAdmin==='function'&&!requireAdmin())return;const os=window.cobraAdminOrders||[];const rows=[['Order ID','Date','Customer','Phone','Email','City','Address','Status','Payment Method','Total PKR','Items']];os.forEach(o=>rows.push([o.id,orderDate(o)?.toISOString()||'',o.customerName,o.phone,o.email,o.city,o.address,o.status||'Pending',o.paymentMethod,o.total,(o.items||[]).map(i=>(i.name||'Product')+' x '+(i.quantity||1)).join(' | ')]));downloadCSV('COBRA-STORE-ORDERS-'+new Date().toISOString().slice(0,10)+'.csv',rows);};
+ function updateDashboard(os){const all=os||[];const today=new Date();const isToday=o=>{const d=orderDate(o);return d&&d.getFullYear()===today.getFullYear()&&d.getMonth()===today.getMonth()&&d.getDate()===today.getDate()};const delivered=all.filter(o=>normalized(o.status)==='delivered');const cancelled=all.filter(o=>['cancelled','returned'].includes(normalized(o.status)));const saleStatuses=['confirmed','processing','shipped','delivered'];const sales=all.filter(o=>saleStatuses.includes(normalized(o.status))).reduce((n,o)=>n+(Number(o.total)||0),0);const deliveredSales=delivered.reduce((n,o)=>n+(Number(o.total)||0),0);const count=all.length;const avg=count?sales/Math.max(1,all.filter(o=>saleStatuses.includes(normalized(o.status))).length):0;
+  const vals={cobraDashOrders:count,cobraDashToday:all.filter(isToday).length,cobraDashDelivered:delivered.length,cobraDashCancelled:cancelled.length,cobraDashSales:moneySafe(sales),cobraDashDeliveredSales:moneySafe(deliveredSales),cobraDashAverage:moneySafe(avg)};Object.entries(vals).forEach(([id,v])=>{if($(id))$(id).textContent=String(v)});
+  const counts=statusList.map(st=>({name:st,count:all.filter(o=>normalized(o.status)===(st==='Pending'?'pending':st.toLowerCase())||(st==='Pending'&&!o.status)).length}));const max=Math.max(1,...counts.map(x=>x.count));if($('cobraDashStatusBars'))$('cobraDashStatusBars').innerHTML=counts.map(x=>`<div class="cobra-dash-bar-row"><span>${x.name}</span><div class="cobra-dash-bar-track"><div class="cobra-dash-bar-fill" style="width:${Math.round(x.count/max*100)}%"></div></div><b>${x.count}</b></div>`).join('');
+ }
+ window.cobraRefreshDashboard=function(){updateDashboard(window.cobraAdminOrders||[]);if(typeof showToast==='function')showToast('Dashboard refreshed from loaded data.');};
+ window.updateCobraOrderStatus=async function(id,status){if(typeof requireAdmin==='function'&&!requireAdmin())return;if(!statusList.includes(status)){if(typeof showToast==='function')showToast('Invalid order status.');return}try{await db.collection('orders').doc(id).update({status,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),...(status==='Delivered'?{deliveredAt:firebase.firestore.FieldValue.serverTimestamp()}:{}),...(status==='Shipped'?{shippedAt:firebase.firestore.FieldValue.serverTimestamp()}:{} )});if(window.syncTracking)window.syncTracking(id,status);if(typeof showToast==='function')showToast('Order status updated: '+status);}catch(e){if(typeof showToast==='function')showToast('Status update failed: '+(e.message||e));}};
+ // Replace the order renderer while preserving existing order actions and Firebase listener.
+ window.renderAdminOrders=function(orders){const box=$('adminOrdersList');if(!box)return;if(typeof requireAdmin==='function'&&!requireAdmin()){box.innerHTML='<div class="status">Admin access required.</div>';return}const all=Array.isArray(orders)?orders:[];window.cobraAdminOrders=all.slice();if($('statPending'))$('statPending').textContent=all.filter(o=>['','pending'].includes(normalized(o.status))).length;if($('statConfirmed'))$('statConfirmed').textContent=all.filter(o=>['confirmed','processing','shipped','delivered'].includes(normalized(o.status))).length;if($('statRevenue'))$('statRevenue').textContent=moneySafe(all.filter(o=>['confirmed','processing','shipped','delivered'].includes(normalized(o.status))).reduce((n,o)=>n+(Number(o.total)||0),0));updateDashboard(all);
+  if(!all.length){box.innerHTML='<div class="status">ابھی کوئی ویب سائٹ آرڈر موصول نہیں ہوا۔</div>';return}
+  function card(o){const st=statusList.find(x=>x.toLowerCase()===normalized(o.status))||'Pending';const items=Array.isArray(o.items)?o.items:[];const itemHTML=items.map(i=>`<div>${escapeHTML(i.name||'Product')} × ${Number(i.quantity)||1}<br>Size: ${escapeHTML(i.size||'Not specified')} | Color: ${escapeHTML(i.color||'Not specified')} — ${moneySafe(i.price)}</div>`).join('');const short=String(o.id).slice(-8).toUpperCase();return `<div class="order-card ${st==='Pending'?'pending':'confirmed'}"><div class="order-head"><strong>ORDER #${escapeHTML(short)}</strong><span class="order-status ${st==='Pending'?'':'confirmed'}">${escapeHTML(st.toUpperCase())}</span></div><div class="order-info"><b>Customer:</b> ${escapeHTML(o.customerName||'Not provided')}<br><b>Email:</b> ${escapeHTML(o.email||'Not provided')}<br><b>Phone:</b> ${escapeHTML(o.phone||'')}<br><b>City:</b> ${escapeHTML(o.city||'')}<br><b>Address:</b> ${escapeHTML(o.address||'')}<br><b>Notes:</b> ${escapeHTML(o.notes||'No notes')}<br><b>Payment:</b> ${escapeHTML(o.paymentMethod||'Cash on Delivery')}${o.transactionId?' • <b>TID:</b> '+escapeHTML(o.transactionId):''}<br><b>Date:</b> ${escapeHTML(typeof formatOrderDate==='function'?formatOrderDate(o.createdAt):'')}</div><div class="order-items"><b>ORDER ITEMS</b>${itemHTML}<b>Total: ${moneySafe(o.total)}</b></div><div class="cobra-order-status-line"><label class="form-label" style="margin:0">UPDATE STATUS</label><select class="cobra-status-select" aria-label="Order status" onchange="updateCobraOrderStatus('${escapeHTML(o.id)}',this.value)">${statusList.map(x=>`<option value="${x}" ${x===st?'selected':''}>${x}</option>`).join('')}</select></div><div class="order-actions">${st==='Pending'?`<button class="gold-btn" onclick="confirmOrder('${escapeHTML(o.id)}')">✓ CONFIRM ORDER</button>`:''}<button class="outline-btn" onclick="contactOrderCustomer('${escapeHTML(o.id)}')">WHATSAPP CUSTOMER</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteOrder('${escapeHTML(o.id)}')">DELETE ORDER</button></div></div>`;}
+  const groups=[['PENDING ORDERS',all.filter(o=>['','pending'].includes(normalized(o.status)))],['CONFIRMED / PROCESSING / SHIPPED',all.filter(o=>['confirmed','processing','shipped'].includes(normalized(o.status)))],['DELIVERED ORDERS',all.filter(o=>normalized(o.status)==='delivered')],['CANCELLED / RETURNED ORDERS',all.filter(o=>['cancelled','returned'].includes(normalized(o.status)))]];box.innerHTML=groups.map(([title,list])=>`<h4 class="admin-section-title">${title} (${list.length})</h4>${list.length?list.map(card).join(''):'<div class="status">No orders in this status.</div>'}`).join('');
+ };
+ // Review count is read-only and may be unavailable if Firestore rules do not permit collection-group reads.
+ async function loadReviewCount(){const el=$('cobraDashReviews');if(!el||!db)return;el.textContent='…';try{const snap=await db.collectionGroup('reviews').get();el.textContent=snap.size.toLocaleString('en-PK');}catch(e){el.textContent='—';el.title='Review count unavailable under current Firestore rules.';}}
+ const oldOpen=window.openAdmin;if(typeof oldOpen==='function'){window.openAdmin=function(){const r=oldOpen.apply(this,arguments);setTimeout(()=>{updateDashboard(window.cobraAdminOrders||[]);loadReviewCount();},700);return r;};}
 })();
 </script>
 
