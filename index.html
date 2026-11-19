@@ -873,6 +873,25 @@ body:not(.admin-mode) .modal-gallery img {
 .supplier-import-row:last-child{border-bottom:0}
 @media(max-width:600px){.supplier-import-grid{grid-template-columns:1fr}.supplier-import-grid .full{grid-column:auto}}
 
+
+/* V11 smart autocomplete, share and store-interest radar */
+.search-suggest-wrap{position:relative;flex:1;min-width:0}
+.search-suggest-wrap .shop-search-box{width:100%}
+.search-suggestions{position:absolute;z-index:1200;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid #e6d9d2;border-radius:13px;box-shadow:0 16px 38px rgba(20,15,12,.18);max-height:min(65vh,430px);overflow:auto;display:none;color:#211b18}
+.search-suggestions.show{display:block}
+.search-suggestion{display:flex;align-items:center;gap:10px;width:100%;border:0;border-bottom:1px solid #f1eae6;background:#fff;text-align:left;padding:11px 13px;cursor:pointer;color:#211b18}
+.search-suggestion:last-child{border-bottom:0}.search-suggestion:hover,.search-suggestion:focus{background:#fff5ef;outline:0}
+.suggest-icon{width:34px;height:34px;flex:0 0 34px;border-radius:9px;background:#f7eee9;display:grid;place-items:center;font-size:17px;overflow:hidden}
+.suggest-icon img{width:100%;height:100%;object-fit:cover}.suggest-main{min-width:0;flex:1}.suggest-main b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.suggest-main small{font-size:10px;color:#8b7b72}.suggest-kind{font-size:9px;color:#a44b37;border:1px solid #f0d8cf;border-radius:20px;padding:3px 7px;white-space:nowrap}
+.product-card .card-copy-link{width:100%;margin-top:7px;min-height:32px;border:1px solid #ded2cb;background:#fff;color:#57463d;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer}
+.product-card .card-copy-link:hover{background:#fff4ed;border-color:#d77c63}
+.store-trend-panel{margin:0 0 16px;padding:14px;border:1px solid #ead9c9;border-radius:13px;background:linear-gradient(135deg,#fffaf4,#fff);}
+.store-trend-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}.store-trend-head h3{font-size:14px;margin:0;color:#35271f}.store-trend-head small{font-size:10px;color:#8b7568}
+.store-trend-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.store-trend-item{display:flex;align-items:center;gap:9px;min-width:0;padding:8px;border:1px solid #eee4dc;border-radius:10px;background:white}
+.store-trend-item img{width:48px;height:48px;object-fit:cover;border-radius:8px;background:#f5eee8}.store-trend-info{min-width:0;flex:1}.store-trend-info b{font-size:10px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.store-trend-info small{font-size:9px;color:#82756d;display:block}.store-trend-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.store-trend-actions button,.store-trend-actions a{font-size:9px;padding:5px 7px;border-radius:6px;border:1px solid #e3d5cb;background:#fff;color:#513c30;text-decoration:none;cursor:pointer}
+.store-trend-note{font-size:10px;line-height:1.7;color:#7d6c60;margin:9px 0 0}
+@media(max-width:600px){.store-trend-list{grid-template-columns:1fr}.search-suggestions{max-height:55vh}.search-suggestion{padding:10px}}
 </style>
 <!-- Google Analytics 4: COBRA STORE -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HT8ZF49BP2"></script>
@@ -951,7 +970,7 @@ body:not(.admin-mode) .modal-gallery img {
  <div class="section-heading"><div class="eyebrow">FIND YOUR STYLE</div><h2>SHOP BY CATEGORY</h2><p>Explore our collections and find something you love.</p></div>
  <div class="shop-discovery" id="shopDiscovery">
   <div class="shop-search-row">
-   <label class="shop-search-box" for="searchInput"><span class="shop-search-icon">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Search products: Men's Shoes, Dresses, Self Care..." aria-label="Search all store products"><button type="button" class="shop-search-clear" id="searchClear" aria-label="Clear search">×</button></label>
+   <div class="search-suggest-wrap"><label class="shop-search-box" for="searchInput"><span class="shop-search-icon">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Search products: Men's Shoes, Dresses, Self Care..." aria-label="Search all store products" aria-expanded="false" aria-controls="searchSuggestions"><button type="button" class="shop-search-clear" id="searchClear" aria-label="Clear search">×</button></label><div id="searchSuggestions" class="search-suggestions" role="listbox" aria-label="Search suggestions"></div></div>
    <select id="sortSelect" class="shop-sort" aria-label="Sort products"><option value="default">Sort: Default</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="az">Name: A to Z</option></select>
   </div>
   <div class="product-results-count" id="productResultsCount" aria-live="polite">Loading products...</div>
@@ -972,7 +991,7 @@ body:not(.admin-mode) .modal-gallery img {
 
 <section class="section" id="products">
  <div class="section-heading"><div class="eyebrow">MADE FOR EVERYDAY</div><h2>OUR COLLECTION</h2><p>Discover products, view details, choose options and order easily.</p></div>
- <div class="active-label" id="activeLabel">ALL PRODUCTS</div><div class="product-grid" id="productGrid"><div class="empty">Connecting to COBRA STORE...</div></div>
+ <div class="active-label" id="activeLabel">ALL PRODUCTS</div><section class="store-trend-panel" id="storeTrendPanel"><div class="store-trend-head"><h3>🔥 COBRA STORE — POPULAR RIGHT NOW</h3><small>Live store-interest signals</small></div><div class="store-trend-list" id="storeTrendList"><div class="store-trend-item">Loading product interest...</div></div><p class="store-trend-note">یہ فہرست آپ کے اپنے اسٹور کے views، cart adds، shares اور product clicks سے بنتی ہے۔ اسے پورے پاکستان کی فروخت یا قومی ٹرینڈنگ کا مصدقہ ڈیٹا نہ سمجھیں۔ پاکستان کے سرچ رجحان کی تصدیق کے لیے ہر پروڈکٹ کے ساتھ Google Trends لنک بھی دیا گیا ہے۔</p></section><div class="product-grid" id="productGrid"><div class="empty">Connecting to COBRA STORE...</div></div>
 </section>
 
 <!-- Recently Viewed Section -->
@@ -2139,7 +2158,7 @@ function buildProductCardHTML(p){
    <h3 onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">${escapeHTML(name)}</h3>${ratingHTML}
    <div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
    <div class="product-note">${mediaNote}<br><span class="product-stock-pill ${isOut?"out":""}">${isOut?"● "+escapeHTML(stockText):"● "+escapeHTML(stockText)}</span></div>
-   <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div>
+   <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div><button type="button" class="card-copy-link" onclick="event.stopPropagation();copyProductLink('${escapeHTML(p.id)}')">🔗 COPY PRODUCT LINK</button>
   </div></article>`;
 }
 function disconnectProductObserver(){if(productScrollObserver){productScrollObserver.disconnect();productScrollObserver=null}}
@@ -4281,7 +4300,8 @@ if(db){
     shareBtn.onclick = function(){
      const pName = cleanProductName(currentProduct.name);
      const pPrice = money(finalPrice(currentProduct));
-     const msg = `Check out *${pName}* for just *${pPrice}* at COBRA STORE!\n${window.location.href}`;
+     const productUrl = new URL(window.location.href); productUrl.searchParams.set("product", String(currentProduct.id)); productUrl.hash = "products";
+     const msg = `Check out *${pName}* for just *${pPrice}* at COBRA STORE!\n${productUrl.href}`;
      window.open(whatsappURL(msg), "_blank", "noopener");
     };
    }
@@ -4817,6 +4837,62 @@ s0.parentNode.insertBefore(s1,s0);
       if(typeof window.Tawk_API.maximize==='function')window.Tawk_API.maximize();
     }
   });
+})();
+</script>
+
+
+<script>
+/* COBRA STORE V11: typo-tolerant live suggestions, product links and transparent store-interest radar. */
+(function(){
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ const norm=v=>String(v||'').toLowerCase().normalize('NFKD').replace(/[’'`]/g,'').replace(/[^a-z0-9\u0600-\u06ff\s-]/g,' ').replace(/\s+/g,' ').trim();
+ const categoryHints=[
+  {name:'Men Shoes',terms:'men mens man male boys shoes footwear sneakers',category:'boys-shoes'},
+  {name:'Women Shoes',terms:'women womens female girls shoes footwear heels sandals',category:'girls-shoes'},
+  {name:'Men Clothes',terms:'men mens male boys clothes clothing shirts pants jeans dresses',category:'boys-clothes'},
+  {name:'Women Clothes',terms:'women womens female girls clothes clothing dresses fashion',category:'girls-clothes'},
+  {name:'Children Clothes',terms:'children child kids boys girls baby clothes clothing',category:'boys-clothes'},
+  {name:'Self Care & Beauty',terms:'self care skincare skin care beauty cosmetics makeup personal care grooming',category:'self-care'},
+  {name:'Men Watches',terms:'men mens male boys watches watch',category:'boys-watches'},
+  {name:'Women Watches',terms:'women womens female girls watches watch',category:'girls-watches'},
+  {name:'Mobile Accessories',terms:'mobile phone smartphone accessories charger cable earbuds',category:'mobile-accessories'},
+  {name:'Electronics & Gadgets',terms:'electronics electronic gadgets devices',category:'electronics'},
+  {name:'Home & Kitchen',terms:'home kitchen household cookware decor',category:'home-kitchen'}
+ ];
+ function editDistance(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let prev=Array.from({length:n+1},(_,i)=>i);for(let i=1;i<=m;i++){let cur=[i];for(let j=1;j<=n;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[n];}
+ function closeMatch(query,text){const q=norm(query),t=norm(text);if(!q||!t)return false;if(t.includes(q)||q.split(' ').every(w=>t.includes(w)))return true;const qs=q.split(' ').filter(w=>w.length>2),ts=t.split(' ');return qs.length>0&&qs.every(w=>ts.some(x=>x.startsWith(w)|| (w.length>=4&&editDistance(w,x)<=1)));}
+ function safeProduct(p){return typeof products!=='undefined'&&Array.isArray(products)?products:[]}
+ function showSuggestions(query){const box=$('searchSuggestions'),input=$('searchInput');if(!box||!input)return;const q=norm(query);if(!q){box.classList.remove('show');box.innerHTML='';input.setAttribute('aria-expanded','false');return;}
+  const ps=safeProduct();const catMatches=categoryHints.filter(c=>closeMatch(q,c.name+' '+c.terms)).slice(0,5);const productMatches=ps.filter(p=>closeMatch(q,[p.name,p.label,p.category,p.sourceCategory,p.description,p.details].join(' '))).slice(0,7);
+  const rows=[];catMatches.forEach(c=>rows.push(`<button type="button" class="search-suggestion" role="option" data-cat="${c.category}" data-query="${c.name.replace(/"/g,'&quot;')}"><span class="suggest-icon">▦</span><span class="suggest-main"><b>${c.name}</b><small>Category · Show matching products</small></span><span class="suggest-kind">CATEGORY</span></button>`));
+  productMatches.forEach(p=>{const img=Array.isArray(p.extraImages)?p.image:p.image;rows.push(`<button type="button" class="search-suggestion" role="option" data-product="${String(p.id).replace(/"/g,'&quot;')}"><span class="suggest-icon">${img?`<img src="${String(img).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" loading="lazy" alt="">`:'🛍️'}</span><span class="suggest-main"><b>${String(p.name||'Product').replace(/</g,'&lt;')}</b><small>${String(p.label||p.category||'Product').replace(/</g,'&lt;')} · ${typeof money==='function'?money(finalPrice(p)):''}</small></span><span class="suggest-kind">PRODUCT</span></button>`)});
+  if(!rows.length)rows.push(`<div class="search-suggestion"><span class="suggest-icon">⌕</span><span class="suggest-main"><b>No close match yet</b><small>Try a shorter word, e.g. shoes, cloth, skin</small></span></div>`);
+  box.innerHTML=rows.join('');box.classList.add('show');input.setAttribute('aria-expanded','true');
+ }
+ function recordSignal(id,type){try{const key='cobra_store_interest_v1',data=JSON.parse(localStorage.getItem(key)||'{}');data[id]=data[id]||{};data[id][type]=(Number(data[id][type])||0)+1;data[id].updated=Date.now();localStorage.setItem(key,JSON.stringify(data));}catch(e){}}
+ function getSignal(id){try{return JSON.parse(localStorage.getItem('cobra_store_interest_v1')||'{}')[id]||{};}catch(e){return {};}}
+ window.copyProductLink=async function(id){const p=safeProduct().find(x=>String(x.id)===String(id));if(!p)return;const url=new URL(window.location.href);url.searchParams.set('product',String(id));url.hash='products';try{await navigator.clipboard.writeText(url.href);recordSignal(id,'copies');renderStoreTrend();if(typeof showToast==='function')showToast('Product link copied!');}catch(e){if(typeof showToast==='function')showToast('Copy failed. Please copy the page link manually.');}};
+ window.copyProductLink=window.copyProductLink;
+ function renderStoreTrend(){const host=$('storeTrendList');if(!host)return;const ps=safeProduct();if(!ps.length){host.innerHTML='<div class="store-trend-item">Store products will appear here when loaded.</div>';return;}
+  const ranked=ps.map(p=>{const s=getSignal(p.id);const score=(Number(s.views)||0)*1+(Number(s.cart)||0)*5+(Number(s.shares)||0)*4+(Number(s.copies)||0)*2+(Number(s.orders)||0)*8;return {p,score,s};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,4);
+  if(!ranked.length){host.innerHTML='<div class="store-trend-item"><div class="store-trend-info"><b>Collecting first customer signals</b><small>Views, cart additions and shares will rank products here.</small></div></div>';return;}
+  host.innerHTML=ranked.map(({p,score,s})=>`<div class="store-trend-item"><img src="${String(p.image||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" loading="lazy" alt=""><div class="store-trend-info"><b>${String(p.name||'Product').replace(/</g,'&lt;')}</b><small>Interest score ${score} · Views ${s.views||0} · Cart ${s.cart||0} · Shares ${s.shares||0}</small><div class="store-trend-actions"><button type="button" data-wa-ad="${String(p.id).replace(/"/g,'&quot;')}">WhatsApp ad text</button><a target="_blank" rel="noopener" href="https://trends.google.com/trends/explore?geo=PK&q=${encodeURIComponent(p.name||'')}">Pakistan Trends check</a></div></div></div>`).join('');
+ }
+ function adText(p){const url=new URL(window.location.href);url.searchParams.set('product',String(p.id));url.hash='products';return `🔥 COBRA STORE PICK\n${p.name||'Featured product'}\nPrice: ${typeof money==='function'?money(finalPrice(p)):''}\nCheck product details and availability: ${url.href}\nOrder / details on WhatsApp: https://wa.me/${String(typeof WHATSAPP_NUMBER!=='undefined'?WHATSAPP_NUMBER:'923432752543').replace(/\D/g,'')}\n\nAvailability and price subject to confirmation.`;}
+ document.addEventListener('click',async e=>{const cat=e.target.closest('[data-cat]');if(cat){e.preventDefault();const input=$('searchInput');input.value=cat.dataset.query||'';if(typeof selectedCategory!=='undefined')selectedCategory='all';if(typeof renderProducts==='function')renderProducts();$('searchSuggestions')?.classList.remove('show');input.setAttribute('aria-expanded','false');return;}
+  const prod=e.target.closest('[data-product]');if(prod){e.preventDefault();$('searchSuggestions')?.classList.remove('show');if(typeof openProduct==='function')openProduct(prod.dataset.product);recordSignal(prod.dataset.product,'views');renderStoreTrend();return;}
+  const ad=e.target.closest('[data-wa-ad]');if(ad){const p=safeProduct().find(x=>String(x.id)===ad.dataset.waAd);if(!p)return;recordSignal(p.id,'shares');const text=adText(p);try{await navigator.clipboard.writeText(text);if(typeof showToast==='function')showToast('Ad caption copied. Paste it in WhatsApp or Facebook.');}catch(e){}window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');renderStoreTrend();}
+  if(!e.target.closest('.search-suggest-wrap')){$('searchSuggestions')?.classList.remove('show');$('searchInput')?.setAttribute('aria-expanded','false');}
+ });
+ const input=$('searchInput');if(input){input.addEventListener('input',()=>showSuggestions(input.value));input.addEventListener('focus',()=>{if(input.value)showSuggestions(input.value)});input.addEventListener('keydown',e=>{if(e.key==='Escape'){$('searchSuggestions')?.classList.remove('show');input.setAttribute('aria-expanded','false');}if(e.key==='Enter'){const first=$('searchSuggestions')?.querySelector('[data-product],[data-cat]');if(first)first.click();}});}
+ const originalOpen=window.openProduct; if(typeof originalOpen==='function'){window.openProduct=function(id){recordSignal(id,'views');const result=originalOpen.apply(this,arguments);renderStoreTrend();return result;};}
+ const originalAdd=window.addToCart;if(typeof originalAdd==='function'){window.addToCart=function(id){recordSignal(id,'cart');renderStoreTrend();return originalAdd.apply(this,arguments);};}
+ const originalQuick=window.quickAdd;if(typeof originalQuick==='function'){window.quickAdd=function(id){recordSignal(id,'cart');renderStoreTrend();return originalQuick.apply(this,arguments);};}
+ // Deep-link support for copied product URLs.
+ function openDeepLink(){try{const id=new URL(location.href).searchParams.get('product');if(id&&safeProduct().some(p=>String(p.id)===id)&&typeof openProduct==='function')openProduct(id);}catch(e){}}
+ const wait=setInterval(()=>{if(safeProduct().length){clearInterval(wait);renderStoreTrend();openDeepLink();}},500);setTimeout(()=>clearInterval(wait),15000);
+ window.addEventListener('storage',renderStoreTrend);
 })();
 </script>
 
