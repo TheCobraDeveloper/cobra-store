@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#171514">
-<title>COBRA STORE | Luxury Premium Shopping Experience</title>
+<title>COBRA STORE | Premium Shopping Experience</title>
+<meta name="description" content="Shop shoes, fashion, watches, electronics, self-care and everyday products at COBRA STORE Pakistan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -91,6 +92,58 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .category-card img{width:100%;max-width:155px;aspect-ratio:1;object-fit:cover;display:block;margin:auto;background:var(--light);border-radius:6px}
 .category-card h3{font-size:11px;margin-top:13px;font-weight:900}
 .category-card small{display:block;color:var(--coral);font-size:9px;margin-top:7px}
+/* === V10: FAST PRODUCT DISCOVERY, HORIZONTAL CATEGORY CHIPS & CLEAR PRODUCT CARDS === */
+.shop-discovery{max-width:980px;margin:20px auto 22px;padding:0 2px}
+.shop-search-row{display:flex;gap:9px;align-items:center;margin-bottom:13px}
+.shop-search-box{display:flex;align-items:center;gap:9px;flex:1;min-width:0;background:#fff;border:1.5px solid #dfd3ce;border-radius:12px;padding:0 13px;box-shadow:0 5px 18px rgba(23,21,20,.055)}
+.shop-search-box:focus-within{border-color:var(--coral);box-shadow:0 0 0 3px color-mix(in srgb,var(--coral) 13%,transparent)}
+.shop-search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:15px 2px;font-size:14px;color:var(--dark)}
+.shop-search-icon{font-size:19px;color:var(--coral);flex-shrink:0}
+.shop-search-clear{border:0;background:#f6eeeb;color:#6d5c55;border-radius:50%;width:28px;height:28px;flex-shrink:0;font-size:17px;display:none}
+.shop-search-clear.show{display:grid;place-items:center}
+.shop-sort{width:auto;min-width:135px;border:1px solid #e6dcd7;border-radius:10px;background:#fff;padding:13px 10px;font-size:11px}
+.category-grid{display:flex;direction:rtl;flex-wrap:nowrap;gap:9px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 12px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#d9b1a9 transparent;-webkit-overflow-scrolling:touch}
+.category-grid::-webkit-scrollbar{height:4px}.category-grid::-webkit-scrollbar-thumb{background:#d9b1a9;border-radius:9px}
+.category-card{direction:rtl;flex:0 0 116px;width:116px;min-width:116px;padding:9px 8px 10px;border-radius:11px;scroll-snap-align:start;box-shadow:0 2px 9px rgba(23,21,20,.035)}
+.category-card:hover,.category-card.active{transform:translateY(-2px);box-shadow:0 7px 16px rgba(23,21,20,.09)}
+.category-card img,.category-card .cat-ph{width:54px;height:54px;aspect-ratio:1;object-fit:contain;margin:auto;border-radius:9px}
+.category-card h3{font-size:9px;line-height:1.35;margin-top:7px;white-space:normal;overflow-wrap:anywhere}
+.category-card small{font-size:8px;margin-top:3px}
+.product-grid{content-visibility:auto;contain-intrinsic-size:1px 900px;gap:18px}
+.product-card{box-shadow:0 3px 14px rgba(23,21,20,.055)}
+.product-image{height:310px;padding:10px;background:#fff}
+.product-image img{object-fit:contain;aspect-ratio:1/1}
+.product-info h3{font-size:14px;line-height:1.5;min-height:42px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.product-price{font-size:19px;color:#171514;line-height:1.4}
+.product-note{font-size:10px;line-height:1.6;min-height:30px}
+.product-stock-pill{display:inline-flex;align-items:center;gap:5px;border-radius:20px;background:#eff8f0;color:#287345;padding:4px 8px;font-size:9px;font-weight:800;margin-top:5px}
+.product-stock-pill.out{background:#fff0ed;color:#b53d31}
+.product-card .product-buttons button{min-height:40px}
+.infinite-sentinel{grid-column:1/-1;min-height:54px;display:flex;align-items:center;justify-content:center;color:#887c77;font-size:11px;padding:14px}
+.infinite-sentinel .loader-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);display:inline-block;margin:0 3px;animation:loadPulse .8s infinite alternate}
+.infinite-sentinel .loader-dot:nth-child(2){animation-delay:.2s}.infinite-sentinel .loader-dot:nth-child(3){animation-delay:.4s}
+@keyframes loadPulse{to{opacity:.25;transform:translateY(-3px)}}
+.product-results-count{font-size:10px;color:#8a6258;text-align:right;margin:2px 3px 10px}
+@media(max-width:850px){.product-image{height:250px}.product-grid{gap:13px}}
+@media(max-width:520px){
+ .shop-discovery{margin:14px auto 18px;padding:0}
+ .shop-search-row{gap:6px}.shop-search-box{border-radius:10px;padding:0 10px}.shop-search-box input{font-size:13px;padding:13px 1px}
+ .shop-sort{min-width:105px;max-width:112px;padding:12px 6px;font-size:10px}
+ .category-grid{gap:7px;padding-bottom:9px}
+ .category-card{flex-basis:96px;width:96px;min-width:96px;padding:8px 6px}
+ .category-card img,.category-card .cat-ph{width:45px;height:45px}
+ .category-card h3{font-size:8px}
+ .product-grid{gap:10px}
+ .product-image{height:190px;padding:5px}
+ .product-info{padding:10px}
+ .product-info h3{font-size:11px;min-height:34px}
+ .product-price{font-size:14px}
+ .old-price{font-size:9px;margin-left:3px}
+ .product-note{font-size:9px;min-height:28px;margin:5px 0 9px}
+ .product-card .product-buttons{flex-direction:column;gap:6px}
+ .product-card .product-buttons button{min-height:34px;padding:8px 4px;font-size:8px}
+}
+
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:25px 0 20px}
 .search-box{flex:1;min-width:190px;display:flex;background:white;border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .search-box input{width:100%;background:transparent;border:0;outline:0;padding:14px 17px;font-size:12px}
@@ -896,6 +949,13 @@ body:not(.admin-mode) .modal-gallery img {
 
 <section class="section" id="categories">
  <div class="section-heading"><div class="eyebrow">FIND YOUR STYLE</div><h2>SHOP BY CATEGORY</h2><p>Explore our collections and find something you love.</p></div>
+ <div class="shop-discovery" id="shopDiscovery">
+  <div class="shop-search-row">
+   <label class="shop-search-box" for="searchInput"><span class="shop-search-icon">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Search products: Men's Shoes, Dresses, Self Care..." aria-label="Search all store products"><button type="button" class="shop-search-clear" id="searchClear" aria-label="Clear search">×</button></label>
+   <select id="sortSelect" class="shop-sort" aria-label="Sort products"><option value="default">Sort: Default</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="az">Name: A to Z</option></select>
+  </div>
+  <div class="product-results-count" id="productResultsCount" aria-live="polite">Loading products...</div>
+ </div>
  <div class="category-grid" id="categoryGrid">
   <div class="category-card" data-category="girls-shoes" onclick="selectCategory('girls-shoes',this)"><img src="IMG-20261109-WA0584.jpg" alt="Girls Shoes"><h3>GIRLS SHOES</h3><small>Explore collection →</small></div>
   <div class="category-card" data-category="boys-shoes" onclick="selectCategory('boys-shoes',this)"><img src="IMG-20261109-WA0585.jpg" alt="Boys Shoes"><h3>BOYS SHOES</h3><small>Explore collection →</small></div>
@@ -912,8 +972,6 @@ body:not(.admin-mode) .modal-gallery img {
 
 <section class="section" id="products">
  <div class="section-heading"><div class="eyebrow">MADE FOR EVERYDAY</div><h2>OUR COLLECTION</h2><p>Discover products, view details, choose options and order easily.</p></div>
- <div class="tools"><div class="search-box"><input id="searchInput" type="search" placeholder="Search products..."></div>
- <select id="sortSelect"><option value="default">Sort: Default</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="az">Name: A to Z</option></select></div>
  <div class="active-label" id="activeLabel">ALL PRODUCTS</div><div class="product-grid" id="productGrid"><div class="empty">Connecting to COBRA STORE...</div></div>
 </section>
 
@@ -2040,55 +2098,92 @@ async function deleteOffer(id){
 }
 
 function selectCategory(category,element){
- selectedCategory=category;productDisplayLimit=60;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
+ selectedCategory=category;productDisplayLimit=24;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
  if(element)element.classList.add("active");$("activeLabel").textContent=categoryName(category);renderProducts();
  $("products").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function showAllProducts(element){
- selectedCategory="all";productDisplayLimit=60;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
+ selectedCategory="all";productDisplayLimit=24;document.querySelectorAll(".category-card").forEach(c=>c.classList.remove("active"));
  const card=element||document.querySelector('[data-category="all"]');if(card)card.classList.add("active");
  $("activeLabel").textContent="ALL PRODUCTS";renderProducts();$("products").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function renderProducts(){
- const grid=$("productGrid");if(!grid)return;
- const query=$("searchInput").value.toLowerCase().trim();
- let list=products.filter(p=>{
-  const match=selectedCategory==="all"||p.category===selectedCategory;
-  return match&&[cleanProductName(p.name),p.label,p.description,p.details].join(" ").toLowerCase().includes(query);
- });
- const sort=$("sortSelect").value;
- if(sort==="low")list.sort((a,b)=>finalPrice(a)-finalPrice(b));
- if(sort==="high")list.sort((a,b)=>finalPrice(b)-finalPrice(a));
- if(sort==="az")list.sort((a,b)=>cleanProductName(a.name).localeCompare(cleanProductName(b.name)));
- if(!list.length){grid.innerHTML='<div class="empty">No products found in this section.</div>';return}
- const campaignLogo=activeCampaignLogo();
- const logoHTML=campaignLogo?`<img class="campaign-logo" src="${escapeHTML(campaignLogo)}" alt="Campaign">`:"";
- const visible=list.slice(0,productDisplayLimit);
- grid.innerHTML=visible.map(p=>{
-  const images=productImages(p),name=cleanProductName(p.name);
-  const isWishlist=wishlist.includes(p.id);
-  const imageHTML=images.length?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(name)}" loading="lazy">`:'<span style="font-size:55px;color:#ec6c5a">🐍</span>';
-  const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":"");
-  return `<article class="product-card">
-   <div class="product-image" onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">
-    <span class="sale-badge">${salePercent(p)}% OFF</span>
-    ${logoHTML}${imageHTML}
-   </div>
-   <div class="product-info">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-     <div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div>
-     <button class="wishlist-inline-btn ${isWishlist?"active":""}" title="Save to Wishlist" onclick="event.stopPropagation();toggleWishlist('${escapeHTML(p.id)}')">${isWishlist?"❤️":"🤍"}</button>
-    </div>
-    <h3 onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">${escapeHTML(name)}</h3>
-    ${p.supplierName==="HHC"?((p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating)))||(p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount)))||(Array.isArray(p.sourceReviews)&&p.sourceReviews.length)?`<div class="card-rating">${p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating))?`<span class="stars">${"★".repeat(Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}${"☆".repeat(5-Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}</span> <span>${Number(p.sourceRating).toFixed(1)}</span>`:""}${p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount))?`<span> · ${Number(p.sourceReviewCount)} supplier reviews</span>`:""}${Array.isArray(p.sourceReviews)&&p.sourceReviews.length&&(p.sourceReviewCount===null||p.sourceReviewCount===undefined||!Number.isFinite(Number(p.sourceReviewCount)))?`<span> · Supplier reviews</span>`:""}</div>`:""):`<div class="card-rating"><span>Customer reviews</span></div>`}
-    <div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
-    <div class="product-note">${mediaNote} • ${escapeHTML(p.stock||"In Stock")}</div>
-    <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div>
-   </div></article>`;
- }).join("")+(list.length>productDisplayLimit?`<div style="grid-column:1/-1;text-align:center;padding:18px"><button class="gold-btn" type="button" onclick="loadMoreProducts()">LOAD MORE PRODUCTS (${list.length-productDisplayLimit} remaining)</button></div>`:"");
+let filteredStoreProducts=[],productRenderIndex=0,productScrollObserver=null,productSearchTimer=null;
+function normalizeStoreSearch(value){return String(value||"").toLowerCase().normalize("NFKD").replace(/[’'`]/g,"").replace(/[^a-z0-9\u0600-\u06ff\s-]/g," ").replace(/\s+/g," ").trim()}
+function productSearchTerms(p){
+ const cat=String(p.category||"").toLowerCase(),base=[cleanProductName(p.name),p.label||"",p.description||"",p.details||"",p.sourceCategory||"",p.supplierName||"",categoryName(cat)].join(" ");
+ const aliases={"boys-shoes":"mens men male boys footwear shoes sneakers","girls-shoes":"womens women female girls footwear shoes","boys-clothes":"mens men male boys clothes clothing dresses shirts apparel","girls-clothes":"womens women female girls clothes clothing dresses apparel","boys-watches":"mens men male boys watches","girls-watches":"womens women female girls watches","mobile-accessories":"mobile phone smartphone accessories charger cable earbuds","electronics":"electronic gadget gadgets device devices","fashion":"fashion clothing apparel style","self-care":"self care skincare skin care beauty cosmetics makeup personal care grooming"};
+ let extra=aliases[cat]||"";
+ if(/skin|beauty|cosmetic|makeup|hair|shampoo|groom|personal care|body care|face wash|serum|cream|perfume|deodorant/.test(base.toLowerCase()))extra+=" self care skincare skin care beauty cosmetics makeup personal care grooming";
+ if(/dress|shirt|trouser|jeans|hoodie|jacket|apparel|clothing/.test(base.toLowerCase()))extra+=" dresses mens clothing womens clothing fashion";
+ return normalizeStoreSearch(base+" "+extra);
 }
-function loadMoreProducts(){productDisplayLimit+=60;renderProducts()}
-$("searchInput").addEventListener("input",()=>{productDisplayLimit=60;renderProducts()});
+function storeProductMatchesQuery(p,query){
+ if(!query)return true;
+ const q=normalizeStoreSearch(query),hay=productSearchTerms(p);
+ if(hay.includes(q))return true;
+ const terms=q.split(" ").filter(Boolean);
+ return terms.length>0&&terms.every(term=>hay.includes(term));
+}
+function buildProductCardHTML(p){
+ const images=productImages(p),name=cleanProductName(p.name),isWishlist=wishlist.includes(p.id);
+ const campaignLogo=activeCampaignLogo(),logoHTML=campaignLogo?`<img class="campaign-logo" src="${escapeHTML(campaignLogo)}" alt="Campaign" loading="lazy">`:"";
+ const imageHTML=images.length?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(name)}" loading="lazy" decoding="async" fetchpriority="low">`:'<span style="font-size:55px;color:#ec6c5a">🐍</span>';
+ const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":""),stockText=String(p.stock||p.stockLabel||"In Stock"),isOut=/out|sold|unavailable/i.test(stockText);
+ const ratingHTML=p.supplierName==="HHC"&&((p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating)))||(p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount))))?`<div class="card-rating">${p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating))?`<span class="stars">${"★".repeat(Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}${"☆".repeat(5-Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}</span> <span>${Number(p.sourceRating).toFixed(1)}</span>`:""}${p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount))?`<span> · ${Number(p.sourceReviewCount)} supplier reviews</span>`:""}</div>`:"";
+ return `<article class="product-card" data-product-id="${escapeHTML(p.id)}">
+  <div class="product-image" onclick="openProduct('${escapeHTML(p.id)}')" role="button" tabindex="0" aria-label="View ${escapeHTML(name)}">
+   <span class="sale-badge">${salePercent(p)}% OFF</span>${logoHTML}${imageHTML}
+  </div>
+  <div class="product-info">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div><button class="wishlist-inline-btn ${isWishlist?"active":""}" title="Save to Wishlist" onclick="event.stopPropagation();toggleWishlist('${escapeHTML(p.id)}')">${isWishlist?"❤️":"🤍"}</button></div>
+   <h3 onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">${escapeHTML(name)}</h3>${ratingHTML}
+   <div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
+   <div class="product-note">${mediaNote}<br><span class="product-stock-pill ${isOut?"out":""}">${isOut?"● "+escapeHTML(stockText):"● "+escapeHTML(stockText)}</span></div>
+   <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div>
+  </div></article>`;
+}
+function disconnectProductObserver(){if(productScrollObserver){productScrollObserver.disconnect();productScrollObserver=null}}
+function appendProductBatch(){
+ const grid=$("productGrid");if(!grid)return;
+ const batchSize=24,next=filteredStoreProducts.slice(productRenderIndex,productRenderIndex+batchSize);
+ if(next.length)grid.insertAdjacentHTML("beforeend",next.map(buildProductCardHTML).join(""));
+ productRenderIndex+=next.length;productDisplayLimit=productRenderIndex;
+ let sentinel=$("productInfiniteSentinel");if(sentinel)sentinel.remove();
+ if(productRenderIndex<filteredStoreProducts.length){
+  sentinel=document.createElement("div");sentinel.id="productInfiniteSentinel";sentinel.className="infinite-sentinel";sentinel.innerHTML='<span>مزید پروڈکٹس لوڈ ہو رہی ہیں</span> <i class="loader-dot"></i><i class="loader-dot"></i><i class="loader-dot"></i>';grid.appendChild(sentinel);
+  if("IntersectionObserver" in window){
+   if(!productScrollObserver)productScrollObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){appendProductBatch()}},{rootMargin:"650px 0px"});
+   productScrollObserver.observe(sentinel);
+  }
+ }else disconnectProductObserver();
+ const count=$("productResultsCount");if(count)count.textContent=filteredStoreProducts.length+" products found · "+productRenderIndex+" shown";
+}
+function renderProducts(){
+ const grid=$("productGrid");if(!grid)return;disconnectProductObserver();
+ const query=$("searchInput")?$("searchInput").value:"";
+ filteredStoreProducts=products.filter(p=>{
+  const match=!!query||selectedCategory==="all"||p.category===selectedCategory;
+  return match&&storeProductMatchesQuery(p,query);
+ });
+ const sort=$("sortSelect")?$("sortSelect").value:"default";
+ if(sort==="low")filteredStoreProducts.sort((a,b)=>finalPrice(a)-finalPrice(b));
+ if(sort==="high")filteredStoreProducts.sort((a,b)=>finalPrice(b)-finalPrice(a));
+ if(sort==="az")filteredStoreProducts.sort((a,b)=>cleanProductName(a.name).localeCompare(cleanProductName(b.name)));
+ productRenderIndex=0;grid.innerHTML="";
+ if(!filteredStoreProducts.length){grid.innerHTML='<div class="empty">No products found. Try another product name or category.</div>';const c=$("productResultsCount");if(c)c.textContent="0 products found";return}
+ appendProductBatch();
+ // If IntersectionObserver is unavailable, use a passive scroll fallback.
+ if(!("IntersectionObserver" in window)){
+  window.removeEventListener("scroll",fallbackProductScroll);window.addEventListener("scroll",fallbackProductScroll,{passive:true});
+ }
+}
+function fallbackProductScroll(){if(productRenderIndex>=filteredStoreProducts.length)return;const sentinel=$("productInfiniteSentinel");if(sentinel&&sentinel.getBoundingClientRect().top<window.innerHeight+500)appendProductBatch()}
+function loadMoreProducts(){appendProductBatch()}
+$("searchInput").addEventListener("input",()=>{
+ const clear=$("searchClear");if(clear)clear.classList.toggle("show",!!$("searchInput").value);
+ clearTimeout(productSearchTimer);productSearchTimer=setTimeout(()=>{productDisplayLimit=24;renderProducts()},140);
+});
+$("searchClear")?.addEventListener("click",()=>{$("searchInput").value="";$("searchClear").classList.remove("show");renderProducts();});
 $("sortSelect").addEventListener("change",renderProducts);
 
 function chooseSize(button,size){
@@ -2453,34 +2548,11 @@ $("orderForm").addEventListener("submit",async event=>{
  }
 });
 
-function getBuiltInProductReviews(p){
- const pname = cleanProductName(p ? p.name : "this product");
- const hash = String(p && p.id || pname).split("").reduce((a,c)=>a+c.charCodeAt(0),0);
- const pool = [
-  {name:"Hamza Tariq (Lahore)", rating:5, text:`Bohat hi zabardast quality hai ${pname} ki! Bilkul waisi hi cheez mili jaisi picture mein dikhai gayi thi. 100% recommended.`},
-  {name:"Ayesha Khan (Karachi)", rating:5, text:`Ordered ${pname} on Cash on Delivery and received it in 3 days. Packaging bohot safe aur neat thi.`},
-  {name:"Usman Ghani (Islamabad)", rating:5, text:`Price ke hisaab se ${pname} ki finishing aur material lajawab hai. COBRA STORE ne dil jeet liya!`},
-  {name:"Bilal Ahmed (Faisalabad)", rating:4, text:`Good quality ${pname}, delivery time par mil gayi aur rider ne parcel check bhi karwaya.`},
-  {name:"Zainab Fatima (Multan)", rating:5, text:`Meri family ko ${pname} bohot pasand aaya. Dobara zaroor order karungi InshaAllah.`},
-  {name:"Muhammad Rizwan (Rawalpindi)", rating:5, text:`Original aur premium feel hai ${pname} ki. WhatsApp support team bhi bohot cooperative hai.`},
-  {name:"Sana Malik (Sialkot)", rating:5, text:`11.11 Mega Sale mein ${pname} liya, paisay wasool ho gaye. Highly satisfied!`},
-  {name:"Farhan Ali (Peshawar)", rating:4, text:`Very comfortable and stylish ${pname}. Size bilkul perfect aaya hai.`},
-  {name:"Hira Noor (Gujranwala)", rating:5, text:`Main ne gift dene ke liye ${pname} mangwaya tha, packing aur look dono premium hain.`},
-  {name:"Kamran Siddiqui (Hyderabad)", rating:5, text:`Fast COD delivery! ${pname} ki quality market se kahin behtar aur sasti hai.`},
-  {name:"Maryam Javed (Bahawalpur)", rating:5, text:`Har detail perfect hai ${pname} mein. Trustworthy online store in Pakistan.`},
-  {name:"Taimoor Shah (Quetta)", rating:4, text:`Quetta mein bhi 4 din mein parcel mil gaya. ${pname} bilkul genuine aur durable hai.`},
-  {name:"Nida Yasir (Sargodha)", rating:5, text:`Superb quality! ${pname} use karne mein bohot acha lag raha hai, zero complaint.`},
-  {name:"Adnan Qureshi (Abbottabad)", rating:5, text:`COBRA STORE se mera teesra order hai, ${pname} bhi har baar ki tarah top class nikla.`},
-  {name:"Kinza Sheikh (Lahore)", rating:5, text:`Value for money! ${pname} ki look bohat classy hai, sab ne tareef ki.`}
- ];
- const rotated = pool.map((_, idx) => pool[(idx + hash) % pool.length]);
- return rotated.slice(0, 15);
-}
-
 async function loadReviews(productId){
  const box=$("reviewList"),token=++reviewRequestToken;
  const prod = products.find(x=>String(x.id)===String(productId)) || currentProduct;
- const builtIn = prod&&prod.supplierName==="HHC"?[]:getBuiltInProductReviews(prod);
+ // Only real customer-submitted reviews and original supplier reviews are displayed.
+ const builtIn = [];
  let liveDocs = [];
  if(db){
   try{
@@ -2490,13 +2562,13 @@ async function loadReviews(productId){
   }catch(error){console.warn("Live reviews fallback:",error);}
  }
  const supplierReviews=(prod&&prod.supplierName==="HHC"&&Array.isArray(prod.sourceReviews)?prod.sourceReviews:[]).map(r=>({...r,name:r.name||"Supplier customer",text:r.text||r.review||"",rating:Number(r.rating)||0,supplierVerified:true}));
- const allReviews = [...liveDocs, ...supplierReviews, ...builtIn];
+ const allReviews = [...liveDocs, ...supplierReviews];
  const tabBtn = document.querySelector('.pm-tab[data-pm="Reviews"]');
  if(tabBtn) tabBtn.textContent = `REVIEWS (${allReviews.length})`;
  box.innerHTML = allReviews.map((r, i)=>{
   const rating=Number(r.rating);
   const ratingMarkup=Number.isFinite(rating)&&rating>=1&&rating<=5?`<div class="stars">${"★".repeat(Math.round(rating))}${"☆".repeat(5-Math.round(rating))}</div>`:"";
-  return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong>${r.supplierVerified?`<span class="verified-badge">Supplier review</span>`:`<span class="verified-badge">✓ Verified Purchase</span>`}${ratingMarkup}<p>${escapeHTML(r.text||"")}</p>${window.reviewPhotoHTML?window.reviewPhotoHTML(r):""}<small>${r.supplierVerified?"Original supplier review":"COBRA STORE customer review"}</small></div>`;
+  return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong>${r.supplierVerified?`<span class="verified-badge">Original supplier review</span>`:`<span class="verified-badge">Customer-submitted review</span>`}${ratingMarkup}<p>${escapeHTML(r.text||"")}</p>${window.reviewPhotoHTML?window.reviewPhotoHTML(r):""}<small>${r.supplierVerified?"Original supplier-provided review":"Submitted by a COBRA STORE customer"}</small></div>`;
  }).join("");
 }
 $("reviewForm").addEventListener("submit",async event=>{
