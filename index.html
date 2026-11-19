@@ -193,6 +193,12 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .modal-gallery{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px}
 .modal-gallery img{width:85px;height:85px;object-fit:contain;background:var(--light);border:1px solid var(--line);cursor:pointer;flex-shrink:0;border-radius:4px}
 .modal-video{width:100%;max-height:340px;background:#111;margin:8px 0;display:block;border-radius:4px}
+.modal-video-gallery{display:grid;grid-template-columns:1fr;gap:12px;margin:8px 0}
+.modal-video-gallery video,.modal-video-gallery iframe{width:100%;max-height:360px;aspect-ratio:16/9;background:#111;border:0;border-radius:6px;display:block}
+.modal-video-link{display:flex;align-items:center;gap:10px;padding:13px 15px;border:1px solid var(--line);background:#fff8f6;border-radius:6px;color:var(--dark);font-size:11px;font-weight:800}
+.modal-video-link:hover{border-color:var(--coral);color:var(--coral)}
+.modal-video-link span{font-size:22px}
+
 iframe.modal-video{aspect-ratio:16/9;max-height:none;height:auto;border:0}
 .modal-box h3{font-size:20px;margin:12px 0}
 .modal-box p{font-size:11px;color:#777;line-height:1.9;margin:10px 0}
@@ -1105,6 +1111,7 @@ body:not(.admin-mode) .modal-gallery img {
  <div class="modal-icon" id="modalIcon"></div><div class="modal-gallery" id="modalGallery"></div>
  <video id="modalVideo" class="modal-video hidden" controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsinline></video>
  <iframe id="modalVideoFrame" class="modal-video hidden" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+ <div id="modalVideoGallery" class="modal-video-gallery"></div>
  <div id="adminProductMediaBar" class="admin-media-bar hidden"></div>
  <div class="product-tag" id="modalCategory"></div><h3 id="modalName"></h3><p id="modalDescription"></p>
  <div class="modal-price" id="modalPrice"></div><div class="detail-line" id="modalStock"></div>
@@ -2412,11 +2419,17 @@ function openProduct(id){
  $("modalIcon").innerHTML=images.length?`<img id="mainProductPhoto" src="${escapeHTML(images[0])}" alt="${escapeHTML(cleanProductName(p.name))}">`:"🐍";
  refreshModalCampaignLogo();
  $("modalGallery").innerHTML=images.map(url=>`<img src="${escapeHTML(url)}" alt="Product photo" onclick="changeMainPhoto('${escapeHTML(url)}')">`).join("");
- const video=$("modalVideo");
- const frame=$("modalVideoFrame"),yt=youtubeEmbedURL(p.videoUrl);
- frame.classList.add("hidden");frame.removeAttribute("src");
- if(yt){video.pause();video.removeAttribute("src");video.classList.add("hidden");frame.src=yt;frame.classList.remove("hidden")}
- else if(p.videoUrl&&safeImageURL(p.videoUrl)){video.src=p.videoUrl;video.classList.remove("hidden")}else{video.pause();video.removeAttribute("src");video.classList.add("hidden")}
+ const video=$("modalVideo"),frame=$("modalVideoFrame"),videoGallery=$("modalVideoGallery");
+ video.pause();video.removeAttribute("src");video.classList.add("hidden");frame.classList.add("hidden");frame.removeAttribute("src");
+ const productVideoUrls=getProductVideos(p);
+ if(videoGallery){
+  videoGallery.innerHTML=productVideoUrls.map((url,index)=>{
+   const embed=youtubeEmbedURL(url),safe=escapeHTML(url);
+   if(embed)return `<iframe class="modal-video" src="${escapeHTML(embed)}" title="Product video ${index+1}" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+   if(/\.(mp4|webm|mov|m4v|m3u8)(?:[?#].*)?$/i.test(url))return `<video class="modal-video" controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsinline preload="metadata" src="${safe}"></video>`;
+   return `<a class="modal-video-link" href="${safe}" target="_blank" rel="noopener noreferrer"><span>▶</span><span>Watch product video ${index+1}</span></a>`;
+  }).join("");
+ }
  $("modalCategory").textContent=categoryName(p.category);$("modalName").textContent=cleanProductName(p.name);
  $("modalDescription").textContent=p.description||"Product details are available from our support team.";
  const proof=getProductSocialProof(p);
@@ -2986,7 +2999,7 @@ function renderAdminProducts(){
  if(!visible.length){list.innerHTML='<div class="status">کوئی پروڈکٹ نہیں ملی۔</div>';return}
  list.innerHTML=visible.map(p=>{
   const imgs=productImages(p);const thumb=imgs.length?`<img class="admin-product-thumb" loading="lazy" src="${escapeHTML(imgs[0])}" alt="">`:`<div class="admin-product-thumb ph">🐍</div>`;
-  return `<div class="admin-product"><div class="admin-product-left">${thumb}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${imgs.length} photos • ${p.videoUrl?'Video':'No video'} • ${escapeHTML(p.supplierName||'Store')}</small></div></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`;
+  return `<div class="admin-product"><div class="admin-product-left">${thumb}<div><strong>${escapeHTML(cleanProductName(p.name))}</strong><small>${escapeHTML(categoryName(p.category))} • ${money(p.price)} • ${salePercent(p)}% sale • ${imgs.length} photos • ${getProductVideos(p).length} videos • ${escapeHTML(p.supplierName||'Store')}</small></div></div><div class="admin-product-actions"><button class="outline-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')" title="Download Photos & Video">⬇ MEDIA</button><button class="outline-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button><button class="outline-btn" style="color:#d95746;border-color:#d95746" onclick="deleteProduct('${escapeHTML(p.id)}')">DELETE</button></div></div>`;
  }).join('');
 }
 $('adminProductSearch')?.addEventListener('input',()=>{adminProductPage=1;renderAdminProducts()});
@@ -3279,6 +3292,35 @@ function hhcExtractPackTiers(p,parentCost){
  if(!out.length&&parentCost>0)out.push({key:'standard_'+Math.round(parentCost*100),label:parentUnits?parentUnits+' pcs / pack':'Standard · supplier unit not specified',unitCount:parentUnits,cost:parentCost,sourceVariantId:'',sourceLabel:'Parent product price'});
  return out;
 }
+function hhcExtractVideoUrls(root){
+ const found=new Set(),seen=new Set();
+ const videoKey=/(video|clip|reel|movie|stock.?media|media.?video)/i;
+ const videoHost=/(youtube\.com|youtu\.be|youtube-nocookie\.com|vimeo\.com|dailymotion\.com|facebook\.com|fb\.watch|instagram\.com|tiktok\.com|streamable\.com)/i;
+ const videoFile=/\.(mp4|webm|mov|m4v|m3u8|mpd)(?:[?#].*)?$/i;
+ function walk(value,key='',depth=0){
+  if(value==null||depth>7)return;
+  if(typeof value==='string'){
+   const raw=value.trim();if(!/^https?:\/\//i.test(raw))return;
+   if(videoKey.test(key)||videoFile.test(raw)||videoHost.test(raw)){try{const u=new URL(raw);if(['http:','https:'].includes(u.protocol))found.add(u.href)}catch(e){}}
+   return;
+  }
+  if(typeof value!=='object'||seen.has(value))return;
+  seen.add(value);
+  if(Array.isArray(value)){value.forEach(v=>walk(v,key,depth+1));return}
+  const type=String(value.type||value.media_type||value.mime_type||value.kind||'').toLowerCase();
+  const explicitlyVideo=/video|movie|clip|reel/.test(type);
+  Object.entries(value).forEach(([k,v])=>{
+   const childKey=(videoKey.test(key)||videoKey.test(k)||explicitlyVideo)?'video_'+k:k;
+   walk(v,childKey,depth+1);
+  });
+ }
+ walk(root);return [...found].slice(0,12);
+}
+function getProductVideos(product){
+ const raw=Array.isArray(product?.videoUrls)?product.videoUrls:[];
+ const urls=[product?.videoUrl,...raw].filter(Boolean).map(x=>typeof x==='string'?x:(x.url||x.src||x.link||''));
+ return [...new Set(urls.map(s=>String(s).trim()).filter(s=>/^https?:\/\//i.test(s)))].slice(0,12);
+}
 function hhcNormalizeProduct(p,profit,categoryMap){
  const variations=Array.isArray(p.variations)?p.variations:[];
  const priceCandidates=[p.wholesalePrice,p.wholesale_price,p.salePrice,p.sale_price,p.price,...variations.map(v=>v.wholesalePrice||v.wholesale_price||v.sale_price||v.salePrice||v.price)];
@@ -3292,6 +3334,7 @@ function hhcNormalizeProduct(p,profit,categoryMap){
  const colorSet=new Set(),sizeSet=new Set();
  variations.forEach(v=>(Array.isArray(v.attribute_values)?v.attribute_values:[]).forEach(a=>{const n=String(a.attribute_name||'').toLowerCase(),val=String(a.attribute_value||'').trim();if(!val)return;if(/colou?r|shade/.test(n))colorSet.add(val);if(/size/.test(n))sizeSet.add(val)}));
  const images=[p.product_thumbnail,...(Array.isArray(p.product_galleries)?p.product_galleries:[])].map(safeImageURL).filter((x,i,a)=>x&&a.indexOf(x)===i).slice(0,4);
+ const videoUrls=hhcExtractVideoUrls(p);
  const id=String(p.id||'');
  const ratingObj=p.rating&&typeof p.rating==='object'?p.rating:(p.ratings&&typeof p.ratings==='object'?p.ratings:{});
  const rating=hhcFirstNumber(p,['rating','ratings','average_rating','avg_rating','product_rating','rating_value','rate'])??hhcFirstNumber(ratingObj,['average','average_rating','avg','rating','value','stars']);
@@ -3300,10 +3343,10 @@ function hhcNormalizeProduct(p,profit,categoryMap){
  const sourceReviews=hhcExtractSourceReviews(p);
  const categoryId=String(p.sub_category_id||p.subCategoryId||p.category_id||p.categoryId||'');
  const packTiers=hhcExtractPackTiers(p,cost);
- return {id,name:String(p.name||'').trim(),cost,description:hhcPlainText(p.description).slice(0,1500),images,sourceCategory,category:hhcStoreCategory(p,sourceCategory),sourceCategoryId:categoryId,stockQty:qty,stockLabel:stockFlag?'In Stock':'Out of Stock',published,variations,colors:[...colorSet],sizes:[...sizeSet],packTiers,storeName:String(p.store_name||p.storeName||''),storeCity:String(p.store_city||p.city_name||''),slug:String(p.slug||''),sourceRating:rating!==null&&rating>=0&&rating<=5?rating:null,sourceReviewCount:reviewCount!==null&&reviewCount>=0?reviewCount:null,sourceSalesCount:sourceSalesCount!==null&&sourceSalesCount>=0?sourceSalesCount:null,sourceReviews,rawSourceData:p};
+ return {id,name:String(p.name||'').trim(),cost,description:hhcPlainText(p.description).slice(0,1500),images,sourceCategory,category:hhcStoreCategory(p,sourceCategory),sourceCategoryId:categoryId,stockQty:qty,stockLabel:stockFlag?'In Stock':'Out of Stock',published,variations,colors:[...colorSet],sizes:[...sizeSet],packTiers,storeName:String(p.store_name||p.storeName||''),storeCity:String(p.store_city||p.city_name||''),slug:String(p.slug||''),sourceRating:rating!==null&&rating>=0&&rating<=5?rating:null,sourceReviewCount:reviewCount!==null&&reviewCount>=0?reviewCount:null,sourceSalesCount:sourceSalesCount!==null&&sourceSalesCount>=0?sourceSalesCount:null,sourceReviews,videoUrls,videoUrl:videoUrls[0]||'',rawSourceData:p};
 }
-function renderHHCProducts(){const box=$('hhcProductList');box.hidden=false;box.innerHTML=hhcCatalogRows.length?'<b>'+hhcCatalogRows.length+' HHC products loaded</b>'+hhcCatalogRows.map((p,i)=>'<div class="supplier-import-row" style="align-items:center;gap:10px;flex-wrap:wrap"><span style="display:flex;gap:9px;align-items:center;min-width:0;flex:1"><input type="checkbox" class="hhc-product-check" data-index="'+i+'" checked style="width:auto"><img src="'+escapeHTML(safeImageURL(p.image)||'')+'" alt="" style="width:54px;height:54px;object-fit:contain;background:#fff;border:1px solid #eee" onerror="this.style.display=\'none\'"><span><b>'+escapeHTML(p.name||'Unnamed product')+'</b><br><small>HHC ID: '+escapeHTML(p.id)+' · '+escapeHTML(p.stockLabel)+' · '+escapeHTML(p.sourceCategory||p.category||'')+'</small><br><small>Variants: '+(p.variations?.length||0)+' · Rating: '+(p.sourceRating===null?'Not provided':p.sourceRating)+'</small></span></span><span style="display:flex;gap:8px;align-items:center"><b style="white-space:nowrap">Rs. '+(p.cost||0).toLocaleString('en-PK')+'</b><button type="button" class="gold-btn hhc-direct-import" data-index="'+i+'" style="padding:8px 12px">DIRECT IMPORT</button></span></div>').join(''):'کوئی پروڈکٹ نہیں ملی۔'}
-async function hhcImportOne(index,button){if(!requireAdmin()||!db){showToast('Admin access required.');return}const p=hhcCatalogRows[Number(index)];if(!p||!p.id||!p.cost){$('hhcStatus').textContent='اس پروڈکٹ کی درست ID یا سپلائر قیمت دستیاب نہیں؛ درآمد نہیں ہو سکتی۔';return}const old=button?.textContent;if(button){button.disabled=true;button.textContent='IMPORTING...'}try{const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id),existing=await ref.get();if(existing.exists){$('hhcStatus').textContent='یہ HHC پروڈکٹ پہلے ہی اسٹور میں موجود ہے؛ موجودہ ریکارڈ تبدیل نہیں کیا گیا۔';showToast('Already imported — existing product preserved.');if(button)button.textContent='ALREADY ADDED';return}const key=cleanProductName(p.name).toLowerCase().replace(/[^a-z0-9؀-ۿ]/g,'');const duplicate=(Array.isArray(products)?products:[]).find(x=>cleanProductName(x.name||'').toLowerCase().replace(/[^a-z0-9؀-ۿ]/g,'')===key);if(duplicate){$('hhcStatus').textContent='اسی نام کی پروڈکٹ پہلے سے موجود ہے ('+(duplicate.supplierName||'manual product')+')؛ ڈپلیکیٹ بنانے کے بجائے موجودہ ریکارڈ محفوظ رکھا گیا۔';showToast('Similar product already exists; skipped.');if(button)button.textContent='DUPLICATE SKIPPED';return}const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0),profit=hhcProfitForCost(p.cost);await ref.set(hhcFirestoreProduct(p,profit,deliveryCost,codCost),{merge:false});$('hhcStatus').textContent='کامیابی! '+p.name+' براہِ راست COBRA STORE میں درآمد ہو گئی۔';showToast('Product imported successfully.');if(button)button.textContent='IMPORTED';}catch(e){$('hhcStatus').textContent='Direct import ناکام: '+(e.message||getErrorMessage(e));if(button)button.textContent=old||'DIRECT IMPORT';}finally{if(button&&button.textContent==='IMPORTING...'){button.disabled=false;button.textContent=old||'DIRECT IMPORT'}}}
+function renderHHCProducts(){const box=$('hhcProductList');box.hidden=false;box.innerHTML=hhcCatalogRows.length?'<b>'+hhcCatalogRows.length+' HHC products loaded</b>'+hhcCatalogRows.map((p,i)=>'<div class="supplier-import-row" style="align-items:center;gap:10px;flex-wrap:wrap"><span style="display:flex;gap:9px;align-items:center;min-width:0;flex:1"><input type="checkbox" class="hhc-product-check" data-index="'+i+'" checked style="width:auto"><img src="'+escapeHTML(safeImageURL(p.image)||'')+'" alt="" style="width:54px;height:54px;object-fit:contain;background:#fff;border:1px solid #eee" onerror="this.style.display=\'none\'"><span><b>'+escapeHTML(p.name||'Unnamed product')+'</b><br><small>HHC ID: '+escapeHTML(p.id)+' · '+escapeHTML(p.stockLabel)+' · '+escapeHTML(p.sourceCategory||p.category||'')+'</small><br><small>Variants: '+(p.variations?.length||0)+' · Rating: '+(p.sourceRating===null?'Not provided':p.sourceRating)+' · Videos: '+(p.videoUrls?.length||0)+'</small></span></span><span style="display:flex;gap:8px;align-items:center"><b style="white-space:nowrap">Rs. '+(p.cost||0).toLocaleString('en-PK')+'</b><button type="button" class="gold-btn hhc-direct-import" data-index="'+i+'" style="padding:8px 12px">DIRECT IMPORT</button></span></div>').join(''):'کوئی پروڈکٹ نہیں ملی۔'}
+async function hhcImportOne(index,button){if(!requireAdmin()||!db){showToast('Admin access required.');return}const p=hhcCatalogRows[Number(index)];if(!p||!p.id||!p.cost){$('hhcStatus').textContent='اس پروڈکٹ کی درست ID یا سپلائر قیمت دستیاب نہیں؛ درآمد نہیں ہو سکتی۔';return}const old=button?.textContent;if(button){button.disabled=true;button.textContent='IMPORTING...'}try{const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id),existing=await ref.get();if(existing.exists){if((p.videoUrls||[]).length){await ref.update({videoUrl:p.videoUrls[0],videoUrls:p.videoUrls,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});$('hhcStatus').textContent='پروڈکٹ پہلے سے موجود تھی؛ صرف '+p.videoUrls.length+' ویڈیو لنکس اپڈیٹ ہوئے۔ باقی تمام معلومات محفوظ رہیں۔';showToast('Existing product video links updated.');if(button)button.textContent='VIDEOS UPDATED';}else{$('hhcStatus').textContent='یہ HHC پروڈکٹ پہلے ہی اسٹور میں موجود ہے؛ موجودہ ریکارڈ تبدیل نہیں کیا گیا۔';showToast('Already imported — existing product preserved.');if(button)button.textContent='ALREADY ADDED';}return}const key=cleanProductName(p.name).toLowerCase().replace(/[^a-z0-9؀-ۿ]/g,'');const duplicate=(Array.isArray(products)?products:[]).find(x=>cleanProductName(x.name||'').toLowerCase().replace(/[^a-z0-9؀-ۿ]/g,'')===key);if(duplicate){$('hhcStatus').textContent='اسی نام کی پروڈکٹ پہلے سے موجود ہے ('+(duplicate.supplierName||'manual product')+')؛ ڈپلیکیٹ بنانے کے بجائے موجودہ ریکارڈ محفوظ رکھا گیا۔';showToast('Similar product already exists; skipped.');if(button)button.textContent='DUPLICATE SKIPPED';return}const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0),profit=hhcProfitForCost(p.cost);await ref.set(hhcFirestoreProduct(p,profit,deliveryCost,codCost),{merge:false});$('hhcStatus').textContent='کامیابی! '+p.name+' براہِ راست COBRA STORE میں درآمد ہو گئی۔';showToast('Product imported successfully.');if(button)button.textContent='IMPORTED';}catch(e){$('hhcStatus').textContent='Direct import ناکام: '+(e.message||getErrorMessage(e));if(button)button.textContent=old||'DIRECT IMPORT';}finally{if(button&&button.textContent==='IMPORTING...'){button.disabled=false;button.textContent=old||'DIRECT IMPORT'}}}
 async function hhcLoadProducts(){if(!requireAdmin()){showToast('Admin access required.');return}const btn=$('hhcSearchBtn'),search=String($('hhcSearch').value||'').trim();if(!search){$('hhcStatus').textContent='پہلے سپلائر سے کاپی کیا ہوا پروڈکٹ نام یا ID Paste کریں۔';$('hhcSearch').focus();return}btn.disabled=true;$('hhcStatus').textContent='HHC catalog میں "'+search+'" تلاش ہو رہا ہے...';try{const q=new URLSearchParams({paginate:$('hhcPageSize').value||'20',search});const cat=$('hhcCategoryId').value.trim();if(cat)q.set('category_id',cat);const data=await hhcRequest('/products?'+q.toString());const rows=Array.isArray(data.data)?data.data:(Array.isArray(data.products)?data.products:[]);hhcCatalogRows=rows.map(p=>hhcNormalizeProduct(p,0,{})).filter(p=>p.name&&p.cost>0).map(p=>({...p,image:p.images[0]||''}));renderHHCProducts();$('hhcStatus').textContent=hhcCatalogRows.length?'HHC سے '+hhcCatalogRows.length+' نتائج ملے۔ مطلوبہ پروڈکٹ کے سامنے DIRECT IMPORT دبائیں یا متعدد منتخب کرکے نیچے IMPORT SELECTED PRODUCTS دبائیں۔':'اس نام سے کوئی قابلِ درآمد HHC پروڈکٹ نہیں ملی۔ نام مختصر کرکے دوبارہ تلاش کریں۔'}catch(e){$('hhcStatus').textContent='HHC search failed: '+e.message;hhcCatalogRows=[];$('hhcProductList').hidden=true}finally{btn.disabled=false}}
 $('hhcTest')?.addEventListener('click',async()=>{if(!requireAdmin()){showToast('Admin access required.');return}$('hhcStatus').textContent='Worker connection test...';try{const d=await hhcRequest('/health');$('hhcStatus').textContent='Worker connected: '+(d.status||'OK')+'. '+(d.supplier||'HHC API proxy');}catch(e){$('hhcStatus').textContent='Connection failed: '+e.message}});
 $('hhcSearchBtn')?.addEventListener('click',hhcLoadProducts);
@@ -3334,9 +3377,9 @@ function hhcFirestoreProduct(p,profit,deliveryCost=0,codCost=0){
  const defaultTier=tiers[0]||null,baseCost=defaultTier?defaultTier.cost:p.cost;
  const baseProfit=defaultTier?defaultTier.profitAmount:profit;
  const basePrice=defaultTier?defaultTier.price:Math.ceil((p.cost+profit+deliveryCost+codCost)/(1-DEFAULT_SALE/100));
- return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:basePrice,costPrice:baseCost,profitAmount:baseProfit,deliveryCostEstimate:deliveryCost,codCostEstimate:codCost,netProfitEstimate:baseProfit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:(p.sourceCategory?'HHC · '+p.sourceCategory:'HHC').slice(0,50),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],packTiers:tiers,stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:(p.storeName?'Supplier: '+p.storeName:'')+(p.storeCity?' · City: '+p.storeCity:'')+(p.variations&&p.variations.length?' · '+p.variations.length+' options/variations':''),sourceRating:p.sourceRating,sourceReviewCount:p.sourceReviewCount,sourceReviews:p.sourceReviews||[],sourceRatingProvider:(p.sourceRating!==null||p.sourceReviewCount!==null||p.sourceReviews?.length)?'HHC':'',image:images[0]||'',extraImages:images.slice(1,4),videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+ return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:basePrice,costPrice:baseCost,profitAmount:baseProfit,deliveryCostEstimate:deliveryCost,codCostEstimate:codCost,netProfitEstimate:baseProfit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:(p.sourceCategory?'HHC · '+p.sourceCategory:'HHC').slice(0,50),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],packTiers:tiers,stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:(p.storeName?'Supplier: '+p.storeName:'')+(p.storeCity?' · City: '+p.storeCity:'')+(p.variations&&p.variations.length?' · '+p.variations.length+' options/variations':''),sourceRating:p.sourceRating,sourceReviewCount:p.sourceReviewCount,sourceReviews:p.sourceReviews||[],sourceRatingProvider:(p.sourceRating!==null||p.sourceReviewCount!==null||p.sourceReviews?.length)?'HHC':'',image:images[0]||'',extraImages:images.slice(1,4),videoUrl:(p.videoUrls||[])[0]||p.videoUrl||'',videoUrls:p.videoUrls||[],mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
 }
-$('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()||!db){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0;const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0);try{let batch=db.batch(),pending=0;for(const p of selected){if(!p.id||!p.cost)continue;const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);const exists=await ref.get();if(exists.exists)continue;const itemProfit=hhcProfitForCost(p.cost);batch.set(ref,hhcFirestoreProduct(p,itemProfit,deliveryCost,codCost),{merge:false});pending++;added++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}if(pending)await batch.commit();$('hhcStatus').textContent=added+' پروڈکٹس COBRA STORE میں Sync ہو گئیں۔';showToast(added+' HHC products imported.')}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
+$('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()||!db){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0,videoUpdated=0;const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0);try{let batch=db.batch(),pending=0;for(const p of selected){if(!p.id||!p.cost)continue;const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);const exists=await ref.get();if(exists.exists){if((p.videoUrls||[]).length){batch.update(ref,{videoUrl:p.videoUrls[0],videoUrls:p.videoUrls,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});pending++;videoUpdated++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}continue;}const itemProfit=hhcProfitForCost(p.cost);batch.set(ref,hhcFirestoreProduct(p,itemProfit,deliveryCost,codCost),{merge:false});pending++;added++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}if(pending)await batch.commit();$('hhcStatus').textContent=added+' نئی پروڈکٹس امپورٹ ہوئیں؛ '+videoUpdated+' موجودہ پروڈکٹس کے صرف ویڈیو لنکس اپڈیٹ ہوئے۔';showToast(added+' products imported; '+videoUpdated+' video galleries updated.')}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
 const HHC_SYNC_CHECKPOINT_KEY='cobra_hhc_sync_checkpoint_v2';
 const HHC_SYNC_DELAY_MS=250;
 function hhcWait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
@@ -4615,8 +4658,8 @@ function renderAdminMediaDownloadBar(p){
  }
  const imgs = productImages(p);
  const safeTitle = cleanProductName(p.name).replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g,"") || "cobra_product";
- const hasDirectVideo = p.videoUrl && safeImageURL(p.videoUrl) && !youtubeEmbedURL(p.videoUrl);
- if(!imgs.length && !hasDirectVideo){
+ const directVideos = getProductVideos(p).filter(url=>!youtubeEmbedURL(url)&&/\.(mp4|webm|mov|m4v)(?:[?#].*)?$/i.test(url));
+ if(!imgs.length && !directVideos.length){
   bar.classList.add("hidden");
   return;
  }
@@ -4627,9 +4670,9 @@ function renderAdminMediaDownloadBar(p){
  if(imgs.length > 1){
   btns += `<button type="button" class="admin-dl-btn" onclick="adminDownloadProductMedia('${escapeHTML(p.id)}')">⬇ ALL (${imgs.length})</button>`;
  }
- if(hasDirectVideo){
-  btns += `<button type="button" class="admin-dl-btn" onclick="forceDownloadFile('${escapeHTML(p.videoUrl)}','${escapeHTML(safeTitle)}_video.mp4')">⬇ VIDEO</button>`;
- }
+ directVideos.forEach((url,idx)=>{
+  btns += `<button type="button" class="admin-dl-btn" onclick="forceDownloadFile('${escapeHTML(url)}','${escapeHTML(safeTitle)}_video_${idx+1}.mp4')">⬇ VIDEO ${idx+1}</button>`;
+ });
  bar.innerHTML = `<span>👑 ADMIN MEDIA DOWNLOAD:</span><div class="admin-dl-btns">${btns}</div>`;
  bar.classList.remove("hidden");
 }
@@ -4640,14 +4683,15 @@ async function adminDownloadProductMedia(productId){
  if(!p) return;
  const imgs = productImages(p);
  const safeTitle = cleanProductName(p.name).replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g,"") || "cobra_product";
- const hasDirectVideo = p.videoUrl && safeImageURL(p.videoUrl) && !youtubeEmbedURL(p.videoUrl);
- if(!imgs.length && !hasDirectVideo){ showToast("No downloadable media on this product."); return; }
+ const directVideos = getProductVideos(p).filter(url=>!youtubeEmbedURL(url)&&/\.(mp4|webm|mov|m4v)(?:[?#].*)?$/i.test(url));
+ if(!imgs.length && !directVideos.length){ showToast("No downloadable media files on this product. Video platform links can be opened from product details."); return; }
  for(let i=0; i<imgs.length; i++){
   await forceDownloadFile(imgs[i], `${safeTitle}_photo_${i+1}.jpg`);
   await new Promise(r=>setTimeout(r, 350));
  }
- if(hasDirectVideo){
-  await forceDownloadFile(p.videoUrl, `${safeTitle}_video.mp4`);
+ for(let i=0;i<directVideos.length;i++){
+  await forceDownloadFile(directVideos[i], `${safeTitle}_video_${i+1}.mp4`);
+  await new Promise(r=>setTimeout(r, 350));
  }
 }
 
