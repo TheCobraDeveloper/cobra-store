@@ -158,6 +158,8 @@ header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.95);backdro
 .product-image img{width:100%;height:100%;object-fit:contain;transition:transform .45s ease}
 .product-card:hover .product-image img{transform:scale(1.07)}
 .product-image img.campaign-logo{position:absolute;top:12px;right:12px;width:54px;height:54px;object-fit:contain;background:#ffffff;border-radius:10px;padding:4px;z-index:4;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid #d4af37;transition:none}
+/* Subtle COBRA STORE image branding on product cards and product detail photos */
+.product-image::after,.modal-icon::after{content:"COBRA STORE";position:absolute;left:9px;bottom:9px;z-index:5;padding:5px 8px;border-radius:4px;background:rgba(23,21,20,.84);color:#f5d061;font-size:8px;font-weight:900;letter-spacing:1.1px;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.16)}
 .wishlist-inline-btn{background:#faf7f5;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;display:inline-grid;place-items:center;font-size:15px;cursor:pointer;transition:.25s;flex-shrink:0}
 .wishlist-inline-btn:hover{transform:scale(1.1);border-color:var(--coral)}
 .wishlist-inline-btn.active{background:var(--coral);color:white;border-color:var(--coral)}
@@ -910,7 +912,7 @@ body:not(.admin-mode) .modal-gallery img {
 .cobra-dash-head,.cobra-products-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.cobra-dash-head h3{font-size:14px;margin:0 0 4px}.cobra-dash-head small,.cobra-dash-exports small{font-size:10px;color:#81736b}
 .cobra-dash-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
 .cobra-dash-card{background:#fff;border:1px solid #eee4dc;border-radius:9px;padding:10px;min-width:0}.cobra-dash-card b{display:block;font-size:19px;line-height:1.4;overflow-wrap:anywhere}.cobra-dash-card span{display:block;font-size:9px;color:#81736b;font-weight:700;letter-spacing:.2px}
-.cobra-dash-bottom{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin:10px 0}.cobra-dash-bottom>div{padding:10px;border:1px solid #eee4dc;border-radius:9px;background:#fff}.cobra-dash-bottom b{font-size:11px}.cobra-dash-bars{display:grid;gap:7px;margin-top:10px}.cobra-dash-bar-row{display:grid;grid-template-columns:88px 1fr 24px;align-items:center;gap:6px;font-size:10px}.cobra-dash-bar-track{height:8px;border-radius:8px;background:#f0eae5;overflow:hidden}.cobra-dash-bar-fill{height:100%;background:#bd8b42;border-radius:8px}.cobra-dash-exports{display:flex;flex-direction:column;gap:8px}.cobra-dash-exports button{width:100%;font-size:10px}.cobra-products-head .form-title{margin:0}.cobra-status-select{padding:7px;border:1px solid #ded4cd;border-radius:6px;background:#fff;font-size:11px;max-width:100%}.cobra-order-status-line{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0}
+.cobra-dash-bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:10px 0}.cobra-dash-bottom>div{padding:10px;border:1px solid #eee4dc;border-radius:9px;background:#fff}.cobra-dash-bottom b{font-size:11px}.cobra-dash-bars{display:grid;gap:7px;margin-top:10px}.cobra-dash-bar-row{display:grid;grid-template-columns:88px 1fr 24px;align-items:center;gap:6px;font-size:10px}.cobra-dash-bar-track{height:8px;border-radius:8px;background:#f0eae5;overflow:hidden}.cobra-dash-bar-fill{height:100%;background:#bd8b42;border-radius:8px}.cobra-dash-exports{display:flex;flex-direction:column;gap:8px}.cobra-dash-exports button{width:100%;font-size:10px}.cobra-products-head .form-title{margin:0}.cobra-status-select{padding:7px;border:1px solid #ded4cd;border-radius:6px;background:#fff;font-size:11px;max-width:100%}.cobra-order-status-line{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0}
 @media(max-width:650px){.cobra-dash-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cobra-dash-bottom{grid-template-columns:1fr}.cobra-dash-card b{font-size:17px}}
 </style>
 
@@ -927,20 +929,14 @@ body:not(.admin-mode) .modal-gallery img {
 </div>
 
 <audio id="backgroundMusic" src="cobra-music.mp3" loop preload="none"></audio>
-<div class="promo-bar"><div class="promo-track">✦ COBRA STORE 11.11 MEGA SALE ✦ CASH ON DELIVERY AVAILABLE ✦ PREMIUM COLLECTION ✦ ORDER NOW ✦</div></div>
+<div class="promo-bar"><div class="promo-track">✦ COBRA STORE ✦ WINTER COLLECTION ✦ CASH ON DELIVERY AVAILABLE ✦ WHATSAPP SUPPORT ✦ SHOP NOW ✦</div></div>
 
 <!-- Anti-AI Scraper & Competitor Bot Shield Indicator -->
 <div style="background:#171514;color:#f5d061;border-top:1px solid #d4af37;padding:8px 15px;text-align:center;font-size:9px;font-weight:800;letter-spacing:1px">
  🛡️ COBRA ANTI-AI BOT &amp; COMPETITOR SCRAPER SHIELD ACTIVE: STORE CONTENT PROTECTED
 </div>
 
-<div class="flash-sale-bar" id="flashSaleBar">
- <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 22px">
-  <div style="font-size:10px;font-weight:900;letter-spacing:1px">🔥 11.11 FLASH SALE ENDS IN:</div>
-  <div id="flashCountdown" style="font-family:'Syne';font-size:11px;font-weight:900;letter-spacing:2px;color:#f5d061">00 : 14 : 32 : 45</div>
-  <div><button class="outline-btn" style="padding:5px 10px;font-size:9px;background:#fff;color:var(--dark)" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">SHOP DEALS</button></div>
- </div>
-</div>
+<div class="flash-sale-bar" id="flashSaleBar"><div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 22px"><div style="font-size:10px;font-weight:900;letter-spacing:1px">❄ COBRA STORE · WINTER COLLECTION</div><div style="font-size:10px;font-weight:700">Selected products · COD available</div><button class="outline-btn" style="padding:5px 10px;font-size:9px;background:#fff;color:var(--dark)" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">EXPLORE PRODUCTS</button></div></div>
 
 <header><div class="header-inner">
  <div><div class="logo"><img src="IMG-20261109-WA0835.jpg" alt="COBRA STORE Logo"></div><div class="logo-sub">STYLE • QUALITY • TRUST</div></div>
@@ -964,7 +960,7 @@ body:not(.admin-mode) .modal-gallery img {
  <div class="hero-kicker">A NEW WAY TO SHOP</div><h1>COBRA<br>STORE.</h1>
  <p>Discover your style with our curated collection. Shop shoes, fashion, watches, electronics and everyday essentials — delivered to your doorstep.</p>
  <div class="hero-buttons"><button class="gold-btn" onclick="goToCategories()">EXPLORE COLLECTION</button><button class="outline-btn" onclick="showAllProducts()">VIEW ALL PRODUCTS</button></div>
- <div class="hero-sale">✦ 11.11 MEGA SALE — SPECIAL PRICES ✦</div>
+ <div class="hero-sale">✦ COBRA STORE WINTER COLLECTION ✦</div>
 </div></section>
 
 <div class="benefits">
@@ -972,7 +968,7 @@ body:not(.admin-mode) .modal-gallery img {
  <div class="benefit"><strong>✦ CASH ON DELIVERY</strong><span>Pay when your order arrives</span></div>
  <div class="benefit"><strong>✦ WHATSAPP SUPPORT</strong><span>We are here to help you</span></div>
 </div>
-<div class="promo-banner"><strong>11.11 MEGA SALE</strong><span>Explore the COBRA STORE collection and enjoy special discounted prices</span></div>
+<div class="promo-banner"><strong>THE COBRA COLLECTION</strong><span>Discover selected products for everyday style, comfort and convenience.</span></div>
 
 <section id="activeCampaignBanner" class="campaign-public hidden"></section>
 
@@ -1082,11 +1078,11 @@ body:not(.admin-mode) .modal-gallery img {
  </div>
  <div class="form-actions"><button class="gold-btn" id="modalAdd">ADD TO CART</button><button class="outline-btn" id="modalWhatsApp">WHATSAPP ORDER</button></div>
  <button class="gold-btn" style="width:100%;margin-top:10px" id="modalCOD">BUY NOW • CASH ON DELIVERY</button>
- <div class="live-viewers-bar"><span class="live-dot"></span><span id="liveViewersText">12 customers are viewing this product right now</span></div>
+ <div class="live-viewers-bar"><span>Need product details or availability help?</span> <button type="button" class="outline-btn" onclick="contactWhatsApp()">CHAT WITH COBRA STORE</button></div>
  <div class="trust-strip">
-  <div class="trust-pill">✦ 100% PREMIUM QUALITY</div>
-  <div class="trust-pill">🚚 FAST COD DELIVERY</div>
-  <div class="trust-pill">🔄 EASY EXCHANGE</div>
+  <div class="trust-pill">✦ SELECTED COLLECTION</div>
+  <div class="trust-pill">🚚 CASH ON DELIVERY AVAILABLE</div>
+  <div class="trust-pill">🔄 RETURN &amp; EXCHANGE POLICY</div>
  </div>
  <button class="outline-btn" style="width:100%;margin-top:8px" id="modalShareWA">📤 SHARE THIS PRODUCT ON WHATSAPP</button>
  
@@ -1231,9 +1227,9 @@ body:not(.admin-mode) .modal-gallery img {
  <button class="close" onclick="$('faqModal').classList.remove('show')">×</button>
  <div class="form-title">FREQUENTLY ASKED QUESTIONS</div>
  <div style="font-size:11px;line-height:1.9;color:#555;margin:10px 0">
-  <b class="gold">Q1: آرڈر کتنے دنوں میں ڈلیور ہوتا ہے؟</b><br>پہلا جواب: پاکستان بھر میں تمام آرڈرز 3 سے 5 ورکنگ دنوں میں کیش آن ڈلیوری پر پہنچ جاتے ہیں۔<br><br>
-  <b class="gold">Q2: کیا ڈلیوری چارجز ہیں؟</b><br>پہلا جواب: معیاری ڈلیوری چارجز ہوتے ہیں، اور مخصوص رقم سے زیادہ کی خریداری پر فری ڈلیوری دی جاتی ہے۔<br><br>
-  <b class="gold">Q3: کیا پارسل کھول کر چیک کرنے کی اجازت ہے؟</b><br>پہلا جواب: جی ہاں! آپ کوریئر بوائے کے سامنے پارسل کھول کر چیک کر سکتے ہیں۔
+  <b class="gold">Q1: آرڈر کتنے دنوں میں ڈلیور ہوتا ہے؟</b><br>ڈلیوری کا وقت شہر، کوریئر اور پروڈکٹ کی دستیابی کے مطابق مختلف ہو سکتا ہے۔ آرڈر کی تصدیق کے وقت متوقع وقت بتایا جائے گا۔<br><br>
+  <b class="gold">Q2: کیا ڈلیوری چارجز ہیں؟</b><br>ڈلیوری چارجز چیک آؤٹ یا آرڈر کی تصدیق کے وقت بتائے جائیں گے۔ مفت ڈلیوری صرف اسی وقت لاگو ہوگی جب ویب سائٹ پر فعال آفر دکھائی دے۔<br><br>
+  <b class="gold">Q3: کیا پارسل کھول کر چیک کرنے کی اجازت ہے؟</b><br>پارسل کھول کر چیک کرنے کی سہولت کوریئر کمپنی کی پالیسی پر منحصر ہے۔ آرڈر سے پہلے COBRA STORE سے تصدیق کر لیں۔
  </div>
  <button class="gold-btn" style="width:100%;margin-top:10px" onclick="$('faqModal').classList.remove('show')">CLOSE</button>
 </div></div>
@@ -1268,7 +1264,7 @@ body:not(.admin-mode) .modal-gallery img {
   <div class="admin-stat-card"><strong id="statRevenue">Rs. 0</strong><span>CONFIRMED SALES</span></div>
  </div>
  <section id="cobraShopDashboard" class="cobra-shop-dashboard">
-  <div class="cobra-dash-head"><div><h3>STORE ANALYTICS & BUSINESS OVERVIEW</h3><small>Live figures from your Firebase products and orders</small></div><button type="button" class="outline-btn" onclick="cobraRefreshDashboard()">↻ REFRESH</button></div>
+  <div class="cobra-dash-head"><div><h3>STORE ANALYTICS & BUSINESS OVERVIEW</h3><small>Figures from products and actual orders saved in Firebase</small></div><button type="button" class="outline-btn" onclick="cobraRefreshDashboard()">↻ REFRESH</button></div>
   <div class="cobra-dash-grid">
    <div class="cobra-dash-card"><b id="cobraDashOrders">0</b><span>TOTAL ORDERS</span></div>
    <div class="cobra-dash-card"><b id="cobraDashToday">0</b><span>ORDERS TODAY</span></div>
@@ -1277,10 +1273,12 @@ body:not(.admin-mode) .modal-gallery img {
    <div class="cobra-dash-card"><b id="cobraDashSales">Rs. 0</b><span>CONFIRMED ORDER VALUE</span></div>
    <div class="cobra-dash-card"><b id="cobraDashDeliveredSales">Rs. 0</b><span>DELIVERED SALES</span></div>
    <div class="cobra-dash-card"><b id="cobraDashAverage">Rs. 0</b><span>AVERAGE ORDER VALUE</span></div>
-   <div class="cobra-dash-card"><b id="cobraDashReviews">—</b><span>PRODUCT REVIEWS</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashReviews">—</b><span>COBRA STORE REVIEWS</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashCustomers">0</b><span>UNIQUE CUSTOMERS</span></div>
+   <div class="cobra-dash-card"><b id="cobraDashCatalog">0</b><span>LIVE CATALOG PRODUCTS</span></div>
   </div>
-  <div class="cobra-dash-bottom"><div><b>ORDER STATUS BREAKDOWN</b><div id="cobraDashStatusBars" class="cobra-dash-bars"><span>Orders will appear here when loaded.</span></div></div><div class="cobra-dash-exports"><b>REPORT EXPORTS</b><button class="gold-btn" type="button" onclick="cobraExportProducts()">⬇ EXPORT ALL PRODUCTS + LINKS (CSV)</button><button class="outline-btn" type="button" onclick="cobraExportOrders()">⬇ EXPORT ORDERS (CSV)</button><small>CSV files can be opened in Excel or Google Sheets.</small></div></div>
-  <div class="status urdu-text">نوٹ: Confirmed Order Value میں Confirmed، Processing، Shipped اور Delivered آرڈرز شامل ہیں۔ Delivered Sales صرف Delivered آرڈرز کی رقم ہے۔ Cancelled/Returned آرڈرز فروخت میں شامل نہیں ہوں گے۔</div>
+  <div class="cobra-dash-bottom"><div><b>TOP ORDERED PRODUCTS</b><div id="cobraDashTopProducts" class="cobra-dash-bars"><span>Products will appear here when orders are received.</span></div></div><div><b>ORDER STATUS BREAKDOWN</b><div id="cobraDashStatusBars" class="cobra-dash-bars"><span>Orders will appear here when loaded.</span></div></div><div class="cobra-dash-exports"><b>REPORT EXPORTS</b><button class="gold-btn" type="button" onclick="cobraExportProducts()">⬇ EXPORT ALL PRODUCTS + LINKS (CSV)</button><button class="outline-btn" type="button" onclick="cobraExportOrders()">⬇ EXPORT ORDERS (CSV)</button><button class="outline-btn" type="button" onclick="cobraExportCustomers()">⬇ EXPORT CUSTOMERS (CSV)</button><small>Customer details are exported for administrator use only.</small><small>CSV files can be opened in Excel or Google Sheets.</small></div></div>
+  <div class="status urdu-text">نوٹ: یہ اعداد صرف Firebase میں محفوظ حقیقی آرڈرز سے بنتے ہیں۔ Confirmed Order Value میں Confirmed، Processing، Shipped اور Delivered آرڈرز شامل ہیں۔ Delivered Sales صرف Delivered آرڈرز کی رقم ہے۔ Unique Customers فون، ای میل یا نام کی بنیاد پر اندازاً الگ گنے جاتے ہیں۔</div>
  </section>
 
  <h3 class="admin-section-title">ORDER MANAGEMENT</h3>
@@ -1394,6 +1392,7 @@ body:not(.admin-mode) .modal-gallery img {
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
 
  <hr style="border:0;border-top:1px solid #eee5e1;margin:24px 0">
+ <div class="status urdu-text"><b>COBRA STORE برانڈ پالیسی:</b> سپلائر کی شناخت، سورس لنکس اور سپلائر ریٹنگز صرف ایڈمن ریکارڈ کے لیے ہیں۔ عوامی پروڈکٹ کارڈ اور تفصیلات میں صرف COBRA STORE کی کیٹیگری، قیمت اور حقیقی اسٹور کسٹمر ریویوز دکھائے جاتے ہیں۔ دستیابی آرڈر کی تصدیق کے وقت چیک کریں۔</div>
  <h3 class="admin-section-title">DIRECT SUPPLIER CATALOG</h3>
  <div class="status urdu-text">HHC کے مجاز API سے پروڈکٹس براہِ راست حاصل کریں۔ ایک کلک سے تمام Published اور In Stock پروڈکٹس COBRA STORE میں Sync ہو سکتی ہیں۔ API Key محفوظ Cloudflare Worker میں ہی رہتی ہے۔</div>
  <div class="supplier-import-box">
@@ -1511,16 +1510,7 @@ body:not(.admin-mode) .modal-gallery img {
 <canvas id="cobraCanvas" aria-hidden="true"></canvas>
 <div class="offer-pop" id="offerPopup" role="status" aria-live="polite"></div>
 
-<!-- Top-Right Compact Live Trending & Order Notification Box -->
-<div class="social-proof-pop" id="socialProofPop" role="status" aria-live="polite">
- <button type="button" class="sp-close" aria-label="Close" onclick="document.getElementById('socialProofPop').classList.remove('show')">×</button>
- <div id="spIcon" style="font-size:18px;flex-shrink:0">🔥</div>
- <div style="font-size:9.5px;line-height:1.35">
-  <div id="spBadge" style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:#287345;text-transform:uppercase">TRENDING NOW</div>
-  <b id="spName" style="color:var(--dark)">Ali from Lahore</b> <span id="spAction">just ordered</span><br>
-  <span id="spItem" style="color:var(--coral);font-weight:800;cursor:pointer;text-decoration:underline">Cobra Luxury Watch</span> <span style="color:#888">(<span id="spTime">2 mins ago</span>)</span>
- </div>
-</div>
+<!-- Simulated order/viewer popups removed: only verified store activity is shown. -->
 
 <!-- Tiny vertical controls bottom-LEFT: Color cycle + Language -->
 <div class="cobra-float-dock" id="cobraFloatDock" aria-label="Theme and language">
@@ -1579,11 +1569,7 @@ let cobraStarted=false;
 let offers=[],unsubscribeOffers=null,offerTimer=null,offerHideTimer=null,offerIndex=0,offersStarted=false;
 let appliedDiscount=0,appliedCouponName="";
 
-const DEFAULT_OFFERS=[
- {type:"MEGA SALE",title:"11.11 MEGA SALE LIVE",message:"Up to 50% OFF + Use code COBRA11 for extra 10% OFF!"},
- {type:"TRENDING",title:"Hot Selling Collection",message:"Limited stock remaining — Cash on Delivery all over Pakistan."},
- {type:"DEAL",title:"Free Delivery Unlock",message:"Shop Rs. 3,000+ and get FREE doorstep delivery!"}
-];
+const DEFAULT_OFFERS=[]; // No unverified discounts, stock scarcity or free-shipping claims.
 
 const $=id=>document.getElementById(id);
 function money(amount){return "Rs. "+Number(amount||0).toLocaleString("en-PK")}
@@ -1980,7 +1966,7 @@ function offerIsCurrentlyActive(o){
  if(e&&today>new Date(e+"T23:59:59"))return false;
  return true;
 }
-function currentOfferList(){const live=offers.filter(offerIsCurrentlyActive);return live.length?live:DEFAULT_OFFERS}
+function currentOfferList(){return offers.filter(offerIsCurrentlyActive)}
 function offerTypeOf(o){const t=String(o.type||"OFFER").toUpperCase();return ["OFFER","DEAL","SALE","MEGA SALE","TRENDING"].includes(t)?t:"OFFER"}
 function offerIconHTML(o){
  const u=safeImageURL(o.iconUrl);
@@ -2172,17 +2158,17 @@ function buildProductCardHTML(p){
  const images=productImages(p),name=cleanProductName(p.name),isWishlist=wishlist.includes(p.id);
  const campaignLogo=activeCampaignLogo(),logoHTML=campaignLogo?`<img class="campaign-logo" src="${escapeHTML(campaignLogo)}" alt="Campaign" loading="lazy">`:"";
  const imageHTML=images.length?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(name)}" loading="lazy" decoding="async" fetchpriority="low">`:'<span style="font-size:55px;color:#ec6c5a">🐍</span>';
- const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":""),stockText=String(p.stock||p.stockLabel||"In Stock"),isOut=/out|sold|unavailable/i.test(stockText);
- const ratingHTML=p.supplierName==="HHC"&&((p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating)))||(p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount))))?`<div class="card-rating">${p.sourceRating!==null&&p.sourceRating!==undefined&&Number.isFinite(Number(p.sourceRating))?`<span class="stars">${"★".repeat(Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}${"☆".repeat(5-Math.max(0,Math.min(5,Math.round(Number(p.sourceRating)))))}</span> <span>${Number(p.sourceRating).toFixed(1)}</span>`:""}${p.sourceReviewCount!==null&&p.sourceReviewCount!==undefined&&Number.isFinite(Number(p.sourceReviewCount))?`<span> · ${Number(p.sourceReviewCount)} supplier reviews</span>`:""}</div>`:"";
+ const mediaNote=(images.length||0)+" photo(s)"+(p.videoUrl?" • Video available":""),stockText=String(p.stock||p.stockLabel||"In Stock"),isOut=/out|sold|unavailable/i.test(stockText),publicStockText=isOut?"Currently unavailable":"Available to order · availability confirmed before dispatch";
+ const ratingHTML=""; // Only genuine COBRA STORE customer reviews are shown publicly.
  return `<article class="product-card" data-product-id="${escapeHTML(p.id)}">
   <div class="product-image" onclick="openProduct('${escapeHTML(p.id)}')" role="button" tabindex="0" aria-label="View ${escapeHTML(name)}">
    <span class="sale-badge">${salePercent(p)}% OFF</span>${logoHTML}${imageHTML}
   </div>
   <div class="product-info">
-   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div class="product-tag">${escapeHTML(p.label||categoryName(p.category))}</div><button class="wishlist-inline-btn ${isWishlist?"active":""}" title="Save to Wishlist" onclick="event.stopPropagation();toggleWishlist('${escapeHTML(p.id)}')">${isWishlist?"❤️":"🤍"}</button></div>
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div class="product-tag">${escapeHTML(categoryName(p.category))}</div><button class="wishlist-inline-btn ${isWishlist?"active":""}" title="Save to Wishlist" onclick="event.stopPropagation();toggleWishlist('${escapeHTML(p.id)}')">${isWishlist?"❤️":"🤍"}</button></div>
    <h3 onclick="openProduct('${escapeHTML(p.id)}')" style="cursor:pointer">${escapeHTML(name)}</h3>${ratingHTML}
    <div class="product-price">${money(finalPrice(p))}<span class="old-price">${money(p.price)}</span></div>
-   <div class="product-note">${mediaNote}<br><span class="product-stock-pill ${isOut?"out":""}">${isOut?"● "+escapeHTML(stockText):"● "+escapeHTML(stockText)}</span></div>
+   <div class="product-note">${mediaNote}<br><span class="product-stock-pill ${isOut?"out":""}">${isOut?"● "+escapeHTML(publicStockText):"● "+escapeHTML(publicStockText)}</span></div>
    <div class="product-buttons"><button class="outline-btn" onclick="openProduct('${escapeHTML(p.id)}')">VIEW DETAILS</button><button class="gold-btn" onclick="quickAdd('${escapeHTML(p.id)}')">ADD TO CART</button></div><button type="button" class="card-copy-link" onclick="event.stopPropagation();copyProductLink('${escapeHTML(p.id)}')">🔗 COPY PRODUCT LINK</button>
   </div></article>`;
 }
@@ -2315,6 +2301,13 @@ function changeModalQty(delta){
  modalQuantity=Math.max(1,Math.min(20,modalQuantity+delta));
  const el=$("modalQtyVal");if(el)el.textContent=modalQuantity;
 }
+function publicProductDescription(p){
+ let value=String(p&&p.description||"");
+ const privateTerms=[p&&p.supplierName,p&&p.supplierStoreName,p&&p.supplierCity,"HHC"].filter(x=>String(x||"").trim().length>1);
+ privateTerms.forEach(term=>{const escaped=String(term).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");try{value=value.replace(new RegExp(escaped,"gi"),"")}catch(e){}});
+ return value.replace(/\b(?:supplier|vendor)\s*[:：-][^\n.;]*/gi,"").replace(/\s{2,}/g," ").trim();
+}
+
 function openProduct(id){
  const targetProd=products.find(p=>String(p.id)===String(id));
  if(!targetProd)return;
@@ -2337,11 +2330,11 @@ function openProduct(id){
  if(yt){video.pause();video.removeAttribute("src");video.classList.add("hidden");frame.src=yt;frame.classList.remove("hidden")}
  else if(p.videoUrl&&safeImageURL(p.videoUrl)){video.src=p.videoUrl;video.classList.remove("hidden")}else{video.pause();video.removeAttribute("src");video.classList.add("hidden")}
  $("modalCategory").textContent=categoryName(p.category);$("modalName").textContent=cleanProductName(p.name);
- $("modalDescription").textContent=p.description||"Product details are available from our support team.";
+ $("modalDescription").textContent=publicProductDescription(p)||"Product details are available from our support team.";
  $("modalPrice").innerHTML=money(finalPrice(p))+` <span class="old-price">${money(p.price)}</span> <span class="sale-badge">${salePercent(p)}% OFF</span>`;
- $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(p.stock||"Please confirm availability");
+ $("modalStock").innerHTML="<b>Availability:</b> "+escapeHTML(/out|sold|unavailable/i.test(String(p.stock||p.stockLabel||""))?"Currently unavailable":"Please confirm availability with COBRA STORE before dispatch");
  $("modalSizes").innerHTML="";$("modalSizes").classList.add("hidden");
- $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML(p.details||"Please contact us for more information.");
+ $("modalExtraDetails").innerHTML="<b>More details:</b> "+escapeHTML((p.supplierName||p.supplierProductId)?"For product specifications, available options and delivery details, please contact COBRA STORE support.":(p.details||"Please contact us for more information."));
  renderSizeOptions();renderCustomerColors();
  renderRelatedProducts(p);
  $("modalAdd").onclick=()=>{if(!validateSelections(p))return;for(let i=0;i<modalQuantity;i++)addToCart(p.id,selectedSize,selectedColor);closeModal()};
@@ -2595,7 +2588,7 @@ $("orderForm").addEventListener("submit",async event=>{
 async function loadReviews(productId){
  const box=$("reviewList"),token=++reviewRequestToken;
  const prod = products.find(x=>String(x.id)===String(productId)) || currentProduct;
- // Only real customer-submitted reviews and original supplier reviews are displayed.
+ // Only real reviews submitted directly to COBRA STORE are displayed.
  const builtIn = [];
  let liveDocs = [];
  if(db){
@@ -2605,14 +2598,14 @@ async function loadReviews(productId){
    liveDocs = snap.docs.map(doc=>doc.data());
   }catch(error){console.warn("Live reviews fallback:",error);}
  }
- const supplierReviews=(prod&&prod.supplierName==="HHC"&&Array.isArray(prod.sourceReviews)?prod.sourceReviews:[]).map(r=>({...r,name:r.name||"Supplier customer",text:r.text||r.review||"",rating:Number(r.rating)||0,supplierVerified:true}));
- const allReviews = [...liveDocs, ...supplierReviews];
+ // Do not display supplier-site reviews as if they were reviews submitted to COBRA STORE.
+ const allReviews = liveDocs;
  const tabBtn = document.querySelector('.pm-tab[data-pm="Reviews"]');
  if(tabBtn) tabBtn.textContent = `REVIEWS (${allReviews.length})`;
  box.innerHTML = allReviews.map((r, i)=>{
   const rating=Number(r.rating);
   const ratingMarkup=Number.isFinite(rating)&&rating>=1&&rating<=5?`<div class="stars">${"★".repeat(Math.round(rating))}${"☆".repeat(5-Math.round(rating))}</div>`:"";
-  return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong>${r.supplierVerified?`<span class="verified-badge">Original supplier review</span>`:`<span class="verified-badge">Customer-submitted review</span>`}${ratingMarkup}<p>${escapeHTML(r.text||"")}</p>${window.reviewPhotoHTML?window.reviewPhotoHTML(r):""}<small>${r.supplierVerified?"Original supplier-provided review":"Submitted by a COBRA STORE customer"}</small></div>`;
+  return `<div class="review-card"><strong>${escapeHTML(r.name||"Customer")}</strong><span class="verified-badge">COBRA STORE customer review</span>${ratingMarkup}<p>${escapeHTML(r.text||"")}</p>${window.reviewPhotoHTML?window.reviewPhotoHTML(r):""}<small>Submitted by a COBRA STORE customer</small></div>`;
  }).join("");
 }
 $("reviewForm").addEventListener("submit",async event=>{
@@ -3163,7 +3156,7 @@ function hhcFirestoreProduct(p,profit,deliveryCost=0,codCost=0){
  const defaultTier=tiers[0]||null,baseCost=defaultTier?defaultTier.cost:p.cost;
  const baseProfit=defaultTier?defaultTier.profitAmount:profit;
  const basePrice=defaultTier?defaultTier.price:Math.ceil((p.cost+profit+deliveryCost+codCost)/(1-DEFAULT_SALE/100));
- return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:basePrice,costPrice:baseCost,profitAmount:baseProfit,deliveryCostEstimate:deliveryCost,codCostEstimate:codCost,netProfitEstimate:baseProfit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:(p.sourceCategory?'HHC · '+p.sourceCategory:'HHC').slice(0,50),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],packTiers:tiers,stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:(p.storeName?'Supplier: '+p.storeName:'')+(p.storeCity?' · City: '+p.storeCity:'')+(p.variations&&p.variations.length?' · '+p.variations.length+' options/variations':''),sourceRating:p.sourceRating,sourceReviewCount:p.sourceReviewCount,sourceReviews:p.sourceReviews||[],sourceRatingProvider:(p.sourceRating!==null||p.sourceReviewCount!==null||p.sourceReviews?.length)?'HHC':'',image:images[0]||'',extraImages:images.slice(1,4),videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+ return {name:cleanProductName(p.name).slice(0,100),category:p.category,price:basePrice,costPrice:baseCost,profitAmount:baseProfit,deliveryCostEstimate:deliveryCost,codCostEstimate:codCost,netProfitEstimate:baseProfit,supplierName:'HHC',supplierProductId:String(p.id),supplierSourceUrl:'',supplierSlug:p.slug||'',supplierStoreName:p.storeName||'',supplierCity:p.storeCity||'',supplierCategory:p.sourceCategory||'',supplierStockQuantity:p.stockQty||0,label:categoryName(hhcStoreCategory(p,p.sourceCategory)),sizes:p.sizes||[],unavailableSizes:[],availableColors:p.colors||[],packTiers:tiers,stock:String(p.stockLabel||'In Stock'),description:String(p.description||'').slice(0,1500),details:(p.variations&&p.variations.length?p.variations.length+' options/variations':'Product options may vary; contact COBRA STORE for details.'),sourceRating:p.sourceRating,sourceReviewCount:p.sourceReviewCount,sourceReviews:p.sourceReviews||[],sourceRatingProvider:(p.sourceRating!==null||p.sourceReviewCount!==null||p.sourceReviews?.length)?'HHC':'',image:images[0]||'',extraImages:images.slice(1,4),videoUrl:'',mediaPaths:[],salePercent:DEFAULT_SALE,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
 }
 $('hhcImportSelected')?.addEventListener('click',async()=>{if(!requireAdmin()||!db){showToast('Admin access required.');return}const ids=[...document.querySelectorAll('.hhc-product-check:checked')].map(x=>Number(x.dataset.index));const selected=ids.map(i=>hhcCatalogRows[i]).filter(Boolean);if(!selected.length){$('hhcStatus').textContent='کم از کم ایک پروڈکٹ منتخب کریں۔';return}const btn=$('hhcImportSelected');btn.disabled=true;let added=0;const deliveryCost=Math.max(0,Number($('hhcDeliveryCost')?.value)||0),codCost=Math.max(0,Number($('hhcCodCost')?.value)||0);try{let batch=db.batch(),pending=0;for(const p of selected){if(!p.id||!p.cost)continue;const ref=db.collection(COLLECTION_NAME).doc('hhc_'+p.id);const exists=await ref.get();if(exists.exists)continue;const itemProfit=hhcProfitForCost(p.cost);batch.set(ref,hhcFirestoreProduct(p,itemProfit,deliveryCost,codCost),{merge:false});pending++;added++;if(pending>=400){await batch.commit();batch=db.batch();pending=0}}if(pending)await batch.commit();$('hhcStatus').textContent=added+' پروڈکٹس COBRA STORE میں Sync ہو گئیں۔';showToast(added+' HHC products imported.')}catch(e){$('hhcStatus').textContent='Import stopped after '+added+' products: '+(e.message||getErrorMessage(e))}finally{btn.disabled=false}});
 const HHC_SYNC_CHECKPOINT_KEY='cobra_hhc_sync_checkpoint_v2';
@@ -3788,72 +3781,12 @@ function openSizeChartModal(){ $("sizeChartModal").classList.add("show"); }
 function openFaqModal(){ $("faqModal").classList.add("show"); }
 function openTermsModal(){ $("termsModal").classList.add("show"); }
 
-// Flash Sale Countdown Timer
-(function(){
- const el = $("flashCountdown");
- if(!el) return;
- let t = parseInt(localStorage.getItem("cobraFlashTimer") || (14 * 3600 + 32 * 60 + 45), 10);
- setInterval(()=>{
-  t--;
-  if(t <= 0) {
-   t = 24 * 3600; // Reset back to fresh 24h flash deal and restore original pricing state when expired
-   showToast("🔥 Flash Sale Renewed with Fresh Original Deals!");
-  }
-  localStorage.setItem("cobraFlashTimer", t);
-  const h = String(Math.floor(t / 3600)).padStart(2,'0');
-  const m = String(Math.floor((t % 3600) / 60)).padStart(2,'0');
-  const s = String(t % 60).padStart(2,'0');
-  el.textContent = `00 : ${h} : ${m} : ${s}`;
- }, 1000);
-})();
+// No fake countdown: seasonal banner is evergreen until a real dated campaign is configured.
 
-// Top-Right Compact Trending Products & Live Order Notifications
-(function(){
- const names = ["Ali from Lahore", "Hamza from Karachi", "Usman from Islamabad", "Bilal from Faisalabad", "Zain from Rawalpindi", "Ayesha from Multan", "Sana from Lahore", "Faizan from Peshawar"];
- const fallbackItems = ["Cobra Luxury Watch", "Girls Stylish Shoes", "Boys Casual Shirt", "Mobile Gaming Accessories", "Smart Bluetooth Earbuds", "Classic Leather Wallet"];
- const times = ["Just now", "1 min ago", "2 mins ago", "3 mins ago", "5 mins ago"];
- const pop = $("socialProofPop");
- if(!pop) return;
- let toggleTrending = true;
 
- function showProof(){
-  if(document.querySelector(".modal.show") || $("cartPanel").classList.contains("open")) return;
-  const liveProd = (Array.isArray(products) && products.length) ? products[Math.floor(Math.random() * products.length)] : null;
-  const itemName = liveProd ? cleanProductName(liveProd.name) : fallbackItems[Math.floor(Math.random() * fallbackItems.length)];
-  const itemEl = $("spItem");
-  itemEl.textContent = itemName;
-  itemEl.onclick = function(){
-   pop.classList.remove("show");
-   if(liveProd && liveProd.id) openProduct(liveProd.id);
-   else $("products").scrollIntoView({behavior:"smooth"});
-  };
 
-  if(toggleTrending){
-   const viewers = Math.floor(Math.random() * 18) + 9;
-   $("spIcon").textContent = "🔥";
-   $("spBadge").textContent = "TRENDING PRODUCT";
-   $("spBadge").style.color = "var(--coral)";
-   $("spName").textContent = viewers + " people";
-   $("spAction").textContent = "are viewing";
-   $("spTime").textContent = "Hot Deal";
-  } else {
-   const name = names[Math.floor(Math.random() * names.length)];
-   const time = times[Math.floor(Math.random() * times.length)];
-   $("spIcon").textContent = "📦";
-   $("spBadge").textContent = "LIVE ORDER • 11.11 SALE";
-   $("spBadge").style.color = "#287345";
-   $("spName").textContent = name;
-   $("spAction").textContent = "just ordered";
-   $("spTime").textContent = time;
-  }
-  toggleTrending = !toggleTrending;
-  pop.classList.add("show");
-  setTimeout(()=>pop.classList.remove("show"), 5500);
- }
+// Simulated order/viewer notifications disabled; no invented shopper activity.
 
- setTimeout(showProof, 5000);
- setInterval(showProof, 18000);
-})();
 </script>
 
 <script>
@@ -4203,24 +4136,8 @@ function showPmTab(n){
 document.querySelectorAll(".pm-tab").forEach(b=>b.addEventListener("click",()=>showPmTab(b.dataset.pm)));
 window.onProductOpened=function(p){showPmTab("Reviews");loadQuestions(p.id);$("qStatus").textContent="";$("inqStatus").textContent=""};
 function getBuiltInProductQuestions(p){
- const pname = cleanProductName(p ? p.name : "this product");
- return [
-  {name:"Ali Raza", text:`Kya ${pname} par Cash on Delivery (COD) poore Pakistan mein available hai?`, answer:"Ji haan! Poore Pakistan mein Cash on Delivery (COD) sahulat maujood hai."},
-  {name:"Sara Ahmed", text:`${pname} ka parcel kitne dinon mein deliver hota hai?`, answer:"Aap ka order 2 se 4 working days mein aap ke address par deliver ho jata hai."},
-  {name:"Usman Tariq", text:`Kya parcel receive karne se pehle khol kar check kar sakte hain?`, answer:"Ji bilkul! Aap courier rider ke samne parcel open kar ke quality check kar sakte hain."},
-  {name:"Fatima Noor", text:`Agar size ya product mein koi issue ho to exchange ho jayega?`, answer:"Ji haan, 7-Day Easy Return & Exchange policy ke tehat aap asani se exchange karwa sakte hain."},
-  {name:"Bilal Khan", text:`Kya ${pname} bilkul real pictures jaisa hi hai?`, answer:"100% same! Tamam pictures aur videos hamari original product ki hi hain."},
-  {name:"Zoya Malik", text:`11.11 Mega Sale ka discount pehle se price mein shamil hai?`, answer:"Ji haan, screen par nazar aane wali price special discounted sale price hi hai."},
-  {name:"Hamza Sheikh", text:`Delivery charges kitne hain?`, answer:"Standard delivery charges apply hotay hain, aur Rs. 3,000 se zyada ke order par FREE Delivery hai."},
-  {name:"Ayesha Siddiqui", text:`Kya ${pname} gift packing mein mil sakta hai?`, answer:"Ji bilkul! Order karte waqt Order Notes mein 'Gift Packing' likh dein, hum special pack kar dein ge."},
-  {name:"Kashif Mehmood", text:`Order place karne ke baad track kaise kar sakte hain?`, answer:"Order confirm hotay hi aap ko 8-digit Order Number milta hai jis se aap 'TRACK ORDER' par live status dekh sakte hain."},
-  {name:"Mahnoor Javed", text:`Kya ${pname} ka stock abhi available hai?`, answer:"Ji haan, abhi fresh stock available hai. Jaldi order karein kyunke sale stock limited hai."},
-  {name:"Rizwan Butt", text:`Kya EasyPaisa ya JazzCash se advance payment kar sakte hain?`, answer:"Ji haan, Cash on Delivery ke ilawa EasyPaisa, JazzCash aur Bank Transfer options bhi available hain."},
-  {name:"Hina Baig", text:`${pname} ki quality aur durability kaisi hai?`, answer:"Yeh COBRA STORE ki premium quality selection hai jo rozana istemal ke liye bohat mazboot aur reliable hai."},
-  {name:"Daniyal Shah", text:`Agar mujhe mazeed pictures ya video chahiye ho to kahan rabta karun?`, answer:"Aap 'WHATSAPP ORDER' ya 'MESSAGE ADMIN' tab se foran live photos/video mangwa sakte hain."},
-  {name:"Sadia Anwar", text:`Kya aik hi order mein mukhtalif products aur sizes mangwa sakte hain?`, answer:"Ji bilkul! Sab products 'ADD TO CART' karein aur aik hi delivery charge mein ek saath mangwayein."},
-  {name:"Omer Farooq", text:`Karachi, Lahore aur Islamabad mein same-week delivery hoti hai?`, answer:"Ji haan, major cities mein 2 se 3 working days mein fast delivery hoti hai."}
- ];
+ // Only shopper-submitted questions are displayed; no invented customer identities or answers.
+ return [];
 }
 
 async function loadQuestions(pid){
@@ -4314,11 +4231,6 @@ if(db){
     hint.className = "zoom-hint";
     hint.textContent = "🔍 Tap image to Zoom";
     box.appendChild(hint);
-   }
-   const viewersEl = $("liveViewersText");
-   if(viewersEl){
-    const count = Math.floor(Math.random() * 14) + 7;
-    viewersEl.textContent = count + " customers are viewing this product right now";
    }
    const shareBtn = $("modalShareWA");
    if(shareBtn && currentProduct){
@@ -4762,10 +4674,7 @@ async function adminDownloadProductMedia(productId){
   "add to cart": "خریداری کے لیے کارٹ میں شامل کریں",
   "view details": "پروڈکٹ کی مکمل تفصیل دیکھیں",
   "buy now": "ابھی آرڈر کریں",
-  "100% premium quality": "100% اعلیٰ اور معیاری کوالٹی",
-  "fast cod delivery": "تیز رفتار کیش آن ڈلیوری",
   "easy exchange": "آسان تبدیلی (ایکسچینج) کی سہولت",
-  "customers are viewing this product right now": "گاہک اس وقت یہ پروڈکٹ دیکھ رہے ہیں",
   "tap image to zoom": "تصویر کو بڑا (زوم) کر کے دیکھنے کے لیے کلک کریں",
   "please select a color": "براہِ کرم اپنا پسندیدہ رنگ منتخب کریں",
   "select size / option": "اپنا سائز یا آپشن منتخب کریں",
@@ -4923,7 +4832,7 @@ s0.parentNode.insertBefore(s1,s0);
 
 
 <script>
-/* COBRA STORE V12 — Admin analytics, order lifecycle and catalog export */
+/* COBRA STORE V12.1 — Brand-safe storefront, admin analytics and order lifecycle */
 (function(){
  'use strict';
  const $=id=>document.getElementById(id);
@@ -4935,8 +4844,10 @@ s0.parentNode.insertBefore(s1,s0);
  function downloadCSV(name,rows){if(!rows||!rows.length){if(typeof showToast==='function')showToast('No records available to export.');return}const csv='\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
  window.cobraExportProducts=function(){if(typeof requireAdmin==='function'&&!requireAdmin())return;const ps=Array.isArray(window.products)?window.products:(typeof products!=='undefined'?products:[]);if(!ps.length){if(typeof showToast==='function')showToast('Products are not loaded yet.');return}const base=location.origin+location.pathname;const rows=[['Product ID','Product Name','Category','Selling Price PKR','Cost Price PKR','Stock','Supplier','Supplier Product ID','Supplier Source URL','Store Product Link','Image URL']];ps.forEach(p=>{const u=new URL(base);u.searchParams.set('product',String(p.id||''));u.hash='products';rows.push([p.id,p.name,p.category,p.price,p.costPrice||p.wholesalePrice||'',p.stock||p.stockStatus||'',p.supplierName||'',p.supplierProductId||'',p.supplierSourceUrl||'',u.href,p.image||'']);});downloadCSV('COBRA-STORE-ALL-PRODUCTS-'+new Date().toISOString().slice(0,10)+'.csv',rows);};
  window.cobraExportOrders=function(){if(typeof requireAdmin==='function'&&!requireAdmin())return;const os=window.cobraAdminOrders||[];const rows=[['Order ID','Date','Customer','Phone','Email','City','Address','Status','Payment Method','Total PKR','Items']];os.forEach(o=>rows.push([o.id,orderDate(o)?.toISOString()||'',o.customerName,o.phone,o.email,o.city,o.address,o.status||'Pending',o.paymentMethod,o.total,(o.items||[]).map(i=>(i.name||'Product')+' x '+(i.quantity||1)).join(' | ')]));downloadCSV('COBRA-STORE-ORDERS-'+new Date().toISOString().slice(0,10)+'.csv',rows);};
+ window.cobraExportCustomers=function(){if(typeof requireAdmin==='function'&&!requireAdmin())return;const os=window.cobraAdminOrders||[];const map=new Map();os.forEach(o=>{const phone=String(o.phone||'').trim(),email=String(o.email||'').trim(),name=String(o.customerName||'').trim(),key=(phone||email||name).toLowerCase();if(!key)return;const c=map.get(key)||{name,phone,email,city:o.city||'',address:o.address||'',orders:0,total:0,last:null};c.name=c.name||name;c.phone=c.phone||phone;c.email=c.email||email;c.city=c.city||o.city||'';c.address=c.address||o.address||'';c.orders++;c.total+=Number(o.total)||0;const d=orderDate(o);if(d&&(!c.last||d>c.last))c.last=d;map.set(key,c);});const rows=[['Customer','Phone','Email','City','Address','Order Count','Total Order Value PKR','Latest Order']];[...map.values()].sort((a,b)=>b.total-a.total).forEach(c=>rows.push([c.name,c.phone,c.email,c.city,c.address,c.orders,c.total,c.last?c.last.toISOString():'']));downloadCSV('COBRA-STORE-CUSTOMERS-'+new Date().toISOString().slice(0,10)+'.csv',rows);};
  function updateDashboard(os){const all=os||[];const today=new Date();const isToday=o=>{const d=orderDate(o);return d&&d.getFullYear()===today.getFullYear()&&d.getMonth()===today.getMonth()&&d.getDate()===today.getDate()};const delivered=all.filter(o=>normalized(o.status)==='delivered');const cancelled=all.filter(o=>['cancelled','returned'].includes(normalized(o.status)));const saleStatuses=['confirmed','processing','shipped','delivered'];const sales=all.filter(o=>saleStatuses.includes(normalized(o.status))).reduce((n,o)=>n+(Number(o.total)||0),0);const deliveredSales=delivered.reduce((n,o)=>n+(Number(o.total)||0),0);const count=all.length;const avg=count?sales/Math.max(1,all.filter(o=>saleStatuses.includes(normalized(o.status))).length):0;
-  const vals={cobraDashOrders:count,cobraDashToday:all.filter(isToday).length,cobraDashDelivered:delivered.length,cobraDashCancelled:cancelled.length,cobraDashSales:moneySafe(sales),cobraDashDeliveredSales:moneySafe(deliveredSales),cobraDashAverage:moneySafe(avg)};Object.entries(vals).forEach(([id,v])=>{if($(id))$(id).textContent=String(v)});
+  const customerKeys=new Set(all.map(o=>String(o.phone||o.email||o.customerName||'').trim().toLowerCase()).filter(Boolean));const catalogCount=Array.isArray(window.products)?window.products.length:(typeof products!=='undefined'?products.length:0);const vals={cobraDashOrders:count,cobraDashToday:all.filter(isToday).length,cobraDashDelivered:delivered.length,cobraDashCancelled:cancelled.length,cobraDashSales:moneySafe(sales),cobraDashDeliveredSales:moneySafe(deliveredSales),cobraDashAverage:moneySafe(avg),cobraDashCustomers:customerKeys.size,cobraDashCatalog:catalogCount};Object.entries(vals).forEach(([id,v])=>{if($(id))$(id).textContent=String(v)});
+  const itemCounts={};all.forEach(o=>(Array.isArray(o.items)?o.items:[]).forEach(it=>{const name=String(it.name||'Product').trim()||'Product';itemCounts[name]=(itemCounts[name]||0)+(Number(it.quantity||it.qty)||1)}));const top=Object.entries(itemCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);if($('cobraDashTopProducts'))$('cobraDashTopProducts').innerHTML=top.length?top.map(([name,n])=>`<div class="cobra-dash-bar-row"><span style="grid-column:1/3;overflow-wrap:anywhere">${escapeHTML(name)}</span><b>${n}</b></div>`).join(''):'<span>ابھی آرڈرز موصول نہیں ہوئے؛ آرڈر آنے پر مقبول پروڈکٹس یہاں نظر آئیں گی۔</span>';
   const counts=statusList.map(st=>({name:st,count:all.filter(o=>normalized(o.status)===(st==='Pending'?'pending':st.toLowerCase())||(st==='Pending'&&!o.status)).length}));const max=Math.max(1,...counts.map(x=>x.count));if($('cobraDashStatusBars'))$('cobraDashStatusBars').innerHTML=counts.map(x=>`<div class="cobra-dash-bar-row"><span>${x.name}</span><div class="cobra-dash-bar-track"><div class="cobra-dash-bar-fill" style="width:${Math.round(x.count/max*100)}%"></div></div><b>${x.count}</b></div>`).join('');
  }
  window.cobraRefreshDashboard=function(){updateDashboard(window.cobraAdminOrders||[]);if(typeof showToast==='function')showToast('Dashboard refreshed from loaded data.');};
