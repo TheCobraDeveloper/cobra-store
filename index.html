@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#171514">
+<meta name="theme-color" content="#0e0e0e">
 <title>COBRA STORE | Premium Shopping Experience</title>
 <meta name="description" content="Shop shoes, fashion, watches, electronics, self-care and everyday products at COBRA STORE Pakistan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -961,6 +961,103 @@ body:not(.admin-mode) .modal-gallery img {
 }
 </style>
 
+<style id="cobra-v13-redesign">
+/* COBRA STORE V13 — editorial redesign layer (design only; all features/JS untouched) */
+:root{--coral:#d8452f;--dark:#0e0e0e;--muted:#7a7a7a;--bg:#fff;--line:#ececec;--light:#f5f5f3;--shadow:0 20px 50px #0000000f}
+body{background:#fff;letter-spacing:-.005em}
+.promo-bar{background:#0e0e0e!important;font-size:10px!important;letter-spacing:3px!important;border:0!important;padding:10px!important}
+div[style*="ANTI-AI"],div[style*="#f5d061"][style*="border-top"]{display:none!important}
+.flash-sale-bar{background:#f5f5f3!important;color:#0e0e0e!important;border-bottom:1px solid var(--line)!important}
+.flash-sale-bar #flashCountdown{color:var(--coral)!important}
+header{background:rgba(255,255,255,.82)!important;backdrop-filter:saturate(1.6) blur(18px)!important;border-bottom:1px solid var(--line)!important}
+.nav a{font-size:11px!important;letter-spacing:2px!important;color:#0e0e0e!important;position:relative}
+.nav a:after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:#0e0e0e;transition:width .35s}
+.nav a:hover:after{width:100%}.nav a:hover{color:#0e0e0e!important}
+.logo img{border-radius:50%}.logo-sub{letter-spacing:4px!important;font-size:8px!important}
+.outline-btn{border:1px solid #0e0e0e!important;border-radius:999px!important;font-size:10px!important;letter-spacing:1.4px!important;padding:10px 16px!important}
+.outline-btn:hover{background:#0e0e0e!important;color:#fff!important}
+.gold-btn{background:#0e0e0e!important;border:1px solid #0e0e0e!important;border-radius:999px!important;color:#fff!important;letter-spacing:2px!important;box-shadow:none!important;padding:15px 28px!important}
+.gold-btn:hover{background:var(--coral)!important;border-color:var(--coral)!important;transform:translateY(-2px)!important}
+.hero{background:linear-gradient(180deg,#f7f7f5,#ecece8)!important;border-radius:28px!important;min-height:600px!important;margin:22px auto 0!important;max-width:1320px!important}
+.hero:before{opacity:.9!important;filter:grayscale(.15) contrast(1.05);border-radius:50%;animation:cv13float 8s ease-in-out infinite}
+@keyframes cv13float{50%{transform:translateY(-54%)}}
+.hero h1{letter-spacing:-6px!important;line-height:.92!important;font-weight:800!important}
+.hero-kicker{color:#0e0e0e!important;letter-spacing:6px!important}
+.hero p{color:#555!important}
+.hero-sale{background:#fff!important;color:#0e0e0e!important;border:1px solid #0e0e0e!important;border-radius:999px!important}
+.benefits{gap:0!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:1320px!important;padding:0!important}
+.benefit{background:transparent!important;border:0!important;border-right:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;text-align:center;padding:22px 12px!important}
+.benefit:last-child{border-right:0!important}
+.promo-banner{background:#0e0e0e!important;color:#fff!important;border-radius:0!important;letter-spacing:3px}
+.section{max-width:1320px!important}
+.section-heading{text-align:left!important;border-bottom:1px solid var(--line);padding-bottom:18px}
+.section-heading h2{font-size:clamp(34px,6vw,64px)!important;letter-spacing:-2.5px!important;line-height:1!important}
+.section-heading .eyebrow{color:var(--coral)!important}
+.shop-search-box,.shop-sort{border-radius:999px!important;border:1px solid #0e0e0e!important;background:#fff!important}
+.category-card{background:#f5f5f3!important;border:1px solid transparent!important;border-radius:20px!important;box-shadow:none!important;transition:all .35s cubic-bezier(.22,1,.36,1)!important}
+.category-card:hover,.category-card.active{background:#0e0e0e!important;border-color:#0e0e0e!important;transform:translateY(-4px)!important}
+.category-card:hover h3,.category-card.active h3,.category-card:hover small,.category-card.active small{color:#fff!important}
+.category-card img{border-radius:14px!important;mix-blend-mode:multiply}
+.active-label{font-family:Syne;letter-spacing:4px!important;color:var(--coral)!important}
+.store-trend-panel{background:#f5f5f3!important;border:0!important;border-radius:20px!important}
+.product-grid{gap:26px 18px!important}
+.product-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+.product-card:hover{transform:none!important;box-shadow:none!important}
+.product-card .product-image{background:#f5f5f3!important;border-radius:18px!important;overflow:hidden!important}
+.product-card .product-image img{transition:transform .8s cubic-bezier(.22,1,.36,1),filter .6s!important}
+.product-card:hover .product-image img{transform:scale(1.06)!important;filter:contrast(1.04)}
+.product-card h3,.product-card .product-title{font-family:"DM Sans"!important;font-weight:600!important;letter-spacing:0!important}
+.product-card .product-buttons button{border-radius:999px!important}
+.promo-video-section{border-radius:28px!important;overflow:hidden}
+footer{background:#0e0e0e!important}
+@media(max-width:700px){.hero{border-radius:20px!important;min-height:520px!important}.hero h1{letter-spacing:-3px!important}.benefit{border-right:0!important;border-bottom:1px solid var(--line)!important}}
+</style>
+<style id="cobra-v14-3d">
+/* V14 — 3D motion layer */
+.v14-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#d8452f,#0e0e0e);z-index:99999}
+.hero:before{display:none!important}
+.hero{perspective:1400px}
+.v14-stage{position:absolute;right:7%;top:50%;width:min(36vw,360px);height:min(36vw,360px);transform:translateY(-50%);perspective:1100px;z-index:0}
+.v14-rot{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s ease-out}
+.v14-cube{position:absolute;inset:18%;transform-style:preserve-3d;animation:v14spin 18s linear infinite}
+.v14-cube i{position:absolute;inset:0;background:#fff url(IMG-20261109-WA0835.jpg) center/cover;border:1px solid #0e0e0e22;box-shadow:inset 0 0 40px #0000001a;backface-visibility:visible}
+.v14-cube i:nth-child(1){transform:translateZ(var(--z))}.v14-cube i:nth-child(2){transform:rotateY(180deg) translateZ(var(--z))}
+.v14-cube i:nth-child(3){transform:rotateY(90deg) translateZ(var(--z))}.v14-cube i:nth-child(4){transform:rotateY(-90deg) translateZ(var(--z))}
+.v14-cube i:nth-child(5){transform:rotateX(90deg) translateZ(var(--z))}.v14-cube i:nth-child(6){transform:rotateX(-90deg) translateZ(var(--z))}
+.v14-cube{--z:min(11vw,110px)}
+@keyframes v14spin{from{transform:rotateX(-18deg) rotateY(0)}to{transform:rotateX(-18deg) rotateY(360deg)}}
+.v14-ring{position:absolute;inset:0;border:1.5px solid #0e0e0e;border-radius:50%;opacity:.25;animation:v14ring 9s linear infinite}
+.v14-ring.b{inset:8%;border-color:#d8452f;opacity:.5;animation-duration:13s;animation-direction:reverse}
+@keyframes v14ring{from{transform:rotateX(72deg) rotateZ(0)}to{transform:rotateX(72deg) rotateZ(360deg)}}
+.v14-shadow{position:absolute;left:20%;right:20%;bottom:-6%;height:24px;background:radial-gradient(#0000003a,transparent 70%);filter:blur(6px);animation:v14sh 4s ease-in-out infinite}
+@keyframes v14sh{50%{transform:scale(.8);opacity:.6}}
+@media(max-width:800px){.v14-stage{opacity:.18;right:-6%;width:70vw;height:70vw}}
+.v14-rv{opacity:0;transform:perspective(900px) translateY(46px) rotateX(10deg);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+.v14-rv.in{opacity:1;transform:none}
+.v14-tilt{transform-style:preserve-3d;will-change:transform}
+.product-card.v14-tilt:hover .product-image{box-shadow:0 30px 50px -18px #0000004d}
+.v14-marquee{overflow:hidden;background:#0e0e0e;color:#fff;padding:16px 0;margin:30px 0 0;white-space:nowrap}
+.v14-marquee div{display:inline-block;font:800 clamp(18px,3vw,30px) Syne,sans-serif;letter-spacing:4px;animation:v14mq 28s linear infinite}
+.v14-marquee span{margin:0 28px}.v14-marquee b{color:#d8452f}
+@keyframes v14mq{to{transform:translateX(-50%)}}
+.v14-why{max-width:1320px;margin:70px auto 20px;padding:0 22px}
+.v14-why h2{font:800 clamp(34px,6vw,64px) Syne,sans-serif;letter-spacing:-2.5px;line-height:1;margin:8px 0 28px}
+.v14-why .ey{color:#d8452f;font-size:10px;letter-spacing:5px;font-weight:900}
+.v14-flips{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;perspective:1200px}
+.v14-flip{height:230px;position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.22,1,.36,1);cursor:pointer}
+.v14-flip:hover,.v14-flip:focus{transform:rotateY(180deg)}
+.v14-flip>div{position:absolute;inset:0;border-radius:22px;padding:26px;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.v14-flip .f{background:#f5f5f3}.v14-flip .k{background:#0e0e0e;color:#fff;transform:rotateY(180deg)}
+.v14-flip .n{font:800 46px Syne,sans-serif;color:#d8452f}.v14-flip h3{font:800 20px Syne,sans-serif}
+.v14-flip p{font-size:13px;line-height:1.7;opacity:.85}
+.v14-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:50px;border-top:1px solid #ececec}
+.v14-steps div{padding:24px 18px 10px 0}.v14-steps b{font:800 12px Syne;letter-spacing:3px;color:#d8452f}
+.v14-steps h4{font:700 17px "DM Sans";margin:8px 0 6px}.v14-steps p{font-size:13px;color:#777;line-height:1.7}
+@media(max-width:800px){.v14-flips,.v14-steps{grid-template-columns:repeat(2,1fr)}.v14-flip{height:210px}}
+#v14top{position:fixed;right:18px;bottom:88px;width:46px;height:46px;border-radius:50%;border:0;background:#0e0e0e;color:#fff;font-size:18px;z-index:80;opacity:0;pointer-events:none;transform:translateY(14px);transition:.35s}
+#v14top.on{opacity:1;pointer-events:auto;transform:none}
+@media(prefers-reduced-motion:reduce){.v14-cube,.v14-ring,.v14-marquee div,.v14-shadow{animation:none!important}.v14-rv{opacity:1;transform:none;transition:none}}
+</style>
 </head>
 <body>
 
@@ -1007,7 +1104,8 @@ body:not(.admin-mode) .modal-gallery img {
  </div>
 </div></header>
 
-<section class="hero" id="home"><div class="hero-content">
+<section class="hero" id="home"><div class="v14-stage" aria-hidden="true"><div class="v14-rot"><div class="v14-ring"></div><div class="v14-ring b"></div><div class="v14-cube"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="v14-shadow"></div></div></div>
+ <div class="hero-content">
  <div class="hero-kicker">A NEW WAY TO SHOP</div><h1>COBRA<br>STORE.</h1>
  <p>Discover your style with our curated collection. Shop shoes, fashion, watches, electronics and everyday essentials — delivered to your doorstep.</p>
  <div class="hero-buttons"><button class="gold-btn" onclick="goToCategories()">EXPLORE COLLECTION</button><button class="outline-btn" onclick="showAllProducts()">VIEW ALL PRODUCTS</button></div>
@@ -1021,6 +1119,15 @@ body:not(.admin-mode) .modal-gallery img {
 </div>
 <div class="promo-banner"><strong>11.11 MEGA SALE</strong><span>Explore the COBRA STORE collection and enjoy special discounted prices</span></div>
 
+<div class="v14-marquee" aria-hidden="true"><div><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b><span>STYLE</span><b>✦</b><span>QUALITY</span><b>✦</b><span>TRUST</span><b>✦</b><span>COBRA STORE</span><b>✦</b></div></div>
+<section class="v14-why" id="why"><div class="ey">WHY COBRA STORE</div><h2>SHOP WITH CONFIDENCE.</h2>
+<div class="v14-flips">
+<div class="v14-flip" tabindex="0"><div class="f"><span class="n">01</span><h3>CURATED<br>COLLECTION</h3></div><div class="k"><h3>Selected for style</h3><p>Shoes, fashion, watches, electronics and everyday essentials chosen with care.</p></div></div>
+<div class="v14-flip" tabindex="0"><div class="f"><span class="n">02</span><h3>CASH ON<br>DELIVERY</h3></div><div class="k"><h3>Pay at your door</h3><p>Order easily and pay when your parcel arrives.</p></div></div>
+<div class="v14-flip" tabindex="0"><div class="f"><span class="n">03</span><h3>TRACK YOUR<br>ORDER</h3></div><div class="k"><h3>Always in the loop</h3><p>Use Track Order any time to see where your order stands.</p></div></div>
+<div class="v14-flip" tabindex="0"><div class="f"><span class="n">04</span><h3>WHATSAPP<br>SUPPORT</h3></div><div class="k"><h3>We are here to help</h3><p>Message us on WhatsApp for sizes, colors and questions.</p></div></div>
+</div>
+<div class="v14-steps"><div><b>STEP 1</b><h4>Browse</h4><p>Pick a category or search.</p></div><div><b>STEP 2</b><h4>Choose options</h4><p>Select your size and color.</p></div><div><b>STEP 3</b><h4>Place order</h4><p>Add to cart and confirm.</p></div><div><b>STEP 4</b><h4>Receive</h4><p>Pay on delivery at your door.</p></div></div></section>
 <section id="activeCampaignBanner" class="campaign-public hidden"></section>
 
 <section class="section" id="categories">
@@ -5258,6 +5365,25 @@ s0.parentNode.insertBefore(s1,s0);
    return oldOpen.apply(this,arguments);
   };
  }
+})();
+</script>
+
+<script id="cobra-v14-js">
+(function(){
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches,fine=matchMedia('(hover:hover)').matches;
+var bar=document.createElement('div');bar.className='v14-progress';document.body.appendChild(bar);
+var top=document.createElement('button');top.id='v14top';top.setAttribute('aria-label','Back to top');top.textContent='↑';top.onclick=function(){scrollTo({top:0,behavior:'smooth'})};document.body.appendChild(top);
+addEventListener('scroll',function(){var h=document.documentElement,p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);bar.style.width=(p*100)+'%';top.classList.toggle('on',h.scrollTop>700)},{passive:true});
+var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08}):null;
+function reveal(root){(root||document).querySelectorAll('.product-card,.category-card,.section-heading,.benefit,.store-trend-panel,.promo-video-section,.v14-flip,.v14-steps div').forEach(function(el,i){if(el.dataset.v14)return;el.dataset.v14=1;el.classList.add('v14-rv');el.style.transitionDelay=(i%6)*70+'ms';io?io.observe(el):el.classList.add('in')})}
+reveal();
+new MutationObserver(function(){reveal()}).observe(document.body,{childList:true,subtree:true});
+if(fine&&!rm){document.addEventListener('mousemove',function(e){var c=e.target.closest&&e.target.closest('.product-card,.category-card');
+ if(!c)return;c.classList.add('v14-tilt');var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+ c.style.transition='transform .1s';c.style.transform='perspective(900px) rotateY('+(x*9)+'deg) rotateX('+(-y*9)+'deg) translateZ(6px)'});
+ document.addEventListener('mouseout',function(e){var c=e.target.closest&&e.target.closest('.product-card,.category-card');if(c&&!c.contains(e.relatedTarget)){c.style.transition='transform .6s cubic-bezier(.22,1,.36,1)';c.style.transform=''}});
+ var rot=document.querySelector('.v14-rot'),hero=document.getElementById('home');
+ if(rot&&hero)hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();rot.style.transform='rotateY('+(((e.clientX-r.left)/r.width-.5)*30)+'deg) rotateX('+(-((e.clientY-r.top)/r.height-.5)*24)+'deg)'});}
 })();
 </script>
 
